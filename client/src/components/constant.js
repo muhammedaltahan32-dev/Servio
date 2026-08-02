@@ -1,0 +1,1 @@
+export const FORM_CONTROL_PROPS = ["classes","color","disabled","error","fullWidth","focused","hiddenLabel","margin","required","size","variant"]; /* prettier-ignore */
