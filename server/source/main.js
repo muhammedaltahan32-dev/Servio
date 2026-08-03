@@ -1,9 +1,18 @@
 import express from "express";
+import registerAPIs from "./controllers/apiRegister.js";
+import assignContext from "./authentication/context.js";
+import connect from "./models/db.js";
+import cors from "cors";
 
 const app = express();
+app.use(express.json());
+app.use(cors());
 
 const startServer = async () => {
 	try {
+		app.locals.db = await connect();
+		app.use(assignContext);
+		registerAPIs(app);
 		app.listen(process.env.APP_PORT || 3001, () => {
 			console.log(`Server running on http://localhost:${process.env.APP_PORT || 3001}`);
 		});
