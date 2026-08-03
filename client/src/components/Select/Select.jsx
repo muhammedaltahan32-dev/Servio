@@ -11,7 +11,10 @@ import { FORM_CONTROL_PROPS } from "../constant";
 import { propertiesSelection } from "@utils";
 
 export const Select = React.forwardRef(
-  ({ children, label, width, minWidth, helperText, ...props }, ref) => {
+  (
+    { children, label, width, minWidth, helperText, error, warning, ...props },
+    ref,
+  ) => {
     const { variant = "outlined", formProps } = propertiesSelection(
       props,
       FORM_CONTROL_PROPS,
@@ -30,16 +33,24 @@ export const Select = React.forwardRef(
     }, [label, variant]);
     return (
       <FormControl {...formProps} variant={variant} sx={{ width, minWidth }}>
-        <InputLabel id={labelIdRef.current}>{label}</InputLabel>
+        <InputLabel error={error} warning={warning} id={labelIdRef.current}>
+          {label}
+        </InputLabel>
         <MUSelect
           {...props}
+          error={error}
+          warning={warning}
           input={variant !== "standard" && inputLabel}
           labelId={labelIdRef.current}
           ref={ref}
         >
           {children}
         </MUSelect>
-        <FormHelperText>{helperText}</FormHelperText>
+        {helperText && (
+          <FormHelperText error={error} warning={warning}>
+            {helperText}
+          </FormHelperText>
+        )}
       </FormControl>
     );
   },
