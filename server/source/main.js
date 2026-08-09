@@ -3,10 +3,15 @@ import registerAPIs from "./controllers/apiRegister.js";
 import assignContext from "./authentication/context.js";
 import connect from "./models/db.js";
 import cors from "cors";
+import path from "path";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+if (process.env.NODE_ENV === "development") {
+	app.use(express.static(path.join(process.cwd(), "../public")));
+}
 
 const startServer = async () => {
 	try {
@@ -22,3 +27,4 @@ const startServer = async () => {
 };
 
 startServer();
+
