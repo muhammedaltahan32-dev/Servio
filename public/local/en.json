@@ -1,3 +1,29 @@
 {
-	
+	"auth": {
+		"validation": {
+			"nameRequired": "Username is required",
+			"passwordRequired": "Password is required",
+			"kindRequired": "Account type is required",
+			"invalidKind": "Invalid account type",
+			"nameExists": "Username is already taken"
+		},
+		"error": {
+			"invalidCredentials": "Invalid username or password"
+		}
+	},
+	"user": {
+		"success": {
+			"created": "User added successfully"
+		}
+	},
+	"upload": {
+		"success": {
+			"completed": "Files uploaded successfully"
+		},
+		"error": {
+			"noFiles": "No files selected for upload",
+			"failed": "An error occurred during file upload",
+			"fileTooLarge": "File size exceeds the allowed limit (5MB)"
+		}
+	}
 }
