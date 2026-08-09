@@ -1,6 +1,5 @@
-import { User_ID, User_Kind, User_Name, User_Password } from "../../../constants/FieldsName.js";
+import { User_ID, User_IsActive, User_Kind, User_Name, User_Password } from "../../../constants/FieldsName.js";
 
-export const RecConfig_ID = 1;
 export const RecUser_ID = 1;
 
 import { mdlUser } from "../../../constants/modelNames.js";
@@ -14,6 +13,7 @@ const systemRecords = async (models) => {
 		[User_Name]: "admin",
 		[User_Password]: hashedPassword,
 		[User_Kind]: 1,
+		[User_IsActive]: true,
 	};
 
 	try {
@@ -34,3 +34,4 @@ const systemRecords = async (models) => {
 };
 
 export default systemRecords;
+
