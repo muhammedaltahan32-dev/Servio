@@ -9,8 +9,8 @@ export const subapi = Api_Signin;
 
 const validateInput = (data) => {
 	const { name, password } = data;
-	if (!name) return "messages.errors.signin.fieldRequired.Name";
-	if (!password) return "messages.errors.signin.fieldRequired.Password";
+	if (!name) return "auth.validation.nameRequired";
+	if (!password) return "auth.validation.passwordRequired";
 	return null;
 };
 
@@ -23,7 +23,7 @@ const signin = async (data, User) => {
 	const user = await User.findOne({ where: { name } });
 	const isValidPassword = user ? await verifyPassword(password, user.password) : false;
 	if (!user || !isValidPassword) {
-		throw new Error("messages.errors.signin.athuError");
+		throw new Error("auth.error.invalidCredentials");
 	}
 	const token = generateToken(user.id);
 	return { token, user };
@@ -34,8 +34,9 @@ export const post = async (req, res) => {
 		const { [mdlUser]: User } = req.app.locals.db;
 		const { token, user } = await signin(req.body, User);
 		const forms = getForms(user.kind);
-		return res.status(St_OK).json({ token, forms });
+		return res.status(St_OK).json({ sucess: true, token, forms });
 	} catch (err) {
-		return res.status(St_UNAUTHORIZED).json({ message: err.message });
+		return res.status(St_UNAUTHORIZED).json({ sucess: false, error: err.message });
 	}
 };
+
