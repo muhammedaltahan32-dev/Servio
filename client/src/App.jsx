@@ -1,13 +1,24 @@
 import React from "react";
-import TextField from '@mui/material/TextField';
+
+import { ApiService } from "./services/ApiService.js";
+import axios from "axios";
 export const App = () => {
-  return (
-    <div>
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      <TextField id="filled-basic" label="Filled" variant="filled" />
-      <TextField id="standard-basic" label="Standard" variant="standard" />
-    </div>
-  );
+	const [isLoading, setLoading] = React.useState(false);
+	const isFetchedRef = React.useRef(null);
+	React.useEffect(() => {
+		if (isFetchedRef.current) return;
+		isFetchedRef.current = (async () => {
+			const response = await ApiService.post("signin", {
+				name: "admin",
+				password: "admin",
+			});
+			if (response) {
+				localStorage.setItem("token", response.token);
+			}
+		})();
+	}, []);
+
+	return <div className="app">{isLoading && "...loading"}</div>;
 };
 
 export default App;
