@@ -1,6 +1,6 @@
 import { mdlUser } from "../../../constants/modelNames.js";
 import { User_ID, User_Name, User_Password, User_Kind, User_IsActive } from "../../../constants/FieldsName.js";
-import { Kind_ADMIN, Kind_KITCHEN, Kind_WAITER } from "../../../constants/user.js";
+import { Kind_ADMIN, Kind_KITCHEN, Kind_WAITER } from "../../../constants/enumOptions.js";
 
 const defineUser = (sequelize, DataTypes) => {
 	const model = sequelize.define(
