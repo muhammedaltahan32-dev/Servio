@@ -2,9 +2,15 @@ import * as Architecture from "./authentication/api.Architecture.js";
 import * as Signin from "./authentication/api.Signin.js";
 import * as User from "./api.User.js";
 import * as Upload from "./api.Upload.js";
+import * as Category from "./api.Category.js";
+import * as MenuItem from "./api.MenuItem.js";
+import * as Order from "./api.Order.js";
+import * as Table from "./api.Table.js";
+import * as Payment from "./api.Payment.js";
+
 import { St_FORBIDDEN, St_INTERNAL_SERVER_ERROR, St_NOT_FOUND } from "../../../constants/HttpStatus.js";
 
-const controllers = [Signin, Architecture, User, Upload];
+const controllers = [Signin, Architecture, User, Upload, Category, MenuItem, Order, Table, Payment];
 
 const permissionCheck = (method, resourceName, action) => async (req, res) => {
 	try {
