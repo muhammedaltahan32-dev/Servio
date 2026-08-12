@@ -4,6 +4,7 @@ import { getForms } from "./helper.js";
 import { St_UNAUTHORIZED, St_OK } from "../../../../constants/HttpStatus.js";
 import { mdlUser } from "../../../../constants/modelNames.js";
 import { verifyPassword } from "./hashPassword.js";
+import { User_Name, User_Password } from "../../../../constants/FieldsName.js";
 
 export const subapi = Api_Signin;
 
@@ -20,8 +21,8 @@ const signin = async (data, User) => {
 		throw new Error(validationError);
 	}
 	const { name, password } = data;
-	const user = await User.findOne({ where: { name } });
-	const isValidPassword = user ? await verifyPassword(password, user.password) : false;
+	const user = await User.findOne({ where: { [User_Name]: name } });
+	const isValidPassword = user ? await verifyPassword(password, user[User_Password]) : false;
 	if (!user || !isValidPassword) {
 		throw new Error("auth.error.invalidCredentials");
 	}
