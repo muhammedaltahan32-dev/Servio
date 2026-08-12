@@ -3,7 +3,7 @@ import { IconButton as MUIconButton } from "@mui/material";
 import React from "react";
 export const IconButton = React.forwardRef(({ name, ...props }, ref) => {
 	return (
-		<MUIconButton>
+		<MUIconButton {...props}>
 			<Icon name={name} />
 		</MUIconButton>
 	);
