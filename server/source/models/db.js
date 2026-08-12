@@ -1,7 +1,15 @@
 import { Sequelize, DataTypes } from "sequelize";
 import systemRecords from "./systemRecords.js";
 
-const dbModels = [import("./mdl.User.js")];
+const dbModels = [
+	import("./mdl.User.js"),
+	import("./mdl.Table.js"),
+	import("./mdl.Categories.js"),
+	import("./mdl.MenuItem.js"),
+	import("./mdl.Order.js"),
+	import("./mdl.OrderItem.js"),
+	import("./mdl.Payment.js"),
+];
 
 const connect = async () => {
 	const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -65,3 +73,4 @@ const connect = async () => {
 };
 
 export default connect;
+
