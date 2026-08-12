@@ -1,5 +1,5 @@
 import { Button, Icon, IconButton, Input, MenuItem, Select } from "@components";
-import "./home.css";
+
 import React from "react";
 // name, password, kind
 import { Kind_WAITER, Kind_KITCHEN, KINDS_VALUES } from "../../../../constants/enumOptions.js";
