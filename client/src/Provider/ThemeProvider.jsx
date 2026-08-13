@@ -1,13 +1,20 @@
+// cSpell:disable
 import React from "react";
 import { createTheme, ThemeProvider as MUThemeProvider, useColorScheme, CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const theme = createTheme({
-	colorSchemes: {
-		dark: true,
-	},
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import rtlPlugin from "@mui/stylis-plugin-rtl";
+import { prefixer } from "stylis";
+const cacheRtl = createCache({
+	key: "muirtl",
+	stylisPlugins: [prefixer, rtlPlugin],
 });
 
+const cacheLtr = createCache({
+	key: "mui",
+});
 const ThemeApplier = ({ children }) => {
 	const { mode: themeMode } = useSelector((state) => state.theme);
 	const { mode, setMode } = useColorScheme();
@@ -21,12 +28,28 @@ const ThemeApplier = ({ children }) => {
 	return children;
 };
 
+const ThemeWrapper = ({ children }) => {
+	const { direction } = useSelector((state) => state.language);
+
+	const theme = React.useMemo(
+		() =>
+			createTheme({
+				direction: direction,
+				colorSchemes: {
+					dark: true,
+				},
+			}),
+		[direction],
+	);
+	return <MUThemeProvider theme={theme}>{children}</MUThemeProvider>;
+};
+
 export const ThemeProvider = ({ children }) => {
 	return (
-		<MUThemeProvider theme={theme}>
+		<ThemeWrapper>
 			<CssBaseline />
 			<ThemeApplier>{children}</ThemeApplier>
-		</MUThemeProvider>
+		</ThemeWrapper>
 	);
 };
 
