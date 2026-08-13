@@ -117,14 +117,16 @@ export const Login = () => {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								disabled={loading}
-								InputProps={{
-									endAdornment: (
+								slotProps={{
+									input:{
+										endAdornment: (
 										<InputAdornment position="end">
 											<IconButton aria-label="toggle password visibility" onClick={togglePasswordVisibility} edge="end">
 												{showPassword ? <VisibilityOff /> : <Visibility />}
 											</IconButton>
 										</InputAdornment>
 									),
+									}
 								}}
 							/>
 
