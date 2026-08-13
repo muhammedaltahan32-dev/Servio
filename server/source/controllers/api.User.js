@@ -2,7 +2,7 @@ import { User_IsActive, User_Password } from "../../../constants/FieldsName.js";
 import { St_BAD_REQUEST, St_CREATED } from "../../../constants/HttpStatus.js";
 import { mdlUser } from "../../../constants/modelNames.js";
 import { Api_User } from "../../../constants/SubApi.js";
-import { allowedRoles_User } from "../../../constants/user.js";
+import { allowedRoles_User } from "../../../constants/enumOptions.js";
 import { hashPassword } from "./authentication/hashPassword.js";
 
 export const subapi = Api_User;
@@ -45,3 +45,4 @@ export const post = async (req, res) => {
 		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
 	}
 };
+

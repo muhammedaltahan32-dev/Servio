@@ -2,4 +2,8 @@ export const Api_Signin = "api/signin";
 export const Api_User = "api/user";
 export const Api_Architecture = "api/architecture";
 export const Api_Upload = "api/upload";
-
+export const Api_Category = "api/category";
+export const Api_MenuItem = "api/menu-item";
+export const Api_Table = "api/table";
+export const Api_Order = "api/order";
+export const Api_Payment = "api/payment";

@@ -1,5 +1,5 @@
 import { mdlUser } from "../../../constants/modelNames.js";
-import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/user.js";
+import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/enumOptions.js";
 import { Api_Signin, Api_User } from "../../../constants/SubApi.js";
 import { User_ID, User_Kind } from "../../../constants/FieldsName.js";
 import { getUserIdFromReq } from "../controllers/authentication/helper.js";
@@ -72,3 +72,4 @@ export default async function assignContext(req, res, next) {
 		next(error);
 	}
 }
+
