@@ -8,7 +8,6 @@ import { drawerToggle } from "../../features/layout/layoutSlice.js";
 import { useLang } from "@hooks";
 const AppBar = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
-
 	const { t } = useLang();
 	const dispatch = useDispatch();
 	const handleDrawerToggle = () => {
@@ -23,8 +22,10 @@ const AppBar = () => {
 
 	return (
 		<MUAppBar
+			color="transparent"
 			position="fixed"
 			sx={{
+				boxShadow: "none",
 				width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
 				marginInlineStart: { md: `${DRAWER_WIDTH}px` },
 			}}

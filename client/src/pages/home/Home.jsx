@@ -50,7 +50,7 @@ export const Home = () => {
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				bgcolor: "grey.100",
+				// bgcolor: "grey.100",
 				px: 2,
 			}}
 		>

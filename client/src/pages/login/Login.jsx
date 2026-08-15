@@ -21,10 +21,13 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { User_Name, User_Password } from "../../../../constants/FieldsName.js";
 
 export const Login = () => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+	const [formData, setFormData] = React.useState({
+		[User_Name]: "",
+		[User_Password]: "",
+	});
 	const [showPassword, setShowPassword] = useState(false);
 
 	const dispatch = useDispatch();
@@ -34,10 +37,7 @@ export const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const result = await dispatch(
-			loginUser({
-				name: username,
-				password,
-			}),
+			loginUser(formData),
 		);
 
 		if (loginUser.fulfilled.match(result)) {
@@ -46,7 +46,7 @@ export const Login = () => {
 			dispatch(
 				setCredentials({
 					token,
-					user: username,
+					...formData,
 				}),
 			);
 			navigate("/");
@@ -100,8 +100,8 @@ export const Login = () => {
 								name="username"
 								autoComplete="username"
 								autoFocus
-								value={username}
-								onChange={(e) => setUsername(e.target.value)}
+								value={formData[User_Name]}
+								onChange={(e) => setFormData((data) => ({ ...data, [User_Name]: e.target.value }))}
 								disabled={loading}
 							/>
 
@@ -114,19 +114,23 @@ export const Login = () => {
 								type={showPassword ? "text" : "password"}
 								id="password"
 								autoComplete="current-password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								value={formData[User_Password]}
+								onChange={(e) => setFormData((data) => ({ ...data, [User_Password]: e.target.value }))}
 								disabled={loading}
 								slotProps={{
-									input:{
+									input: {
 										endAdornment: (
-										<InputAdornment position="end">
-											<IconButton aria-label="toggle password visibility" onClick={togglePasswordVisibility} edge="end">
-												{showPassword ? <VisibilityOff /> : <Visibility />}
-											</IconButton>
-										</InputAdornment>
-									),
-									}
+											<InputAdornment position="end">
+												<IconButton
+													aria-label="toggle password visibility"
+													onClick={togglePasswordVisibility}
+													edge="end"
+												>
+													{showPassword ? <VisibilityOff /> : <Visibility />}
+												</IconButton>
+											</InputAdornment>
+										),
+									},
 								}}
 							/>
 

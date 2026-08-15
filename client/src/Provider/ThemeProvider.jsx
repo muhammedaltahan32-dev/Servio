@@ -1,12 +1,12 @@
 // cSpell:disable
 import React from "react";
-import { createTheme, ThemeProvider as MUThemeProvider, useColorScheme, CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider as MUThemeProvider, CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
-
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import rtlPlugin from "@mui/stylis-plugin-rtl";
 import { prefixer } from "stylis";
+
 const cacheRtl = createCache({
 	key: "muirtl",
 	stylisPlugins: [prefixer, rtlPlugin],
@@ -15,42 +15,39 @@ const cacheRtl = createCache({
 const cacheLtr = createCache({
 	key: "mui",
 });
-const ThemeApplier = ({ children }) => {
-	const { mode: themeMode } = useSelector((state) => state.theme);
-	const { mode, setMode } = useColorScheme();
+
+export const ThemeProvider = ({ children }) => {
+	const direction = useSelector((state) => state.language?.direction || "ltr");
 
 	React.useEffect(() => {
-		if (themeMode) {
-			setMode(themeMode);
-		}
-	}, [themeMode, setMode]);
-
-	return children;
-};
-
-const ThemeWrapper = ({ children }) => {
-	const { direction } = useSelector((state) => state.language);
+		document.dir = direction;
+	}, [direction]);
 
 	const theme = React.useMemo(
 		() =>
 			createTheme({
-				direction: direction,
+				direction,
+				cssVariables: {
+					colorSchemeSelector: "class",
+				},
 				colorSchemes: {
+					light: true,
 					dark: true,
 				},
 			}),
 		[direction],
 	);
-	return <MUThemeProvider theme={theme}>{children}</MUThemeProvider>;
-};
 
-export const ThemeProvider = ({ children }) => {
+	const currentCache = direction === "rtl" ? cacheRtl : cacheLtr;
+
 	return (
-		<ThemeWrapper>
-			<CssBaseline />
-			<ThemeApplier>{children}</ThemeApplier>
-		</ThemeWrapper>
+		<CacheProvider value={currentCache}>
+			<MUThemeProvider theme={theme} defaultMode="system">
+				<CssBaseline />
+				{children}
+			</MUThemeProvider>
+		</CacheProvider>
 	);
 };
 
-export default ThemeProvider;
+export default React.memo(ThemeProvider);
