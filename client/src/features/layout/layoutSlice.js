@@ -6,9 +6,14 @@ const layoutSlice = createSlice({
 		mobileOpen: false,
 	},
 	reducers: {
-		drawerToggle: (state) => (state.mobileOpen = !state.mobileOpen),
+		drawerToggle: (state) => {
+			state.mobileOpen = !state.mobileOpen;
+		},
+		closeDrawer: (state) => {
+			state.mobileOpen = false;
+		},
 	},
 });
 
-export const { drawerToggle } = layoutSlice.actions;
+export const { drawerToggle,closeDrawer } = layoutSlice.actions;
 export default layoutSlice.reducer;
