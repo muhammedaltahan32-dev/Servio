@@ -1,7 +1,8 @@
 // Users Table Fields
 export const User_ID = "id";
 export const User_Name = "username";
-export const User_Password = "password_hash";
+export const User_Password = "password";
+export const User_HashedPassword = "hashed_password";
 export const User_Kind = "kind";
 export const User_CreatedAt = "created_at";
 export const User_IsActive = "is-active";
