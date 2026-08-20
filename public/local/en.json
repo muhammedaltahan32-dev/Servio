@@ -25,5 +25,18 @@
 			"failed": "An error occurred during file upload",
 			"fileTooLarge": "File size exceeds the allowed limit (5MB)"
 		}
+	},
+	"payment": {
+		"success": {
+			"created": "Payment successful"
+		}
+	},
+	"table": {
+		"success": {
+			"updated": "Table updated successfully"
+		},
+		"error": {
+			"notFound": "Table not found"
+		}
 	}
 }
