@@ -24,21 +24,19 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { User_Name, User_Password } from "../../../../constants/FieldsName.js";
 
 export const Login = () => {
+	const dispatch = useDispatch();
+	const { loading, error, user } = useSelector((state) => state.auth);
 	const [formData, setFormData] = React.useState({
-		[User_Name]: "",
+		[User_Name]: user?.[User_Name],
 		[User_Password]: "",
 	});
 	const [showPassword, setShowPassword] = useState(false);
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { loading, error } = useSelector((state) => state.auth);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const result = await dispatch(
-			loginUser(formData),
-		);
+		const result = await dispatch(loginUser(formData));
 
 		if (loginUser.fulfilled.match(result)) {
 			const { token } = result.payload;
