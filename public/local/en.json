@@ -6,7 +6,8 @@
 		},
 		"languages": {
 			"en": "English",
-			"ar": "Arabic"
+			"ar": "Arabic",
+			"language": "Language"
 		}
 	},
 	"auth": {
