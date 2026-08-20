@@ -1,3 +1,4 @@
+import { Kind_ADMIN, Kind_KITCHEN, Kind_WAITER } from "../../../../constants/enumOptions.js";
 import { admin, waiter, kitchen } from "../../authentication/context.js";
 import { verifyToken } from "./token.js";
 
@@ -6,15 +7,15 @@ export const getForms = (kind, rolues) => {
 	if (!rolues) {
 		switch (kind) {
 			case 1:
-			case "admin":
+			case Kind_ADMIN:
 				roleConfig = admin;
 				break;
 			case 2:
-			case "waiter":
+			case Kind_WAITER:
 				roleConfig = waiter;
 				break;
 			case 3:
-			case "kitchen":
+			case Kind_KITCHEN:
 				roleConfig = kitchen;
 				break;
 			default:
