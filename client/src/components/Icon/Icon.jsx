@@ -15,7 +15,7 @@ export const Icon = React.forwardRef(
         color: status,
         htmlColor: color,
         sx: {
-          fontSize: size || "1.2rem",
+          fontSize: size,
         },
       }),
       [color, status, size, props],
