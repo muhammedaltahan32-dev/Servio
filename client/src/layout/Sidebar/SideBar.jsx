@@ -28,6 +28,7 @@ export const SideBar = () => {
 	const { mobileOpen } = useSelector((state) => state.layout);
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
+
 	const { t } = useLang();
 	const goto = useNavigate();
 
@@ -70,7 +71,10 @@ export const SideBar = () => {
 			</List>
 			<List disablePadding sx={{ padding: "0.8rem" }}>
 				<ThemeSwitcher />
-				<SidebarItem icon={<Avatar src="" sx={{ transform: "translateX(-25%)" }} />} label="admin"></SidebarItem>
+				<SidebarItem
+					icon={<Avatar src="" sx={{ transform: "translateX(-25%)" }} />}
+					label={user[User_Name]}
+				></SidebarItem>
 			</List>
 		</Box>
 	);
