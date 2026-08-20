@@ -1,6 +1,25 @@
 import { mdlOrders, mdlOrderItems, mdlTable, mdlUser, mdlMenuItems } from "../../../constants/modelNames.js";
 import { Api_Order } from "../../../constants/SubApi.js";
 import { St_BAD_REQUEST, St_CREATED, St_OK, St_INTERNAL_SERVER_ERROR } from "../../../constants/HttpStatus.js";
+import {
+	Order_ID,
+	Order_TableID,
+	Order_WaiterID,
+	Order_Status,
+	Order_Subtotal,
+	Order_Tax,
+	Order_Total,
+	Order_CreatedAt,
+	Item_OrderID,
+	Item_MenuID,
+	Item_Quantity,
+	Item_UnitPrice,
+	Item_Notes,
+	Table_Number,
+	User_Name,
+	Menu_Name,
+	Menu_Price,
+} from "../../../constants/FieldsName.js";
 
 export const subapi = Api_Order;
 
@@ -9,26 +28,33 @@ export const post = async (req, res) => {
 	const t = await sequelize.transaction();
 
 	try {
-		const { table_id, waiter_id, subtotal, tax_amount, total_amount, items } = req.body;
+		const {
+			[Order_TableID]: table_id,
+			[Order_WaiterID]: waiter_id,
+			[Order_Subtotal]: subtotal,
+			[Order_Tax]: tax_amount,
+			[Order_Total]: total_amount,
+			items,
+		} = req.body;
 
 		const newOrder = await Order.create(
 			{
-				table_id,
-				waiter_id,
-				subtotal,
-				tax_amount,
-				total_amount,
+				[Order_TableID]: table_id,
+				[Order_WaiterID]: waiter_id,
+				[Order_Subtotal]: subtotal,
+				[Order_Tax]: tax_amount,
+				[Order_Total]: total_amount,
 			},
 			{ transaction: t },
 		);
 
 		if (items && items.length > 0) {
 			const orderItemsData = items.map((item) => ({
-				order_id: newOrder.id,
-				menu_item_id: item.menu_item_id,
-				quantity: item.quantity,
-				unit_price: item.unit_price,
-				notes: item.notes || null,
+				[Item_OrderID]: newOrder[Order_ID],
+				[Item_MenuID]: item[Item_MenuID],
+				[Item_Quantity]: item[Item_Quantity],
+				[Item_UnitPrice]: item[Item_UnitPrice],
+				[Item_Notes]: item[Item_Notes] || null,
 			}));
 			await OrderItem.bulkCreate(orderItemsData, { transaction: t });
 		}
@@ -44,12 +70,12 @@ export const post = async (req, res) => {
 export const patch = async (req, res) => {
 	try {
 		const { [mdlOrders]: Order } = req.app.locals.db;
-		const { id, status } = req.body; // status: 'PREPARING', 'READY', 'SERVED', etc.
+		const { [Order_ID]: id, [Order_Status]: status } = req.body;
 
 		const order = await Order.findByPk(id);
 		if (!order) return res.status(St_BAD_REQUEST).json({ success: false, error: "Order not found" });
 
-		order.status = status;
+		order[Order_Status] = status;
 		await order.save();
 
 		res.status(St_OK).json({ success: true, data: order });
@@ -62,17 +88,17 @@ export const getAll = async (req, res, params) => {
 	try {
 		const { [mdlOrders]: Order, [mdlTable]: Table, [mdlUser]: User } = req.app.locals.db;
 
-		const { status } = params;
+		const { [Order_Status]: status } = params;
 
-		const whereClause = status ? { status } : {};
+		const whereClause = status ? { [Order_Status]: status } : {};
 
 		const orders = await Order.findAll({
 			where: whereClause,
 			include: [
-				{ model: Table, attributes: ["table_number"] },
-				{ model: User, attributes: ["username"] },
+				{ model: Table, attributes: [Table_Number] },
+				{ model: User, attributes: [User_Name] },
 			],
-			order: [["created_at", "ASC"]], // old first
+			order: [[Order_CreatedAt, "ASC"]],
 		});
 
 		res.status(St_OK).json({ success: true, data: orders });
@@ -92,10 +118,10 @@ export const getOne = async (id, req, res) => {
 
 		const order = await Order.findByPk(id, {
 			include: [
-				{ model: Table, attributes: ["table_number"] },
+				{ model: Table, attributes: [Table_Number] },
 				{
 					model: OrderItem,
-					include: [{ model: MenuItem, attributes: ["name", "price"] }],
+					include: [{ model: MenuItem, attributes: [Menu_Name, Menu_Price] }],
 				},
 			],
 		});
