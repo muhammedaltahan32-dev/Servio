@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User_Name } from "../../../../constants/FieldsName.js";
 import ThemeSwitcher from "./ThemeSwitcher.jsx";
 import { closeDrawer, drawerToggle } from "../../features/layout/layoutSlice.js";
+import SidebarItem from "./elements/SidebarItem.jsx";
 
 export const SideBar = () => {
 	const { mobileOpen } = useSelector((state) => state.layout);
@@ -36,7 +37,18 @@ export const SideBar = () => {
 
 	const theme = useTheme();
 	const drawerContent = (
-		<Box sx={{ display: "flex", flexDirection: "column", height: "100%", p: "0px" }}>
+		<Box
+			sx={(theme) => ({
+				display: "flex",
+				flexDirection: "column",
+				height: "100%",
+				p: "0px",
+				backgroundColor: theme.vars.palette.grey[50],
+				...theme.applyStyles("dark", {
+					backgroundColor: theme.vars.palette.grey["900"],
+				}),
+			})}
+		>
 			<Toolbar>
 				<Typography variant="h6" noWrap component="div" sx={{ fontWeight: "bold" }}>
 					Servio
@@ -45,37 +57,20 @@ export const SideBar = () => {
 			<Divider />
 			<List disablePadding sx={{ padding: "0.8rem", flexGrow: "1" }}>
 				{sidebarMenu.map((item) => (
-					<ListItem key={item.label} disablePadding>
-						<ListItemButton
-							onClick={() => {
-								goto(item.path);
-								if (mobileOpen) dispatch(closeDrawer());
-							}}
-						>
-							<ListItemIcon>
-								<Icon name={item.icon} />
-							</ListItemIcon>
-							<ListItemText primary={item.label} />
-						</ListItemButton>
-					</ListItem>
+					<SidebarItem
+						key={item.label}
+						icon={item.icon}
+						label={item.label}
+						onClick={() => {
+							goto(item.path);
+							if (mobileOpen) dispatch(closeDrawer());
+						}}
+					></SidebarItem>
 				))}
 			</List>
 			<List disablePadding sx={{ padding: "0.8rem" }}>
 				<ThemeSwitcher />
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon
-							sx={{
-								minWidth: 0,
-								justifyContent: "center",
-								transform: `translateX(-12%)`,
-							}}
-						>
-							<Avatar src="" />
-						</ListItemIcon>
-						<ListItemText primary="admin" />
-					</ListItemButton>
-				</ListItem>
+				<SidebarItem icon={<Avatar src="" sx={{ transform: "translateX(-25%)" }} />} label="admin"></SidebarItem>
 			</List>
 		</Box>
 	);

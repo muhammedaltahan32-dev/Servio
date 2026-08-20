@@ -1,4 +1,10 @@
 {
+	"layout": {
+		"mode": {
+			"dark": "الوضع المظلم",
+			"light": "الوضع الفاتح"
+		}
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "اسم المستخدم مطلوب",

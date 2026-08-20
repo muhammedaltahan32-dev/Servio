@@ -1,4 +1,10 @@
 {
+	"layout": {
+		"mode": {
+			"dark": "Dark mode",
+			"light": "Light mode"
+		}
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
