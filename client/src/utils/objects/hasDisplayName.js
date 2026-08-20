@@ -1,0 +1,1 @@
+export const hasDisplayName = (element, displayName) => element?.type?.displayName === displayName || element?.type?.name === displayName || (typeof element?.type === "string" && element.type === displayName); /* prettier-ignore */

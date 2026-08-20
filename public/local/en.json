@@ -3,6 +3,10 @@
 		"mode": {
 			"dark": "Dark mode",
 			"light": "Light mode"
+		},
+		"languages": {
+			"en": "English",
+			"ar": "Arabic"
 		}
 	},
 	"auth": {
