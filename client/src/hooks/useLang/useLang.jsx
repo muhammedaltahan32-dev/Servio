@@ -11,10 +11,6 @@ export const useLang = () => {
 	const change = (lang) => {
 		dispatch(changeLanguage(lang));
 	};
-	React.useEffect(() => {
-		const savedLanguage = localStorage.getItem(LANG_CODE) || "en";
-		dispatch(changeLanguage(savedLanguage));
-	}, [dispatch]);
 
 	return {
 		t,
