@@ -1,4 +1,4 @@
-import { User_ID, User_IsActive, User_Kind, User_Name, User_Password } from "../../../constants/FieldsName.js";
+import { User_ID, User_IsActive, User_Kind, User_Name, User_HashedPassword } from "../../../constants/FieldsName.js";
 
 export const RecUser_ID = 1;
 
@@ -11,7 +11,7 @@ const systemRecords = async (models) => {
 	const userRecords = {
 		[User_ID]: RecUser_ID,
 		[User_Name]: "admin",
-		[User_Password]: hashedPassword,
+		[User_HashedPassword]: hashedPassword,
 		[User_Kind]: 1,
 		[User_IsActive]: true,
 	};
