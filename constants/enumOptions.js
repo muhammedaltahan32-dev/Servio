@@ -8,3 +8,24 @@ export const ST_AVAILABLE = "Available";
 export const ST_OCCUPIED = "Occupied";
 export const ST_NEEDS_CLEANING = "Needs_Cleaning";
 
+export const KINDS_VALUES = {
+	[Kind_KITCHEN]: 2,
+	[Kind_WAITER]: 3,
+};
+
+// Order Status Options
+export const OrderStatus_PENDING = "PENDING";
+export const OrderStatus_PREPARING = "PREPARING";
+export const OrderStatus_READY = "READY";
+export const OrderStatus_SERVED = "SERVED";
+export const OrderStatus_PAID = "PAID";
+export const OrderStatus_CANCELLED = "CANCELLED";
+
+export const ORDER_STATUS_VALUES = [
+	OrderStatus_PENDING,
+	OrderStatus_PREPARING,
+	OrderStatus_READY,
+	OrderStatus_SERVED,
+	OrderStatus_PAID,
+	OrderStatus_CANCELLED,
+];
