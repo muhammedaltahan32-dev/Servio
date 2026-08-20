@@ -1,36 +1,25 @@
-import { mdlTable } from "../../../constants/modelNames.js";
-import {
-	Table_ID,
-	Table_Number,
-	Table_Capacity,
-	Table_Status,
-	Table_UpdatedAt,
-} from "../../../constants/FieldsName.js";
-import { ST_AVAILABLE, ST_NEEDS_CLEANING, ST_OCCUPIED } from "../../../constants/enumOptions.js";
+import { mdlUser } from "../../../constants/modelNames.js";
+import { User_ID, User_Name, User_HashedPassword, User_Kind, User_IsActive } from "../../../constants/FieldsName.js";
+import { Kind_ADMIN, Kind_KITCHEN, Kind_WAITER } from "../../../constants/enumOptions.js";
 
-const defineTables = (sequelize, DataTypes) => {
+const defineUser = (sequelize, DataTypes) => {
 	const model = sequelize.define(
-		mdlTable,
+		mdlUser,
 		{
-			[Table_ID]: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-			[Table_Number]: { type: DataTypes.INTEGER, allowNull: false, unique: true },
-			[Table_Capacity]: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 4 },
-			[Table_Status]: {
-				type: DataTypes.ENUM(ST_AVAILABLE, ST_OCCUPIED, ST_NEEDS_CLEANING),
-				defaultValue: ST_AVAILABLE,
-			},
-			[Table_UpdatedAt]: {
-				type: DataTypes.DATE,
-				defaultValue: DataTypes.NOW,
-			},
+			[User_ID]: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+			[User_Name]: { type: DataTypes.STRING(40), allowNull: false },
+			[User_HashedPassword]: { type: DataTypes.STRING(200), allowNull: false },
+			[User_Kind]: { type: DataTypes.ENUM(Kind_ADMIN, Kind_KITCHEN, Kind_WAITER), allowNull: false },
+			[User_IsActive]: { type: DataTypes.BOOLEAN },
 		},
 		{
-			tableName: "table",
+			tableName: "user",
 			timestamps: false,
 		},
 	);
 
-	return [mdlTable, model];
+	return [mdlUser, model];
 };
 
-export default defineTables;
+export default defineUser;
+
