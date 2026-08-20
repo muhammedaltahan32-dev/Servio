@@ -1,0 +1,42 @@
+{
+	"auth": {
+		"validation": {
+			"nameRequired": "اسم المستخدم مطلوب",
+			"passwordRequired": "كلمة المرور مطلوبة",
+			"kindRequired": "نوع الحساب مطلوب",
+			"invalidKind": "نوع الحساب غير صالح",
+			"nameExists": "اسم المستخدم مُستخدَم بالفعل"
+		},
+		"error": {
+			"invalidCredentials": "اسم المستخدم أو كلمة المرور غير صالحة"
+		}
+	},
+	"user": {
+		"success": {
+			"created": "تمت إضافة المستخدم بنجاح"
+		}
+	},
+	"upload": {
+		"success": {
+			"completed": "تم رفع الملفات بنجاح"
+		},
+		"error": {
+			"noFiles": "لم يتم تحديد أي ملفات للرفع",
+			"failed": "حدث خطأ أثناء رفع الملفات",
+			"fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (5 ميجابايت)"
+		}
+	},
+	"payment": {
+		"success": {
+			"created": "تمت عملية الدفع بنجاح"
+		}
+	},
+	"table": {
+		"success": {
+			"updated": "تم تحديث الطاولة بنجاح"
+		},
+		"error": {
+			"notFound": "الطاولة غير موجودة"
+		}
+	}
+}

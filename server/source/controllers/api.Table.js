@@ -1,0 +1,48 @@
+import { mdlTable } from "../../../constants/modelNames.js";
+import { Api_Table } from "../../../constants/SubApi.js";
+import { St_BAD_REQUEST, St_CREATED, St_OK, St_NOT_FOUND } from "../../../constants/HttpStatus.js";
+import { Table_ID, Table_Number, Table_Status, Table_Capacity } from "../../../constants/FieldsName.js";
+
+export const subapi = Api_Table;
+
+export const getAll = async (req, res, params) => {
+	try {
+		const { [mdlTable]: Table } = req.app.locals.db;
+		const tables = await Table.findAll({
+			order: [[Table_Number, "ASC"]],
+		});
+		res.status(St_OK).json({ success: true, data: tables });
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+	}
+};
+
+export const post = async (req, res) => {
+	try {
+		const { [mdlTable]: Table } = req.app.locals.db;
+		const data = req.body;
+		const newTable = await Table.create(data);
+		res.status(St_CREATED).json({ success: true, data: newTable });
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+	}
+};
+
+export const patch = async (req, res) => {
+	try {
+		const { [mdlTable]: Table } = req.app.locals.db;
+		const { [Table_ID]: id, [Table_Status]: status, [Table_Capacity]: capacity } = req.body;
+
+		const table = await Table.findByPk(id);
+		if (!table) return res.status(St_NOT_FOUND).json({ success: false, error: "table.error.notFound" });
+
+		if (status) table[Table_Status] = status;
+		if (capacity) table[Table_Capacity] = capacity;
+
+		await table.save();
+
+		res.status(St_OK).json({ success: true, data: table, message: "table.success.updated" });
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+	}
+};

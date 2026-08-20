@@ -1,0 +1,15 @@
+export const St_OK = 200;
+export const St_CREATED = 201;
+export const St_ACCEPTED = 202;
+export const St_NO_CONTENT = 204;
+export const St_BAD_REQUEST = 400;
+export const St_UNAUTHORIZED = 401;
+export const St_FORBIDDEN = 403;
+export const St_NOT_FOUND = 404;
+export const St_METHOD_NOT_ALLOWED = 405;
+export const St_CONFLICT = 409;
+export const St_UNPROCESSABLE_ENTITY = 422;
+export const St_INTERNAL_SERVER_ERROR = 500;
+export const St_NOT_IMPLEMENTED = 501;
+export const St_BAD_GATEWAY = 502;
+export const St_SERVICE_UNAVAILABLE = 503;
