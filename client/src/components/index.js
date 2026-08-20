@@ -4,6 +4,7 @@ export * from "./Switch/Switch";
 export * from "./Checkbox/Checkbox";
 export * from "./Radio/Radio";
 export * from "./Button/Button";
+export * from "./Menu/Menu";
 export * from "./IconButton/IconButton";
 export * from "./Icon/Icon";
 
