@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_ASSETS_PATH = "/local";
+const BASE_ASSETS_PATH = "local";
 const RAW_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${document.baseURI}`;
 const BASE_URL = (RAW_BASE_URL.endsWith("/") ? RAW_BASE_URL.slice(0, -1) : RAW_BASE_URL) + "/api";
 

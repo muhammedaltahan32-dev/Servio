@@ -15,7 +15,6 @@ import {
 	Typography,
 	Menu,
 	MenuItem,
-
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -35,26 +34,27 @@ import { useLang } from "@hooks";
 import { DRAWER_WIDTH } from "./constant.js";
 import SideBar from "./Sidebar/SideBar.jsx";
 import Main from "./Main/Main.jsx";
+import { LANG_CODE } from "../../../constants/localStorage.js";
 
 export default function Root() {
-	
-
-
-
-
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
 	const { currentLanguage, changeLanguage } = useLang();
 
-
-
 	const handleToggleLanguage = () => {
 		const nextLang = currentLanguage === "ar" ? "en" : "ar";
 		changeLanguage(nextLang);
 	};
-
+	const isLoadingLang = React.useRef(null);
+	React.useEffect(() => {
+		if (isLoadingLang.current) return;
+		isLoadingLang.current = (() => {
+			const savedLanguage = localStorage.getItem(LANG_CODE) || "en";
+			changeLanguage(savedLanguage);
+		})();
+	}, [changeLanguage]);
 	return (
 		<Box sx={{ display: "flex", overflow: "auto" }}>
 			<CssBaseline />
