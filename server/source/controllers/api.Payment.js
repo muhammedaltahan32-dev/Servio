@@ -11,6 +11,7 @@ import {
 	Order_Status,
 	Table_Status,
 } from "../../../constants/FieldsName.js";
+import { OrderStatus_PAID, ST_NEEDS_CLEANING } from "../../../constants/enumOptions.js";
 
 export const subapi = Api_Payment;
 
@@ -46,17 +47,17 @@ export const post = async (req, res) => {
 		const order = await Order.findByPk(order_id, { transaction: t });
 		if (!order) throw new Error("Order not found");
 
-		order[Order_Status] = "PAID";
+		order[Order_Status] = OrderStatus_PAID;
 		await order.save({ transaction: t });
 
 		const table = await Table.findByPk(order[Order_TableID], { transaction: t });
 		if (table) {
-			table[Table_Status] = "NEEDS_CLEANING";
+			table[Table_Status] = ST_NEEDS_CLEANING;
 			await table.save({ transaction: t });
 		}
 
 		await t.commit();
-		res.status(St_CREATED).json({ success: true, data: newPayment, message: "Payment successful" });
+		res.status(St_CREATED).json({ success: true, data: newPayment, message: "payment.success.created" });
 	} catch (err) {
 		await t.rollback();
 		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, error: err.message });
