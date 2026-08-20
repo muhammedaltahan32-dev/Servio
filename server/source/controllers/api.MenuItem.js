@@ -1,19 +1,20 @@
 import { mdlMenuItems, mdlCategories } from "../../../constants/modelNames.js";
 import { Api_MenuItem } from "../../../constants/SubApi.js";
 import { St_BAD_REQUEST, St_CREATED, St_OK } from "../../../constants/HttpStatus.js";
+import { Menu_CatID, Cat_Name } from "../../../constants/FieldsName.js";
 
 export const subapi = Api_MenuItem;
 
 export const getAll = async (req, res, params) => {
 	try {
 		const { [mdlMenuItems]: MenuItem, [mdlCategories]: Category } = req.app.locals.db;
-		const { category_id } = params;
+		const { [Menu_CatID]: category_id } = params;
 
-		const whereClause = category_id ? { category_id } : {};
+		const whereClause = category_id ? { [Menu_CatID]: category_id } : {};
 
 		const items = await MenuItem.findAll({
 			where: whereClause,
-			include: [{ model: Category, attributes: ["name"] }],
+			include: [{ model: Category, attributes: [Cat_Name] }],
 		});
 		res.status(St_OK).json({ success: true, data: items });
 	} catch (err) {
