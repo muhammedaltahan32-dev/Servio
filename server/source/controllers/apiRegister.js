@@ -18,9 +18,9 @@ const permissionCheck = (method, resourceName, action) => async (req, res) => {
 			return res.status(St_FORBIDDEN).json({ error: "No context available" });
 		}
 
-		// if (!req.context.hasPermission(resourceName, action)) {
-		// 	return res.status(St_FORBIDDEN).json({ error: "messages.error.Accessdenied" });
-		// }
+		if (!req.context.hasPermission(resourceName, action)) {
+			return res.status(St_FORBIDDEN).json({ error: "messages.error.Accessdenied" });
+		}
 
 		await method(req, res);
 	} catch (error) {
@@ -82,8 +82,8 @@ export default function registerAPIs(app) {
 			app.put(`${basePath}`, permissionCheck(api.put, api.subapi, "put"));
 		}
 
-		if (typeof api.delete === "function") {
-			app.delete(`${basePath}`, permissionCheck(api.delete, api.subapi, "delete"));
+		if (typeof api.remove === "function") {
+			app.delete(`${basePath}/:id`, permissionCheck(api.remove, api.subapi, "remove"));
 		}
 
 		if (typeof api.patch === "function") {
