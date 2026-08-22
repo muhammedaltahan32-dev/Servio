@@ -65,7 +65,7 @@ const connect = async () => {
 
 	await sequelize.authenticate();
 	if (process.env.DB_SYNC === "true") {
-		await sequelize.sync({ alter: true });
+		await sequelize.sync();
 		await systemRecords(models);
 	}
 
