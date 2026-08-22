@@ -44,10 +44,6 @@ export const SideBar = () => {
 				flexDirection: "column",
 				height: "100%",
 				p: "0px",
-				backgroundColor: theme.vars.palette.grey[50],
-				...theme.applyStyles("dark", {
-					backgroundColor: theme.vars.palette.grey["900"],
-				}),
 			})}
 		>
 			<Toolbar>
