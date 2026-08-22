@@ -10,6 +10,11 @@
 			"language": "Language"
 		}
 	},
+	"login": {
+		"login":"Login",
+		"username": "Username",
+		"password": "Password"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
