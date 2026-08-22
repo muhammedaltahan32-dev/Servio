@@ -1,13 +1,159 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Servio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Servio</title>
+		<style>
+			/* Light Mode Default */
+			body:not(:has(#appLoader.loaded)) {
+				pointer-events: none;
+			}
+			#appLoader {
+				position: fixed;
+				inset: 0;
+				height: 100dvh;
+				width: 100dvw;
+				z-index: 99999;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: #f1f5f9;
+				opacity: 1;
+				visibility: visible;
+				transition:
+					opacity 0.4s ease,
+					visibility 0.4s ease;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			/* Dark Mode Fallback */
+			@media (prefers-color-scheme: dark) {
+				#appLoader {
+					background-color: #121827;
+				}
+				.loader-track {
+					border-color: rgba(255, 255, 255, 0.08) !important;
+				}
+				.loader-text {
+					color: #9ca3af !important;
+				}
+			}
+
+			/* Removal State */
+			#appLoader.loaded {
+				opacity: 0 !important;
+				visibility: hidden !important;
+				pointer-events: none !important;
+			}
+
+			.loader-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 20px;
+				position: relative;
+				z-index: 1;
+			}
+
+			.glow-bg {
+				position: absolute;
+				width: 320px;
+				height: 320px;
+				border-radius: 50%;
+				background: radial-gradient(circle, #0ea5a4 0%, transparent 70%);
+				opacity: 0.12;
+				filter: blur(60px);
+				pointer-events: none;
+			}
+
+			.loader-ring-wrapper {
+				position: relative;
+				width: 64px;
+				height: 64px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.loader-track {
+				position: absolute;
+				inset: 0;
+				border-radius: 50%;
+				border: 3px solid rgba(0, 0, 0, 0.08);
+			}
+
+			.loader-spinner {
+				position: absolute;
+				inset: 0;
+				border-radius: 50%;
+				border: 3px solid transparent;
+				border-top-color: #0ea5a4;
+				animation: loader-spin 1s linear infinite;
+			}
+
+			.brand-badge {
+				width: 34px;
+				height: 34px;
+				border-radius: 8px;
+				background-color: #0ea5a4;
+				color: #ffffff;
+				font-weight: 800;
+				font-size: 0.95rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0 6px 16px rgba(14, 165, 164, 0.35);
+			}
+
+			.loader-text {
+				color: #6b7280;
+				font-size: 0.875rem;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				animation: loader-fade 1.5s ease-in-out infinite;
+			}
+
+			@keyframes loader-spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			@keyframes loader-fade {
+				0%,
+				100% {
+					opacity: 0.4;
+				}
+				50% {
+					opacity: 1;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<div id="appLoader">
+			<div class="loader-container">
+				<div class="glow-bg"></div>
+				<div class="loader-ring-wrapper">
+					<div class="loader-track"></div>
+					<div class="loader-spinner"></div>
+					<div class="brand-badge">S</div>
+				</div>
+				<div class="loader-text">Loading Servio...</div>
+			</div>
+		</div>
+
+		<script type="module" src="/src/main.jsx"></script>
+	</body>
 </html>

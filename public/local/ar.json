@@ -10,6 +10,11 @@
 			"language": "اللغة"
 		}
 	},
+	"login": {
+		"login": "تسجيل الدخول",
+		"username": "اسم المستخدم",
+		"password": "كلمة المرور"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "اسم المستخدم مطلوب",
