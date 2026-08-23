@@ -8,6 +8,7 @@ export * from "./Menu/Menu";
 export * from "./IconButton/IconButton";
 export * from "./Icon/Icon";
 export * from "./Table/Table";
+export * from "./Dialog/Dialog";
 
 //  items controls
 export * from "./Controls/MenuItem";
