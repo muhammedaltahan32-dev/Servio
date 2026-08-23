@@ -1,4 +1,20 @@
 {
+	"layout": {
+		"mode": {
+			"dark": "Dark mode",
+			"light": "Light mode"
+		},
+		"languages": {
+			"en": "English",
+			"ar": "Arabic",
+			"language": "Language"
+		}
+	},
+	"login": {
+		"login":"Login",
+		"username": "Username",
+		"password": "Password"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
@@ -24,6 +40,19 @@
 			"noFiles": "No files selected for upload",
 			"failed": "An error occurred during file upload",
 			"fileTooLarge": "File size exceeds the allowed limit (5MB)"
+		}
+	},
+	"payment": {
+		"success": {
+			"created": "Payment successful"
+		}
+	},
+	"table": {
+		"success": {
+			"updated": "Table updated successfully"
+		},
+		"error": {
+			"notFound": "Table not found"
 		}
 	}
 }

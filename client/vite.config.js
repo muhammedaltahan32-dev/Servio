@@ -27,7 +27,7 @@ export default defineConfig({
 			"@components": path.resolve(__dirname, "./src/components/index.js"),
 			"@utils": path.resolve(__dirname, "./src/utils/index.js"),
 			"@pages": path.resolve(__dirname, "./src/pages/index.js"),
-			"@router": path.resolve(__dirname, "./src/router/index.js"),
+			"@router": path.resolve(__dirname, "./src/router/index.jsx"),
 		},
 	},
 	server: {

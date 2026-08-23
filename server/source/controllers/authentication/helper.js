@@ -1,32 +1,32 @@
+import { Kind_ADMIN, Kind_KITCHEN, Kind_WAITER } from "../../../../constants/enumOptions.js";
 import { admin, waiter, kitchen } from "../../authentication/context.js";
 import { verifyToken } from "./token.js";
 
-export const getForms = (kind, rolues) => {
+export const getForms = (kind, roles) => {
 	let roleConfig;
-	if (!rolues) {
+	if (!roles) {
 		switch (kind) {
 			case 1:
-			case "admin":
+			case Kind_ADMIN:
 				roleConfig = admin;
 				break;
 			case 2:
-			case "waiter":
+			case Kind_WAITER:
 				roleConfig = waiter;
 				break;
 			case 3:
-			case "kitchen":
+			case Kind_KITCHEN:
 				roleConfig = kitchen;
 				break;
 			default:
 				roleConfig = {};
 		}
-	} else roleConfig = rolues;
+	} else roleConfig = roles;
 
 	return Object.entries(roleConfig)
 		.filter(([_, perms]) => perms.open === true)
-		.map(([key]) => key);
+		.map(([_, { open, ...rest }]) => rest);
 };
-
 export const getUserIdFromReq = (req) => {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) throw new Error("Unauthorized");
@@ -36,3 +36,4 @@ export const getUserIdFromReq = (req) => {
 		return parseInt(user.userId);
 	} else return { message: "error.messages.ExpiredToken" };
 };
+

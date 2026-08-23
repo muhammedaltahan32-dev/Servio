@@ -1,4 +1,6 @@
+import { User_Kind } from "../../../../constants/FieldsName.js";
 import { St_BAD_REQUEST, St_CREATED } from "../../../../constants/HttpStatus.js";
+import { mdlUser } from "../../../../constants/modelNames.js";
 import { Api_Architecture } from "../../../../constants/SubApi.js";
 import { getForms } from "./helper.js";
 import { generateToken, verifyToken } from "./token.js";
@@ -19,8 +21,8 @@ export const get = async (req, res) => {
 				newToken = generateToken(resToken.userId);
 			}
 		}
-
-		const forms = getForms(null, rolues);
+		const user = await db[mdlUser].findByPk(req.context.user?.id);
+		const forms = getForms(user[User_Kind], rolues);
 
 		res.status(St_CREATED).json({
 			forms,
@@ -30,3 +32,4 @@ export const get = async (req, res) => {
 		res.status(St_BAD_REQUEST).json({ message: err.message });
 	}
 };
+
