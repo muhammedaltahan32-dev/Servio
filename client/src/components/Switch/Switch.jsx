@@ -62,7 +62,7 @@ const IOSSwitchStyled = styled(IOSSwitch)(({ theme }) => ({
 	},
 }));
 export const Switch = React.forwardRef(
-	({ label, classes, row, width, minWidth, helperText, labelPlacement, error, warning, ...props }, ref) => {
+	({ label, classes, row, width, minWidth, helperText, labelPlacement, error, warning, sx,...props }, ref) => {
 		return (
 			<FormGroup classes={classes} row={row} sx={{ width, minWidth }}>
 				<FormControlLabel
