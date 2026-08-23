@@ -158,7 +158,6 @@ export const Login = () => {
 							value={formData[User_Name]}
 							onChange={(e) => setFormData((prev) => ({ ...prev, [User_Name]: e.target.value }))}
 							required
-							variant="outlined"
 							sx={{
 								"& .MuiOutlinedInput-root": {
 									backgroundColor: "background.default",
