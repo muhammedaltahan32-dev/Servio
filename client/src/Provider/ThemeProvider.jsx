@@ -34,7 +34,7 @@ export const ThemeProvider = ({ children }) => {
 			createTheme({
 				direction,
 				shape: {
-					borderRadius: 20,
+					borderRadius: 12,
 				},
 				cssVariables: {
 					colorSchemeSelector: "class",
