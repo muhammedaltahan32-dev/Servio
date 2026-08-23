@@ -6,7 +6,11 @@ import { useDispatch } from "react-redux";
 import { drawerToggle } from "../../features/layout/layoutSlice.js";
 
 import { useLang } from "@hooks";
+import { useLocation } from "react-router";
+
 const AppBar = () => {
+	const location = useLocation();
+	const pageName = location.pathname.split("/").filter(Boolean).pop() || "";
 	const { t, supportedLanguages, changeLanguage } = useLang();
 	const dispatch = useDispatch();
 	const handleDrawerToggle = () => {
@@ -36,7 +40,7 @@ const AppBar = () => {
 				/>
 
 				<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-					{t("Page Title") || "Dashboard"}
+					{pageName}
 				</Typography>
 
 				<Menu>
