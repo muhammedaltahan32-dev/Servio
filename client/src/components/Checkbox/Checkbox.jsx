@@ -16,7 +16,7 @@ import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone";
 export const Checkbox = React.forwardRef(
 	({ label, width, minWidth, helperText, labelPlacement, error, warning, ...props }, ref) => {
 		return (
-			<FormControl sx={{ width, minWidth }}>
+			<FormControl sx={{ width, minWidth, display: "inline" }}>
 				<FormControlLabel
 					labelPlacement={labelPlacement}
 					sx={{ gap: "0.2rem", userSelect: "none" }}
