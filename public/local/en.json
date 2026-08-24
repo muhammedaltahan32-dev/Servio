@@ -1,4 +1,20 @@
 {
+	"layout": {
+		"mode": {
+			"dark": "Dark mode",
+			"light": "Light mode"
+		},
+		"languages": {
+			"en": "English",
+			"ar": "Arabic",
+			"language": "Language"
+		}
+	},
+	"login": {
+		"login": "Login",
+		"username": "Username",
+		"password": "Password"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
@@ -38,5 +54,16 @@
 		"error": {
 			"notFound": "Table not found"
 		}
+	},
+	"categories": {
+		"title": "Categories",
+		"addNew": "Add New Category",
+		"editTitle": "Edit Category",
+		"addTitle": "Add New Category",
+		"dialogSubtitle": "Enter the category details below to update the list.",
+		"name": "Category Name",
+		"sortOrder": "Sort Order",
+		"save": "Save Changes",
+		"cancel": "Cancel"
 	}
 }
