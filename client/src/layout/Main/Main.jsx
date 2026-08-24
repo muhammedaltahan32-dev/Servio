@@ -15,7 +15,7 @@ export const Main = () => {
 			}}
 		>
 			<Toolbar />
-			<Box sx={{ maxHeight: "calc(100vh - 64px)", p: 3 }}>
+			<Box sx={{ maxHeight: "calc(100vh - 64px)", height: "100%", p: 3 }}>
 				<Outlet />
 			</Box>
 		</Box>
