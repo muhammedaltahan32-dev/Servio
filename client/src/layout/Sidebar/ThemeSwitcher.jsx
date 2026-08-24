@@ -3,23 +3,24 @@ import { ListItem, ListItemButton, ListItemIcon, ListItemText, useColorScheme } 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../features/theme/themeSlice.js";
+import SidebarItem from "./elements/SidebarItem.jsx";
+import { useLang } from "@hooks";
 
 const ThemeSwitcher = () => {
 	const { mode, setMode } = useColorScheme();
+	const { t } = useLang();
 	const dispatch = useDispatch();
 	const changeMode = () => {
 		setMode(mode === "dark" ? "light" : "dark");
 	};
 	return (
-		<ListItem disablePadding>
-			<ListItemButton onClick={() => changeMode()}>
-				<ListItemIcon>
-					<Icon name="BedtimeOutlined" />
-				</ListItemIcon>
-				<ListItemText primary={"dark mode"} />
-				<Switch checked={mode === "dark"} tabIndex={-1} />
-			</ListItemButton>
-		</ListItem>
+<SidebarItem
+  label={t(`layout.mode.${mode === "dark" ? "light" : "dark"}`)}
+  icon={mode === "dark" ? "LightMode" : "DarkMode"}
+  onClick={changeMode}
+>
+  <Switch checked={mode === "dark"} tabIndex={-1} sx={{ pointerEvents: "none" }} />
+</SidebarItem>
 	);
 };
 

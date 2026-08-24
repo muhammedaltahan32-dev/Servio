@@ -11,12 +11,14 @@ export const useLang = () => {
 	const change = (lang) => {
 		dispatch(changeLanguage(lang));
 	};
-
+	// cSpell:disable-next-line
+	const supportedLanguages = i18n.options.supportedLngs.filter((lang) => lang !== "cimode" && lang !== false);
 	return {
 		t,
 		changeLanguage: change,
 		currentLanguage,
 		i18n,
+		supportedLanguages,
 	};
 };
 

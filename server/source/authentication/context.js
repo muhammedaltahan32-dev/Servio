@@ -1,16 +1,22 @@
 import { mdlUser } from "../../../constants/modelNames.js";
 import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/enumOptions.js";
-import { Api_Signin, Api_User } from "../../../constants/SubApi.js";
+import { Api_Signin, Api_Table, Api_User } from "../../../constants/SubApi.js";
 import { User_ID, User_Kind } from "../../../constants/FieldsName.js";
 import { getUserIdFromReq } from "../controllers/authentication/helper.js";
 
 export const admin = {
 	[Api_User]: { post: true, put: true, get: true, getAll: true, getOne: true, delete: true, patch: true },
+	[Api_Table]: { post: true, put: true, get: true, getAll: true, getOne: true, delete: true, patch: true },
+	[Api_Signin]: { post: true },
 };
 
-export const waiter = {};
+export const waiter = {
+	[Api_Signin]: { post: true },
+};
 
-export const kitchen = {};
+export const kitchen = {
+	[Api_Signin]: { post: true },
+};
 
 export const guests = {
 	[Api_Signin]: { post: true },

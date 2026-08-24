@@ -26,19 +26,19 @@ const IOSSwitchStyled = styled(IOSSwitch)(({ theme }) => ({
 		"&.Mui-checked": {
 			transform: "translateX(16px)",
 			color: "#fff",
-			"& + .MuiSwitch-track": {
-				backgroundColor: "#39cf1b",
-				opacity: 1,
-				border: 0,
-			},
+			// "& + .MuiSwitch-track": {
+			// 	backgroundColor: "#39cf1b",
+			// 	opacity: 1,
+			// 	border: 0,
+			// },
 			"&.Mui-disabled + .MuiSwitch-track": {
 				opacity: 0.5,
 			},
 		},
-		"&.Mui-focusVisible .MuiSwitch-thumb": {
-			color: "#33d69f",
-			border: "6px solid #fff",
-		},
+		// "&.Mui-focusVisible .MuiSwitch-thumb": {
+		// 	color: "#33d69f",
+		// 	border: "6px solid #fff",
+		// },
 		"&.Mui-disabled .MuiSwitch-thumb": {
 			color: theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[600],
 		},
@@ -62,7 +62,7 @@ const IOSSwitchStyled = styled(IOSSwitch)(({ theme }) => ({
 	},
 }));
 export const Switch = React.forwardRef(
-	({ label, classes, row, width, minWidth, helperText, labelPlacement, error, warning, ...props }, ref) => {
+	({ label, classes, row, width, minWidth, helperText, labelPlacement, error, warning, sx,...props }, ref) => {
 		return (
 			<FormGroup classes={classes} row={row} sx={{ width, minWidth }}>
 				<FormControlLabel

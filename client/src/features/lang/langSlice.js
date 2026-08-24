@@ -5,19 +5,17 @@ import { LANG_CODE } from "../../../../constants/localStorage.js";
 
 export const changeLanguage = createAsyncThunk("language/changeLanguage", async (lang, { rejectWithValue }) => {
 	try {
-		const langFile = lang.endsWith(".json") ? lang : `${lang}.json`;
-		const langCode = lang.replace(".json", "");
-		if (!i18n.services.resourceStore.data[langCode]) {
-			const translations = await ApiService.getLanguage(langFile);
+		if (!i18n.services.resourceStore.data[lang]) {
+			const translations = await ApiService.getLanguage(lang);
 
-			i18n.addResourceBundle(langCode, "translation", translations, true, true);
+			i18n.addResourceBundle(lang, "translation", translations, true, true);
 		}
-		i18n.languages = langCode;
-		await i18n.changeLanguage(langCode);
-		localStorage.setItem(LANG_CODE, langCode);
-		document.dir = langCode === "ar" ? "rtl" : "ltr";
+		i18n.languages = lang;
+		await i18n.changeLanguage(lang);
+		localStorage.setItem(LANG_CODE, lang);
+		document.dir = lang === "ar" ? "rtl" : "ltr";
 
-		return langCode;
+		return lang;
 	} catch (error) {
 		return rejectWithValue("Failed to load language resources");
 	}

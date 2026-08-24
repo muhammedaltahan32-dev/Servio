@@ -1,25 +1,21 @@
 import React from "react";
 import { DRAWER_WIDTH } from "../constant.js";
-import { Menu, Toolbar, Typography, AppBar as MUAppBar } from "@mui/material";
-import { Icon, IconButton, MenuItem } from "@components";
+import { Toolbar, Typography, AppBar as MUAppBar, Tooltip } from "@mui/material";
+import { Icon, IconButton, MenuItem, Menu } from "@components";
 import { useDispatch } from "react-redux";
 import { drawerToggle } from "../../features/layout/layoutSlice.js";
 
 import { useLang } from "@hooks";
+import { useLocation } from "react-router";
+
 const AppBar = () => {
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const { t } = useLang();
+	const location = useLocation();
+	const pageName = location.pathname.split("/").filter(Boolean).pop() || "";
+	const { t, supportedLanguages, changeLanguage } = useLang();
 	const dispatch = useDispatch();
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
 	};
-	const handleMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleMenuClose = () => {
-		setAnchorEl(null);
-	};
-
 	return (
 		<MUAppBar
 			color="transparent"
@@ -44,18 +40,22 @@ const AppBar = () => {
 				/>
 
 				<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-					{t("Page Title") || "Dashboard"}
+					{pageName}
 				</Typography>
 
-				<IconButton color="inherit" title="Switch Language" name="Language" />
-
-				<IconButton color="inherit" name="Notifications" />
-
-				<IconButton color="inherit" name="AccountCircle" onClick={handleMenuOpen} />
-				<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-					<MenuItem onClick={handleMenuClose}>{t("Profile") || "Profile"}</MenuItem>
-					<MenuItem onClick={handleMenuClose}>{t("My Account") || "My Account"}</MenuItem>
-					<MenuItem onClick={handleMenuClose}>{t("Logout") || "Logout"}</MenuItem>
+				<Menu>
+					<Menu.Trigger>
+						<Tooltip title={t("layout.languages.language")}>
+							<IconButton color="inherit" name="Language" />
+						</Tooltip>
+					</Menu.Trigger>
+					<Menu.Content>
+						{supportedLanguages.map((lang) => (
+							<Menu.Item key={lang} onClick={() => changeLanguage(lang)}>
+								{t(`layout.languages.${lang}`)}
+							</Menu.Item>
+						))}
+					</Menu.Content>
 				</Menu>
 			</Toolbar>
 		</MUAppBar>
