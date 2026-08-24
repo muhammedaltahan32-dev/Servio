@@ -37,7 +37,7 @@ export const remove = async (req, res) => {
 		if (deletedCount === 0) {
 			return res.status(St_BAD_REQUEST).json({ success: false, error: "Category not found" });
 		}
-		res.status(St_OK).json({ success: true, message: "Category deleted successfully" });
+		res.status(St_OK).json({ success: true, message: "messages.success.deleted" });
 	} catch (err) {
 		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
 	}
@@ -52,7 +52,7 @@ export const put = async (req, res) => {
 		if (updatedCount === 0) {
 			return res.status(St_BAD_REQUEST).json({ success: false, error: "Category not found" });
 		}
-		res.status(St_OK).json({ success: true, message: "Category updated successfully" });
+		res.status(St_OK).json({ success: true, message: "messages.success.updated" });
 	} catch (err) {
 		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
 	}
