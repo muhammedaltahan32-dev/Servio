@@ -119,8 +119,8 @@ const data = [
 export function Test() {
 	const [open, setOpen] = React.useState(false);
 	return (
-		<Container maxWidth="xl" sx={{ py: 5 }}>
-			<>
+		<Stack sx={{ height: "100%" }} spacing={2} direction="column">
+			<Box>
 				<Button variant="contained" onClick={() => setOpen(true)}>
 					Open Modal
 				</Button>
@@ -141,21 +141,24 @@ export function Test() {
 						</>
 					}
 				>
-					<Stack spacing={2} sx={{pt:"10px"}}>
+					<Stack spacing={2} sx={{ pt: "10px" }}>
 						<Input label="Username" fullWidth defaultValue="Ahmad" />
 						<Input label="Email" fullWidth defaultValue="ahmad@example.com" />
 					</Stack>
 				</Dialog>
-			</>
-			<Table
-				title="System Users"
-				columns={columns}
-				data={data}
-				idField="id"
-				onEdit={(user) => console.log("Edit:", user)}
-				onDelete={(user) => console.log("Delete:", user)}
-				onBatchDelete={(ids) => console.log("Delete Batch IDs:", ids)}
-			/>
-		</Container>
+			</Box>
+			<Box sx={{ flexGrow: 1, overflow: "hidden" }}>
+				<Table
+					sx={{ overflow: "auto", height: "100%" }}
+					title="System Users"
+					columns={columns}
+					data={data}
+					idField="id"
+					onEdit={(user) => console.log("Edit:", user)}
+					onDelete={(user) => console.log("Delete:", user)}
+					onBatchDelete={(ids) => console.log("Delete Batch IDs:", ids)}
+				/>
+			</Box>
+		</Stack>
 	);
 }
