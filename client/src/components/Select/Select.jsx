@@ -25,6 +25,7 @@ export const Select = React.forwardRef(
 				</InputLabel>
 				<MUSelect
 					{...props}
+					size="small"
 					error={error}
 					warning={warning}
 					input={variant !== "standard" && inputLabel}

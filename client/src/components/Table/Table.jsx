@@ -6,6 +6,7 @@ import { TableRefProvider } from "./providers/Table.Ref.Provider";
 import { TableToolbar } from "./elements/TableToolbar";
 import { TableRoot } from "./elements/Table.Root";
 const EMPTY_ARRAY = [];
+const EMPTY_Object = {};
 export const Table = ({
 	columns = EMPTY_ARRAY,
 	data = EMPTY_ARRAY,
@@ -14,6 +15,8 @@ export const Table = ({
 	onEdit,
 	onDelete,
 	onBatchDelete,
+	sx = EMPTY_Object,
+	...props
 }) => {
 	return (
 		<TableStateProvider columns={columns} data={data} idField={idField} title={title}>
@@ -21,11 +24,15 @@ export const Table = ({
 				<TableRefProvider>
 					<Card
 						elevation={0}
+						{...props}
 						sx={{
 							border: "1px solid",
 							borderColor: "divider",
 							bgcolor: "background.paper",
 							overflow: "hidden",
+							display:"flex",
+							flexDirection:"column",
+							...sx,
 						}}
 					>
 						<TableToolbar />

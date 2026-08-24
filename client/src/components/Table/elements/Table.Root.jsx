@@ -6,17 +6,17 @@ import { TableBody } from "./TableBody.jsx";
 import { TableFooter } from "./TableFooter.jsx";
 
 export const TableRoot = () => {
-  const { tableContainerRef } = useTableRefs();
+	const { tableContainerRef } = useTableRefs();
 
-  return (
-    <>
-      <TableContainer ref={tableContainerRef}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHeader />
-          <TableBody />
-        </Table>
-      </TableContainer>
-      <TableFooter />
-    </>
-  );
+	return (
+		<>
+			<TableContainer ref={tableContainerRef} sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+				<Table sx={{ flex: 0 }}>
+					<TableHeader />
+					<TableBody />
+				</Table>
+			</TableContainer>
+			<TableFooter />
+		</>
+	);
 };

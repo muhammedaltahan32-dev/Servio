@@ -15,7 +15,7 @@ export const TableBody = () => {
 
 	if (paginatedData.length === 0) {
 		return (
-			<MuiTableBody>
+			<MuiTableBody sx={{ flex: 1 }}>
 				<TableRow>
 					<TableCell colSpan={columns.length + 2} align="center" sx={{ py: 5 }}>
 						<Typography variant="body2" color="text.secondary">
