@@ -84,6 +84,14 @@
 			"update": {
 				"category": "Failed to update the item"
 			}
+		},
+		"required": {
+			"category": {
+				"ID": "Category ID is required."
+			}
+		},
+		"notFound": {
+			"category": "The category does not exist."
 		}
 	},
 	"categories": {
@@ -96,5 +104,17 @@
 		"sortOrder": "Sort Order",
 		"save": "Save Changes",
 		"cancel": "Cancel"
+	},
+	"components": {
+		"table": {
+			"noData": "No records found.",
+			"actions": "Actions",
+			"pagination": "Rows per page",
+			"selectedRows": "Selected rows",
+			"search": "search...",
+			"tooltips": {
+				"deleteSelected": "Delete selected"
+			}
+		}
 	}
 }
