@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table } from "@components";
+import { Button, Dialog, Input, Table, Select } from "@components";
+import { MenuItem } from "@mui/material";
 import { useLang } from "@hooks";
-import {
-	fetchTables,
-	addTable,
-	updateTable,
-	deleteTable,
-} from "../../features/tables/TablesSlice.js";
+import { fetchTables, addTable, updateTable, deleteTable } from "../../features/tables/TablesSlice.js";
 import { Table_Number, Table_Capacity, Table_Status } from "../../../../constants/FieldsName.js";
+import { ST_AVAILABLE, ST_OCCUPIED, ST_NEEDS_CLEANING } from "../../../../constants/enumOptions.js";
 import { useSnackbar } from "notistack";
 
 const initialFormState = {
 	[Table_Number]: "",
 	[Table_Capacity]: 4,
-	[Table_Status]: "available",
+	[Table_Status]: ST_AVAILABLE,
 };
 
 export const TablesPage = () => {
@@ -52,7 +49,7 @@ export const TablesPage = () => {
 			setFormData({
 				[Table_Number]: table[Table_Number] ?? "",
 				[Table_Capacity]: table[Table_Capacity] ?? 4,
-				[Table_Status]: table[Table_Status] || "available",
+				[Table_Status]: table[Table_Status] || ST_AVAILABLE,
 			});
 		} else {
 			setSelectedTable(null);
@@ -131,13 +128,17 @@ export const TablesPage = () => {
 						value={formData[Table_Capacity]}
 						onChange={handleChange}
 					/>
-					<Input
+					<Select
 						label={t("tables.status")}
 						name={Table_Status}
 						fullWidth
 						value={formData[Table_Status]}
 						onChange={handleChange}
-					/>
+					>
+						<MenuItem value={ST_AVAILABLE}>{ST_AVAILABLE}</MenuItem>
+						<MenuItem value={ST_OCCUPIED}>{ST_OCCUPIED}</MenuItem>
+						<MenuItem value={ST_NEEDS_CLEANING}>{ST_NEEDS_CLEANING}</MenuItem>
+					</Select>
 				</Stack>
 			</Dialog>
 
