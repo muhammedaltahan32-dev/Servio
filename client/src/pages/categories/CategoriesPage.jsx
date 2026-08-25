@@ -86,7 +86,7 @@ export const CategoriesPage = () => {
 
 	return (
 		<Container maxWidth="xl" sx={{ py: 5 }}>
-			<Stack direction="row" justifyContent="flex-end" sx={{ mb: 3 }}>
+			<Stack direction="row" sx={{ mb: 3, justifyContent: "flex-end" }}>
 				<Button loading={loading} variant="contained" onClick={() => handleOpen()}>
 					{t("categories.addNew")}
 				</Button>

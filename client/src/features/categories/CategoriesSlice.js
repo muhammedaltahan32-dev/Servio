@@ -35,8 +35,8 @@ export const updateCategory = createAsyncThunk("categories/update", async (categ
 
 export const deleteCategory = createAsyncThunk("categories/delete", async (id, { rejectWithValue }) => {
 	try {
-		await ApiService.delete(`${Api_Category}/${id}`);
-		return id;
+		const response = await ApiService.delete(`${Api_Category}/${id}`);
+		return response;
 	} catch (error) {
 		return rejectWithValue(error?.response?.data);
 	}
@@ -111,7 +111,7 @@ const categoriesSlice = createSlice({
 				state.error = null;
 			})
 			.addCase(deleteCategory.fulfilled, (state, action) => {
-				state.items = state.items.filter((item) => item.id !== action.payload.data);
+				state.items = state.items.filter((item) => item.id != action.payload.data);
 				notify.snackbar.success(translator(action.payload.message));
 				state.loading = false;
 				state.error = action.payload.success;
