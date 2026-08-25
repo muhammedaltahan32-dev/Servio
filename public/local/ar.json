@@ -84,6 +84,14 @@
 			"update": {
 				"category": "فشل في تحديث العنصر"
 			}
+		},
+		"required": {
+			"category": {
+				"ID": "معرّف الفئة مطلوب."
+			}
+		},
+		"notFound": {
+			"category": "الفئة غير موجودة."
 		}
 	},
 	"categories": {

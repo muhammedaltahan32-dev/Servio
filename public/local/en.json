@@ -84,6 +84,14 @@
 			"update": {
 				"category": "Failed to update the item"
 			}
+		},
+		"required": {
+			"category": {
+				"ID": "Category ID is required."
+			}
+		},
+		"notFound": {
+			"category": "The category does not exist."
 		}
 	},
 	"categories": {
