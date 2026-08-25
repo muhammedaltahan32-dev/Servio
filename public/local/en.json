@@ -15,6 +15,13 @@
 		"username": "Username",
 		"password": "Password"
 	},
+	"actions": {
+		"delete": "Delete",
+		"update": "Update",
+		"add": "add",
+		"modify": "modify",
+		"save": "save"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
@@ -60,6 +67,12 @@
 			"created": "The item has been added successfully",
 			"updated": "The item has been updated successfully",
 			"deleted": "The item has been deleted successfully"
+		},
+		"failed": {
+			"load": "Failed to load data",
+			"add":"Failed to add data",
+			"delete":"Failed to delete data",
+			"update1":"Failed to update data"
 		}
 	},
 	"categories": {
