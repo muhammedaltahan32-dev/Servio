@@ -28,8 +28,8 @@ export const Dialog = ({
 			onClose={handleClose}
 			fullWidth={fullWidth}
 			maxWidth={maxWidth}
-			TransitionComponent={TransitionComponent}
-			PaperProps={{
+			// TransitionComponent={TransitionComponent}
+			paper={{
 				elevation: 0,
 				sx: {
 					border: "1px solid",
