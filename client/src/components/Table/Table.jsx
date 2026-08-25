@@ -16,10 +16,12 @@ export const Table = ({
 	onDelete,
 	onBatchDelete,
 	sx = EMPTY_Object,
+	loading = false,
+	selection = true,
 	...props
 }) => {
 	return (
-		<TableStateProvider columns={columns} data={data} idField={idField} title={title}>
+		<TableStateProvider loading={loading} columns={columns} data={data} idField={idField} title={title}>
 			<TableFunctionProvider onEdit={onEdit} onDelete={onDelete} onBatchDelete={onBatchDelete}>
 				<TableRefProvider>
 					<Card
@@ -30,13 +32,13 @@ export const Table = ({
 							borderColor: "divider",
 							bgcolor: "background.paper",
 							overflow: "hidden",
-							display:"flex",
-							flexDirection:"column",
+							display: "flex",
+							flexDirection: "column",
 							...sx,
 						}}
 					>
-						<TableToolbar />
-						<TableRoot />
+						<TableToolbar selection={selection} />
+						<TableRoot selection={selection} />
 					</Card>
 				</TableRefProvider>
 			</TableFunctionProvider>

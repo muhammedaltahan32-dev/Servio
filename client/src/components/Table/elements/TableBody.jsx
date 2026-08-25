@@ -4,7 +4,7 @@ import { IconButton, Menu, Icon } from "../../index.js";
 import { useTableState, useTableFunctions } from "../context";
 import { useLang } from "@hooks";
 
-export const TableBody = () => {
+export const TableBody = ({ selection }) => {
 	const { columns, idField, selected } = useTableState();
 	const { paginatedData, handleSelectRow, onEdit, onDelete } = useTableFunctions();
 	const { t } = useLang();
@@ -20,7 +20,7 @@ export const TableBody = () => {
 				<TableRow>
 					<TableCell colSpan={columns.length + 2} align="center" sx={{ py: 5 }}>
 						<Typography variant="body2" color="text.secondary">
-							No records found
+							{t("components.table.noData")}
 						</Typography>
 					</TableCell>
 				</TableRow>
@@ -35,9 +35,9 @@ export const TableBody = () => {
 
 				return (
 					<TableRow key={row[idField]} hover selected={isSelected}>
-						<TableCell padding="checkbox">
+						{selection && <TableCell padding="checkbox">
 							<Checkbox color="primary" checked={isSelected} onChange={() => handleSelectRow(row[idField])} />
-						</TableCell>
+						</TableCell>}
 
 						{columns.map((col) => (
 							<TableCell key={col.field}>
