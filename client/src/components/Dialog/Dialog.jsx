@@ -11,12 +11,13 @@ export const Dialog = ({
 	actions,
 	maxWidth = "sm",
 	fullWidth = true,
-	disableBackdropClick = false,
+	disableEscape = true,
+	disableBackdropClick = true,
 	TransitionComponent = Fade,
 	...props
 }) => {
 	const handleClose = (event, reason) => {
-		if (disableBackdropClick && reason === "backdropClick") return;
+		if ((disableBackdropClick && reason === "backdropClick") || (disableEscape && reason === "escapeKeyDown")) return;
 		onClose?.(event, reason);
 	};
 
