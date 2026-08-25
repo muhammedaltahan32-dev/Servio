@@ -37,7 +37,7 @@ export const remove = async (req, res) => {
 		if (deletedCount === 0) {
 			return res.status(St_BAD_REQUEST).json({ success: false, message: "messages.notFound.category" });
 		}
-		res.status(St_OK).json({ success: true, message: "messages.success.delete.category" });
+		res.status(St_OK).json({ success: true, data: id, message: "messages.success.delete.category" });
 	} catch (err) {
 		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
@@ -52,7 +52,7 @@ export const put = async (req, res) => {
 		if (updatedCount === 0) {
 			return res.status(St_BAD_REQUEST).json({ success: false, message: "messages.notFound.category" });
 		}
-		res.status(St_OK).json({ success: true, message: "messages.success.update.category" });
+		res.status(St_OK).json({ success: true, data, message: "messages.success.update.category" });
 	} catch (err) {
 		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
