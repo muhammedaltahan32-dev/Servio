@@ -3,11 +3,12 @@ import { IconButton, Input, Icon } from "../../index.js";
 import { Stack, Box, Typography, Tooltip, TextField, InputAdornment, alpha } from "@mui/material";
 import { Search as SearchIcon, DeleteTwoTone as DeleteIcon } from "@mui/icons-material";
 import { useTableState, useTableFunctions } from "../context";
+import { useLang } from "@hooks";
 
-export const TableToolbar = () => {
+export const TableToolbar = ({ selection }) => {
 	const { title, selected, searchTerm, setSearchTerm } = useTableState();
 	const { onBatchDelete } = useTableFunctions();
-
+	const { t } = useLang();
 	return (
 		<Stack
 			direction={{ xs: "column", sm: "row" }}
@@ -26,14 +27,14 @@ export const TableToolbar = () => {
 				</Typography>
 				{selected.length > 0 && (
 					<Typography variant="caption" color="primary" fontWeight={600}>
-						{selected.length} row(s) selected
+						{selected.length} - {t("components.table.selectedRows")}
 					</Typography>
 				)}
 			</Box>
 
 			<Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
-				{selected.length > 0 ? (
-					<Tooltip title="Delete Selected">
+				{selected.length > 0 && selection ? (
+					<Tooltip title={t("components.table.tooltips.deleteSelected")}>
 						<IconButton
 							color="error"
 							onClick={() => onBatchDelete?.(selected)}
@@ -43,7 +44,7 @@ export const TableToolbar = () => {
 					</Tooltip>
 				) : (
 					<Input
-						placeholder="Search..."
+						placeholder={t("components.table.search")}
 						size="small"
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
