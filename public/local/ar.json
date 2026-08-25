@@ -62,30 +62,30 @@
 			"notFound": "الطاولة غير موجودة"
 		}
 	},
-  "messages": {
-    "success": {
-      "add": {
-        "category": "تمت إضافة العنصر بنجاح."
-      },
-      "delete": {
-        "category": "تم حذف العنصر بنجاح."
-      },
-      "update": {
-        "category": "تم تحديث العنصر بنجاح."
-      }
-    },
-    "failed": {
-      "add": {
-        "category": "فشل في إضافة العنصر"
-      },
-      "delete": {
-        "category": "فشل في حذف العنصر"
-      },
-      "update": {
-        "category": "فشل في تحديث العنصر"
-      }
-    }
-  },
+	"messages": {
+		"success": {
+			"add": {
+				"category": "تمت إضافة العنصر بنجاح."
+			},
+			"delete": {
+				"category": "تم حذف العنصر بنجاح."
+			},
+			"update": {
+				"category": "تم تحديث العنصر بنجاح."
+			}
+		},
+		"failed": {
+			"add": {
+				"category": "فشل في إضافة العنصر"
+			},
+			"delete": {
+				"category": "فشل في حذف العنصر"
+			},
+			"update": {
+				"category": "فشل في تحديث العنصر"
+			}
+		}
+	},
 	"categories": {
 		"title": "إدارة الأصناف",
 		"addNew": "إضافة تصنيف جديد",
@@ -96,5 +96,17 @@
 		"sortOrder": "ترتيب العرض",
 		"save": "حفظ التغييرات",
 		"cancel": "إلغاء"
+	},
+	"components": {
+		"table": {
+			"noData": "لم يتم العثور على سجلات.",
+			"actions": "إجراءات",
+			"pagination": "عدد الصفوف في الصفحة",
+			"selectedRows": "الصفوف المحددة",
+			"search": "بحث...",
+			"tooltips": {
+				"deleteSelected": "حذف المحدد"
+			}
+		}
 	}
 }

@@ -96,5 +96,17 @@
 		"sortOrder": "Sort Order",
 		"save": "Save Changes",
 		"cancel": "Cancel"
+	},
+	"components": {
+		"table": {
+			"noData": "No records found.",
+			"actions": "Actions",
+			"pagination": "Rows per page",
+			"selectedRows": "Selected rows",
+			"search": "search...",
+			"tooltips": {
+				"deleteSelected": "Delete selected"
+			}
+		}
 	}
 }
