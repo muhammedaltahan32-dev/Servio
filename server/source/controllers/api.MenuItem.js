@@ -18,7 +18,7 @@ export const getAll = async (req, res, params) => {
 		});
 		res.status(St_OK).json({ success: true, data: items });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
 };
 
@@ -30,6 +30,6 @@ export const post = async (req, res) => {
 		const newItem = await MenuItem.create(data);
 		res.status(St_CREATED).json({ success: true, data: newItem });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
 };

@@ -63,7 +63,7 @@ export const post = async (req, res) => {
 		res.status(St_CREATED).json({ success: true, data: newOrder, message: "order.success.created" });
 	} catch (err) {
 		await t.rollback();
-		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, error: err.message });
+		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -73,25 +73,22 @@ export const patch = async (req, res) => {
 		const { [Order_ID]: id, [Order_Status]: status } = req.body;
 
 		const order = await Order.findByPk(id);
-		if (!order) return res.status(St_BAD_REQUEST).json({ success: false, error: "Order not found" });
+		if (!order) return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.notFound" });
 
 		order[Order_Status] = status;
 		await order.save();
 
 		res.status(St_OK).json({ success: true, data: order });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
 export const getAll = async (req, res, params) => {
 	try {
 		const { [mdlOrders]: Order, [mdlTable]: Table, [mdlUser]: User } = req.app.locals.db;
-
 		const { [Order_Status]: status } = params;
-
 		const whereClause = status ? { [Order_Status]: status } : {};
-
 		const orders = await Order.findAll({
 			where: whereClause,
 			include: [
@@ -100,10 +97,9 @@ export const getAll = async (req, res, params) => {
 			],
 			order: [[Order_CreatedAt, "ASC"]],
 		});
-
 		res.status(St_OK).json({ success: true, data: orders });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -127,11 +123,10 @@ export const getOne = async (id, req, res) => {
 		});
 
 		if (!order) {
-			return res.status(St_BAD_REQUEST).json({ success: false, error: "Order not found" });
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.notFound" });
 		}
-
 		res.status(St_OK).json({ success: true, data: order });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };

@@ -40,7 +40,7 @@ export const subapi = Api_Upload;
 const uploadMultipleHandler = async (req, res) => {
 	try {
 		if (!req.files || req.files.length === 0) {
-			return res.status(St_BAD_REQUEST).json({ success: false, error: "upload.error.noFiles" });
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "upload.error.noFiles" });
 		}
 
 		const filesInfo = req.files.map((file) => ({
@@ -58,7 +58,7 @@ const uploadMultipleHandler = async (req, res) => {
 			files: filesInfo,
 		});
 	} catch (error) {
-		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, error: "upload.error.failed" });
+		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "upload.error.failed" });
 	}
 };
 
@@ -67,10 +67,10 @@ export const post = (req, res) => {
 		if (err) {
 			if (err instanceof multer.MulterError) {
 				if (err.code === "LIMIT_FILE_SIZE") {
-					return res.status(St_BAD_REQUEST).json({ success: false, error: "upload.error.fileTooLarge" });
+					return res.status(St_BAD_REQUEST).json({ success: false, message: "upload.error.fileTooLarge" });
 				}
 			}
-			return res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "upload.error.failed" });
 		}
 		uploadMultipleHandler(req, res);
 	});

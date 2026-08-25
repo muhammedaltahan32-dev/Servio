@@ -56,10 +56,27 @@
 	},
 	"table": {
 		"success": {
-			"updated": "Table updated successfully"
+			"created": "Table created successfully",
+			"updated": "Table updated successfully",
+			"deleted": "Table deleted successfully"
 		},
 		"error": {
-			"notFound": "Table not found"
+			"notFound": "Table not found",
+			"noIdsProvided": "No table IDs provided."
+		}
+	},
+	"order": {
+		"success": {
+			"created": "Order created successfully"
+		},
+		"error": {
+			"notFound": "Order not found"
+		}
+	},
+	"error": {
+		"messages": {
+			"ExpiredToken": "Session expired, please log in again.",
+			"serverError": "An internal server error occurred."
 		}
 	},
 	"messages": {
@@ -84,6 +101,11 @@
 			"update": {
 				"category": "Failed to update the item"
 			}
+		},
+		"error": {
+			"Accessdenied": "Access denied.",
+			"IDNotProvided": "ID not provided.",
+			"noContext": "No context available."
 		},
 		"required": {
 			"category": {

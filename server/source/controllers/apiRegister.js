@@ -15,23 +15,23 @@ const controllers = [Signin, Architecture, User, Upload, Category, MenuItem, Ord
 const permissionCheck = (method, resourceName, action) => async (req, res) => {
 	try {
 		if (!req.context) {
-			return res.status(St_FORBIDDEN).json({ error: "No context available" });
+			return res.status(St_FORBIDDEN).json({ message: "messages.error.noContext" });
 		}
 
 		if (!req.context.hasPermission(resourceName, action)) {
-			return res.status(St_FORBIDDEN).json({ error: "messages.error.Accessdenied" });
+			return res.status(St_FORBIDDEN).json({ message: "messages.error.Accessdenied" });
 		}
 
 		await method(req, res);
 	} catch (error) {
 		console.error(error);
-		res.status(St_INTERNAL_SERVER_ERROR).json({ error: "Internal server error" });
+		res.status(St_INTERNAL_SERVER_ERROR).json({ message: "error.messages.serverError" });
 	}
 };
 
 const handleGetOne = (method, resourceName) => async (req, res) => {
 	const id = req.params.id;
-	if (!id) return res.status(St_NOT_FOUND).json({ error: "messages.error.IDNotProvided" });
+	if (!id) return res.status(St_NOT_FOUND).json({ message: "messages.error.IDNotProvided" });
 	await permissionCheck(async () => method(id, req, res), resourceName, "getOne")(req, res);
 };
 
