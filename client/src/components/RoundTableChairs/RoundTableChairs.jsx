@@ -14,30 +14,25 @@ export const RestaurantTable = ({
 	const resolvedChairColor = chairColor ?? theme.palette.secondary.main ?? "#A87C4F";
 	const resolvedTableBgColor = tableBgColor ?? theme.palette.tableStatus?.[status] ?? "#D9C3A9";
 	const resolvedTableBorderColor = tableBorderColor ?? theme.palette.text.primary ?? "#8B5A2B";
-	const radius = tableSize / 2 + 18;
-	const containerSize = radius * 2 + 30;
-
+	const dynamicRadius = tableSize / 2 + (chairsCount > 8 ? 20 : 15);
+	const containerSize = dynamicRadius * 2 + 24;
+	const chairWidth = chairsCount > 10 ? 10 : 14;
+	const chairHeight = chairsCount > 10 ? 6 : 9;
+	const angleStep = 360 / chairsCount;
 	const chairs = Array.from({ length: chairsCount }, (_, index) => {
-		const angleRad = ((360 / chairsCount) * index - 90) * (Math.PI / 180);
-
-		const x = radius * Math.cos(angleRad);
-		const y = radius * Math.sin(angleRad);
-
-		const chairRotation = (360 / chairsCount) * index - 90;
-
+		const angle = index * angleStep;
 		return (
 			<Box
 				key={index}
 				sx={{
 					position: "absolute",
-					width: 12,
-					height: 22,
+					width: chairWidth,
+					height: chairHeight,
 					bgcolor: resolvedChairColor,
-					borderRadius: "4px",
-
-					top: `calc(50% - 11px)`,
-					left: `calc(50% - 6px)`,
-					transform: `translate(${x}px, ${y}px) rotate(${chairRotation}deg)`,
+					borderRadius: "3px",
+					top: `calc(50% - ${chairHeight / 2}px)`,
+					left: `calc(50% - ${chairWidth / 2}px)`,
+					transform: `rotate(${angle}deg) translateY(-${dynamicRadius}px)`,
 					transformOrigin: "center center",
 					transition: "all 0.3s ease",
 				}}
