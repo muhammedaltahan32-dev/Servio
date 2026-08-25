@@ -8,15 +8,17 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router/index.jsx";
 import LanguagesProvider from "./Provider/LanguagesProvider.jsx";
 import UIAppLoader from "./Provider/UIAppLoader.jsx";
-
+import { SnackbarProvider } from "notistack";
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
 		<Provider store={store}>
 			<UIAppLoader>
 				<ThemeProvider>
-					<LanguagesProvider>
-						<RouterProvider router={router} />
-					</LanguagesProvider>
+					<SnackbarProvider maxSnack={6}>
+						<LanguagesProvider>
+							<RouterProvider router={router} />
+						</LanguagesProvider>
+					</SnackbarProvider>
 				</ThemeProvider>
 			</UIAppLoader>
 		</Provider>
