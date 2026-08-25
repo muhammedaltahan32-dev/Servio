@@ -15,6 +15,13 @@
 		"username": "Username",
 		"password": "Password"
 	},
+	"actions": {
+		"delete": "Delete",
+		"update": "Update",
+		"add": "add",
+		"modify": "modify",
+		"save": "save"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
@@ -57,9 +64,26 @@
 	},
 	"messages": {
 		"success": {
-			"created": "The item has been added successfully",
-			"updated": "The item has been updated successfully",
-			"deleted": "The item has been deleted successfully"
+			"add": {
+				"category": "The item has been successfully added."
+			},
+			"delete": {
+				"category": "The item has been successfully deleted."
+			},
+			"update": {
+				"category": "The item has been successfully updated."
+			}
+		},
+		"failed": {
+			"add": {
+				"category": "Failed to add the item"
+			},
+			"delete": {
+				"category": "Failed to delete the item"
+			},
+			"update": {
+				"category": "Failed to update the item"
+			}
 		}
 	},
 	"categories": {

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { TableBody as MuiTableBody, TableRow, TableCell, Checkbox, Typography, Stack } from "@mui/material";
 import { IconButton, Menu, Icon } from "../../index.js";
 import { useTableState, useTableFunctions } from "../context";
+import { useLang } from "@hooks";
 
 export const TableBody = () => {
 	const { columns, idField, selected } = useTableState();
 	const { paginatedData, handleSelectRow, onEdit, onDelete } = useTableFunctions();
-
+	const { t } = useLang();
 	const [activeRow, setActiveRow] = useState(null);
 
 	const handleOpenMenu = (row) => {
@@ -53,14 +54,14 @@ export const TableBody = () => {
 									<Menu.Item onClick={() => onEdit?.(activeRow)}>
 										<Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
 											<Icon name="Edit" fontSize="small" sx={{ color: "primary.main" }} color="#59f" />
-											<Typography>Edit</Typography>
+											<Typography>{t("actions.modify")}</Typography>
 										</Stack>
 									</Menu.Item>
 
 									<Menu.Item onClick={() => onDelete?.(activeRow)}>
 										<Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
 											<Icon name="Delete" fontSize="small" sx={{ color: "error.main" }} color="#f55" />
-											<Typography>Delete</Typography>
+											<Typography>{t("actions.delete")}</Typography>
 										</Stack>
 									</Menu.Item>
 								</Menu.Content>

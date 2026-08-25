@@ -4,6 +4,7 @@ import { IconButton } from "../index.js";
 
 export const Dialog = ({
 	open = false,
+	disabled = false,
 	onClose,
 	title,
 	subtitle,
@@ -11,12 +12,13 @@ export const Dialog = ({
 	actions,
 	maxWidth = "sm",
 	fullWidth = true,
-	disableBackdropClick = false,
+	disableEscape = true,
+	disableBackdropClick = true,
 	TransitionComponent = Fade,
 	...props
 }) => {
 	const handleClose = (event, reason) => {
-		if (disableBackdropClick && reason === "backdropClick") return;
+		if ((disableBackdropClick && reason === "backdropClick") || (disableEscape && reason === "escapeKeyDown")) return;
 		onClose?.(event, reason);
 	};
 
@@ -33,6 +35,7 @@ export const Dialog = ({
 					border: "1px solid",
 					borderColor: "divider",
 					p: 1,
+					pointerEvents: disabled ? "none" : "all",
 				},
 			}}
 			{...props}
@@ -67,6 +70,7 @@ export const Dialog = ({
 							name="Close"
 							size="small"
 							onClick={(e) => onClose(e, "closeButtonClick")}
+							disabled={disabled}
 							sx={{ color: "text.secondary", ml: 1 }}
 						/>
 					)}
