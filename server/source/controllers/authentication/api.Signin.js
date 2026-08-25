@@ -35,9 +35,8 @@ export const post = async (req, res) => {
 		const { [mdlUser]: User } = req.app.locals.db;
 		const { token, user } = await signin(req.body, User);
 		const forms = getForms(user[User_Kind]);
-		return res.status(St_OK).json({ success: true, token, forms });
+		return res.status(St_OK).json({ success: true, data: { token, forms } });
 	} catch (err) {
-		return res.status(St_UNAUTHORIZED).json({ success: false, error: err.message });
+		return res.status(St_UNAUTHORIZED).json({ success: false, message: err.message });
 	}
 };
-

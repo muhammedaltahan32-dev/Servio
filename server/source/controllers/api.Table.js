@@ -36,7 +36,7 @@ export const getAll = async (req, res) => {
 		});
 		res.status(St_OK).json({ success: true, data: tables });
 	} catch (err) {
-		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: err.message });
+		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -50,7 +50,7 @@ export const post = async (req, res) => {
 
 		res.status(St_CREATED).json({ success: true, data: newTable, message: "table.success.created" });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -66,7 +66,7 @@ export const patch = async (req, res) => {
 		await emitTablesUpdate(req);
 		res.status(St_OK).json({ success: true, data: table, message: "table.success.updated" });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -83,7 +83,7 @@ export const put = async (req, res) => {
 		await emitTablesUpdate(req);
 		res.status(St_OK).json({ success: true, data: table, message: "table.success.updated" });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
 
@@ -113,6 +113,6 @@ export const remove = async (req, res) => {
 			message: "table.success.deleted",
 		});
 	} catch (err) {
-		return res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: err.message });
+		return res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "error.messages.serverError" });
 	}
 };

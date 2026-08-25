@@ -25,11 +25,13 @@ export const get = async (req, res) => {
 		const forms = getForms(user[User_Kind], rolues);
 
 		res.status(St_CREATED).json({
-			forms,
-			token: newToken,
+			success: true,
+			data: {
+				forms,
+				token: newToken,
+			},
 		});
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
 };
-
