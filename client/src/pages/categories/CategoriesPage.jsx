@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table } from "@components";
+import { Stack } from "@mui/material";
+import { Button, Dialog, Input, Table, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchCategories,
@@ -85,7 +85,7 @@ export const CategoriesPage = () => {
 	};
 
 	return (
-		<Container maxWidth="xl" sx={{ py: 5 }}>
+		<PageContainer>
 			<Stack direction="row" sx={{ mb: 3, justifyContent: "flex-end" }}>
 				<Button loading={loading} variant="contained" onClick={() => handleOpen()}>
 					{t("categories.addNew")}
@@ -139,7 +139,7 @@ export const CategoriesPage = () => {
 				onEdit={(category) => handleOpen(category)}
 				onDelete={handleDelete}
 			/>
-		</Container>
+		</PageContainer>
 	);
 };
 
