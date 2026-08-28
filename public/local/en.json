@@ -22,6 +22,15 @@
 		"modify": "modify",
 		"save": "save"
 	},
+	"lobby": {
+		"persons": "Persons",
+		"small": "Small",
+		"medium": "Medium",
+		"large": "Large",
+		"Needs_Cleaning": "Needs cleaning",
+		"Occupied": "Occupied",
+		"Available": "Available"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
