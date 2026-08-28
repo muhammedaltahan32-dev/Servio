@@ -24,13 +24,13 @@ import ThemeSwitcher from "./ThemeSwitcher.jsx";
 import { closeDrawer, drawerToggle } from "../../features/layout/layoutSlice.js";
 import SidebarItem from "./elements/SidebarItem.jsx";
 
+import SidebarList from "./elements/SidebarList.jsx";
+
 export const SideBar = () => {
-	const { mobileOpen } = useSelector((state) => state.layout);
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
-
+	const { mobileOpen } = useSelector((state) => state.layout);
 	const { t } = useLang();
-	const goto = useNavigate();
 
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
@@ -52,19 +52,7 @@ export const SideBar = () => {
 				</Typography>
 			</Toolbar>
 			<Divider />
-			<List disablePadding sx={{ padding: "0.8rem", flexGrow: "1" }}>
-				{sidebarMenu.map((item) => (
-					<SidebarItem
-						key={item.label}
-						icon={item.icon}
-						label={item.label}
-						onClick={() => {
-							goto(item.path);
-							if (mobileOpen) dispatch(closeDrawer());
-						}}
-					></SidebarItem>
-				))}
-			</List>
+			<SidebarList />
 			<List disablePadding sx={{ padding: "0.8rem" }}>
 				<ThemeSwitcher />
 				<SidebarItem
@@ -95,7 +83,15 @@ export const SideBar = () => {
 				anchor={"left"}
 				sx={{
 					display: { xs: "none", md: "block" },
-					"& .MuiDrawer-paper": { boxSizing: "border-box", width: DRAWER_WIDTH },
+					"& .MuiDrawer-paper": {
+						boxSizing: "border-box",
+						width: DRAWER_WIDTH,
+						border: "none",
+						m: "1rem",
+
+						height: "calc(100% - 2rem)",
+						borderRadius: (theme) => theme.shape.borderRadius + "px",
+					},
 				}}
 				open
 			>
