@@ -7,11 +7,17 @@ import {
 	Menu_IsAvailable,
 	Menu_BaseImage,
 	Menu_Images,
+	Menu_Descriptions,
 } from "../../../constants/FieldsName.js";
 
 const normalizeImagePath = (val) => {
 	if (!val) return null;
-	const basePaths = ["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"];
+	const basePaths = [
+		"http://localhost:3000",
+		"http://localhost:3001",
+		"http://127.0.0.1:3000",
+		"http://127.0.0.1:3001",
+	];
 	let cleaned = val;
 	for (const basePath of basePaths) {
 		cleaned = cleaned.replace(basePath, "");
@@ -30,6 +36,7 @@ const defineMenuItems = (sequelize, DataTypes) => {
 			[Menu_Name]: { type: DataTypes.STRING(150), allowNull: false },
 			[Menu_Price]: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
 			[Menu_IsAvailable]: { type: DataTypes.BOOLEAN, defaultValue: true },
+			[Menu_Descriptions]: { type: DataTypes.TEXT, allowNull: true },
 			[Menu_BaseImage]: {
 				type: DataTypes.STRING(200),
 				allowNull: true,

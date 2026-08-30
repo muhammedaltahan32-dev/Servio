@@ -19,6 +19,7 @@ import {
 	Menu_IsAvailable,
 	Menu_BaseImage,
 	Menu_Images,
+	Menu_Descriptions,
 } from "../../../../constants/FieldsName.js";
 import { useSnackbar } from "notistack";
 import ApiService, { normalizeImageUrl } from "../../services/ApiService.js";
@@ -70,6 +71,7 @@ export const MenuItemsPage = () => {
 			{ field: Menu_Price, headerName: t("menuItems.price") },
 			{ field: Menu_CatID, headerName: t("menuItems.category") },
 			{ field: Menu_IsAvailable, headerName: t("menuItems.available") },
+			{ field: Menu_Descriptions, headerName: t("menuItems.descriptions") },
 		],
 		[t],
 	);
@@ -93,6 +95,7 @@ export const MenuItemsPage = () => {
 	}, [dispatch, categories]);
 
 	const handleOpen = (item = null) => {
+		console.log("item", item);
 		if (item) {
 			setSelectedItem(item);
 			setFormData({
@@ -100,6 +103,7 @@ export const MenuItemsPage = () => {
 				[Menu_Name]: item[Menu_Name] ?? "",
 				[Menu_Price]: item[Menu_Price] ?? 0,
 				[Menu_IsAvailable]: !!item[Menu_IsAvailable],
+				[Menu_Descriptions]: item[Menu_Descriptions] ?? "",
 				[Menu_BaseImage]: normalizeImageUrl(item[Menu_BaseImage] || item[Menu_Images]?.[0] || null),
 				[Menu_Images]: Array.isArray(item[Menu_Images]) ? item[Menu_Images].map((img) => normalizeImageUrl(img)) : [],
 			});
@@ -166,47 +170,6 @@ export const MenuItemsPage = () => {
 				}
 			>
 				<Stack spacing={2} sx={{ pt: "10px" }}>
-					<Select
-						label={t("menuItems.category")}
-						name={Menu_CatID}
-						fullWidth
-						value={formData[Menu_CatID] || ""}
-						onChange={handleChange}
-					>
-						<MenuItem value="">{t("menuItems.selectCategory")}</MenuItem>
-						{categories.map((c) => (
-							<MenuItem key={c.id} value={c.id}>
-								{c.name}
-							</MenuItem>
-						))}
-					</Select>
-					<Input
-						label={t("menuItems.name")}
-						name={Menu_Name}
-						fullWidth
-						value={formData[Menu_Name]}
-						onChange={handleChange}
-						required
-					/>
-					<Input
-						label={t("menuItems.price")}
-						name={Menu_Price}
-						type="number"
-						fullWidth
-						value={formData[Menu_Price]}
-						onChange={handleChange}
-					/>
-					<Select
-						label={t("menuItems.available")}
-						name={Menu_IsAvailable}
-						fullWidth
-						value={String(formData[Menu_IsAvailable])}
-						onChange={(e) => setFormData((p) => ({ ...p, [Menu_IsAvailable]: e.target.value === "true" }))}
-					>
-						<MenuItem value={"true"}>{t("menuItems.availableTrue")}</MenuItem>
-						<MenuItem value={"false"}>{t("menuItems.availableFalse")}</MenuItem>
-					</Select>
-
 					<PhotoAlbumGallery
 						images={Array.isArray(formData[Menu_Images]) ? formData[Menu_Images] : []}
 						baseImage={formData[Menu_BaseImage] || null}
@@ -246,6 +209,53 @@ export const MenuItemsPage = () => {
 							setFormData((prev) => ({ ...prev, [Menu_BaseImage]: normalizeImageUrl(url) }));
 						}}
 					/>
+					<Select
+						label={t("menuItems.category")}
+						name={Menu_CatID}
+						fullWidth
+						value={formData[Menu_CatID] || ""}
+						onChange={handleChange}
+					>
+						<MenuItem value="">{t("menuItems.selectCategory")}</MenuItem>
+						{categories.map((c) => (
+							<MenuItem key={c.id} value={c.id}>
+								{c.name}
+							</MenuItem>
+						))}
+					</Select>
+					<Input
+						label={t("menuItems.name")}
+						name={Menu_Name}
+						fullWidth
+						value={formData[Menu_Name]}
+						onChange={handleChange}
+						required
+					/>
+					<Input
+						label={t("menuItems.price")}
+						name={Menu_Price}
+						type="number"
+						fullWidth
+						value={formData[Menu_Price]}
+						onChange={handleChange}
+					/>
+					<Input
+						label={t("menuItems.descriptions")}
+						name={Menu_Descriptions}
+						fullWidth
+						value={formData[Menu_Descriptions]}
+						onChange={handleChange}
+					/>
+					<Select
+						label={t("menuItems.available")}
+						name={Menu_IsAvailable}
+						fullWidth
+						value={String(formData[Menu_IsAvailable])}
+						onChange={(e) => setFormData((p) => ({ ...p, [Menu_IsAvailable]: e.target.value === "true" }))}
+					>
+						<MenuItem value={"true"}>{t("menuItems.availableTrue")}</MenuItem>
+						<MenuItem value={"false"}>{t("menuItems.availableFalse")}</MenuItem>
+					</Select>
 				</Stack>
 			</Dialog>
 
