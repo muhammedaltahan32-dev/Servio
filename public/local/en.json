@@ -127,6 +127,22 @@
 		"save": "Save Changes",
 		"cancel": "Cancel"
 	},
+	"menuItems": {
+		"title": "Menu Items",
+		"addNew": "Add New Menu Item",
+		"editTitle": "Edit Menu Item",
+		"addTitle": "Add New Menu Item",
+		"dialogSubtitle": "Enter the menu item details below to update the list.",
+		"name": "Menu Item Name",
+		"description": "Description",
+		"price": "Price",
+		"category": "Category",
+		"image": "Image",
+		"availableTrue": "Available",
+		"availableFalse": "Not Available",
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
 	"components": {
 		"table": {
 			"noData": "No records found.",

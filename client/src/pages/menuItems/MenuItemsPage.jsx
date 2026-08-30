@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table, Select } from "@components";
+import { Button, Dialog, Input, Table, Select, PhotoAlbumGallery } from "@components";
 import { MenuItem } from "@mui/material";
 import { useLang } from "@hooks";
 import {
@@ -21,7 +21,7 @@ import {
 	Menu_Images,
 } from "../../../../constants/FieldsName.js";
 import { useSnackbar } from "notistack";
-import ApiService from "../../services/ApiService.js";
+import ApiService, { normalizeImageUrl } from "../../services/ApiService.js";
 import { Api_Upload } from "../../../../constants/SubApi.js";
 
 const initialFormState = {
@@ -39,13 +39,33 @@ export const MenuItemsPage = () => {
 	const { enqueueSnackbar } = useSnackbar();
 	const { items: menuItems, loading } = useSelector((state) => state.menuItems || { items: [], loading: false });
 	const { items: categories } = useSelector((state) => state.categories || { items: [] });
-
 	const [open, setOpen] = useState(false);
 	const [selectedItem, setSelectedItem] = useState(null);
 	const [formData, setFormData] = useState(initialFormState);
 
 	const columns = React.useMemo(
 		() => [
+			{
+				field: Menu_BaseImage,
+				headerName: t("menuItems.baseImage"),
+				render: (value, row) => {
+					const imageUrl = normalizeImageUrl(value || row[Menu_Images]?.[0]);
+					if (!imageUrl) return "-";
+					return (
+						<img
+							src={imageUrl}
+							alt="menu item"
+							style={{
+								width: 52,
+								height: 52,
+								objectFit: "cover",
+								borderRadius: 8,
+								display: "block",
+							}}
+						/>
+					);
+				},
+			},
 			{ field: Menu_Name, headerName: t("menuItems.name") },
 			{ field: Menu_Price, headerName: t("menuItems.price") },
 			{ field: Menu_CatID, headerName: t("menuItems.category") },
@@ -80,8 +100,8 @@ export const MenuItemsPage = () => {
 				[Menu_Name]: item[Menu_Name] ?? "",
 				[Menu_Price]: item[Menu_Price] ?? 0,
 				[Menu_IsAvailable]: !!item[Menu_IsAvailable],
-				[Menu_BaseImage]: item[Menu_BaseImage] || null,
-				[Menu_Images]: item[Menu_Images] || [],
+				[Menu_BaseImage]: normalizeImageUrl(item[Menu_BaseImage] || item[Menu_Images]?.[0] || null),
+				[Menu_Images]: Array.isArray(item[Menu_Images]) ? item[Menu_Images].map((img) => normalizeImageUrl(img)) : [],
 			});
 		} else {
 			setSelectedItem(null);
@@ -187,23 +207,33 @@ export const MenuItemsPage = () => {
 						<MenuItem value={"false"}>{t("menuItems.availableFalse")}</MenuItem>
 					</Select>
 
-					{/* Image upload */}
-					<input
-						type="file"
-						accept="image/*"
-						multiple
-						onChange={async (e) => {
-							const files = Array.from(e.target.files || []);
+					<PhotoAlbumGallery
+						images={Array.isArray(formData[Menu_Images]) ? formData[Menu_Images] : []}
+						baseImage={formData[Menu_BaseImage] || null}
+						loading={loading}
+						onUpload={async (files) => {
 							if (files.length === 0) return;
 							const form = new FormData();
-							files.forEach((f) => form.append("images", f));
+							files.forEach((file) => form.append("images", file));
+
 							try {
 								const res = await ApiService.post(Api_Upload, form, {
 									headers: { "Content-Type": "multipart/form-data" },
 								});
+
 								if (res && res.success && Array.isArray(res.files)) {
-									const urls = res.files.map((f) => f.url);
-									setFormData((p) => ({ ...p, [Menu_BaseImage]: urls[0] || null, [Menu_Images]: urls }));
+									const urls = res.files.map((file) => normalizeImageUrl(file.url));
+									setFormData((prev) => {
+										const currentImages = Array.isArray(prev[Menu_Images]) ? prev[Menu_Images] : [];
+										const mergedImages = [...currentImages, ...urls];
+										const nextBaseImage = prev[Menu_BaseImage] || urls[0] || null;
+
+										return {
+											...prev,
+											[Menu_BaseImage]: nextBaseImage,
+											[Menu_Images]: mergedImages,
+										};
+									});
 									enqueueSnackbar(t("upload.success.completed"), { variant: "success" });
 								} else {
 									enqueueSnackbar(t("upload.error.failed"), { variant: "error" });
@@ -212,14 +242,10 @@ export const MenuItemsPage = () => {
 								enqueueSnackbar(t("upload.error.failed"), { variant: "error" });
 							}
 						}}
+						onBaseImageChange={(url) => {
+							setFormData((prev) => ({ ...prev, [Menu_BaseImage]: normalizeImageUrl(url) }));
+						}}
 					/>
-
-					{/* preview of selected base image */}
-					{formData[Menu_BaseImage] && (
-						<div>
-							<img src={formData[Menu_BaseImage]} alt="preview" style={{ maxWidth: "150px", marginTop: 8 }} />
-						</div>
-					)}
 				</Stack>
 			</Dialog>
 

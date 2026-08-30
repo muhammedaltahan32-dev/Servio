@@ -127,6 +127,22 @@
 		"save": "حفظ التغييرات",
 		"cancel": "إلغاء"
 	},
+	"menuItems": {
+		"title": "عناصر القائمة",
+		"addNew": "إضافة عنصر جديد",
+		"editTitle": "تعديل عنصر القائمة",
+		"addTitle": "إضافة عنصر جديد",
+		"name": "اسم عنصر القائمة",
+		"available": "متاح",
+		"dialogSubtitle": "أدخل تفاصيل عنصر القائمة أدناه لتحديث القائمة.",
+		"price": "السعر",
+		"category": "الفئة",
+		"baseImage": "الصورة",
+		"availableTrue": "متاح",
+		"availableFalse": "غير متاح",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
+	},
 	"components": {
 		"table": {
 			"noData": "لم يتم العثور على سجلات.",
