@@ -134,7 +134,7 @@
 		"addTitle": "Add New Menu Item",
 		"dialogSubtitle": "Enter the menu item details below to update the list.",
 		"name": "Menu Item Name",
-		"description": "Description",
+		"descriptions": "Descriptions",
 		"price": "Price",
 		"category": "Category",
 		"image": "Image",

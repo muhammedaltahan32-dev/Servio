@@ -25,6 +25,7 @@ export const Menu_CatID = "category_id";
 export const Menu_Name = "name";
 export const Menu_Price = "price";
 export const Menu_IsAvailable = "is_available";
+export const Menu_Descriptions = "descriptions";
 export const Menu_BaseImage = "base_image";
 export const Menu_Images = "images";
 
