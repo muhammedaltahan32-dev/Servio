@@ -127,16 +127,18 @@
 		"save": "حفظ التغييرات",
 		"cancel": "إلغاء"
 	},
-	"components": {
-		"table": {
-			"noData": "لم يتم العثور على سجلات.",
-			"actions": "إجراءات",
-			"pagination": "عدد الصفوف في الصفحة",
-			"selectedRows": "الصفوف المحددة",
-			"search": "بحث...",
-			"tooltips": {
-				"deleteSelected": "حذف المحدد"
-			}
-		}
+	"menuItems": {
+		"title": "عناصر القائمة",
+		"name": "الاسم",
+		"price": "السعر",
+		"category": "الفئة",
+		"available": "متاح",
+		"addNew": "إضافة عنصر جديد"
+	},
+	"tables": {
+		"addNew": "إضافة طاولة جديد",
+		"title": "إدارة الطاولات",
+		"capacity": "السعة",
+		"status": "الحالة"
 	}
 }

@@ -127,16 +127,18 @@
 		"save": "Save Changes",
 		"cancel": "Cancel"
 	},
-	"components": {
-		"table": {
-			"noData": "No records found.",
-			"actions": "Actions",
-			"pagination": "Rows per page",
-			"selectedRows": "Selected rows",
-			"search": "search...",
-			"tooltips": {
-				"deleteSelected": "Delete selected"
-			}
-		}
+	"menuItems": {
+		"title": "Menu Items",
+		"name": "Name",
+		"price": "Price",
+		"category": "Category",
+		"available": "Available",
+		"addNew": "Add New Item"
+	},
+	"tables": {
+		"addNew": "Add New Table",
+		"title": "Manage Tables",
+		"capacity": "Capacity",
+		"status": "Status"
 	}
 }
