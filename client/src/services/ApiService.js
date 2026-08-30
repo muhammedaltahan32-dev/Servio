@@ -1,5 +1,26 @@
 import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
+
+export const normalizeImageUrl = (url) => {
+	if (!url) return "";
+	if (url.startsWith("data:")) return url;
+
+	const baseUrl = BASE_URL.replace(/\/$/, "");
+	const targetOrigin = new URL(baseUrl).origin;
+
+	if (/^https?:\/\//i.test(url)) {
+		const parsed = new URL(url);
+		if (parsed.origin !== targetOrigin) {
+			return `${targetOrigin}${parsed.pathname}${parsed.search}${parsed.hash}`;
+		}
+		return url;
+	}
+
+	const normalizedPath = url.startsWith("/") ? url : `/${url}`;
+	return `${baseUrl}${normalizedPath}`;
+};
+
 const api = axios.create({
 	baseURL: BASE_URL,
 	headers: {

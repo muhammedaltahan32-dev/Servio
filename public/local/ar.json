@@ -129,16 +129,30 @@
 	},
 	"menuItems": {
 		"title": "عناصر القائمة",
-		"name": "الاسم",
+		"addNew": "إضافة عنصر جديد",
+		"editTitle": "تعديل عنصر القائمة",
+		"addTitle": "إضافة عنصر جديد",
+		"name": "اسم عنصر القائمة",
+		"available": "متاح",
+		"dialogSubtitle": "أدخل تفاصيل عنصر القائمة أدناه لتحديث القائمة.",
 		"price": "السعر",
 		"category": "الفئة",
-		"available": "متاح",
-		"addNew": "إضافة عنصر جديد"
+		"baseImage": "الصورة",
+		"availableTrue": "متاح",
+		"availableFalse": "غير متاح",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
 	},
-	"tables": {
-		"addNew": "إضافة طاولة جديد",
-		"title": "إدارة الطاولات",
-		"capacity": "السعة",
-		"status": "الحالة"
+	"components": {
+		"table": {
+			"noData": "لم يتم العثور على سجلات.",
+			"actions": "إجراءات",
+			"pagination": "عدد الصفوف في الصفحة",
+			"selectedRows": "الصفوف المحددة",
+			"search": "بحث...",
+			"tooltips": {
+				"deleteSelected": "حذف المحدد"
+			}
+		}
 	}
 }

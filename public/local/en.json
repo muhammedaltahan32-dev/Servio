@@ -129,16 +129,30 @@
 	},
 	"menuItems": {
 		"title": "Menu Items",
-		"name": "Name",
+		"addNew": "Add New Menu Item",
+		"editTitle": "Edit Menu Item",
+		"addTitle": "Add New Menu Item",
+		"dialogSubtitle": "Enter the menu item details below to update the list.",
+		"name": "Menu Item Name",
+		"description": "Description",
 		"price": "Price",
 		"category": "Category",
-		"available": "Available",
-		"addNew": "Add New Item"
+		"image": "Image",
+		"availableTrue": "Available",
+		"availableFalse": "Not Available",
+		"save": "Save Changes",
+		"cancel": "Cancel"
 	},
-	"tables": {
-		"addNew": "Add New Table",
-		"title": "Manage Tables",
-		"capacity": "Capacity",
-		"status": "Status"
+	"components": {
+		"table": {
+			"noData": "No records found.",
+			"actions": "Actions",
+			"pagination": "Rows per page",
+			"selectedRows": "Selected rows",
+			"search": "search...",
+			"tooltips": {
+				"deleteSelected": "Delete selected"
+			}
+		}
 	}
 }

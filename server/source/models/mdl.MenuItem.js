@@ -11,12 +11,16 @@ import {
 
 const normalizeImagePath = (val) => {
 	if (!val) return null;
-	const basePath = "http://localhost:3000";
-	return val.replace(basePath, "").replace(/^\/+/, "");
+	const basePaths = ["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"];
+	let cleaned = val;
+	for (const basePath of basePaths) {
+		cleaned = cleaned.replace(basePath, "");
+	}
+	return cleaned.replace(/^\/+/, "");
 };
 
 const defineMenuItems = (sequelize, DataTypes) => {
-	const FULL_PATH = process.env.FULL_PATH || "http://localhost:3000/";
+	const FULL_PATH = (process.env.FULL_PATH || "http://localhost:3001/").replace(/\/$/, "/");
 
 	const model = sequelize.define(
 		mdlMenuItems,

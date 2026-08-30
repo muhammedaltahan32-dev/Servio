@@ -33,3 +33,14 @@ export const post = async (req, res) => {
 		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
 };
+
+export const remove = async (req, res) => {
+	try {
+		const { [mdlMenuItems]: MenuItem } = req.app.locals.db;
+		const { id } = req.params;
+		await MenuItem.destroy({ where: { id } });
+		res.status(St_OK).json({ success: true, message: "Item deleted successfully" });
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+	}
+};
