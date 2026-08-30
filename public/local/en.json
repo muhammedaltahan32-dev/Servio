@@ -72,5 +72,19 @@
 		"sortOrder": "Sort Order",
 		"save": "Save Changes",
 		"cancel": "Cancel"
+	},
+	"menuItems": {
+		"title": "Menu Items",
+		"name": "Name",
+		"price": "Price",
+		"category": "Category",
+		"available": "Available",
+		"addNew": "Add New Item"
+	},
+	"tables": {
+		"addNew": "Add New Table",
+		"title": "Manage Tables",
+		"capacity": "Capacity",
+		"status": "Status"
 	}
 }
