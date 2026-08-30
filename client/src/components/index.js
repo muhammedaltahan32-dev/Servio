@@ -1,14 +1,15 @@
-export * from "./Input/Input";
-export * from "./Select/Select";
-export * from "./Switch/Switch";
-export * from "./Checkbox/Checkbox";
-export * from "./Radio/Radio";
-export * from "./Button/Button";
-export * from "./Menu/Menu";
-export * from "./IconButton/IconButton";
-export * from "./Icon/Icon";
-export * from "./Table/Table";
-export * from "./Dialog/Dialog";
+export * from "./Input/Input.jsx";
+export * from "./Select/Select.jsx";
+export * from "./Switch/Switch.jsx";
+export * from "./Checkbox/Checkbox.jsx";
+export * from "./Radio/Radio.jsx";
+export * from "./Button/Button.jsx";
+export * from "./Menu/Menu.jsx";
+export * from "./IconButton/IconButton.jsx";
+export * from "./Icon/Icon.jsx";
+export * from "./Table/Table.jsx";
+export * from "./Dialog/Dialog.jsx";
+export * from "./Container/PageContainer.jsx";
 
 //  items controls
 export * from "./Controls/MenuItem";

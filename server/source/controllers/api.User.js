@@ -48,7 +48,7 @@ export const post = async (req, res) => {
 			message: "user.success.created",
 		});
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, error: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
 	}
 };
 

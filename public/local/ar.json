@@ -15,6 +15,13 @@
 		"username": "اسم المستخدم",
 		"password": "كلمة المرور"
 	},
+	"actions": {
+		"delete": "حذف",
+		"update": "تحديث",
+		"add": "إضافة",
+		"modify": "تعديل",
+		"save": "حفظ"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "اسم المستخدم مطلوب",
@@ -49,17 +56,64 @@
 	},
 	"table": {
 		"success": {
-			"updated": "تم تحديث الطاولة بنجاح"
+			"created": "تم إنشاء الطاولة بنجاح",
+			"updated": "تم تحديث الطاولة بنجاح",
+			"deleted": "تم حذف الطاولة بنجاح"
 		},
 		"error": {
-			"notFound": "الطاولة غير موجودة"
+			"notFound": "الطاولة غير موجودة",
+			"noIdsProvided": "لم يتم تقديم أي معرّفات للطاولة."
+		}
+	},
+	"order": {
+		"success": {
+			"created": "تم إنشاء الطلب بنجاح"
+		},
+		"error": {
+			"notFound": "الطلب غير موجود"
+		}
+	},
+	"error": {
+		"messages": {
+			"ExpiredToken": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى.",
+			"serverError": "حدث خطأ في الخادم."
 		}
 	},
 	"messages": {
 		"success": {
-			"created": "تمت الإضافة بنجاح",
-			"updated": "تم التحديث بنجاح",
-			"deleted": "تم الحذف بنجاح"
+			"add": {
+				"category": "تمت إضافة العنصر بنجاح."
+			},
+			"delete": {
+				"category": "تم حذف العنصر بنجاح."
+			},
+			"update": {
+				"category": "تم تحديث العنصر بنجاح."
+			}
+		},
+		"failed": {
+			"add": {
+				"category": "فشل في إضافة العنصر"
+			},
+			"delete": {
+				"category": "فشل في حذف العنصر"
+			},
+			"update": {
+				"category": "فشل في تحديث العنصر"
+			}
+		},
+		"error": {
+			"Accessdenied": "تم رفض الوصول.",
+			"IDNotProvided": "لم يتم تقديم معرّف.",
+			"noContext": "لا يوجد سياق متاح."
+		},
+		"required": {
+			"category": {
+				"ID": "معرّف الفئة مطلوب."
+			}
+		},
+		"notFound": {
+			"category": "الفئة غير موجودة."
 		}
 	},
 	"categories": {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table } from "@components";
+import { Stack } from "@mui/material";
+import { Button, Dialog, Input, Table, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchCategories,
@@ -10,7 +10,7 @@ import {
 	deleteCategory,
 } from "../../features/categories/CategoriesSlice.js";
 import { Cat_Name, Cat_Sort } from "../../../../constants/FieldsName.js";
-
+import { useSnackbar } from "notistack";
 const initialFormState = {
 	[Cat_Name]: "",
 	[Cat_Sort]: 0,
@@ -19,20 +19,29 @@ const initialFormState = {
 export const CategoriesPage = () => {
 	const dispatch = useDispatch();
 	const { t } = useLang();
+	const { enqueueSnackbar } = useSnackbar();
 	const { items: categories, loading } = useSelector((state) => state.categories);
 
 	const [open, setOpen] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [formData, setFormData] = useState(initialFormState);
 
-	const columns = [
-		{ field: Cat_Name, headerName: t("categories.name") },
-		{ field: Cat_Sort, headerName: t("categories.sortOrder") },
-	];
+	const columns = React.useMemo(
+		() => [
+			{ field: Cat_Name, headerName: t("categories.name") },
+			{ field: Cat_Sort, headerName: t("categories.sortOrder") },
+		],
+		[t],
+	);
+	const inLoadRef = React.useRef(null);
 
-	useEffect(() => {
-		dispatch(fetchCategories());
-	}, [dispatch]);
+	React.useEffect(() => {
+		if (inLoadRef.current || loading || categories.length > 0) return;
+		inLoadRef.current = (() => {
+			dispatch(fetchCategories());
+			return true;
+		})();
+	}, [dispatch, loading, categories]);
 
 	const handleOpen = (category = null) => {
 		if (category) {
@@ -76,9 +85,9 @@ export const CategoriesPage = () => {
 	};
 
 	return (
-		<Container maxWidth="xl" sx={{ py: 5 }}>
-			<Stack direction="row" justifyContent="flex-end" sx={{ mb: 3 }}>
-				<Button variant="contained" onClick={() => handleOpen()}>
+		<PageContainer>
+			<Stack direction="row" sx={{ mb: 3, justifyContent: "flex-end" }}>
+				<Button loading={loading} variant="contained" onClick={() => handleOpen()}>
 					{t("categories.addNew")}
 				</Button>
 			</Stack>
@@ -88,12 +97,13 @@ export const CategoriesPage = () => {
 				onClose={handleClose}
 				title={selectedCategory ? t("categories.editTitle") : t("categories.addTitle")}
 				subtitle={t("categories.dialogSubtitle")}
+				disabled={loading}
 				actions={
 					<>
-						<Button color="none" variant="text" onClick={handleClose}>
+						<Button disabled={loading} color="none" variant="text" onClick={handleClose}>
 							{t("categories.cancel")}
 						</Button>
-						<Button variant="text" onClick={handleSave}>
+						<Button loading={loading} variant="text" onClick={handleSave}>
 							{t("categories.save")}
 						</Button>
 					</>
@@ -120,6 +130,7 @@ export const CategoriesPage = () => {
 			</Dialog>
 
 			<Table
+				selection={false}
 				title={t("categories.title")}
 				columns={columns}
 				data={categories}
@@ -128,9 +139,8 @@ export const CategoriesPage = () => {
 				onEdit={(category) => handleOpen(category)}
 				onDelete={handleDelete}
 			/>
-		</Container>
+		</PageContainer>
 	);
 };
 
 export default CategoriesPage;
-
