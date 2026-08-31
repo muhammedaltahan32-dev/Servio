@@ -6,6 +6,7 @@ import layoutSlice from "../features/layout/layoutSlice.js";
 import categoriesReducer from "../features/categories/CategoriesSlice.js";
 import tablesReducer from "../features/tables/TablesSlice.js";
 import { listenerMiddleware } from "./socketMiddleware.js";
+import menuItemsReducer from "../features/menuItems/MenuItemsSlice.js";
 
 export const store = configureStore({
 	reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
 		layout: layoutSlice,
 		categories: categoriesReducer,
 		tables: tablesReducer,
+		menuItems: menuItemsReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),

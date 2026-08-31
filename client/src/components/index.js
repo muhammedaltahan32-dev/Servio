@@ -11,6 +11,7 @@ export * from "./Table/Table.jsx";
 export * from "./Dialog/Dialog.jsx";
 export * from "./Container/PageContainer.jsx";
 export * from "./RoundTableChairs/RoundTableChairs.jsx"
+export * from "./PhotoAlbumGallery/PhotoAlbumGallery.jsx";
 
 //  items controls
 export * from "./Controls/MenuItem";
