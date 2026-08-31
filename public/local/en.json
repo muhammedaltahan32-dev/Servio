@@ -29,7 +29,9 @@
 		"large": "Large",
 		"Needs_Cleaning": "Needs cleaning",
 		"Occupied": "Occupied",
-		"Available": "Available"
+		"Available": "Available",
+		"allStatus": "All status",
+		"search" :"Search..."
 	},
 	"auth": {
 		"validation": {

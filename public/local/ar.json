@@ -29,7 +29,9 @@
 		"large": "كبيرة",
 		"Needs_Cleaning": "بحاجة إلى تنظيف",
 		"Occupied": "مشغولة",
-		"Available": "متاحة"
+		"Available": "متاحة",
+		"allStatus": "كل الحالات",
+		"search" :"بحث..."
 	},
 	"auth": {
 		"validation": {

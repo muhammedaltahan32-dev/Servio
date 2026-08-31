@@ -7,7 +7,7 @@ export const Kind_GUESTS = "guests";
 export const ST_AVAILABLE = "Available";
 export const ST_OCCUPIED = "Occupied";
 export const ST_NEEDS_CLEANING = "Needs_Cleaning";
-
+export const TABLE_STATUS = [ST_AVAILABLE, ST_OCCUPIED, ST_NEEDS_CLEANING];
 export const KINDS_VALUES = {
 	[Kind_KITCHEN]: 2,
 	[Kind_WAITER]: 3,
