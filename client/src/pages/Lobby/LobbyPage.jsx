@@ -7,39 +7,41 @@ import { useSelector } from "react-redux";
 import { Icon, Input, MenuItem, PageContainer, Select } from "@components";
 import { useLang } from "@hooks";
 import LobbySummeryCard from "./LobbySummeryCard.jsx";
-
+import { TABLE_STATUS } from "../../../../constants/enumOptions.js";
+const STATUS_FILTER = [{ label: "lobby.allStatus", value: "all" }];
+TABLE_STATUS.forEach((st) => {
+	STATUS_FILTER.push({ label: `lobby.${st}`, value: st });
+});
 export const LobbyPage = () => {
 	const { t } = useLang();
-	// const [tables, setTables] = useState([]);
-	// const [loading, setLoading] = useState(true);
-	// const [connectionState, setConnectionState] = useState("connecting");
-	const { items: tables, loading, connectionState } = useSelector((state) => state.tables);
-	// useEffect(() => {
-	// 	const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3001", {
-	// 		transports: ["polling", "websocket"],
-	// 		reconnectionAttempts: 5,
-	// 	});
 
-	// 	socket.on("connect", () => {
-	// 		setConnectionState("live");
-	// 		socket.emit("tables:request");
-	// 	});
+	const { items, loading, connectionState } = useSelector((state) => state.tables);
+	const [status, setStatus] = React.useState("all");
+	const [tableName, setTableName] = React.useState(null);
+	const tables = React.useMemo(() => {
+		const result = [];
+		const rgx = new RegExp(tableName, "i");
 
-	// 	socket.on("disconnect", () => {
-	// 		setConnectionState("offline");
-	// 	});
+		for (const table of items) {
+			if (status !== "all" && table.status !== status) continue;
+			if (tableName && !rgx.test(table.table_number)) continue;
+			result.push(table);
+		}
 
-	// 	socket.on("tables:updated", (payload) => {
-	// 		const nextTables = Array.isArray(payload) ? payload : (payload?.data ?? payload?.tables ?? []);
-	// 		setTables(nextTables);
-	// 		setLoading(false);
-	// 	});
-
-	// 	return () => {
-	// 		socket.disconnect();
-	// 	};
-	// }, []);
-
+		return result;
+	}, [items, tableName, status]);
+	const occupiedCount = React.useMemo(
+		() => items.filter((table) => table?.status?.toLocaleLowerCase?.() === "occupied").length || 0,
+		[items],
+	);
+	const availableCount = React.useMemo(
+		() => items.filter((table) => table?.status?.toLocaleLowerCase?.() === "available").length || 0,
+		[items],
+	);
+	const needsCleaningCount = React.useMemo(
+		() => items.filter((table) => table?.status?.toLocaleLowerCase?.() === "needs_cleaning").length || 0,
+		[items],
+	);
 	return (
 		<PageContainer sx={{ gap: 2, overflow: "auto" }}>
 			<Grid container spacing={2}>
@@ -59,25 +61,40 @@ export const LobbyPage = () => {
 							<Icon name="TableBarTwoTone" size="2.5rem" sx={{ marginInlineStart: "auto" }} />
 						</Stack>
 						<Typography variant="h6" sx={{ mt: "auto" }}>
-							12
+							----
 						</Typography>
 					</Stack>
 				</Grid>
 				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
-					<LobbySummeryCard type="occupied" label={t("lobby.Occupied")} number="5" />
+					<LobbySummeryCard type="occupied" label={t("lobby.Occupied")} number={occupiedCount} />
 				</Grid>
 				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
-					<LobbySummeryCard type="ready" label={t("lobby.Available")} number="5" />
+					<LobbySummeryCard type="ready" label={t("lobby.Available")} number={availableCount} />
 				</Grid>
 				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
-					<LobbySummeryCard type="preparing" label={t("lobby.Needs_Cleaning")} number="5" />
+					<LobbySummeryCard type="preparing" label={t("lobby.Needs_Cleaning")} number={needsCleaningCount} />
 				</Grid>
 			</Grid>
 
 			<Stack direction={"row"} spacing={2}>
-				<Input sx={{ bgcolor: "background.paper" }} placeholder="search..." prefix={<Icon name="Search" />} />
-				<Select value="all" sx={{ bgcolor: "background.paper" }}>
-					<MenuItem value={"all"}>All status</MenuItem>
+				<Input
+					sx={{ bgcolor: "background.paper" }}
+					name="status"
+					placeholder={t("lobby.search")}
+					value={tableName ?? ""}
+					onChange={(e) => setTableName(e.target.value)}
+					prefix={<Icon name="Search" />}
+				/>
+				<Select
+					value={status}
+					onChange={(e) => setStatus(e.target.value)}
+					sx={{ bgcolor: "background.paper", width: 180 }}
+				>
+					{STATUS_FILTER.map((st) => (
+						<MenuItem key={st.value} value={st.value}>
+							{t(st.label)}
+						</MenuItem>
+					))}
 				</Select>
 			</Stack>
 			{loading ? (
