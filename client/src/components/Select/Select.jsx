@@ -4,7 +4,7 @@ import { FORM_CONTROL_PROPS } from "../constant";
 import { propertiesSelection } from "@utils";
 
 export const Select = React.forwardRef(
-	({ children, label, width, minWidth, helperText, error, warning, ...props }, ref) => {
+	({ children, label, width, minWidth, helperText, error, warning, sx, ...props }, ref) => {
 		const { variant = "outlined", ...formProps } = propertiesSelection(props, FORM_CONTROL_PROPS);
 		const labelIdRef = React.useRef(null);
 		if (!labelIdRef.current) {
@@ -18,8 +18,21 @@ export const Select = React.forwardRef(
 					return <OutlinedInput label={label} />;
 			}
 		}, [label, variant]);
+		const resolvedSX = React.useCallback(
+			(theme) => {
+				let overrideStyles = sx;
+				if (typeof overrideStyles === "function") overrideStyles = overrideStyles(theme);
+				return {
+					width,
+					minWidth,
+					borderRadius: theme.shape.borderRadius + "px",
+					...overrideStyles,
+				};
+			},
+			[sx, width, minWidth],
+		);
 		return (
-			<FormControl {...formProps} variant={variant} sx={{ width, minWidth }}>
+			<FormControl {...formProps} variant={variant} sx={resolvedSX}>
 				<InputLabel error={error} warning={warning} id={labelIdRef.current}>
 					{label}
 				</InputLabel>

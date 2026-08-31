@@ -22,6 +22,15 @@
 		"modify": "تعديل",
 		"save": "حفظ"
 	},
+	"lobby": {
+		"persons": "أشخاص",
+		"small": "صغيرة",
+		"medium": "متوسطة",
+		"large": "كبيرة",
+		"Needs_Cleaning": "بحاجة إلى تنظيف",
+		"Occupied": "مشغولة",
+		"Available": "متاحة"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "اسم المستخدم مطلوب",
