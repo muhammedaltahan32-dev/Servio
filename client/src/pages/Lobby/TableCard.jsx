@@ -15,10 +15,8 @@ export const TableCard = React.memo(({ item }) => {
 			elevation={3}
 			sx={{
 				p: 2,
-				minWidth: 250,
 				height: 170,
-				// border: "1px solid",
-				// borderColor: "divider",
+				width: "100%",
 				userSelect: "none",
 				backgroundColor: "background.paper",
 				display: "flex",

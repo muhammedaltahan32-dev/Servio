@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Box, Chip, CircularProgress, Paper, Stack, Typography, alpha } from "@mui/material";
+import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography, alpha } from "@mui/material";
 import { io } from "socket.io-client";
 import { getCapacity, getTableNumber, normalizeStatus } from "./utils/normalize.js";
 import TableCard from "./TableCard.jsx";
 import { useSelector } from "react-redux";
+import { Icon, Input, MenuItem, PageContainer, Select } from "@components";
+import { useLang } from "@hooks";
+import LobbySummeryCard from "./LobbySummeryCard.jsx";
 
 export const LobbyPage = () => {
+	const { t } = useLang();
 	// const [tables, setTables] = useState([]);
 	// const [loading, setLoading] = useState(true);
 	// const [connectionState, setConnectionState] = useState("connecting");
-const {items : tables,loading,connectionState} = useSelector((state)=>state.tables)
+	const { items: tables, loading, connectionState } = useSelector((state) => state.tables);
 	// useEffect(() => {
 	// 	const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3001", {
 	// 		transports: ["polling", "websocket"],
@@ -37,32 +41,45 @@ const {items : tables,loading,connectionState} = useSelector((state)=>state.tabl
 	// }, []);
 
 	return (
-		<Box sx={{ p: 3 }}>
-			<Stack
-				direction="row"
-				sx={{
-					mb: 3,
-					gap: 2,
-					flexWrap: "wrap",
-					justifyContent: "space-between",
-					alignItems: "center",
-				}}
-			>
-				<Box>
-					<Typography variant="h4" sx={{ fontWeight: 700 }}>
-						Tables Lobby
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						Live status updates using Socket.IO
-					</Typography>
-				</Box>
-				<Chip
-					label={connectionState === "live" ? "Live" : connectionState === "offline" ? "Offline" : "Connecting"}
-					color={connectionState === "live" ? "success" : connectionState === "offline" ? "error" : "warning"}
-					variant="filled"
-				/>
-			</Stack>
+		<PageContainer sx={{ gap: 2, overflow: "auto" }}>
+			<Grid container spacing={2}>
+				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
+					<Stack
+						direction={"column"}
+						sx={(theme) => ({
+							height: 130,
+							background: theme.palette.primary.gradient,
+							borderRadius: theme.shape.borderRadius + "px",
+							color: "#fff",
+							p: 1.5,
+						})}
+					>
+						<Stack direction={"row"}>
+							<Typography variant="h6">Total orders</Typography>
+							<Icon name="TableBarTwoTone" size="2.5rem" sx={{ marginInlineStart: "auto" }} />
+						</Stack>
+						<Typography variant="h6" sx={{ mt: "auto" }}>
+							12
+						</Typography>
+					</Stack>
+				</Grid>
+				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
+					<LobbySummeryCard type="occupied" label={t("lobby.Occupied")} number="5" />
+				</Grid>
+				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
+					<LobbySummeryCard type="ready" label={t("lobby.Available")} number="5" />
+				</Grid>
+				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
+					<LobbySummeryCard type="preparing" label={t("lobby.Needs_Cleaning")} number="5" />
+				</Grid>
+			</Grid>
 
+			<Stack direction={"row"} spacing={2}>
+				<Input sx={{ bgcolor: "background.paper" }} placeholder="search..." prefix={<Icon name="Search" />} />
+				<Select value="all" sx={{ bgcolor: "background.paper" }}>
+					<MenuItem value={"all"}>All status</MenuItem>
+				</Select>
+			</Stack>
 			{loading ? (
 				<Paper
 					sx={{
@@ -71,22 +88,28 @@ const {items : tables,loading,connectionState} = useSelector((state)=>state.tabl
 						alignItems: "center",
 						justifyContent: "center",
 						minHeight: 220,
+						flex: 1,
+						overflow: "auto",
 						background: (theme) => alpha(theme.palette.primary.main, 0.08),
 					}}
 				>
 					<Stack sx={{ alignItems: "center" }} spacing={2}>
 						<CircularProgress size={32} />
-						<Typography variant="body1">Loading tables…</Typography>
+						<Typography variant="body">Loading tables…</Typography>
 					</Stack>
 				</Paper>
 			) : (
-				<Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+				<Grid container spacing={2}>
 					{tables.map((table) => {
-						return <TableCard key={table?.id ?? getTableNumber(table)} item={table} />;
+						return (
+							<Grid key={table?.id ?? getTableNumber(table)} size={{ lg: 3, md: 4, sm: 6, xs: 12 }}>
+								<TableCard item={table} />
+							</Grid>
+						);
 					})}
-				</Box>
+				</Grid>
 			)}
-		</Box>
+		</PageContainer>
 	);
 };
 
