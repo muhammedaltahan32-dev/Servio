@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table, Select } from "@components";
+import { Button, Dialog, Input, Table, Select, PageContainer } from "@components";
 import { MenuItem } from "@mui/material";
 import { useLang } from "@hooks";
 import { fetchTables, addTable, updateTable, deleteTable } from "../../features/tables/TablesSlice.js";
@@ -86,8 +86,8 @@ export const TablesPage = () => {
 	};
 
 	return (
-		<Container maxWidth="xl" sx={{ py: 5 }}>
-			<Stack direction="row" justifyContent="flex-end" sx={{ mb: 3 }}>
+		<PageContainer>
+			<Stack direction="row" sx={{ mb: 3, justifyContent: "flex-end" }}>
 				<Button loading={loading} variant="contained" onClick={() => handleOpen()}>
 					{t("tables.addNew")}
 				</Button>
@@ -152,7 +152,7 @@ export const TablesPage = () => {
 				onEdit={(table) => handleOpen(table)}
 				onDelete={handleDelete}
 			/>
-		</Container>
+		</PageContainer>
 	);
 };
 
