@@ -27,7 +27,7 @@ const protectedPaths = [
 	{
 		path: "/lobby",
 		label: "lobby",
-		icon: "TableRestaurant",
+		icon: "TableBarTwoTone",
 		element: <LobbyPage />,
 	},
 	{
