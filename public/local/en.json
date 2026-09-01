@@ -33,6 +33,18 @@
 		"allStatus": "All status",
 		"search" :"Search..."
 	},
+	"tables":{
+		"title": "Tables",
+		"addNew": "Add New Table",
+		"editTitle": "Edit Table",
+		"addTitle": "Add New Table",
+		"dialogSubtitle": "Enter the table details below to update the list.",
+		"capacity": "Table Capacity",
+		"number": "Table Number",
+		"status": "Table Status",
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table, Select } from "@components";
+import { Chip, Container, Stack } from "@mui/material";
+import { Button, Dialog, Input, Table, Select, PageContainer } from "@components";
 import { MenuItem } from "@mui/material";
 import { useLang } from "@hooks";
 import { fetchTables, addTable, updateTable, deleteTable } from "../../features/tables/TablesSlice.js";
 import { Table_Number, Table_Capacity, Table_Status } from "../../../../constants/FieldsName.js";
-import { ST_AVAILABLE, ST_OCCUPIED, ST_NEEDS_CLEANING } from "../../../../constants/enumOptions.js";
+import { ST_AVAILABLE, ST_OCCUPIED, ST_NEEDS_CLEANING, TABLE_STATUS } from "../../../../constants/enumOptions.js";
 import { useSnackbar } from "notistack";
 
 const initialFormState = {
@@ -29,7 +29,22 @@ export const TablesPage = () => {
 		() => [
 			{ field: Table_Number, headerName: t("tables.number") },
 			{ field: Table_Capacity, headerName: t("tables.capacity") },
-			{ field: Table_Status, headerName: t("tables.status") },
+			{
+				field: Table_Status,
+				headerName: t("tables.status"),
+				render: (_, instance) => {
+					return (
+						<Chip
+							label={t(`lobby.${instance[Table_Status]}`)}
+							sx={(theme) => ({
+								bgcolor: `color-mix(in srgb ,${theme.palette.tableStatus[instance[Table_Status]]} 20%,transparent )`,
+								color: `tableStatus.${instance[Table_Status]}`,
+							})}
+							size="small"
+						/>
+					);
+				},
+			},
 		],
 		[t],
 	);
@@ -86,8 +101,8 @@ export const TablesPage = () => {
 	};
 
 	return (
-		<Container maxWidth="xl" sx={{ py: 5 }}>
-			<Stack direction="row" justifyContent="flex-end" sx={{ mb: 3 }}>
+		<PageContainer>
+			<Stack direction="row" sx={{ mb: 3, justifyContent: "flex-end" }}>
 				<Button loading={loading} variant="contained" onClick={() => handleOpen()}>
 					{t("tables.addNew")}
 				</Button>
@@ -135,9 +150,11 @@ export const TablesPage = () => {
 						value={formData[Table_Status]}
 						onChange={handleChange}
 					>
-						<MenuItem value={ST_AVAILABLE}>{ST_AVAILABLE}</MenuItem>
-						<MenuItem value={ST_OCCUPIED}>{ST_OCCUPIED}</MenuItem>
-						<MenuItem value={ST_NEEDS_CLEANING}>{ST_NEEDS_CLEANING}</MenuItem>
+						{TABLE_STATUS?.map((st) => (
+							<MenuItem key={st} value={st}>
+								{t(`lobby.${st}`)}
+							</MenuItem>
+						))}
 					</Select>
 				</Stack>
 			</Dialog>
@@ -152,7 +169,7 @@ export const TablesPage = () => {
 				onEdit={(table) => handleOpen(table)}
 				onDelete={handleDelete}
 			/>
-		</Container>
+		</PageContainer>
 	);
 };
 

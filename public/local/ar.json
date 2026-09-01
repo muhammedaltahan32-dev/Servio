@@ -31,7 +31,19 @@
 		"Occupied": "مشغولة",
 		"Available": "متاحة",
 		"allStatus": "كل الحالات",
-		"search" :"بحث..."
+		"search": "بحث..."
+	},
+	"tables": {
+		"title": "الطاولات",
+		"addNew": "إضافة طاولة جديدة",
+		"editTitle": "تعديل الطاولة",
+		"addTitle": "إضافة طاولة جديدة",
+		"dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
+		"capacity": "سعة الطاولة",
+		"number": "رقم الطاولة",
+		"status": "حالة الطاولة",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
 	},
 	"auth": {
 		"validation": {
