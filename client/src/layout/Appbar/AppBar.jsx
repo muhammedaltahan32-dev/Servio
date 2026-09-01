@@ -38,13 +38,9 @@ const AppBar = () => {
 			position="fixed"
 			sx={(theme) => ({
 				boxShadow: "none",
-				width: { md: `calc(100% - ${DRAWER_WIDTH}px - 3rem)` },
-				marginInlineStart: { md: `calc(${DRAWER_WIDTH}px )`, xs: "none" },
+				width: { md: `calc(100% - ${DRAWER_WIDTH}px )` },
+				marginInlineStart: { md: `calc(${DRAWER_WIDTH}px )` },
 				bgcolor: "background.paper",
-				borderRadius: () => ({ md: theme.shape.borderRadius + "px", xs: "none" }),
-				mt: { xs: "none", md: "1rem" },
-				transition: "borderRadius 200ms ease, margin 200ms ease, width 200ms ease",
-				marginInlineEnd: { xs: "none", md: "1rem" },
 			})}
 		>
 			<Toolbar>
