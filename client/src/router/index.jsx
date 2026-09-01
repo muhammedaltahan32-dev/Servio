@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import { Home, Login, NotFound, CategoriesPage, Test, LobbyPage, TablesPage, MenuItemsPage } from "@pages";
+import { Home, Login, NotFound, CategoriesPage, LobbyPage, TablesPage, MenuItemsPage } from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Root from "../layout/Root.jsx";
 
@@ -17,12 +17,6 @@ const protectedPaths = [
 		label: "Categories",
 		icon: "Category",
 		element: <CategoriesPage />,
-	},
-	{
-		path: "/Test",
-		label: "Test",
-		icon: "Table",
-		element: <Test />,
 	},
 	{
 		path: "/lobby",
