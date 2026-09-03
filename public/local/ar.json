@@ -183,7 +183,11 @@
       "emptyText": "لم يتم تحميل أي صور بعد. قم بسحب وإسقاط الصور هنا أو انقر للتحميل.",
       "upload": "تحميل",
       "base": "الرئيسية",
-      "imageAlt": "صورة {{number}}"
+      "imageAlt": "صورة {{number}}",
+			"tooltips": {
+				"setAsBase": "تعيين كصورة رئيسية",
+				"deleteSelected": "حذف المحدد"
+			}
 		}
 	}
 }

@@ -182,7 +182,11 @@
 			"emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
 			"upload": "Upload",
 			"base": "Base",
-			"imageAlt": "Image {{number}}"
+			"imageAlt": "Image {{number}}",
+			"tooltips": {
+				"deleteSelected": "Delete",
+				"setAsBase": "Set as base image"
+			}
 		}
 	}
 }
