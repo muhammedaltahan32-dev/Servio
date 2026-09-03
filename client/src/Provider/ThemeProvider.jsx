@@ -311,7 +311,7 @@ export const ThemeProvider = ({ children }) => {
 								// backgroundColor: "#151515",
 
 								"& fieldset": {
-									borderColor: "#e7e5e486",
+									borderColor: "#93929199",
 								},
 
 								"&:hover fieldset": {
