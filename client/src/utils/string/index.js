@@ -1,1 +1,1 @@
-export * from "./getFileWithEx.js";
+export * from "./filesFunctions.js";
