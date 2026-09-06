@@ -53,8 +53,8 @@ export const MenuItemsPage = () => {
 					);
 				},
 			},
-			{ field: Menu_Name_AR, headerName: t("menuItems.nameAR") },
-			{ field: Menu_Name_EN, headerName: t("menuItems.nameEN") },
+			{ field: Menu_Name_AR, headerName: t("menuItems.nameAr") },
+			{ field: Menu_Name_EN, headerName: t("menuItems.nameEn") },
 			{ field: Menu_Price, headerName: t("menuItems.price") },
 			{ field: Menu_CatID, headerName: t("menuItems.category") },
 			{ field: Menu_IsAvailable, headerName: t("menuItems.available") },
