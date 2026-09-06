@@ -25,7 +25,7 @@ export const TableHeader = ({ selection }) => {
 				)}
 
 				{columns.map((col) => (
-					<TableCell key={col.field} sx={{ fontWeight: 700, color: "text.secondary" }}>
+					<TableCell key={col.field} sx={{ fontWeight: 700, color: "text.secondary", whiteSpace: "nowrap" }}>
 						{col.sortable !== false ? (
 							<TableSortLabel
 								active={orderBy === col.field}
