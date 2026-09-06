@@ -1,8 +1,7 @@
 import axios from "axios";
 import { Api_Upload } from "../../../constants/SubApi.js";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
-
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
 
 const api = axios.create({
 	baseURL: BASE_URL,
