@@ -1,7 +1,7 @@
 import { mdlCategories } from "../../../constants/modelNames.js";
 import { Api_Category } from "../../../constants/SubApi.js";
 import { St_BAD_REQUEST, St_CREATED, St_OK } from "../../../constants/HttpStatus.js";
-import { Cat_Sort } from "../../../constants/FieldsName.js";
+import { Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../constants/FieldsName.js";
 
 export const subapi = Api_Category;
 
@@ -15,8 +15,18 @@ export const getAll = async (req, res, params) => {
 	}
 };
 
+const validateInput = (data) => {
+	const { [Cat_Name_AR]: nameAr, [Cat_Name_EN]: nameEn } = data;
+	if (!nameAr && !nameEn) return "messages.failed.add.category.nameRequired";
+	return null;
+};
+
 export const post = async (req, res) => {
 	try {
+		const validatedData = validateInput(req.body);
+		if (validatedData) {
+			return res.status(St_BAD_REQUEST).json({ success: false, message: validatedData });
+		}
 		const { [mdlCategories]: Category } = req.app.locals.db;
 		const data = req.body;
 		const newCategory = await Category.create(data);

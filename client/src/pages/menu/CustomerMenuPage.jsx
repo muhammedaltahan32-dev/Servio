@@ -25,7 +25,8 @@ import { fetchMenuItems } from "../../features/menuItems/MenuItemsSlice.js";
 import { normalizeImageUrl } from "@utils";
 import {
 	Cat_ID,
-	Cat_Name,
+	Cat_Name_AR,
+	Cat_Name_EN,
 	Menu_BaseImage,
 	Menu_CatID,
 	Menu_Descriptions,
@@ -34,7 +35,7 @@ import {
 	Menu_Name,
 	Menu_Price,
 } from "../../../../constants/FieldsName.js";
-
+import { useLang } from "@hooks";
 const normalizeImage = (value) => {
 	const image = value || "";
 	if (!image) return "";
@@ -46,10 +47,9 @@ export const CustomerMenuPage = () => {
 	const categories = useSelector((state) => state.categories?.items ?? []);
 	const menuItems = useSelector((state) => state.menuItems?.items ?? []);
 	const isLoading = useSelector((state) => state.categories?.loading || state.menuItems?.loading);
-
 	const [selectedCategoryId, setSelectedCategoryId] = React.useState("");
 	const [selectedItem, setSelectedItem] = React.useState(null);
-
+	const { getFieldsByLang } = useLang();
 	React.useEffect(() => {
 		dispatch(fetchCategories());
 		dispatch(fetchMenuItems());
@@ -156,7 +156,11 @@ export const CustomerMenuPage = () => {
 								}}
 							>
 								{safeCategories.map((category) => (
-									<Tab key={category[Cat_ID]} label={category[Cat_Name] || "Category"} value={category[Cat_ID]} />
+									<Tab
+										key={category[Cat_ID]}
+										label={getFieldsByLang(category, "name") || "Category"}
+										value={category[Cat_ID]}
+									/>
 								))}
 							</Tabs>
 						)}
@@ -170,7 +174,7 @@ export const CustomerMenuPage = () => {
 						) : categoryItems.length === 0 ? (
 							<Box sx={{ py: 6, textAlign: "center" }}>
 								<Typography variant="h6" color="text.secondary">
-									No items available in {activeCategory[Cat_Name]} yet.
+									No items available in {getFieldsByLang(activeCategory, "name")} yet.
 								</Typography>
 							</Box>
 						) : (
@@ -264,8 +268,10 @@ export const CustomerMenuPage = () => {
 									{selectedItem[Menu_Name]}
 								</Typography>
 								<Typography variant="body2" color="text.secondary">
-									{safeCategories.find((category) => category[Cat_ID] === selectedItem[Menu_CatID])?.[Cat_Name] ||
-										"Menu item"}
+									{getFieldsByLang(
+										safeCategories.find((category) => category[Cat_ID] === selectedItem[Menu_CatID]),
+										"name",
+									) || "Menu item"}
 								</Typography>
 							</Box>
 							<IconButton edge="end" color="inherit" onClick={() => setSelectedItem(null)} aria-label="close">

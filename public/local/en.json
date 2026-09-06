@@ -120,7 +120,8 @@
 		"failed": {
 			"add": {
 				"menuItem": "Failed to add the menu item.",
-				"category": "Failed to add the item"
+				"category": "Failed to add the item",
+				"nameRequired": "Arabic or English item name is required."
 			},
 			"delete": {
 				"menuItem": "Failed to delete the menu item.",
@@ -151,7 +152,8 @@
 		"editTitle": "Edit Category",
 		"addTitle": "Add New Category",
 		"dialogSubtitle": "Enter the category details below to update the list.",
-		"name": "Category Name",
+		"nameAr": "Category Name (Arabic)",
+		"nameEn": "Category Name (English)",
 		"sortOrder": "Sort Order",
 		"save": "Save Changes",
 		"cancel": "Cancel"
