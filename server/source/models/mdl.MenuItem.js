@@ -6,9 +6,10 @@ import {
 	Menu_IsAvailable,
 	Menu_BaseImage,
 	Menu_Images,
-	Menu_Descriptions,
 	Menu_Name_AR,
 	Menu_Name_EN,
+	Menu_Description_EN,
+	Menu_Description_AR,
 } from "../../../constants/FieldsName.js";
 
 const normalizeImagePath = (val) => {
@@ -38,7 +39,8 @@ const defineMenuItems = (sequelize, DataTypes) => {
 			[Menu_Name_EN]: { type: DataTypes.STRING(100) },
 			[Menu_Price]: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
 			[Menu_IsAvailable]: { type: DataTypes.BOOLEAN, defaultValue: true },
-			[Menu_Descriptions]: { type: DataTypes.TEXT, allowNull: true },
+			[Menu_Description_AR]: { type: DataTypes.TEXT, allowNull: true },
+			[Menu_Description_EN]: { type: DataTypes.TEXT, allowNull: true },
 			[Menu_BaseImage]: {
 				type: DataTypes.STRING(200),
 				allowNull: true,

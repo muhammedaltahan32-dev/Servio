@@ -22,7 +22,8 @@ import {
 	Menu_IsAvailable,
 	Menu_BaseImage,
 	Menu_Images,
-	Menu_Descriptions,
+	Menu_Description_AR,
+	Menu_Description_EN,
 } from "../../../../constants/FieldsName.js";
 import { useSnackbar } from "notistack";
 import ApiService from "../../services/ApiService.js";
@@ -64,7 +65,8 @@ const MenuItemsDialog = React.memo(
 					[Menu_Name_EN]: item[Menu_Name_EN] ?? "",
 					[Menu_Price]: item[Menu_Price] ?? 0,
 					[Menu_IsAvailable]: !!item[Menu_IsAvailable],
-					[Menu_Descriptions]: item[Menu_Descriptions] ?? "",
+					[Menu_Description_AR]: item[Menu_Description_AR] ?? "",
+					[Menu_Description_EN]: item[Menu_Description_EN] ?? "",
 					[Menu_BaseImage]: item[Menu_Images]?.[0] || null,
 					[Menu_Images]: item[Menu_Images] || [],
 				});
@@ -263,14 +265,25 @@ const MenuItemsDialog = React.memo(
 						</Grid>
 					</Grid>
 
-					<Grid size={12}>
+					<Grid container size={6}>
 						<Input
-							label={t("menuItems.descriptions")}
-							name={Menu_Descriptions}
+							label={t("menuItems.descriptionAr")}
+							name={Menu_Description_AR}
 							fullWidth
 							multiline
 							rows={3}
-							value={formData[Menu_Descriptions]}
+							value={getFieldsByLang(formData, "description")}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid size={6}>
+						<Input
+							label={t("menuItems.descriptionEn")}
+							name={Menu_Description_EN}
+							fullWidth
+							multiline
+							rows={3}
+							value={getFieldsByLang(formData, "description")}
 							onChange={handleChange}
 						/>
 					</Grid>

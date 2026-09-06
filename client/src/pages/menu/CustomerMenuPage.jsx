@@ -29,7 +29,8 @@ import {
 	Cat_Name_EN,
 	Menu_BaseImage,
 	Menu_CatID,
-	Menu_Descriptions,
+	Menu_Description_AR,
+	Menu_Description_EN,
 	Menu_Images,
 	Menu_IsAvailable,
 	Menu_Name_AR,
@@ -235,7 +236,8 @@ export const CustomerMenuPage = () => {
 													</Stack>
 
 													<Typography variant="body2" color="text.secondary" sx={{ minHeight: 48, mb: 2 }}>
-														{item[Menu_Descriptions] || "Fresh ingredients and authentic taste in every bite."}
+														{getFieldsByLang(item, "description") ||
+															"Fresh ingredients and authentic taste in every bite."}
 													</Typography>
 
 													<Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -339,7 +341,7 @@ export const CustomerMenuPage = () => {
 									/>
 
 									<Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, whiteSpace: "pre-line" }}>
-										{selectedItem[Menu_Descriptions] ||
+										{getFieldsByLang(selectedItem, "description") ||
 											"Fresh ingredients, balanced flavors, and a warm presentation make this dish a favorite choice for guests."}
 									</Typography>
 								</Box>
