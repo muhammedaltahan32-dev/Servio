@@ -22,6 +22,29 @@
 		"modify": "تعديل",
 		"save": "حفظ"
 	},
+	"lobby": {
+		"persons": "أشخاص",
+		"small": "صغيرة",
+		"medium": "متوسطة",
+		"large": "كبيرة",
+		"Needs_Cleaning": "بحاجة إلى تنظيف",
+		"Occupied": "مشغولة",
+		"Available": "متاحة",
+		"allStatus": "كل الحالات",
+		"search": "بحث..."
+	},
+	"tables": {
+		"title": "الطاولات",
+		"addNew": "إضافة طاولة جديدة",
+		"editTitle": "تعديل الطاولة",
+		"addTitle": "إضافة طاولة جديدة",
+		"dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
+		"capacity": "سعة الطاولة",
+		"number": "رقم الطاولة",
+		"status": "حالة الطاولة",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "اسم المستخدم مطلوب",
@@ -158,6 +181,17 @@
 			"selectedRows": "الصفوف المحددة",
 			"search": "بحث...",
 			"tooltips": {
+				"deleteSelected": "حذف المحدد"
+			}
+		},
+		"dropzone":{
+			"title": "الصور",
+      "emptyText": "لم يتم تحميل أي صور بعد. قم بسحب وإسقاط الصور هنا أو انقر للتحميل.",
+      "upload": "تحميل",
+      "base": "الرئيسية",
+      "imageAlt": "صورة {{number}}",
+			"tooltips": {
+				"setAsBase": "تعيين كصورة رئيسية",
 				"deleteSelected": "حذف المحدد"
 			}
 		}

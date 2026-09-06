@@ -33,8 +33,8 @@ export const updateTable = createAsyncThunk("tables/update", async (tableData, {
 
 export const deleteTable = createAsyncThunk("tables/delete", async (id, { rejectWithValue }) => {
 	try {
-		await ApiService.delete(`${Api_Table}/${id}`);
-		return id;
+		const response = await ApiService.delete(`${Api_Table}/${id}`);
+		return response;
 	} catch (error) {
 		return rejectWithValue(error?.response?.data);
 	}
@@ -46,81 +46,84 @@ const tablesSlice = createSlice({
 		items: [],
 		loading: false,
 		error: null,
+		connectionState: "connecting",
 	},
 	reducers: {
+		// Socket listener will dispatch this reducer
 		setTables: (state, action) => {
 			state.items = action.payload;
+			state.loading = false;
+		},
+		setConnectionState: (state, action) => {
+			state.connectionState = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
 		builder
+			// Fetch All
 			.addCase(fetchTables.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
 			.addCase(fetchTables.fulfilled, (state, action) => {
 				state.loading = false;
-				state.items = action.payload.data;
-				state.error = action.payload.success;
+				state.items = action.payload?.data ?? action.payload ?? [];
 			})
 			.addCase(fetchTables.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload?.success;
+				state.error = action.payload?.message;
 				notify.snackbar.error(translator(action.payload?.message));
 			})
-			// add
+
+			// Add Table
 			.addCase(addTable.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
 			.addCase(addTable.fulfilled, (state, action) => {
-				state.items.push(action.payload.data);
-				notify.snackbar.success(translator(action.payload.message));
 				state.loading = false;
-				state.error = action.payload.success;
+				notify.snackbar.success(translator(action.payload?.message));
+				// Array update is omitted here — socket handles state update
 			})
 			.addCase(addTable.rejected, (state, action) => {
-				notify.snackbar.error(translator(action.payload?.message));
 				state.loading = false;
-				state.error = action.payload?.success;
+				state.error = action.payload?.message;
+				notify.snackbar.error(translator(action.payload?.message));
 			})
-			// update
+
+			// Update Table
 			.addCase(updateTable.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
 			.addCase(updateTable.fulfilled, (state, action) => {
-				const index = state.items.findIndex((item) => item.id === action.payload.data.id);
-				if (index !== -1) {
-					state.items[index] = action.payload.data;
-				}
-				notify.snackbar.success(translator(action.payload.message));
 				state.loading = false;
-				state.error = action.payload.success;
+				notify.snackbar.success(translator(action.payload?.message));
+				// Array update is omitted here — socket handles state update
 			})
 			.addCase(updateTable.rejected, (state, action) => {
-				notify.snackbar.error(translator(action.payload?.message));
 				state.loading = false;
-				state.error = action.payload?.success;
+				state.error = action.payload?.message;
+				notify.snackbar.error(translator(action.payload?.message));
 			})
-			// delete
+
+			// Delete Table
 			.addCase(deleteTable.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
 			.addCase(deleteTable.fulfilled, (state, action) => {
-				state.items = state.items.filter((item) => item.id !== action.payload.data);
-				notify.snackbar.success(translator(action.payload?.message));
 				state.loading = false;
-				state.error = action.payload?.success;
+				notify.snackbar.success(translator(action.payload?.message));
+				// Array update is omitted here — socket handles state update
 			})
 			.addCase(deleteTable.rejected, (state, action) => {
-				notify.snackbar.error(translator(action.payload?.message));
 				state.loading = false;
-				state.error = action.payload?.success;
+				state.error = action.payload?.message;
+				notify.snackbar.error(translator(action.payload?.message));
 			});
 	},
 });
 
-export const { setTables } = tablesSlice.actions;
+export const { setTables, setConnectionState } = tablesSlice.actions;
 export default tablesSlice.reducer;

@@ -18,11 +18,14 @@ const cacheLtr = createCache({
 
 const tableStatusColors = {
 	ready: "#22A06B",
+	Available: "#22A06B",
 	delayed: "#EF5B5B",
 	preparing: "#F59E0B",
+	Needs_Cleaning: "#F59E0B",
 	reserved: "#4F6FED",
 	new: "#3B82F6",
 	occupied: "#FF6547",
+	Occupied: "#FF6547",
 };
 
 export const ThemeProvider = ({ children }) => {
@@ -308,7 +311,7 @@ export const ThemeProvider = ({ children }) => {
 								// backgroundColor: "#151515",
 
 								"& fieldset": {
-									borderColor: "#e7e5e486",
+									borderColor: "#93929199",
 								},
 
 								"&:hover fieldset": {

@@ -22,6 +22,29 @@
 		"modify": "modify",
 		"save": "save"
 	},
+	"lobby": {
+		"persons": "Persons",
+		"small": "Small",
+		"medium": "Medium",
+		"large": "Large",
+		"Needs_Cleaning": "Needs cleaning",
+		"Occupied": "Occupied",
+		"Available": "Available",
+		"allStatus": "All status",
+		"search": "Search..."
+	},
+	"tables": {
+		"title": "Tables",
+		"addNew": "Add New Table",
+		"editTitle": "Edit Table",
+		"addTitle": "Add New Table",
+		"dialogSubtitle": "Enter the table details below to update the list.",
+		"capacity": "Table Capacity",
+		"number": "Table Number",
+		"status": "Table Status",
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
@@ -158,6 +181,17 @@
 			"search": "search...",
 			"tooltips": {
 				"deleteSelected": "Delete selected"
+			}
+		},
+		"dropzone": {
+			"title": "Images",
+			"emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
+			"upload": "Upload",
+			"base": "Base",
+			"imageAlt": "Image {{number}}",
+			"tooltips": {
+				"deleteSelected": "Delete",
+				"setAsBase": "Set as base image"
 			}
 		}
 	}

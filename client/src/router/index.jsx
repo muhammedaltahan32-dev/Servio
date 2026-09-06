@@ -4,13 +4,13 @@ import {
 	Home,
 	Login,
 	NotFound,
-	CategoriesPage,
-	Test,
+	CategoriesPage,	
 	LobbyPage,
 	TablesPage,
 	MenuItemsPage,
 	CustomerMenuPage,
 } from "@pages";
+import { Home, Login, NotFound, CategoriesPage, LobbyPage, TablesPage, MenuItemsPage } from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Root from "../layout/Root.jsx";
 
@@ -29,15 +29,9 @@ const protectedPaths = [
 		element: <CategoriesPage />,
 	},
 	{
-		path: "/Test",
-		label: "Test",
-		icon: "Table",
-		element: <Test />,
-	},
-	{
 		path: "/lobby",
 		label: "lobby",
-		icon: "TableRestaurant",
+		icon: "TableBarTwoTone",
 		element: <LobbyPage />,
 	},
 	{

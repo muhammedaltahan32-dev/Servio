@@ -1,25 +1,8 @@
 import axios from "axios";
+import { Api_Upload } from "../../../constants/SubApi.js";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
 
-export const normalizeImageUrl = (url) => {
-	if (!url) return "";
-	if (url.startsWith("data:")) return url;
-
-	const baseUrl = BASE_URL.replace(/\/$/, "");
-	const targetOrigin = new URL(baseUrl).origin;
-
-	if (/^https?:\/\//i.test(url)) {
-		const parsed = new URL(url);
-		if (parsed.origin !== targetOrigin) {
-			return `${targetOrigin}${parsed.pathname}${parsed.search}${parsed.hash}`;
-		}
-		return url;
-	}
-
-	const normalizedPath = url.startsWith("/") ? url : `/${url}`;
-	return `${baseUrl}${normalizedPath}`;
-};
 
 const api = axios.create({
 	baseURL: BASE_URL,
@@ -59,6 +42,20 @@ export const ApiService = {
 		} catch (error) {
 			console.error(`failed to load language : ${lang} \n`, error);
 		}
+	},
+	uploadImage: async (img) => {
+		let images = img;
+		if (!Array.isArray(images)) images = [img];
+		const form = new FormData();
+		images.forEach((file) => {
+			form.append("images", file);
+		});
+
+		const res = await ApiService.post(Api_Upload, form, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
+		// console.log("result : ",res)
+		return res;
 	},
 };
 

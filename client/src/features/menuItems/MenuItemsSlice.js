@@ -7,7 +7,6 @@ import { translator } from "../utils/translator.js";
 export const fetchMenuItems = createAsyncThunk("menuItems/fetchAll", async (_, { rejectWithValue }) => {
 	try {
 		const response = await ApiService.get(`${Api_MenuItem}/all`);
-		console.log("fetchMenuItems response:", response);
 		return response;
 	} catch (error) {
 		return rejectWithValue(error?.response?.data);
@@ -40,7 +39,14 @@ export const deleteMenuItem = createAsyncThunk("menuItems/delete", async (id, { 
 		return rejectWithValue(error?.response?.data);
 	}
 });
-
+export const uploadImage = createAsyncThunk("menuItems/uploadImage", async (img, { rejectWithValue }) => {
+	try {
+		const response = await ApiService.uploadImage(img);
+		return response;
+	} catch (error) {
+		return rejectWithValue(error?.response?.data);
+	}
+});
 const menuItemsSlice = createSlice({
 	name: "menuItems",
 	initialState: {
@@ -70,6 +76,18 @@ const menuItemsSlice = createSlice({
 				notify.snackbar.error(translator(action.payload?.message));
 			})
 			// add
+			.addCase(uploadImage.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(uploadImage.fulfilled, (state, action) => {
+				state.loading = false;
+				state.error = action.payload.success;
+			})
+			.addCase(uploadImage.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.payload?.success;
+			})
 			.addCase(addMenuItem.pending, (state) => {
 				state.loading = true;
 				state.error = null;

@@ -86,11 +86,9 @@ export const SideBar = () => {
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
 						width: DRAWER_WIDTH,
-						border: "none",
-						m: "1rem",
+						// border: "none",
 
-						height: "calc(100% - 2rem)",
-						borderRadius: (theme) => theme.shape.borderRadius + "px",
+						height: "100%",
 					},
 				}}
 				open
