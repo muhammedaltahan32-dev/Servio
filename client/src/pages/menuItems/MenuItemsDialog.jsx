@@ -214,7 +214,7 @@ const MenuItemsDialog = React.memo(
 						<Grid container spacing={2}>
 							<Grid size={12}>
 								<Input
-									label={t("menuItems.nameAR")}
+									label={t("menuItems.nameAr")}
 									name={Menu_Name_AR}
 									fullWidth
 									value={formData[Menu_Name_AR]}
@@ -225,7 +225,7 @@ const MenuItemsDialog = React.memo(
 
 							<Grid size={{ xs: 12, sm: 6 }}>
 								<Input
-									label={t("menuItems.nameEN")}
+									label={t("menuItems.nameEn")}
 									name={Menu_Name_EN}
 									fullWidth
 									value={formData[Menu_Name_EN]}
