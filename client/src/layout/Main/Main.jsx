@@ -19,7 +19,6 @@ export const Main = () => {
 				sx={{
 					maxHeight: "calc(100vh - 64px)",
 					height: "100%",
-					p: { md: 3, sm: 2.5, xs: 2 },
 				}}
 			>
 				<Outlet />
