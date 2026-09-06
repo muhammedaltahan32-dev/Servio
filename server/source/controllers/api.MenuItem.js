@@ -28,9 +28,9 @@ export const post = async (req, res) => {
 		const data = req.body;
 		// data.base_image & data.images will be handled by Sequelize setters automatically
 		const newItem = await MenuItem.create(data);
-		res.status(St_CREATED).json({ success: true, data: newItem });
+		res.status(St_CREATED).json({ success: true, data: newItem, message: "messages.success.add.menuItem" });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "messages.failed.add.menuItem" });
 	}
 };
 
@@ -39,8 +39,20 @@ export const remove = async (req, res) => {
 		const { [mdlMenuItems]: MenuItem } = req.app.locals.db;
 		const { id } = req.params;
 		await MenuItem.destroy({ where: { id } });
-		res.status(St_OK).json({ success: true, message: "Item deleted successfully" });
+		res.status(St_OK).json({ success: true, message: "messages.success.delete.menuItem" });
 	} catch (err) {
-		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+		res.status(St_BAD_REQUEST).json({ success: false, message: "messages.failed.delete.menuItem" });
+	}
+};
+
+export const put = async (req, res) => {
+	try {
+		const { [mdlMenuItems]: MenuItem } = req.app.locals.db;
+		const data = req.body;
+		const { id } = data;
+		await MenuItem.update(data, { where: { id } });
+		res.status(St_OK).json({ success: true, message: "messages.success.update.menuItem" });
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, message: "messages.failed.update.menuItem" });
 	}
 };

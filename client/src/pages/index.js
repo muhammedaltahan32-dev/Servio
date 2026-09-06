@@ -5,3 +5,4 @@ export * from "./categories/CategoriesPage.jsx";
 export * from "./Lobby/LobbyPage.jsx";
 export * from "./tables/TablesPage.jsx";
 export * from "./menuItems/MenuItemsPage.jsx";
+export * from "./menu/CustomerMenuPage.jsx";
