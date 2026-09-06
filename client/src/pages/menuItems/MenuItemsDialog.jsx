@@ -16,7 +16,8 @@ import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
 import {
 	Menu_ID,
 	Menu_CatID,
-	Menu_Name,
+	Menu_Name_AR,
+	Menu_Name_EN,
 	Menu_Price,
 	Menu_IsAvailable,
 	Menu_BaseImage,
@@ -31,7 +32,8 @@ import { normalizeImage } from "./utils/helpers.js";
 
 const initialFormState = {
 	[Menu_CatID]: null,
-	[Menu_Name]: "",
+	[Menu_Name_AR]: "",
+	[Menu_Name_EN]: "",
 	[Menu_Price]: 0,
 	[Menu_IsAvailable]: true,
 	[Menu_BaseImage]: null,
@@ -41,7 +43,7 @@ const initialFormState = {
 const MenuItemsDialog = React.memo(
 	React.forwardRef((props, ref) => {
 		const dispatch = useDispatch();
-		const { t } = useLang();
+		const { t, getFieldsByLang } = useLang();
 		const { enqueueSnackbar } = useSnackbar();
 		const { items: menuItems, loading } = useSelector((state) => state.menuItems || { items: [], loading: false });
 		const { items: categories } = useSelector((state) => state.categories || { items: [] });
@@ -58,11 +60,11 @@ const MenuItemsDialog = React.memo(
 				setSelectedItem(item);
 				setFormData({
 					[Menu_CatID]: item[Menu_CatID] ?? null,
-					[Menu_Name]: item[Menu_Name] ?? "",
+					[Menu_Name_AR]: item[Menu_Name_AR] ?? "",
+					[Menu_Name_EN]: item[Menu_Name_EN] ?? "",
 					[Menu_Price]: item[Menu_Price] ?? 0,
 					[Menu_IsAvailable]: !!item[Menu_IsAvailable],
 					[Menu_Descriptions]: item[Menu_Descriptions] ?? "",
-
 					[Menu_BaseImage]: item[Menu_Images]?.[0] || null,
 					[Menu_Images]: item[Menu_Images] || [],
 				});
@@ -127,7 +129,6 @@ const MenuItemsDialog = React.memo(
 			}
 			handleClose();
 		};
-
 
 		const handleDeleteAnImage = React.useCallback(
 			(imageKey) => {
@@ -213,10 +214,21 @@ const MenuItemsDialog = React.memo(
 						<Grid container spacing={2}>
 							<Grid size={12}>
 								<Input
-									label={t("menuItems.name")}
-									name={Menu_Name}
+									label={t("menuItems.nameAR")}
+									name={Menu_Name_AR}
 									fullWidth
-									value={formData[Menu_Name]}
+									value={formData[Menu_Name_AR]}
+									onChange={handleChange}
+									required
+								/>
+							</Grid>
+
+							<Grid size={{ xs: 12, sm: 6 }}>
+								<Input
+									label={t("menuItems.nameEN")}
+									name={Menu_Name_EN}
+									fullWidth
+									value={formData[Menu_Name_EN]}
 									onChange={handleChange}
 									required
 								/>
@@ -232,7 +244,7 @@ const MenuItemsDialog = React.memo(
 								>
 									{categories.map((c) => (
 										<MenuItem key={c.id} value={c.id}>
-											{c.name}
+											{getFieldsByLang(c, "name")}
 										</MenuItem>
 									))}
 								</Select>

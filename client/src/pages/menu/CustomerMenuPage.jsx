@@ -32,7 +32,8 @@ import {
 	Menu_Descriptions,
 	Menu_Images,
 	Menu_IsAvailable,
-	Menu_Name,
+	Menu_Name_AR,
+	Menu_Name_EN,
 	Menu_Price,
 } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
@@ -212,7 +213,7 @@ export const CustomerMenuPage = () => {
 														image ||
 														"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
 													}
-													alt={item[Menu_Name]}
+													alt={getFieldsByLang(item, "name")}
 													sx={{ height: 220, objectFit: "cover" }}
 												/>
 												<CardContent sx={{ p: 2.5 }}>
@@ -224,7 +225,7 @@ export const CustomerMenuPage = () => {
 														sx={{ mb: 1.5 }}
 													>
 														<Typography variant="h6" sx={{ fontWeight: 700 }}>
-															{item[Menu_Name]}
+															{getFieldsByLang(item, "name")}
 														</Typography>
 														<Chip
 															label={item[Menu_IsAvailable] === false ? "Unavailable" : "Available"}
@@ -265,7 +266,7 @@ export const CustomerMenuPage = () => {
 						<DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 1 }}>
 							<Box>
 								<Typography variant="h5" sx={{ fontWeight: 800 }}>
-									{selectedItem[Menu_Name]}
+									{getFieldsByLang(selectedItem, "name")}
 								</Typography>
 								<Typography variant="body2" color="text.secondary">
 									{getFieldsByLang(
@@ -305,7 +306,7 @@ export const CustomerMenuPage = () => {
 													<CardMedia
 														component="img"
 														image={image}
-														alt={`${selectedItem[Menu_Name]} ${index + 1}`}
+														alt={`${getFieldsByLang(selectedItem, "name")} ${index + 1}`}
 														sx={{ height: 190, objectFit: "cover" }}
 													/>
 												</Card>
@@ -315,7 +316,7 @@ export const CustomerMenuPage = () => {
 												<CardMedia
 													component="img"
 													image="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
-													alt={selectedItem[Menu_Name]}
+													alt={getFieldsByLang(selectedItem, "name")}
 													sx={{ height: 190, objectFit: "cover" }}
 												/>
 											</Card>
