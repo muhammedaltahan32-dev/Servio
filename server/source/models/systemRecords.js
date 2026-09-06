@@ -34,4 +34,3 @@ const systemRecords = async (models) => {
 };
 
 export default systemRecords;
-

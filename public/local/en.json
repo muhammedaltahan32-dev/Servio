@@ -82,23 +82,29 @@
 	"messages": {
 		"success": {
 			"add": {
+				"menuItem": "The menu item has been successfully added.",
 				"category": "The item has been successfully added."
 			},
 			"delete": {
+				"menuItem": "The menu item has been successfully deleted.",
 				"category": "The item has been successfully deleted."
 			},
 			"update": {
+				"menuItem": "The menu item has been successfully updated.",
 				"category": "The item has been successfully updated."
 			}
 		},
 		"failed": {
 			"add": {
+				"menuItem": "Failed to add the menu item.",
 				"category": "Failed to add the item"
 			},
 			"delete": {
+				"menuItem": "Failed to delete the menu item.",
 				"category": "Failed to delete the item"
 			},
 			"update": {
+				"menuItem": "Failed to update the menu item.",
 				"category": "Failed to update the item"
 			}
 		},
