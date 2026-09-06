@@ -160,9 +160,9 @@
 		"descriptions": "Descriptions",
 		"price": "Price",
 		"category": "Category",
-		"image": "Image",
-		"availableTrue": "Available",
-		"availableFalse": "Not Available",
+		"baseImage": "Image",
+		"available": "Available",
+		"notAvailable": "Not Available",
 		"save": "Save Changes",
 		"cancel": "Cancel"
 	},
