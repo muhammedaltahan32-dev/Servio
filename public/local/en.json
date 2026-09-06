@@ -167,6 +167,8 @@
 		"nameAr": "Menu Item Name (Arabic)",
 		"nameEn": "Menu Item Name (English)",
 		"descriptions": "Descriptions",
+		"descriptionAr": "Description (Arabic)",
+		"descriptionEN": "Description (English)",
 		"price": "Price",
 		"category": "Category",
 		"baseImage": "Image",

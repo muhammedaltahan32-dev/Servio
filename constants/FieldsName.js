@@ -30,6 +30,8 @@ export const Menu_Name_EN = "name_en";
 export const Menu_Price = "price";
 export const Menu_IsAvailable = "is_available";
 export const Menu_Descriptions = "descriptions";
+export const Menu_Description_AR = "description_ar";
+export const Menu_Description_EN = "description_en";
 export const Menu_BaseImage = "base_image";
 export const Menu_Images = "images";
 
