@@ -15,9 +15,9 @@ export const useLang = () => {
 	const getFieldsByLang = (obj, field) => {
 		const lang = currentLanguage;
 		if (lang === "ar") {
-			return obj[`${field}_ar`] ? obj[`${field}_ar`] : obj[field];
+			return obj[`${field}_ar`] ?? obj[`${field}_en`] ?? obj[field];
 		} else if (lang === "en") {
-			return obj[`${field}_en`] ? obj[`${field}_en`] : obj[field];
+			return obj[`${field}_en`] ?? obj[`${field}_ar`] ?? obj[field];
 		}
 		return obj[field];
 	};
