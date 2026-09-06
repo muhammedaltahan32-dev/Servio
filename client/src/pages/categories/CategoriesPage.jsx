@@ -9,10 +9,11 @@ import {
 	updateCategory,
 	deleteCategory,
 } from "../../features/categories/CategoriesSlice.js";
-import { Cat_Name, Cat_Sort } from "../../../../constants/FieldsName.js";
+import { Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
 import { useSnackbar } from "notistack";
 const initialFormState = {
-	[Cat_Name]: "",
+	[Cat_Name_AR]: "",
+	[Cat_Name_EN]: "",
 	[Cat_Sort]: 0,
 };
 
@@ -28,7 +29,8 @@ export const CategoriesPage = () => {
 
 	const columns = React.useMemo(
 		() => [
-			{ field: Cat_Name, headerName: t("categories.name") },
+			{ field: Cat_Name_AR, headerName: t("categories.nameAr") },
+			{ field: Cat_Name_EN, headerName: t("categories.nameEn") },
 			{ field: Cat_Sort, headerName: t("categories.sortOrder") },
 		],
 		[t],
@@ -47,7 +49,8 @@ export const CategoriesPage = () => {
 		if (category) {
 			setSelectedCategory(category);
 			setFormData({
-				[Cat_Name]: category[Cat_Name] || "",
+				[Cat_Name_AR]: category[Cat_Name_AR] || "",
+				[Cat_Name_EN]: category[Cat_Name_EN] || "",
 				[Cat_Sort]: category[Cat_Sort] ?? 0,
 			});
 		} else {
@@ -111,10 +114,18 @@ export const CategoriesPage = () => {
 			>
 				<Stack spacing={2} sx={{ pt: "10px" }}>
 					<Input
-						label={t("categories.name")}
-						name={Cat_Name}
+						label={t("categories.nameAr")}
+						name={Cat_Name_AR}
 						fullWidth
-						value={formData[Cat_Name]}
+						value={formData[Cat_Name_AR]}
+						onChange={handleChange}
+						required
+					/>
+					<Input
+						label={t("categories.nameEn")}
+						name={Cat_Name_EN}
+						fullWidth
+						value={formData[Cat_Name_EN]}
 						onChange={handleChange}
 						required
 					/>
