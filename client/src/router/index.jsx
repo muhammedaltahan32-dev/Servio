@@ -1,16 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-
-import {
-	Home,
-	Login,
-	NotFound,
-	CategoriesPage,	
-	LobbyPage,
-	TablesPage,
-	MenuItemsPage,
-	CustomerMenuPage,
-} from "@pages";
-import { Home, Login, NotFound, CategoriesPage, LobbyPage, TablesPage, MenuItemsPage } from "@pages";
+import { Home, Login, NotFound, CategoriesPage, LobbyPage, TablesPage, MenuItemsPage, CustomerMenuPage } from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Root from "../layout/Root.jsx";
 
