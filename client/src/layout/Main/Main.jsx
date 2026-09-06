@@ -9,13 +9,19 @@ export const Main = () => {
 			component="main"
 			sx={{
 				flexGrow: 1,
-				width: { md: `calc(100% - ${DRAWER_WIDTH}px)`,xs:"100%" },
+				width: { md: `calc(100% - ${DRAWER_WIDTH}px)`, xs: "100%" },
 				minHeight: "100vh",
 				// backgroundColor: (theme) => theme.palette.grey[100],
 			}}
 		>
 			<Toolbar />
-			<Box sx={{ maxHeight: "calc(100vh - 64px)", height: "100%", p: 3 }}>
+			<Box
+				sx={{
+					maxHeight: "calc(100vh - 64px)",
+					height: "100%",
+					p: { md: 3, sm: 2.5, xs: 2 },
+				}}
+			>
 				<Outlet />
 			</Box>
 		</Box>

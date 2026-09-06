@@ -6,7 +6,8 @@ export const PageContainer = React.forwardRef(({ children, sx = EMPTY_OBJECT, ..
 		<MUContainer
 			ref={ref}
 			maxWidth="xl"
-			sx={{ height: "100%", flex: 1, display: "flex", flexDirection: "column", ...sx }}
+			disableGutters
+			sx={{ height: "100%", flex: 1,p:0, display: "flex", flexDirection: "column", ...sx }}
 			{...props}
 		>
 			{children}
