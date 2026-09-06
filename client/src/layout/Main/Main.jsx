@@ -9,7 +9,7 @@ export const Main = () => {
 			component="main"
 			sx={{
 				flexGrow: 1,
-				width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+				width: { md: `calc(100% - ${DRAWER_WIDTH}px)`,xs:"100%" },
 				minHeight: "100vh",
 				// backgroundColor: (theme) => theme.palette.grey[100],
 			}}
