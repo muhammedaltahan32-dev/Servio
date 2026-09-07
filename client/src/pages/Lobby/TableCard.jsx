@@ -24,7 +24,7 @@ export const TableCard = React.memo(({ item }) => {
 			}}
 		>
 			<Stack direction={"row"} sx={{ alignItems: "start", flex: 1 }}>
-				<RestaurantTable number={String(tableNumber)} chairsCount={Math.max(2, capacity)} tableSize={60} />
+				<RestaurantTable number={String(tableNumber)} chairsCount={capacity} tableSize={60} />
 				<Box sx={{ marginInlineStart: "auto" }}>
 					<Chip
 						label={t(`lobby.${item?.status}`)}
