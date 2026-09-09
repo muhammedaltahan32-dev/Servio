@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Container, Grid, Stack } from "@mui/material";
+import { Avatar, Box, Container, Grid, Stack, Chip } from "@mui/material";
 import { Button, Dialog, Input, Table, Select, PhotoAlbumGallery, PageContainer } from "@components";
 import { MenuItem } from "@mui/material";
 import { useLang } from "@hooks";
@@ -12,7 +12,6 @@ import {
 	uploadImage,
 } from "../../features/menuItems/MenuItemsSlice.js";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
-
 import {
 	Menu_CatID,
 	Menu_Price,
@@ -28,7 +27,7 @@ import MenuItemsDialog from "./MenuItemsDialog.jsx";
 
 export const MenuItemsPage = () => {
 	const dispatch = useDispatch();
-	const { t } = useLang();
+	const { t, i18n } = useLang();
 	const { items: menuItems, loading } = useSelector((state) => state.menuItems || { items: [], loading: false });
 	const { items: categories } = useSelector((state) => state.categories || { items: [] });
 	const columns = React.useMemo(
@@ -55,10 +54,41 @@ export const MenuItemsPage = () => {
 				},
 			},
 			{ field: Menu_Name_AR, headerName: t("menuItems.nameAr") },
-			{ field: Menu_Name_EN, headerName: t("menuItems.nameEN") },
+			{ field: Menu_Name_EN, headerName: t("menuItems.nameEn") },
 			{ field: Menu_Price, headerName: t("menuItems.price") },
-			{ field: Menu_CatID, headerName: t("menuItems.category") },
-			{ field: Menu_IsAvailable, headerName: t("menuItems.available") },
+			{
+				field: "category",
+				headerName: t("categories.nameAr"),
+				render: (_, row) => {
+					const cat = row?.Category;
+					return cat ? cat[Menu_Name_AR] : "---";
+				},
+			},
+			{
+				field: "category",
+				headerName: t("categories.nameEn"),
+				render: (_, row) => {
+					const cat = row?.Category;
+					return cat ? cat[Menu_Name_EN] : "---";
+				},
+			},
+
+			{
+				field: Menu_IsAvailable,
+				headerName: t("menuItems.available"),
+				render: (value) => {
+					const isAvailable = Boolean(value);
+					return (
+						<Chip
+							label={isAvailable ? t("menuItems.available") : t("menuItems.notAvailable")}
+							color={isAvailable ? "success" : "error"}
+							size="small"
+							variant="outlined"
+						/>
+					);
+				},
+			},
+
 			{ field: Menu_Description_AR, headerName: t("menuItems.descriptionAr") },
 			{ field: Menu_Description_EN, headerName: t("menuItems.descriptionEn") },
 		],
