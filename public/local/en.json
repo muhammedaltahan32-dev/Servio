@@ -22,6 +22,12 @@
 		"modify": "modify",
 		"save": "save"
 	},
+	"customerMenu": {
+		"card": {
+			"showDetails": "View Details",
+			"order": "Order"
+		}
+	},
 	"lobby": {
 		"persons": "Persons",
 		"small": "Small",
