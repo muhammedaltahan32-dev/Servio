@@ -3,6 +3,15 @@ import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/enumOp
 import { Api_Category, Api_MenuItem, Api_Signin, Api_Table, Api_Upload, Api_User } from "../../../constants/SubApi.js";
 import { User_ID, User_Kind } from "../../../constants/FieldsName.js";
 import { getUserIdFromReq } from "../controllers/authentication/helper.js";
+import {
+	UI_Categories,
+	UI_CustomerMenu,
+	UI_Home,
+	UI_Lobby,
+	UI_Login,
+	UI_MenuItems,
+	UI_Tables,
+} from "../../../constants/Forms.js";
 
 export const admin = {
 	[Api_User]: { post: true, put: true, get: true, getAll: true, getOne: true, remove: true, patch: true },
@@ -11,18 +20,31 @@ export const admin = {
 	[Api_MenuItem]: { post: true, put: true, get: true, getAll: true, getOne: true, remove: true, patch: true },
 	[Api_Upload]: { post: true },
 	[Api_Signin]: { post: true },
+	[UI_Login]: { open: true, path: "/login" },
+	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
+	[UI_Categories]: { open: true, path: "/categories", label: "Categories", icon: "Category" },
+	[UI_Lobby]: { open: true, path: "/lobby", label: "Lobby", icon: "TableBarTwoTone" },
+	[UI_Tables]: { open: true, path: "/tables", label: "Tables", icon: "TableRestaurant" },
+	[UI_MenuItems]: { open: true, path: "/menu-items", label: "Menu Items", icon: "RestaurantMenu" },
+	[UI_CustomerMenu]: { open: true, path: "/customer-menu", label: "Customer Menu", icon: "RestaurantMenu" },
 };
 
 export const waiter = {
 	[Api_Signin]: { post: true },
+	[UI_Login]: { open: true, path: "/login" },
+	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
 };
 
 export const kitchen = {
 	[Api_Signin]: { post: true },
+	[UI_Login]: { open: true, path: "/login" },
+	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
 };
 
 export const guests = {
 	[Api_Signin]: { post: true },
+	[UI_Login]: { open: true, path: "/login" },
+	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
 };
 
 class Context {
