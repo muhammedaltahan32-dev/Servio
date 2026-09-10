@@ -6,3 +6,4 @@ export * from "./Lobby/LobbyPage.jsx";
 export * from "./tables/TablesPage.jsx";
 export * from "./menuItems/MenuItemsPage.jsx";
 export * from "./menu/CustomerMenuPage.jsx";
+export * from "./menu/CustomerMenuCard.jsx";
