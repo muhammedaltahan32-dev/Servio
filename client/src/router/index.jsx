@@ -1,7 +1,18 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { Home, Login, NotFound, CategoriesPage, LobbyPage, TablesPage, MenuItemsPage, CustomerMenuPage } from "@pages";
+import {
+	Home,
+	Login,
+	NotFound,
+	CategoriesPage,
+	LobbyPage,
+	TablesPage,
+	MenuItemsPage,
+	CustomerMenuPage,
+	CustomerMenuCard
+} from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Root from "../layout/Root.jsx";
+
 
 const protectedPaths = [
 	{
@@ -40,6 +51,12 @@ const protectedPaths = [
 		label: "Customer Menu",
 		icon: "RestaurantMenu",
 		element: <CustomerMenuPage />,
+		children: [
+			{
+				path: "/customer-menu/:id",
+				element: <CustomerMenuCard />,
+			},
+		],
 	},
 ];
 export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path, icon, label }));

@@ -22,6 +22,12 @@
 		"modify": "تعديل",
 		"save": "حفظ"
 	},
+	"customerMenu": {
+		"card": {
+			"showDetails": "عرض التفاصيل",
+			"order": "طلب"
+		}
+	},
 	"lobby": {
 		"persons": "أشخاص",
 		"small": "صغيرة",
