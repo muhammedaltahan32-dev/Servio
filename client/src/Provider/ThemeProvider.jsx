@@ -64,10 +64,10 @@ export const ThemeProvider = ({ children }) => {
 							},
 
 							secondary: {
-								main: "#171717",
-								light: "#404040",
-								dark: "#0A0A0A",
-								contrastText: "#FFFFFF",
+								contrastText: "#171717",
+								dark: "#D97706",
+								light: "#FFF7E6",
+								main: "#F59E0B",
 							},
 
 							success: {
@@ -130,9 +130,9 @@ export const ThemeProvider = ({ children }) => {
 							},
 
 							secondary: {
-								main: "#FFFFFF",
-								light: "#F5F5F5",
-								dark: "#D4D4D4",
+								main: "#FBBF24",
+								light: "#3A2C0D",
+								dark: "#F59E0B",
 								contrastText: "#171717",
 							},
 
@@ -252,14 +252,10 @@ export const ThemeProvider = ({ children }) => {
 					MuiCard: {
 						styleOverrides: {
 							root: {
-								borderRadius: 12,
 								backgroundImage: "none",
 								boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
-
-								transition: "transform 150ms ease, box-shadow 150ms ease",
-
+								transition: "box-shadow 150ms ease",
 								"&:hover": {
-									// transform: "translateY(-2px)",
 									boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
 								},
 							},
@@ -299,7 +295,7 @@ export const ThemeProvider = ({ children }) => {
 						styleOverrides: {
 							root: {
 								"& .MuiOutlinedInput-root": {
-									borderRadius: 10,
+									borderRadius: "shape.borderRadius",
 								},
 							},
 						},
@@ -378,7 +374,6 @@ export const ThemeProvider = ({ children }) => {
 		[direction],
 	);
 	const currentCache = direction === "rtl" ? cacheRtl : cacheLtr;
-
 	return (
 		<CacheProvider value={currentCache}>
 			<MUThemeProvider theme={theme} defaultMode="system">
