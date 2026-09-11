@@ -3,17 +3,16 @@ import React from "react";
 import { Cat_ID, Menu_BaseImage, Menu_Images, Menu_IsAvailable, Menu_Price } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
 import { normalizeImage } from "./utils/helpers.js";
-import { Button, Dialog, Icon, IconButton } from "@components";
+import { Button, Icon } from "@components";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { motion } from "framer-motion";
+import CustomerMenuDialog from "./CustomerMenuDialog.jsx";
 
-export const CustomerMenuCard = React.memo(({ item, onClick }) => {
+export const CustomerMenuCard = React.memo(({ item }) => {
 	const { getFieldsByLang, t } = useLang();
 	const image = normalizeImage(item[Menu_BaseImage] || item[Menu_Images]?.[0]);
 	const price = Number(item[Menu_Price] ?? 0);
-	const navigate = useNavigate();
-	const [isOpened, setOpen] = React.useState(false);
+	const dialogRef = React.useRef(null);
+
 	const categories = useSelector((state) => state.categories?.items ?? []);
 	const safeCategories = React.useMemo(
 		() => categories.filter((category) => category && category[Cat_ID] !== undefined && category[Cat_ID] !== null),
@@ -36,11 +35,9 @@ export const CustomerMenuCard = React.memo(({ item, onClick }) => {
 		<>
 			<Card
 				className={"customer-card"}
-				component={motion.div}
-				layoutId={`card-${item.id}`} // Unique key matching the detail view
 				sx={{
 					height: "100%",
-					borderRadius: 4,
+					borderRadius: "shape.borderRadius",
 					overflow: "hidden",
 					boxShadow: "0 20px 45px rgba(15, 23, 42, 0.08)",
 					border: "1px solid ",
@@ -78,9 +75,7 @@ export const CustomerMenuCard = React.memo(({ item, onClick }) => {
 								{t("customerMenu.card.order")}
 							</Button>
 							<Button
-              onClick={onClick}
-								// onClick={() => setOpen(true)}
-								// onClick={() => navigate(`/customer-menu/${item.id}`)}
+								onClick={() => dialogRef.current.open()}
 								suffix={<Icon name="InfoOutlined" size="1rem" />}
 								sx={{ bgcolor: "#0006" }}
 							>
@@ -88,8 +83,7 @@ export const CustomerMenuCard = React.memo(({ item, onClick }) => {
 							</Button>
 						</Stack>
 						<CardMedia
-							component={motion.img}
-							layoutId={`image-${item.id}`}
+							component="img"
 							draggable={false}
 							image={image}
 							alt={name}
@@ -106,7 +100,7 @@ export const CustomerMenuCard = React.memo(({ item, onClick }) => {
 						/>
 					</Box>
 					<CardContent sx={{ p: 2.5 }}>
-						<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
+						<Stack direction="row" spacing={1} sx={{ mb: 1.5, justifyContent: "space-between", alignItems: "center" }}>
 							<Typography variant="h6" sx={{ fontWeight: 700 }}>
 								{name}
 							</Typography>
@@ -132,20 +126,24 @@ export const CustomerMenuCard = React.memo(({ item, onClick }) => {
 							{description}
 						</Typography>
 
-						<Stack direction="row" justifyContent="space-between" alignItems="center">
-							<Typography variant="h6" sx={{ fontWeight: 800, color: "warning.main" }}>
+						<Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
+							<Typography variant="h6" sx={{ fontWeight: 800, color: "secondary.main" }}>
 								{new Intl.NumberFormat("en-US", {
 									style: "currency",
 									currency: "USD",
 								}).format(price)}
 							</Typography>
-							<Button variant="text" color="warning" sx={{ fontWeight: 700, px: 0 }}>
-								View details
-							</Button>
 						</Stack>
 					</CardContent>
 				</>
 			</Card>
+			<CustomerMenuDialog
+				ref={dialogRef}
+				item={item}
+				name={name}
+				description={description}
+				galleryImages={galleryImages}
+			/>
 		</>
 	);
 });
