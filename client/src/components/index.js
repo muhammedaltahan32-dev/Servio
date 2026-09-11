@@ -10,8 +10,9 @@ export * from "./Icon/Icon.jsx";
 export * from "./Table/Table.jsx";
 export * from "./Dialog/Dialog.jsx";
 export * from "./Container/PageContainer.jsx";
-export * from "./RoundTableChairs/RoundTableChairs.jsx"
+export * from "./RoundTableChairs/RoundTableChairs.jsx";
 export * from "./PhotoAlbumGallery/PhotoAlbumGallery.jsx";
+export * from "./Carousel/Carousel.jsx";
 
 //  items controls
 export * from "./Controls/MenuItem";
