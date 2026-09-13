@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography, alpha } from "@mui/material";
-import { io } from "socket.io-client";
 import { getCapacity, getTableNumber, normalizeStatus } from "./utils/normalize.js";
 import TableCard from "./TableCard.jsx";
 import { useSelector } from "react-redux";
@@ -8,12 +7,14 @@ import { Icon, Input, MenuItem, PageContainer, Select } from "@components";
 import { useLang } from "@hooks";
 import LobbySummeryCard from "./LobbySummeryCard.jsx";
 import { TABLE_STATUS } from "../../../../constants/enumOptions.js";
+import { useNavigate } from "react-router-dom";
 const STATUS_FILTER = [{ label: "lobby.allStatus", value: "all" }];
 TABLE_STATUS.forEach((st) => {
 	STATUS_FILTER.push({ label: `lobby.${st}`, value: st });
 });
 export const LobbyPage = () => {
 	const { t } = useLang();
+	const navigate = useNavigate();
 
 	const { items, loading, connectionState } = useSelector((state) => state.tables);
 	const [status, setStatus] = React.useState("all");
@@ -120,7 +121,7 @@ export const LobbyPage = () => {
 					{tables.map((table) => {
 						return (
 							<Grid key={table?.id ?? getTableNumber(table)} size={{ lg: 3, md: 4, sm: 6, xs: 12 }}>
-								<TableCard item={table} />
+								<TableCard item={table} onSelect={(selectedTable) => navigate(`/customer-menu/${selectedTable.id}`)} />
 							</Grid>
 						);
 					})}

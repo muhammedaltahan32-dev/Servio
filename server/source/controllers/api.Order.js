@@ -1,6 +1,7 @@
 import { mdlOrders, mdlOrderItems, mdlTable, mdlUser, mdlMenuItems } from "../../../constants/modelNames.js";
 import { Api_Order } from "../../../constants/SubApi.js";
-import { St_BAD_REQUEST, St_CREATED, St_OK, St_INTERNAL_SERVER_ERROR } from "../../../constants/HttpStatus.js";
+import { St_BAD_REQUEST, St_CREATED, St_OK, St_INTERNAL_SERVER_ERROR, St_NOT_FOUND } from "../../../constants/HttpStatus.js";
+import { ST_AVAILABLE, ST_OCCUPIED } from "../../../constants/enumOptions.js";
 import {
 	Order_ID,
 	Order_TableID,
@@ -19,50 +20,100 @@ import {
 	User_Name,
 	Menu_Name,
 	Menu_Price,
+	Menu_IsAvailable,
+	Table_Status,
 } from "../../../constants/FieldsName.js";
 
 export const subapi = Api_Order;
 
 export const post = async (req, res) => {
-	const { sequelize, [mdlOrders]: Order, [mdlOrderItems]: OrderItem } = req.app.locals.db;
+	const {
+		sequelize,
+		[mdlOrders]: Order,
+		[mdlOrderItems]: OrderItem,
+		[mdlTable]: Table,
+		[mdlMenuItems]: MenuItem,
+	} = req.app.locals.db;
 	const t = await sequelize.transaction();
 
 	try {
-		const {
-			[Order_TableID]: table_id,
-			[Order_WaiterID]: waiter_id,
-			[Order_Subtotal]: subtotal,
-			[Order_Tax]: tax_amount,
-			[Order_Total]: total_amount,
-			items,
-		} = req.body;
+		const table_id = Number(req.body?.[Order_TableID]);
+		const tax_amount = Number(req.body?.[Order_Tax] ?? 0);
+		const items = req.body?.items;
+		const waiter_id = req.context?.user?.id;
+
+		if (!waiter_id || !Number.isInteger(table_id) || !Array.isArray(items) || items.length === 0) {
+			await t.rollback();
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.invalidData" });
+		}
+
+		const table = await Table.findByPk(table_id, { transaction: t });
+		if (!table) {
+			await t.rollback();
+			return res.status(St_NOT_FOUND).json({ success: false, message: "table.error.notFound" });
+		}
+		if (table[Table_Status] !== ST_AVAILABLE) {
+			await t.rollback();
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.tableUnavailable" });
+		}
+
+		const menuIds = items.map((item) => Number(item?.[Item_MenuID]));
+		const menuItems = await MenuItem.findAll({ where: { id: menuIds }, transaction: t });
+		const menuById = new Map(menuItems.map((item) => [Number(item.id), item]));
+		const hasInvalidItem = items.some((item) => {
+			const menuItem = menuById.get(Number(item?.[Item_MenuID]));
+			const quantity = Number(item?.[Item_Quantity]);
+			return !menuItem || menuItem[Menu_IsAvailable] === false || !Number.isInteger(quantity) || quantity < 1;
+		});
+		if (hasInvalidItem) {
+			await t.rollback();
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.invalidData" });
+		}
+		const orderItemsData = items.map((item) => {
+			const menuItem = menuById.get(Number(item?.[Item_MenuID]));
+			const quantity = Number(item?.[Item_Quantity]);
+			return {
+				[Item_MenuID]: menuItem.id,
+				[Item_Quantity]: quantity,
+				[Item_UnitPrice]: menuItem[Menu_Price],
+				[Item_Notes]: item[Item_Notes] || null,
+			};
+		});
+		const subtotal = orderItemsData.reduce(
+			(sum, item) => sum + Number(item[Item_UnitPrice]) * item[Item_Quantity],
+			0,
+		);
+		const tax = Number.isFinite(tax_amount) && tax_amount >= 0 ? tax_amount : 0;
+		const total_amount = subtotal + tax;
 
 		const newOrder = await Order.create(
 			{
 				[Order_TableID]: table_id,
 				[Order_WaiterID]: waiter_id,
 				[Order_Subtotal]: subtotal,
-				[Order_Tax]: tax_amount,
+				[Order_Tax]: tax,
 				[Order_Total]: total_amount,
 			},
 			{ transaction: t },
 		);
 
-		if (items && items.length > 0) {
-			const orderItemsData = items.map((item) => ({
-				[Item_OrderID]: newOrder[Order_ID],
-				[Item_MenuID]: item[Item_MenuID],
-				[Item_Quantity]: item[Item_Quantity],
-				[Item_UnitPrice]: item[Item_UnitPrice],
-				[Item_Notes]: item[Item_Notes] || null,
-			}));
-			await OrderItem.bulkCreate(orderItemsData, { transaction: t });
-		}
+		await OrderItem.bulkCreate(
+			orderItemsData.map((item) => ({ ...item, [Item_OrderID]: newOrder[Order_ID] })),
+			{ transaction: t },
+		);
+		table[Table_Status] = ST_OCCUPIED;
+		await table.save({ transaction: t });
 
 		await t.commit();
+		const io = req.app.locals.io;
+		if (io) {
+			const tables = await Table.findAll({ order: [["table_number", "ASC"]] });
+			io.emit("tables:updated", tables);
+		}
 		res.status(St_CREATED).json({ success: true, data: newOrder, message: "order.success.created" });
 	} catch (err) {
-		await t.rollback();
+		if (!t.finished) await t.rollback();
+		console.error(err);
 		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "error.messages.serverError" });
 	}
 };
