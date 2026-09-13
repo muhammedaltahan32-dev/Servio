@@ -99,7 +99,9 @@
 			"created": "Order created successfully"
 		},
 		"error": {
-			"notFound": "Order not found"
+			"notFound": "Order not found",
+			"invalidData": "Please select a table and at least one menu item.",
+			"tableUnavailable": "This table is no longer available."
 		}
 	},
 	"error": {

@@ -7,7 +7,7 @@ import { Button, Icon } from "@components";
 import { useSelector } from "react-redux";
 import CustomerMenuDialog from "./CustomerMenuDialog.jsx";
 
-export const CustomerMenuCard = React.memo(({ item }) => {
+export const CustomerMenuCard = React.memo(({ item, onOrder }) => {
 	const { getFieldsByLang, t } = useLang();
 	const image = normalizeImage(item[Menu_BaseImage] || item[Menu_Images]?.[0]);
 	const price = Number(item[Menu_Price] ?? 0);
@@ -71,7 +71,12 @@ export const CustomerMenuCard = React.memo(({ item }) => {
 								},
 							}}
 						>
-							<Button suffix={<Icon name="TakeoutDiningOutlined" size="1rem" />} sx={{ bgcolor: "primary" }}>
+							<Button
+								onClick={() => onOrder?.(item)}
+								disabled={item[Menu_IsAvailable] === false}
+								suffix={<Icon name="TakeoutDiningOutlined" size="1rem" />}
+								sx={{ bgcolor: "primary" }}
+							>
 								{t("customerMenu.card.order")}
 							</Button>
 							<Button

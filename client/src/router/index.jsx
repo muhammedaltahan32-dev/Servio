@@ -53,8 +53,8 @@ const protectedPaths = [
 		element: <CustomerMenuPage />,
 		children: [
 			{
-				path: "/customer-menu/:id",
-				element: <CustomerMenuCard />,
+				path: ":tableId",
+				element: <CustomerMenuPage />,
 			},
 		],
 	},

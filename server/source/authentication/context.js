@@ -1,6 +1,6 @@
 import { mdlUser } from "../../../constants/modelNames.js";
 import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/enumOptions.js";
-import { Api_Category, Api_MenuItem, Api_Signin, Api_Table, Api_Upload, Api_User } from "../../../constants/SubApi.js";
+import { Api_Category, Api_MenuItem, Api_Order, Api_Signin, Api_Table, Api_Upload, Api_User } from "../../../constants/SubApi.js";
 import { User_ID, User_Kind } from "../../../constants/FieldsName.js";
 import { getUserIdFromReq } from "../controllers/authentication/helper.js";
 import {
@@ -18,6 +18,7 @@ export const admin = {
 	[Api_Table]: { post: true, put: true, get: true, getAll: true, getOne: true, remove: true, patch: true },
 	[Api_Category]: { post: true, put: true, get: true, getAll: true, getOne: true, remove: true, patch: true },
 	[Api_MenuItem]: { post: true, put: true, get: true, getAll: true, getOne: true, remove: true, patch: true },
+	[Api_Order]: { post: true, get: true, getAll: true, getOne: true, patch: true },
 	[Api_Upload]: { post: true },
 	[Api_Signin]: { post: true },
 	[UI_Login]: { open: true, path: "/login" },
@@ -31,8 +32,14 @@ export const admin = {
 
 export const waiter = {
 	[Api_Signin]: { post: true },
+	[Api_Category]: { getAll: true },
+	[Api_MenuItem]: { getAll: true },
+	[Api_Table]: { getAll: true },
+	[Api_Order]: { post: true },
 	[UI_Login]: { open: true, path: "/login" },
 	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
+	[UI_Lobby]: { open: true, path: "/lobby", label: "Lobby", icon: "TableBarTwoTone" },
+	[UI_CustomerMenu]: { open: true, path: "/customer-menu", label: "Customer Menu", icon: "RestaurantMenu" },
 };
 
 export const kitchen = {
