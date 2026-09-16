@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import CustomerMenuDialog from "./CustomerMenuDialog.jsx";
 import { AnimatePresence, motion } from "framer-motion";
 
-export const CustomerMenuCard = React.memo(({ item, onOrder }) => {
+export const CustomerMenuCard = React.memo(({ item, onOrder, index }) => {
 	const { getFieldsByLang, t } = useLang();
 	const image = normalizeImage(item[Menu_BaseImage] || item[Menu_Images]?.[0]);
 	const price = Number(item[Menu_Price] ?? 0);
@@ -61,7 +61,7 @@ export const CustomerMenuCard = React.memo(({ item, onOrder }) => {
 						flexDirection: "column",
 						"&:hover": {
 							boxShadow: "0 24px 50px rgba(15, 23, 42, 0.2)",
-							transform:"translateY(4px)"
+							transform: "translateY(4px)",
 						},
 					}}
 				>
@@ -78,7 +78,6 @@ export const CustomerMenuCard = React.memo(({ item, onOrder }) => {
 							borderColor: "primary.main",
 							insetInline: "50%",
 							transform: "translate(-50%,-25%)",
-	
 						}}
 					>
 						<Stack
