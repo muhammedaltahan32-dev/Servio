@@ -60,7 +60,7 @@ export const CustomerMenuPage = () => {
 				};
 			}}
 		>
-			<Container maxWidth="lg" sx={{ pb: 8 }}>
+			<>
 				{isLoading && !safeCategories.length && !menuItems.length ? (
 					<Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
 						<CircularProgress color="warning" />
@@ -76,6 +76,8 @@ export const CustomerMenuPage = () => {
 						>
 							{safeCategories.length > 0 && (
 								<Tabs
+									allowScrollButtonsMobile
+									selectionFollowsFocus
 									value={activeCategory?.[Cat_ID] ?? false}
 									onChange={handleTabChange}
 									variant="scrollable"
@@ -121,19 +123,21 @@ export const CustomerMenuPage = () => {
 								<Box
 									sx={{
 										display: "grid",
-										gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-										gap: 3,
+										gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+										rowGap: 6,
+										columnGap: 4,
+										mt: 8,
 									}}
 								>
-									{categoryItems.map((item) => (
-										<CustomerMenuCard key={item.id} item={item} />
+									{categoryItems.map((item, index) => (
+										<CustomerMenuCard key={item.id} item={item} index={index} />
 									))}
 								</Box>
 							)}
 						</motion.div>
 					</AnimatePresence>
 				)}
-			</Container>
+			</>
 		</PageContainer>
 	);
 };
