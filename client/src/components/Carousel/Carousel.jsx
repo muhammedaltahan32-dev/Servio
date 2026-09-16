@@ -4,7 +4,15 @@ import { IconButton } from "../index.js";
 
 const EMPTY_ARRAY = [];
 
-export const Carousel = ({ autoPlay = true, interval = 4000, items = EMPTY_ARRAY, isRtl: isRtlProp, sx }) => {
+export const Carousel = ({
+	caption,
+	disableItemCaption = false,
+	autoPlay = true,
+	interval = 4000,
+	items = EMPTY_ARRAY,
+	isRtl: isRtlProp,
+	sx,
+}) => {
 	const theme = useTheme();
 
 	const isRtl = isRtlProp ?? theme.direction === "rtl";
@@ -89,7 +97,7 @@ export const Carousel = ({ autoPlay = true, interval = 4000, items = EMPTY_ARRAY
 		[sx, isSwiping],
 	);
 	return (
-		<Box dir={isRtl ? "rtl" : "ltr"} sx={{ maxWidth: 600, flexGrow: 1, margin: "auto", userSelect: "none" }}>
+		<Box dir={isRtl ? "rtl" : "ltr"} sx={{ userSelect: "none" }}>
 			<Paper
 				ref={containerRef}
 				elevation={3}
@@ -109,6 +117,7 @@ export const Carousel = ({ autoPlay = true, interval = 4000, items = EMPTY_ARRAY
 						width: "100%",
 						transition: isSwiping ? "none" : "transform 0.3s ease-out",
 						transform: `translateX(calc(${stepTranslate}% + ${dragOffset}px))`,
+						position: "relative",
 					}}
 				>
 					{items.map((item, index) => (
@@ -133,52 +142,75 @@ export const Carousel = ({ autoPlay = true, interval = 4000, items = EMPTY_ARRAY
 								src={item.image}
 								alt={item.title}
 							/>
-							<Box
-								sx={{
-									position: "absolute",
-									bottom: 0,
-									left: 0,
-									right: 0,
-									bgcolor: "rgba(0, 0, 0, 0.6)",
-									color: "white",
-									p: 2,
-									textAlign: isRtl ? "right" : "left",
-								}}
-							>
-								<Typography variant="h6">{item.title}</Typography>
-								<Typography variant="body2">{item.description}</Typography>
-							</Box>
+							{!disableItemCaption && (
+								<Box
+									sx={{
+										position: "absolute",
+										bottom: 0,
+										left: 0,
+										right: 0,
+										bgcolor: "rgba(0, 0, 0, 0.6)",
+										color: "white",
+										p: 2,
+										textAlign: isRtl ? "right" : "left",
+									}}
+								>
+									<Typography variant="h6">{item.title}</Typography>
+									<Typography variant="body2">{item.description}</Typography>
+								</Box>
+							)}
 						</Box>
 					))}
 				</Box>
+				{caption && (
+					<Box
+						sx={{
+							position: "absolute",
+							bottom: 0,
+							left: 0,
+							right: 0,
+							bgcolor: "rgba(0, 0, 0, 0.6)",
+							color: "white",
+							whiteSpace: "nowrap",
+							overflow: "hidden",
+							textOverflow: "ellipsis",
+							p: 2,
+						}}
+					>
+						<Typography variant="h6">{caption}</Typography>
+					</Box>
+				)}
+				{items?.length > 1 && (
+					<>
+						<IconButton
+							onClick={isRtl ? handleNext : handleBack}
+							sx={{
+								position: "absolute",
+								top: "50%",
+								...(isRtl ? { right: 10 } : { left: 10 }),
+								transform: "translateY(-50%)",
+								color: "primary.contrastText",
+								bgcolor: "rgba(0, 0, 0, 0.2)",
+								"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
+							}}
+							name={"KeyboardArrowLeft"}
+						/>
 
-				<IconButton
-					onClick={isRtl ? handleNext : handleBack}
-					sx={{
-						position: "absolute",
-						top: "50%",
-						...(isRtl ? { right: 10 } : { left: 10 }),
-						transform: "translateY(-50%)",
-						color: "primary.contrastText",
-						bgcolor: "rgba(0, 0, 0, 0.2)",
-						"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
-					}}
-					name={"KeyboardArrowLeft"}
-				/>
-
-				<IconButton
-					onClick={isRtl ? handleBack : handleNext}
-					sx={{
-						position: "absolute",
-						top: "50%",
-						...(!isRtl ? { right: 10 } : { left: 10 }),
-						color: "primary.contrastText",
-						transform: "translateY(-50%)",
-						bgcolor: "rgba(0, 0, 0, 0.2)",
-						"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
-					}}
-					name={"KeyboardArrowRight"}
-				/>
+						<IconButton
+							onClick={isRtl ? handleBack : handleNext}
+							sx={{
+								position: "absolute",
+								top: "50%",
+								...(!isRtl ? { right: 10 } : { left: 10 }),
+								color: "primary.contrastText",
+								transform: "translateY(-50%)",
+								bgcolor: "rgba(0, 0, 0, 0.2)",
+								"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
+							}}
+							name={"KeyboardArrowRight"}
+						/>
+					</>
+				)}
 			</Paper>
 
 			<MobileStepper
@@ -189,6 +221,7 @@ export const Carousel = ({ autoPlay = true, interval = 4000, items = EMPTY_ARRAY
 					bgcolor: "transparent",
 					justifyContent: "center",
 					pt: 1,
+					opacity: items?.length > 1 ? 1 : 0,
 				}}
 			/>
 		</Box>

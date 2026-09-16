@@ -171,11 +171,13 @@ export const ThemeProvider = ({ children }) => {
 							},
 
 							background: {
-								default: "#171717",
-								paper: "#242424",
+								// default: "#171717",
+								default: "#2A2A2A",
+								// paper: "#242424",
+								paper: "#363636",
 							},
 
-							divider: "#363636",
+							divider: "#525152",
 
 							tableStatus: tableStatusColors,
 						},

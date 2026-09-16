@@ -185,6 +185,8 @@ export const CustomerMenuPage = () => {
 						>
 							{safeCategories.length > 0 && (
 								<Tabs
+									allowScrollButtonsMobile
+									selectionFollowsFocus
 									value={activeCategory?.[Cat_ID] ?? false}
 									onChange={handleTabChange}
 									variant="scrollable"
@@ -232,8 +234,10 @@ export const CustomerMenuPage = () => {
 								<Box
 									sx={{
 										display: "grid",
-										gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-										gap: 3,
+										gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+										rowGap: 6,
+										columnGap: 4,
+										mt: 8,
 									}}
 								>
 									{categoryItems.map((item) => (
@@ -289,7 +293,7 @@ export const CustomerMenuPage = () => {
 						</motion.div>
 					</AnimatePresence>
 				)}
-			</Container>
+			</>
 		</PageContainer>
 	);
 };
