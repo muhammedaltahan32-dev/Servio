@@ -83,9 +83,7 @@ export const CustomerMenuPage = () => {
 			const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
 			if (existing) {
 				return currentCart.map((cartItem) =>
-					String(cartItem.id) === String(itemId)
-						? { ...cartItem, quantity: cartItem.quantity + 1 }
-						: cartItem,
+					String(cartItem.id) === String(itemId) ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
 				);
 			}
 			return [
@@ -110,9 +108,7 @@ export const CustomerMenuPage = () => {
 	};
 
 	const updateNotes = (itemId, notes) => {
-		setCart((currentCart) =>
-			currentCart.map((item) => (item.id === itemId ? { ...item, notes } : item)),
-		);
+		setCart((currentCart) => currentCart.map((item) => (item.id === itemId ? { ...item, notes } : item)));
 	};
 
 	const submitOrder = async () => {
@@ -142,7 +138,9 @@ export const CustomerMenuPage = () => {
 		return (
 			<PageContainer sx={{ alignItems: "center", justifyContent: "center", gap: 2 }}>
 				<Typography variant="h6">Select an available table from the lobby first.</Typography>
-				<MuiButton variant="contained" onClick={() => navigate("/lobby")}>Back to lobby</MuiButton>
+				<MuiButton variant="contained" onClick={() => navigate("/lobby")}>
+					Back to lobby
+				</MuiButton>
 			</PageContainer>
 		);
 	}
@@ -163,7 +161,9 @@ export const CustomerMenuPage = () => {
 			<Container maxWidth="lg" sx={{ pb: 8 }}>
 				<Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 3 }}>
 					<Box>
-						<Typography variant="h5" sx={{ fontWeight: 800 }}>Table {table[Table_Number]}</Typography>
+						<Typography variant="h5" sx={{ fontWeight: 800 }}>
+							Table {table[Table_Number]}
+						</Typography>
 						<Typography color="text.secondary">Choose your items and send the order to the kitchen.</Typography>
 					</Box>
 					<MuiButton variant="outlined" startIcon={<Icon name="ArrowBack" />} onClick={() => navigate("/lobby")}>
@@ -231,69 +231,82 @@ export const CustomerMenuPage = () => {
 							) : (
 								<Grid container spacing={3}>
 									<Grid size={{ xs: 12, md: 8 }}>
-								<Box
-									sx={{
-										display: "grid",
-										gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-										rowGap: 6,
-										columnGap: 4,
-										mt: 8,
-									}}
-								>
-									{categoryItems.map((item) => (
-										<CustomerMenuCard key={item.id} item={item} onOrder={addToCart} />
-									))}
-								</Box>
-								</Grid>
-								<Grid size={{ xs: 12, md: 4 }}>
-									<Card sx={{ p: 2.5, position: "sticky", top: 16 }}>
-										<Typography variant="h6" sx={{ fontWeight: 800 }}>Your order</Typography>
-										<Divider sx={{ my: 2 }} />
-										{cart.length === 0 ? (
-											<Typography color="text.secondary">Your order is empty.</Typography>
-										) : (
-											<Stack spacing={1.5}>
-												{cart.map((item) => (
-													<Stack key={item.id} direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "space-between" }}>
-														<Box sx={{ minWidth: 0, flex: 1 }}>
-															<Typography noWrap>{item.name}</Typography>
-															<Typography variant="body2" color="text.secondary">${(item.price * item.quantity).toFixed(2)}</Typography>
-															<TextField
-																fullWidth
-																size="small"
-																margin="dense"
-																label="Notes"
-																placeholder="e.g. no onions"
-																value={item.notes}
-																onChange={(event) => updateNotes(item.id, event.target.value)}
-																inputProps={{ maxLength: 500 }}
-															/>
-														</Box>
-														<Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
-															<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</MuiButton>
-															<Typography>{item.quantity}</Typography>
-															<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</MuiButton>
+										<Box
+											sx={{
+												display: "grid",
+												gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+												rowGap: 6,
+												columnGap: 4,
+												mt: 8,
+											}}
+										>
+											{categoryItems.map((item) => (
+												<CustomerMenuCard key={item.id} item={item} onOrder={addToCart} />
+											))}
+										</Box>
+									</Grid>
+									<Grid size={{ xs: 12, md: 4 }}>
+										<Card sx={{ p: 2.5, position: "sticky", top: 16 }}>
+											<Typography variant="h6" sx={{ fontWeight: 800 }}>
+												Your order
+											</Typography>
+											<Divider sx={{ my: 2 }} />
+											{cart.length === 0 ? (
+												<Typography color="text.secondary">Your order is empty.</Typography>
+											) : (
+												<Stack spacing={1.5}>
+													{cart.map((item) => (
+														<Stack
+															key={item.id}
+															direction="row"
+															spacing={1}
+															sx={{ alignItems: "center", justifyContent: "space-between" }}
+														>
+															<Box sx={{ minWidth: 0, flex: 1 }}>
+																<Typography noWrap>{item.name}</Typography>
+																<Typography variant="body2" color="text.secondary">
+																	${(item.price * item.quantity).toFixed(2)}
+																</Typography>
+																<TextField
+																	fullWidth
+																	size="small"
+																	margin="dense"
+																	label="Notes"
+																	placeholder="e.g. no onions"
+																	value={item.notes}
+																	onChange={(event) => updateNotes(item.id, event.target.value)}
+																	inputProps={{ maxLength: 500 }}
+																/>
+															</Box>
+															<Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+																<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+																	-
+																</MuiButton>
+																<Typography>{item.quantity}</Typography>
+																<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+																	+
+																</MuiButton>
+															</Stack>
 														</Stack>
+													))}
+													<Divider />
+													<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+														<Typography sx={{ fontWeight: 700 }}>Total</Typography>
+														<Typography sx={{ fontWeight: 700 }}>${cartTotal.toFixed(2)}</Typography>
 													</Stack>
-												))}
-												<Divider />
-												<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-													<Typography sx={{ fontWeight: 700 }}>Total</Typography>
-													<Typography sx={{ fontWeight: 700 }}>${cartTotal.toFixed(2)}</Typography>
+													<MuiButton variant="contained" fullWidth disabled={orderLoading} onClick={submitOrder}>
+														{orderLoading ? "Sending..." : "Send order"}
+													</MuiButton>
 												</Stack>
-												<MuiButton variant="contained" fullWidth disabled={orderLoading} onClick={submitOrder}>
-													{orderLoading ? "Sending..." : "Send order"}
-												</MuiButton>
-											</Stack>
-										)}
-									</Card>
+											)}
+										</Card>
+									</Grid>
 								</Grid>
-							</Grid>
 							)}
 						</motion.div>
 					</AnimatePresence>
 				)}
-			</>
+			</Container>
 		</PageContainer>
 	);
 };
