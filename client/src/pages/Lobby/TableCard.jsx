@@ -4,15 +4,17 @@ import { getCapacity, getTableNumber, normalizeStatus, getTableSizeType } from "
 import { RestaurantTable } from "@components";
 import { useLang } from "@hooks";
 
-export const TableCard = React.memo(({ item }) => {
+export const TableCard = React.memo(({ item, onSelect }) => {
 	const tableNumber = getTableNumber(item);
 	const status = normalizeStatus(item?.status);
 	const capacity = getCapacity(item);
 	const { t } = useLang();
 	const tableSizeType = getTableSizeType(capacity);
+	const isAvailable = String(item?.status).toLowerCase() === "available";
 	return (
 		<Paper
 			elevation={3}
+			onClick={isAvailable ? () => onSelect?.(item) : undefined}
 			sx={{
 				p: 2,
 				height: 170,
@@ -21,6 +23,11 @@ export const TableCard = React.memo(({ item }) => {
 				backgroundColor: "background.paper",
 				display: "flex",
 				flexDirection: "column",
+				cursor: isAvailable ? "pointer" : "default",
+				transition: "transform 0.2s ease, box-shadow 0.2s ease",
+				"&:hover": isAvailable
+					? { transform: "translateY(-2px)", boxShadow: 6 }
+					: undefined,
 			}}
 		>
 			<Stack direction={"row"} sx={{ alignItems: "start", flex: 1 }}>

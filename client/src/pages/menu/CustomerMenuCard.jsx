@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import CustomerMenuDialog from "./CustomerMenuDialog.jsx";
 import { AnimatePresence, motion } from "framer-motion";
 
-export const CustomerMenuCard = React.memo(({ item, index }) => {
+export const CustomerMenuCard = React.memo(({ item, onOrder }) => {
 	const { getFieldsByLang, t } = useLang();
 	const image = normalizeImage(item[Menu_BaseImage] || item[Menu_Images]?.[0]);
 	const price = Number(item[Menu_Price] ?? 0);
@@ -81,6 +81,37 @@ export const CustomerMenuCard = React.memo(({ item, index }) => {
 	
 						}}
 					>
+						<Stack
+							direction={"row"}
+							spacing={1}
+							sx={{
+								position: "absolute",
+								bottom: 5,
+								insetInlineStart: 5,
+								zIndex: 1,
+								opacity: 0,
+								transition: "opacity 0.4s ease",
+								".customer-card:hover &": {
+									opacity: 1,
+								},
+							}}
+						>
+							<Button
+								onClick={() => onOrder?.(item)}
+								disabled={item[Menu_IsAvailable] === false}
+								suffix={<Icon name="TakeoutDiningOutlined" size="1rem" />}
+								sx={{ bgcolor: "primary" }}
+							>
+								{t("customerMenu.card.order")}
+							</Button>
+							<Button
+								onClick={() => dialogRef.current.open()}
+								suffix={<Icon name="InfoOutlined" size="1rem" />}
+								sx={{ bgcolor: "#0006" }}
+							>
+								{t("customerMenu.card.showDetails")}
+							</Button>
+						</Stack>
 						<CardMedia
 							component="img"
 							draggable={false}

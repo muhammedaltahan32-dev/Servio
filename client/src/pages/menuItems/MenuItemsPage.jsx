@@ -57,7 +57,7 @@ export const MenuItemsPage = () => {
 			{ field: Menu_Name_EN, headerName: t("menuItems.nameEn") },
 			{ field: Menu_Price, headerName: t("menuItems.price") },
 			{
-				field: "category",
+				field: "category_name_ar",
 				headerName: t("categories.nameAr"),
 				render: (_, row) => {
 					const cat = row?.Category;
@@ -65,7 +65,7 @@ export const MenuItemsPage = () => {
 				},
 			},
 			{
-				field: "category",
+				field: "category_name_en",
 				headerName: t("categories.nameEn"),
 				render: (_, row) => {
 					const cat = row?.Category;

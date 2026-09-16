@@ -7,6 +7,7 @@ import categoriesReducer from "../features/categories/CategoriesSlice.js";
 import tablesReducer from "../features/tables/TablesSlice.js";
 import { listenerMiddleware } from "./socketMiddleware.js";
 import menuItemsReducer from "../features/menuItems/MenuItemsSlice.js";
+import ordersReducer from "../features/orders/OrdersSlice.js";
 
 export const store = configureStore({
 	reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
 		categories: categoriesReducer,
 		tables: tablesReducer,
 		menuItems: menuItemsReducer,
+		orders: ordersReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
