@@ -7,6 +7,7 @@ import {
 	LobbyPage,
 	TablesPage,
 	MenuItemsPage,
+	UsersPage,
 	CustomerMenuPage,
 	CustomerMenuCard
 } from "@pages";
@@ -39,6 +40,12 @@ const protectedPaths = [
 		label: "Tables",
 		icon: "TableRestaurant",
 		element: <TablesPage />,
+	},
+	{
+		path: "/users",
+		label: "Users",
+		icon: "People",
+		element: <UsersPage />,
 	},
 	{
 		path: "/menu-items",
