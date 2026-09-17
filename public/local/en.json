@@ -60,6 +60,11 @@
 		"username": "Username",
 		"password": "Password",
 		"kind": "Account Type",
+		"isActive": "Is Active",
+		"activate": {
+			"yes": "Yes",
+			"no": "No"
+		},
 		"roles": {
 			"admin": "Admin",
 			"waiter": "Waiter",
