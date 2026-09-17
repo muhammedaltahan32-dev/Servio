@@ -64,3 +64,27 @@ export const getAll = async (req, res) => {
 		res.status(500).json({ success: false, message: err.message });
 	}
 };
+
+export const put = async (req, res) => {
+	try {
+		const { [mdlUser]: User } = req.app.locals.db;
+		const data = req.body;
+		const user = await User.findByPk(data.id);
+		if (!user) {
+			return res.status(St_BAD_REQUEST).json({ success: false, message: "user.error.notFound" });
+		}
+		if (data[User_Password]) {
+			const hashedPassword = await hashPassword(data[User_Password]);
+			data[User_HashedPassword] = hashedPassword;
+		} else {
+			data[User_HashedPassword] = user[User_HashedPassword];
+		}
+		await user.update(data);
+		res.status(200).json({
+			success: true,
+			message: "user.success.updated",
+		});
+	} catch (err) {
+		res.status(St_BAD_REQUEST).json({ success: false, message: err.message });
+	}
+};

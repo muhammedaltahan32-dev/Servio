@@ -60,6 +60,11 @@
 		"username": "اسم المستخدم",
 		"password": "كلمة المرور",
 		"kind": "نوع الحساب",
+		"isActive": "نشط",
+		"activate": {
+			"yes": "نعم",
+			"no": "لا"
+		},
 		"roles": {
 			"admin": "مدير",
 			"waiter": "نادل",
