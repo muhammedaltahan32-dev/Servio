@@ -8,7 +8,7 @@ import tablesReducer from "../features/tables/TablesSlice.js";
 import { listenerMiddleware } from "./socketMiddleware.js";
 import menuItemsReducer from "../features/menuItems/MenuItemsSlice.js";
 import ordersReducer from "../features/orders/OrdersSlice.js";
-
+import usersReducer from "../features/users/UsersSlice.js";
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
@@ -19,7 +19,7 @@ export const store = configureStore({
 		tables: tablesReducer,
 		menuItems: menuItemsReducer,
 		orders: ordersReducer,
+		users: usersReducer,
 	},
-	middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });

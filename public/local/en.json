@@ -51,6 +51,23 @@
 		"save": "Save Changes",
 		"cancel": "Cancel"
 	},
+	"users": {
+		"title": "Users",
+		"addNew": "Add New User",
+		"editTitle": "Edit User",
+		"addTitle": "Add New User",
+		"dialogSubtitle": "Enter the user details below to update the list.",
+		"username": "Username",
+		"password": "Password",
+		"kind": "Account Type",
+		"roles": {
+			"admin": "Admin",
+			"waiter": "Waiter",
+			"kitchen": "Kitchen"
+		},
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
 	"auth": {
 		"validation": {
 			"nameRequired": "Username is required",
