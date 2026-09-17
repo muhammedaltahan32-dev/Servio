@@ -24,6 +24,9 @@ export function MobileBottomSheet({
 	title,
 	anchor = "bottom",
 	disableSwipeToOpen = true,
+	maxHeight = "85vh",
+	height = "auto",
+	backwardButton = true,
 	...props
 }) {
 	// Configures iOS swipe back prevention optimization
@@ -50,7 +53,8 @@ export function MobileBottomSheet({
 						sx: (theme) => ({
 							borderTopLeftRadius: theme.shape.borderRadius + "px",
 							borderTopRightRadius: theme.shape.borderRadius + "px",
-							maxHeight: "85vh",
+							height,
+							maxHeight,
 							overflow: "visible",
 						}),
 					},
@@ -60,10 +64,10 @@ export function MobileBottomSheet({
 				{/* Top Header / Drag Handle Container */}
 				<Box
 					className="bottomSheetPaper"
-					sx={{
+					sx={(theme) => ({
 						position: "relative",
-						borderTopLeftRadius: 16,
-						borderTopRightRadius: 16,
+						borderTopLeftRadius: theme.shape.borderRadius + "px",
+						borderTopRightRadius: theme.shape.borderRadius + "px",
 						pt: 2,
 						pb: 1,
 						px: 2,
@@ -71,7 +75,7 @@ export function MobileBottomSheet({
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "space-between",
-					}}
+					})}
 				>
 					<Puller />
 
@@ -79,7 +83,9 @@ export function MobileBottomSheet({
 						{title}
 					</Typography>
 
-					<IconButton size="small" onClick={onClose} sx={{ mt: 1 }} name={!isRtl ? "ArrowForward" : "ArrowBack"} />
+					{backwardButton && (
+						<IconButton size="small" onClick={onClose} sx={{ mt: 1 }} name={!isRtl ? "ArrowForward" : "ArrowBack"} />
+					)}
 				</Box>
 
 				{/* Scrollable Main Content */}
