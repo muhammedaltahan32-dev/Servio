@@ -10,6 +10,7 @@ import {
 	Order_CreatedAt,
 	Order_UpdatedAt,
 } from "../../../constants/FieldsName.js";
+import { ORDER_STATUS_VALUES, OrderStatus_PENDING } from "../../../constants/enumOptions.js";
 
 const defineOrders = (sequelize, DataTypes) => {
 	const model = sequelize.define(
@@ -18,10 +19,7 @@ const defineOrders = (sequelize, DataTypes) => {
 			[Order_ID]: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 			[Order_TableID]: { type: DataTypes.INTEGER, allowNull: false },
 			[Order_WaiterID]: { type: DataTypes.INTEGER, allowNull: false },
-			[Order_Status]: {
-				type: DataTypes.ENUM("PENDING", "PREPARING", "READY", "SERVED", "PAID", "CANCELLED"),
-				defaultValue: "PENDING",
-			},
+			[Order_Status]: { type: DataTypes.ENUM(...ORDER_STATUS_VALUES), defaultValue: OrderStatus_PENDING },
 			[Order_Subtotal]: { type: DataTypes.DECIMAL(10, 2), allowNull: false, defaultValue: 0.0 },
 			[Order_Tax]: { type: DataTypes.DECIMAL(10, 2), allowNull: false, defaultValue: 0.0 },
 			[Order_Total]: { type: DataTypes.DECIMAL(10, 2), allowNull: false, defaultValue: 0.0 },
