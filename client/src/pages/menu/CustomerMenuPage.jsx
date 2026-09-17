@@ -158,7 +158,7 @@ export const CustomerMenuPage = () => {
 				};
 			}}
 		>
-			<Container maxWidth="lg" sx={{ pb: 8 }}>
+			<>
 				<Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 3 }}>
 					<Box>
 						<Typography variant="h5" sx={{ fontWeight: 800 }}>
@@ -306,7 +306,7 @@ export const CustomerMenuPage = () => {
 						</motion.div>
 					</AnimatePresence>
 				)}
-			</Container>
+			</>
 		</PageContainer>
 	);
 };

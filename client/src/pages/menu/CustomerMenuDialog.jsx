@@ -21,7 +21,13 @@ export const CustomerMenuDialog = React.memo(
 		}, [galleryImages]);
 		React.useImperativeHandle(ref, () => api);
 		return (
-			<Dialog maxWidth="md" open={isOpened} onClose={() => setOpen(false)} title={name}>
+			<Dialog
+				fullWidth
+				open={isOpened}
+				onClose={() => setOpen(false)}
+				title={name}
+				bottomSheetProps={{ height: "85vh", maxHeight: "85vh" }}
+			>
 				<Box>
 					<Box>
 						<Box
@@ -30,7 +36,12 @@ export const CustomerMenuDialog = React.memo(
 								gap: 2,
 							}}
 						>
-							<Carousel sx={{ width: "50%", height: 400, marginInline: "auto" }} items={carouselSlides} />
+							<Carousel
+								disableItemCaption
+								sx={{ width: "100%", height: "50dvh", marginInline: "auto" }}
+								caption={name}
+								items={carouselSlides}
+							/>
 						</Box>
 					</Box>
 
@@ -49,8 +60,7 @@ export const CustomerMenuDialog = React.memo(
 						/>
 
 						<Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, whiteSpace: "pre-line" }}>
-							{description ||
-								"Fresh ingredients, balanced flavors, and a warm presentation make this dish a favorite choice for guests."}
+							{description}
 						</Typography>
 					</Box>
 				</Box>
