@@ -20,7 +20,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const SlideUpTransition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
-
+const BOTTOM_SHEET_PROPS = {};
 export const Dialog = ({
 	open = false,
 	disabled = false,
@@ -33,6 +33,7 @@ export const Dialog = ({
 	disableEscape = true,
 	disableBackdropClick = true,
 	TransitionComponent = Transition,
+	bottomSheetProps = BOTTOM_SHEET_PROPS,
 	...props
 }) => {
 	const handleClose = (event, reason) => {
@@ -117,7 +118,7 @@ export const Dialog = ({
 			</MuiDialog>
 		);
 	return (
-		<MobileBottomSheet open={open} onClose={onClose}>
+		<MobileBottomSheet open={open} onClose={onClose} title={title} {...bottomSheetProps}>
 			{children}
 		</MobileBottomSheet>
 	);
