@@ -13,6 +13,7 @@ export * from "./Container/PageContainer.jsx";
 export * from "./RoundTableChairs/RoundTableChairs.jsx";
 export * from "./PhotoAlbumGallery/PhotoAlbumGallery.jsx";
 export * from "./Carousel/Carousel.jsx";
+export * from "./MobileBottomSheet/MobileBottomSheet.jsx";
 
 //  items controls
 export * from "./Controls/MenuItem";

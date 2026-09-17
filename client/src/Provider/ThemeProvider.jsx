@@ -357,7 +357,6 @@ export const ThemeProvider = ({ children }) => {
 					MuiDialog: {
 						styleOverrides: {
 							paper: {
-								borderRadius: 16,
 								boxShadow: "0 20px 60px rgba(0, 0, 0, 0.15)",
 							},
 						},
