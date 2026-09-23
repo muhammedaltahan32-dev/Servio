@@ -118,7 +118,7 @@ export const Dialog = ({
 			</MuiDialog>
 		);
 	return (
-		<MobileBottomSheet open={open} onClose={onClose} title={title} {...bottomSheetProps}>
+		<MobileBottomSheet open={open} onClose={onClose} title={title} actions={actions} {...bottomSheetProps}>
 			{children}
 		</MobileBottomSheet>
 	);

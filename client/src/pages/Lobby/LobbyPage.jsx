@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography, alpha } from "@mui/material";
+import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography, alpha, useScrollTrigger } from "@mui/material";
 import { getCapacity, getTableNumber, normalizeStatus } from "./utils/normalize.js";
 import TableCard from "./TableCard.jsx";
 import { useSelector } from "react-redux";
@@ -12,6 +12,59 @@ const STATUS_FILTER = [{ label: "lobby.allStatus", value: "all" }];
 TABLE_STATUS.forEach((st) => {
 	STATUS_FILTER.push({ label: `lobby.${st}`, value: st });
 });
+const Filters = React.memo(({ tableName, setTableName, setStatus }) => {
+	const elRef = React.useRef(null);
+	const { t } = useLang();
+	const [threshold, setThreshold] = React.useState(0);
+	const scrolled = useScrollTrigger({
+		target: document.getElementById("rootLayout"),
+		disableHysteresis: true,
+		threshold,
+	});
+	React.useLayoutEffect(() => {
+		if (!elRef.current) return;
+		setThreshold(elRef.current.getBoundingClientRect().bottom);
+	}, []);
+	return (
+		<>
+			<Stack
+				ref={elRef}
+				direction={"row"}
+				spacing={2}
+				sx={(theme) => ({
+					position: "sticky",
+					top: `${theme.layout["desktop-appbar-height"]}px`,
+					// bgcolor: "background.default",
+					backdropFilter: "blur(10px)",
+					py: scrolled ? 1 : 0,
+					zIndex: 10,
+					transition: "padding 0.3s ease, backdrop-filter 0.3s ease",
+				})}
+			>
+				<Input
+					sx={{ bgcolor: "background.paper" }}
+					name="status"
+					placeholder={t("lobby.search")}
+					value={tableName ?? ""}
+					onChange={(e) => setTableName(e.target.value)}
+					prefix={<Icon name="Search" />}
+				/>
+				<Select
+					value={status}
+					onChange={(e) => setStatus(e.target.value)}
+					sx={{ bgcolor: "background.paper", width: 180 }}
+				>
+					{STATUS_FILTER.map((st) => (
+						<MenuItem key={st.value} value={st.value}>
+							{t(st.label)}
+						</MenuItem>
+					))}
+				</Select>
+			</Stack>
+		</>
+	);
+});
+Filters.displayName = "Filters";
 export const LobbyPage = () => {
 	const { t } = useLang();
 	const navigate = useNavigate();
@@ -43,8 +96,9 @@ export const LobbyPage = () => {
 		() => items.filter((table) => table?.status?.toLocaleLowerCase?.() === "needs_cleaning").length || 0,
 		[items],
 	);
+
 	return (
-		<PageContainer sx={{ gap: 2, overflow: "auto" }}>
+		<PageContainer sx={{ gap: 2 }}>
 			<Grid container spacing={2}>
 				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
 					<Stack
@@ -77,27 +131,7 @@ export const LobbyPage = () => {
 				</Grid>
 			</Grid>
 
-			<Stack direction={"row"} spacing={2}>
-				<Input
-					sx={{ bgcolor: "background.paper" }}
-					name="status"
-					placeholder={t("lobby.search")}
-					value={tableName ?? ""}
-					onChange={(e) => setTableName(e.target.value)}
-					prefix={<Icon name="Search" />}
-				/>
-				<Select
-					value={status}
-					onChange={(e) => setStatus(e.target.value)}
-					sx={{ bgcolor: "background.paper", width: 180 }}
-				>
-					{STATUS_FILTER.map((st) => (
-						<MenuItem key={st.value} value={st.value}>
-							{t(st.label)}
-						</MenuItem>
-					))}
-				</Select>
-			</Stack>
+			<Filters tableName={tableName} setTableName={setTableName} setStatus={setStatus} />
 			{loading ? (
 				<Paper
 					sx={{

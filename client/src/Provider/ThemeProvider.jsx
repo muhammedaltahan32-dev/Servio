@@ -39,7 +39,11 @@ export const ThemeProvider = ({ children }) => {
 		() =>
 			createTheme({
 				direction,
-
+				layout: {
+					"desktop-appbar-height": 64,
+					"desktop-drawer-width": 88,
+					"mobile-drawer-width": 260,
+				},
 				shape: {
 					borderRadius: 12,
 				},
@@ -223,12 +227,27 @@ export const ThemeProvider = ({ children }) => {
 							"*": {
 								boxSizing: "border-box",
 							},
+							"::-webkit-scrollbar": {
+								width: "8px",
+								height: "8px",
+							},
+							"::-webkit-scrollbar-track": {
+								background: "#0000",
+								borderRadius: "4px",
+							},
+							"::-webkit-scrollbar-thumb": {
+								background: "#888",
+								borderRadius: "4px",
+								"&:hover": {
+									background: "#aaa",
+								},
+							},
 						},
 					},
 					MuiTooltip: {
 						styleOverrides: {
 							tooltip: {
-								backgroundColor: "#1E1E1E",
+								backgroundColor: "#2F3137",
 								color: "#fff",
 								fontSize: "12px",
 								fontWeight: 500,
@@ -238,7 +257,7 @@ export const ThemeProvider = ({ children }) => {
 							},
 
 							arrow: {
-								color: "#1E1E1E",
+								color: "#2F3137",
 							},
 						},
 					},

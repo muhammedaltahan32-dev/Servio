@@ -1,5 +1,4 @@
 import React from "react";
-import { DESKTOP_DRAWER_WIDTH } from "../constant.js";
 import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme, useScrollTrigger } from "@mui/material";
 import { Icon, IconButton, MenuItem, Menu } from "@components";
 import { useDispatch } from "react-redux";
@@ -24,7 +23,7 @@ const ThemeSwitcher = React.memo(() => {
 	);
 });
 ThemeSwitcher.displayName = "ThemeSwitcher";
-const AppBar = ({ mainScrollableElement }) => {
+const AppBar = () => {
 	const location = useLocation();
 	const pageName = location.pathname.split("/").filter(Boolean).pop() || "";
 	const { t, supportedLanguages, changeLanguage } = useLang();
@@ -33,19 +32,22 @@ const AppBar = ({ mainScrollableElement }) => {
 		dispatch(drawerToggle());
 	};
 	const scrolled = useScrollTrigger({
-		target: mainScrollableElement.current,
-		threshold: 10,
+		target: document.getElementById("rootLayout"),
+		disableHysteresis: true,
+		threshold: 60,
 	});
+
 	return (
 		<MUAppBar
 			color="transparent"
 			position="fixed"
 			sx={(theme) => ({
+				height: `${theme.layout["desktop-appbar-height"]}px`,
+				width: { md: `calc(100% -  ${theme.layout["desktop-drawer-width"]}px )` },
+				marginInlineStart: { md: `calc(${theme.layout["desktop-drawer-width"]}px )` },
+				bgcolor: scrolled ? "background.paper" : "transparent",
 				boxShadow: "none",
-				width: { md: `calc(100% - ${DESKTOP_DRAWER_WIDTH}px )` },
-				marginInlineStart: { md: `calc(${DESKTOP_DRAWER_WIDTH}px )` },
-				// bgcolor: "background.paper",
-				backdropFilter: "blur(20px)",
+				transition: "background-color 0.3s ease, box-shadow 0.3s ease ",
 			})}
 		>
 			<Toolbar>

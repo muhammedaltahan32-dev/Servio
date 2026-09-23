@@ -27,6 +27,7 @@ export function MobileBottomSheet({
 	maxHeight = "85vh",
 	height = "auto",
 	backwardButton = true,
+	actions,
 	...props
 }) {
 	// Configures iOS swipe back prevention optimization
@@ -100,6 +101,7 @@ export function MobileBottomSheet({
 				>
 					{children}
 				</Box>
+				{actions && <Box sx={{ p: 1 }}>{actions}</Box>}
 			</SwipeableDrawer>
 		</>
 	);
