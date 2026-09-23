@@ -1,6 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
 import React from "react";
-import { DRAWER_WIDTH } from "../constant.js";
+import { DESKTOP_DRAWER_WIDTH } from "../constant.js";
 import { Outlet } from "react-router";
 
 export const Main = () => {
@@ -9,8 +9,8 @@ export const Main = () => {
 			component="main"
 			sx={{
 				flexGrow: 1,
-				width: { md: `calc(100% - ${DRAWER_WIDTH}px)`, xs: "100%" },
-				minHeight: "100vh",
+
+				// minHeight: "100vh",
 				// backgroundColor: (theme) => theme.palette.grey[100],
 			}}
 		>
