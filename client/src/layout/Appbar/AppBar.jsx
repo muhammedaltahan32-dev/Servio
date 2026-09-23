@@ -1,6 +1,6 @@
 import React from "react";
-import { DRAWER_WIDTH } from "../constant.js";
-import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme } from "@mui/material";
+import { DESKTOP_DRAWER_WIDTH } from "../constant.js";
+import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme, useScrollTrigger } from "@mui/material";
 import { Icon, IconButton, MenuItem, Menu } from "@components";
 import { useDispatch } from "react-redux";
 import { drawerToggle } from "../../features/layout/layoutSlice.js";
@@ -24,7 +24,7 @@ const ThemeSwitcher = React.memo(() => {
 	);
 });
 ThemeSwitcher.displayName = "ThemeSwitcher";
-const AppBar = () => {
+const AppBar = ({ mainScrollableElement }) => {
 	const location = useLocation();
 	const pageName = location.pathname.split("/").filter(Boolean).pop() || "";
 	const { t, supportedLanguages, changeLanguage } = useLang();
@@ -32,15 +32,20 @@ const AppBar = () => {
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
 	};
+	const scrolled = useScrollTrigger({
+		target: mainScrollableElement.current,
+		threshold: 10,
+	});
 	return (
 		<MUAppBar
 			color="transparent"
 			position="fixed"
 			sx={(theme) => ({
 				boxShadow: "none",
-				width: { md: `calc(100% - ${DRAWER_WIDTH}px )` },
-				marginInlineStart: { md: `calc(${DRAWER_WIDTH}px )` },
-				bgcolor: "background.paper",
+				width: { md: `calc(100% - ${DESKTOP_DRAWER_WIDTH}px )` },
+				marginInlineStart: { md: `calc(${DESKTOP_DRAWER_WIDTH}px )` },
+				// bgcolor: "background.paper",
+				backdropFilter: "blur(20px)",
 			})}
 		>
 			<Toolbar>
