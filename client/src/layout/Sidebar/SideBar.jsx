@@ -9,7 +9,6 @@ import ThemeSwitcher from "./ThemeSwitcher.jsx";
 import { closeDrawer, drawerToggle } from "../../features/layout/layoutSlice.js";
 import SidebarItem from "./elements/SidebarItem.jsx";
 import SidebarList from "./elements/SidebarList.jsx";
-import { DESKTOP_DRAWER_WIDTH, MOBILE_DRAWER_WIDTH } from "../constant.js";
 
 export const SideBar = () => {
 	const dispatch = useDispatch();
@@ -138,15 +137,15 @@ export const SideBar = () => {
 	return (
 		<Box
 			component="nav"
-			sx={{
+			sx={(theme) => ({
 				width: {
-					md: DESKTOP_DRAWER_WIDTH,
+					md: theme.layout["desktop-drawer-width"],
 				},
 
 				flexShrink: {
 					md: 0,
 				},
-			}}
+			})}
 		>
 			<Drawer
 				variant="temporary"
@@ -156,7 +155,7 @@ export const SideBar = () => {
 				ModalProps={{
 					keepMounted: true,
 				}}
-				sx={{
+				sx={(theme) => ({
 					display: {
 						xs: "block",
 						md: "none",
@@ -164,15 +163,15 @@ export const SideBar = () => {
 
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
-						width: MOBILE_DRAWER_WIDTH,
+						width: theme.layout["mobile.drawer-width"],
 
 						border: "none",
 
 						bgcolor: "background.paper",
-						
+
 						color: "text.primary",
 					},
-				}}
+				})}
 			>
 				{drawerContent}
 			</Drawer>
@@ -181,7 +180,7 @@ export const SideBar = () => {
 				variant="permanent"
 				anchor="left"
 				open
-				sx={{
+				sx={(theme) => ({
 					display: {
 						xs: "none",
 						md: "block",
@@ -189,14 +188,14 @@ export const SideBar = () => {
 
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
-						width: DESKTOP_DRAWER_WIDTH,
+						width: theme.layout["desktop-drawer-width"],
 						border: "none",
 						bgcolor: "background.paper",
 						color: "text.primary",
 
 						overflowX: "hidden",
 					},
-				}}
+				})}
 			>
 				{drawerContent}
 			</Drawer>

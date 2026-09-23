@@ -27,7 +27,7 @@ export const SidebarList = () => {
 			disablePadding
 			sx={(theme) => ({
 				width: "100%",
-				height: "100%",
+				// height: "100%",
 				overflow: "auto",
 				scrollbarWidth: "none",
 				...(isSmallScreen

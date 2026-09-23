@@ -15,7 +15,6 @@ const ThemeSwitcher = () => {
 		<SidebarItem
 			label={t(`layout.mode.${colorScheme === "dark" ? "light" : "dark"}`)}
 			icon={colorScheme === "dark" ? "LightMode" : "DarkMode"}
-			showTitle={false}
 			onClick={changeMode}
 		>
 			<Switch checked={colorScheme === "dark"} tabIndex={-1} sx={{ pointerEvents: "none" }} />
