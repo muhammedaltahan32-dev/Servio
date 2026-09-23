@@ -172,12 +172,12 @@ export const ThemeProvider = ({ children }) => {
 
 							background: {
 								// default: "#171717",
-								default: "#2A2A2A",
+								default: "#101118",
 								// paper: "#242424",
-								paper: "#363636",
+								paper: "#1C1D23",
 							},
 
-							divider: "#525152",
+							divider: "#2F3137",
 
 							tableStatus: tableStatusColors,
 						},
