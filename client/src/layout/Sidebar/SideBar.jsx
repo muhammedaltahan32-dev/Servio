@@ -191,6 +191,7 @@ export const SideBar = () => {
 						width: theme.layout["desktop-drawer-width"],
 						border: "none",
 						bgcolor: "background.paper",
+						boxShadow: "none",
 						color: "text.primary",
 
 						overflowX: "hidden",
