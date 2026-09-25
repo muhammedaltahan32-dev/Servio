@@ -17,7 +17,6 @@ const Filters = React.memo(({ tableName, setTableName, setStatus }) => {
 	const { t } = useLang();
 	const [threshold, setThreshold] = React.useState(0);
 	const scrolled = useScrollTrigger({
-		target: document.getElementById("rootLayout"),
 		disableHysteresis: true,
 		threshold,
 	});
@@ -98,7 +97,7 @@ export const LobbyPage = () => {
 	);
 
 	return (
-		<PageContainer sx={{ gap: 2 }}>
+		<PageContainer sx={{ gap: 2, height: "auto" }}>
 			<Grid container spacing={2}>
 				<Grid size={{ lg: 3, sm: 6, xs: 12 }}>
 					<Stack

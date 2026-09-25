@@ -7,7 +7,7 @@ export const PageContainer = React.forwardRef(({ children, sx = EMPTY_OBJECT, ..
 			let overrideStyles = sx;
 			if (typeof overrideStyles === "function") overrideStyles = overrideStyles(theme);
 			return {
-				height: "100%",
+				height: `calc(100dvh - ${theme.layout["desktop-appbar-height"]}px)`,
 				flex: 1,
 				p: { md: 3, sm: 2.5, xs: 2 },
 				display: "flex",
