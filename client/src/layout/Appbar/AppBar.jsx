@@ -32,11 +32,9 @@ const AppBar = () => {
 		dispatch(drawerToggle());
 	};
 	const scrolled = useScrollTrigger({
-		target: document.getElementById("rootLayout"),
 		disableHysteresis: true,
 		threshold: 60,
 	});
-
 	return (
 		<MUAppBar
 			color="transparent"

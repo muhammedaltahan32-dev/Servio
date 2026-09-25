@@ -43,6 +43,7 @@ export const ThemeProvider = ({ children }) => {
 					"desktop-appbar-height": 64,
 					"desktop-drawer-width": 88,
 					"mobile-drawer-width": 260,
+					"desktop-actions-bar-width": 350,
 				},
 				shape: {
 					borderRadius: 12,

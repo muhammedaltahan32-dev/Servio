@@ -4,8 +4,16 @@ const layoutSlice = createSlice({
 	name: "layout",
 	initialState: {
 		mobileOpen: false,
+		actionsBarContent: null,
+		isActionsBarOpened: false,
 	},
 	reducers: {
+		setActionsBarContent: (state, action) => {
+			state.actionsBarContent = action.payload;
+		},
+		openActionsBar: (state, action) => {
+			state.isActionsBarOpened = action.payload;
+		},
 		drawerToggle: (state) => {
 			state.mobileOpen = !state.mobileOpen;
 		},
@@ -15,5 +23,5 @@ const layoutSlice = createSlice({
 	},
 });
 
-export const { drawerToggle,closeDrawer } = layoutSlice.actions;
+export const { drawerToggle, closeDrawer, setActionsBarContent, openActionsBar } = layoutSlice.actions;
 export default layoutSlice.reducer;

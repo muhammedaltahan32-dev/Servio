@@ -31,6 +31,7 @@ import {
 import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
 import { Icon, PageContainer } from "@components";
+import { openActionsBar, setActionsBarContent } from "../../features/layout/layoutSlice.js";
 
 export const CustomerMenuPage = () => {
 	const dispatch = useDispatch();
@@ -47,7 +48,6 @@ export const CustomerMenuPage = () => {
 	const [cart, setCart] = React.useState([]);
 
 	const [selectedCategoryId, setSelectedCategoryId] = React.useState("");
-
 	React.useEffect(() => {
 		dispatch(fetchCategories());
 		dispatch(fetchMenuItems());
@@ -78,6 +78,7 @@ export const CustomerMenuPage = () => {
 	};
 
 	const addToCart = (item) => {
+		dispatch(openActionsBar(true));
 		setCart((currentCart) => {
 			const itemId = item[Menu_ID] ?? item.id;
 			const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
@@ -111,29 +112,98 @@ export const CustomerMenuPage = () => {
 		setCart((currentCart) => currentCart.map((item) => (item.id === itemId ? { ...item, notes } : item)));
 	};
 
-	const submitOrder = async () => {
-		if (!table || cart.length === 0) return;
-		const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-		const result = await dispatch(
-			createOrder({
-				table_id: table.id,
-				subtotal,
-				tax_amount: 0,
-				total_amount: subtotal,
-				items: cart.map((item) => ({
-					menu_item_id: item.id,
-					quantity: item.quantity,
-					unit_price: item.price,
-					[Item_Notes]: item.notes.trim() || null,
-				})),
-			}),
-		);
-		if (createOrder.fulfilled.match(result)) {
-			setCart([]);
-			navigate("/lobby");
-		}
-	};
+	const submitOrder = React.useCallback(() => {
+		(async () => {
+			if (!table || cart.length === 0) return;
+			const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+			const result = await dispatch(
+				createOrder({
+					table_id: table.id,
+					subtotal,
+					tax_amount: 0,
+					total_amount: subtotal,
+					items: cart.map((item) => ({
+						menu_item_id: item.id,
+						quantity: item.quantity,
+						unit_price: item.price,
+						[Item_Notes]: item.notes.trim() || null,
+					})),
+				}),
+			);
+			if (createOrder.fulfilled.match(result)) {
+				setCart([]);
+				navigate("/lobby");
+			}
+		})();
+	}, [cart, dispatch, navigate, table]);
+	const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+	React.useEffect(() => {
+		dispatch(
+			setActionsBarContent(
+				<Card sx={{ p: 2.5, position: "sticky", top: 16 }}>
+					<Typography variant="h6" sx={{ fontWeight: 800 }}>
+						Your order
+					</Typography>
+					<Divider sx={{ my: 2 }} />
+					{cart.length === 0 ? (
+						<Typography color="text.secondary">Your order is empty.</Typography>
+					) : (
+						<Stack spacing={1.5}>
+							{cart.map((item) => (
+								<Stack
+									key={item.id}
+									direction="row"
+									spacing={1}
+									sx={{ alignItems: "center", justifyContent: "space-between" }}
+								>
+									<Box sx={{ minWidth: 0, flex: 1 }}>
+										<Typography noWrap>{item.name}</Typography>
+										<Typography variant="body2" color="text.secondary">
+											${(item.price * item.quantity).toFixed(2)}
+										</Typography>
+										<TextField
+											fullWidth
+											size="small"
+											margin="dense"
+											label="Notes"
+											placeholder="e.g. no onions"
+											value={item.notes}
+											onChange={(event) => updateNotes(item.id, event.target.value)}
+											inputProps={{ maxLength: 500 }}
+										/>
+									</Box>
+									<Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+										<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+											-
+										</MuiButton>
+										<Typography>{item.quantity}</Typography>
+										<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+											+
+										</MuiButton>
+									</Stack>
+								</Stack>
+							))}
+							<Divider />
+							<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+								<Typography sx={{ fontWeight: 700 }}>Total</Typography>
+								<Typography sx={{ fontWeight: 700 }}>${cartTotal.toFixed(2)}</Typography>
+							</Stack>
+							<MuiButton variant="contained" fullWidth disabled={orderLoading} onClick={submitOrder}>
+								{orderLoading ? "Sending..." : "Send order"}
+							</MuiButton>
+						</Stack>
+					)}
+				</Card>,
+			),
+		);
+	}, [cartTotal, dispatch, orderLoading, cart, submitOrder]);
+	React.useEffect(() => {
+		return () => {
+			dispatch(setActionsBarContent(null));
+			dispatch(openActionsBar(false));
+		};
+	}, [dispatch]);
 	if (!table) {
 		return (
 			<PageContainer sx={{ alignItems: "center", justifyContent: "center", gap: 2 }}>
@@ -144,8 +214,6 @@ export const CustomerMenuPage = () => {
 			</PageContainer>
 		);
 	}
-
-	const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 	return (
 		<PageContainer
@@ -245,62 +313,7 @@ export const CustomerMenuPage = () => {
 											))}
 										</Box>
 									</Grid>
-									<Grid size={{ xs: 12, md: 4 }}>
-										<Card sx={{ p: 2.5, position: "sticky", top: 16 }}>
-											<Typography variant="h6" sx={{ fontWeight: 800 }}>
-												Your order
-											</Typography>
-											<Divider sx={{ my: 2 }} />
-											{cart.length === 0 ? (
-												<Typography color="text.secondary">Your order is empty.</Typography>
-											) : (
-												<Stack spacing={1.5}>
-													{cart.map((item) => (
-														<Stack
-															key={item.id}
-															direction="row"
-															spacing={1}
-															sx={{ alignItems: "center", justifyContent: "space-between" }}
-														>
-															<Box sx={{ minWidth: 0, flex: 1 }}>
-																<Typography noWrap>{item.name}</Typography>
-																<Typography variant="body2" color="text.secondary">
-																	${(item.price * item.quantity).toFixed(2)}
-																</Typography>
-																<TextField
-																	fullWidth
-																	size="small"
-																	margin="dense"
-																	label="Notes"
-																	placeholder="e.g. no onions"
-																	value={item.notes}
-																	onChange={(event) => updateNotes(item.id, event.target.value)}
-																	inputProps={{ maxLength: 500 }}
-																/>
-															</Box>
-															<Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
-																<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
-																	-
-																</MuiButton>
-																<Typography>{item.quantity}</Typography>
-																<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
-																	+
-																</MuiButton>
-															</Stack>
-														</Stack>
-													))}
-													<Divider />
-													<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-														<Typography sx={{ fontWeight: 700 }}>Total</Typography>
-														<Typography sx={{ fontWeight: 700 }}>${cartTotal.toFixed(2)}</Typography>
-													</Stack>
-													<MuiButton variant="contained" fullWidth disabled={orderLoading} onClick={submitOrder}>
-														{orderLoading ? "Sending..." : "Send order"}
-													</MuiButton>
-												</Stack>
-											)}
-										</Card>
-									</Grid>
+									{/* <Grid size={{ xs: 12, md: 4 }}></Grid> */}
 								</Grid>
 							)}
 						</motion.div>
