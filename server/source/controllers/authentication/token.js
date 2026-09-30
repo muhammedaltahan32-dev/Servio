@@ -1,13 +1,9 @@
 import jwt from "jsonwebtoken";
 
-// if (!process.env.APP_SECRET) {
-// 	throw new Error("FATAL: APP_SECRET environment variable is not defined.");
-// }
+const SECRET = process.env.APP_SECRET;
 
-const SECRET = process.env.APP_SECRET || "AHMAD-SECRET-KEY";
-
-const ACCESS_TOKEN_TTL = 1 * 60;
-const REFRESH_TOKEN_TTL = 7 * 24;
+const ACCESS_TOKEN_TTL = 15 * 60;
+const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60;
 
 export const generateToken = (userId, options = {}) => {
 	const { type = "access", ttl = type === "refresh" ? REFRESH_TOKEN_TTL : ACCESS_TOKEN_TTL } = options;
