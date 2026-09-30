@@ -40,11 +40,12 @@ export const Login = () => {
 		const result = await dispatch(loginUser(formData));
 
 		if (loginUser.fulfilled.match(result)) {
-			const { token } = result.payload.data;
+			const { token, refreshToken } = result.payload.data;
 
 			dispatch(
 				setCredentials({
 					token,
+					refreshToken,
 					...formData,
 				}),
 			);
