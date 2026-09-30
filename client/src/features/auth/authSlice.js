@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import ApiService from "../../services/ApiService.js";
-import { TOKEN, USER_INFO } from "../../../../constants/localStorage.js";
+import { REFRESH_TOKEN, TOKEN, USER_INFO } from "../../../../constants/localStorage.js";
 import { User_Name } from "../../../../constants/FieldsName.js";
 import { Api_Signin } from "../../../../constants/SubApi.js";
 const getStoredUser = () => {
@@ -26,27 +26,34 @@ const authSlice = createSlice({
 	initialState: {
 		user: getStoredUser(),
 		token: localStorage.getItem(TOKEN) || null,
+		refreshToken: localStorage.getItem(REFRESH_TOKEN) || null,
 		isAuthenticated: !!localStorage.getItem(TOKEN),
 		loading: false,
 		error: false,
 	},
 	reducers: {
 		setCredentials: (state, action) => {
-			const { token, ...data } = action.payload;
+			const { token, refreshToken, ...data } = action.payload;
 			const userInfo = {
 				[User_Name]: data[User_Name],
 			};
 			state.user = userInfo;
 			state.token = token;
+			state.refreshToken = refreshToken || state.refreshToken;
 			state.isAuthenticated = true;
 			localStorage.setItem(TOKEN, token);
+			if (refreshToken) {
+				localStorage.setItem(REFRESH_TOKEN, refreshToken);
+			}
 			localStorage.setItem(USER_INFO, JSON.stringify(userInfo));
 		},
 		logout: (state) => {
 			state.user = null;
 			state.token = null;
+			state.refreshToken = null;
 			state.isAuthenticated = false;
 			localStorage.removeItem(TOKEN);
+			localStorage.removeItem(REFRESH_TOKEN);
 			localStorage.removeItem(USER_INFO);
 		},
 	},
