@@ -12,6 +12,8 @@ export const PageContainer = React.forwardRef(({ children, sx = EMPTY_OBJECT, ..
 				p: { md: 3, sm: 2.5, xs: 2 },
 				display: "flex",
 				flexDirection: "column",
+				width: { xs: "100dvw", md: "100%" },
+				overflow: "auto",
 				...overrideStyles,
 			};
 		},

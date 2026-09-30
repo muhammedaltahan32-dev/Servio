@@ -24,7 +24,10 @@ export default function Root() {
 					borderEndStartRadius: { md: theme.shape.borderRadius + "px", xs: 0 },
 					borderStartStartRadius: { md: theme.shape.borderRadius + "px", xs: 0 },
 					display: "flex",
-					height: "100%",
+
+					// 🔴 CHANGED: Use minHeight so the document body handles the scroll
+					minHeight: "100vh",
+
 					flexDirection: "column",
 				};
 			}}

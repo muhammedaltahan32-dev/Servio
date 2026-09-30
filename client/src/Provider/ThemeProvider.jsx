@@ -42,7 +42,7 @@ export const ThemeProvider = ({ children }) => {
 				layout: {
 					"desktop-appbar-height": 64,
 					"desktop-drawer-width": 88,
-					"mobile-drawer-width": 260,
+					"mobile-drawer-width": 270,
 					"desktop-actions-bar-width": 350,
 				},
 				shape: {

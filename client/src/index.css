@@ -1,20 +1,24 @@
 @font-face {
-	font-family: "Cairo";
-	src: url("./assets/fonts/Cairo-VariableFont_slnt\,wght.ttf") format("truetype");
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-VariableFont_slnt\,wght.ttf") format("truetype");
 }
-body,
+
 html,
+body,
 #root {
-	width: 100%;
-	min-height: 100%;
+  width: 100%;
+  min-height: 100vh; /* Changed from height: 100dvh */
 }
+
 body {
-	height: 100dvh;
-	overflow-y: auto;
+  /* Removed height: 100dvh */
+  /* Removed overflow-y: auto */
+  overflow-x: clip; /* Replaced overflow-x: hidden with clip (won't break vertical sticky) */
 }
+
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: "Cairo", sans-serif !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Cairo", sans-serif !important;
 }

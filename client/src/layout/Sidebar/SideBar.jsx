@@ -163,7 +163,7 @@ export const SideBar = () => {
 
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
-						width: theme.layout["mobile.drawer-width"],
+						width: theme.layout["mobile-drawer-width"],
 
 						border: "none",
 

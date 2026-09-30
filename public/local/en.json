@@ -26,7 +26,8 @@
 		"card": {
 			"showDetails": "View Details",
 			"order": "Order"
-		}
+		},
+		"noItems": "No items available yet."
 	},
 	"lobby": {
 		"persons": "Persons",

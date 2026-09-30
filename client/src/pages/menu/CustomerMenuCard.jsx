@@ -152,14 +152,14 @@ export const CustomerMenuCard = React.memo(({ item, onOrder, index }) => {
 								onClick={() => onOrder?.(item)}
 								disabled={item[Menu_IsAvailable] === false}
 								suffix={<Icon name="TakeoutDiningOutlined" size="1rem" />}
-								sx={{ bgcolor: "primary" }}
+								sx={{ bgcolor: "primary", py: 1, px: 1.5 }}
 							>
 								{t("customerMenu.card.order")}
 							</Button>
 							<Button
 								onClick={() => dialogRef.current.open()}
 								suffix={<Icon name="InfoOutlined" size="1rem" />}
-								sx={{ bgcolor: "#0006" }}
+								sx={{ bgcolor: "#0006", py: 1, px: 1.5 }}
 							>
 								{t("customerMenu.card.showDetails")}
 							</Button>

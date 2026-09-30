@@ -13,6 +13,8 @@ import {
 	Tabs,
 	TextField,
 	Typography,
+	useScrollTrigger,
+	Toolbar,
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
@@ -37,7 +39,7 @@ export const CustomerMenuPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { tableId } = useParams();
-	const { getFieldsByLang } = useLang();
+	const { getFieldsByLang, t } = useLang();
 
 	const categories = useSelector((state) => state.categories?.items ?? []);
 	const menuItems = useSelector((state) => state.menuItems?.items ?? []);
@@ -46,7 +48,10 @@ export const CustomerMenuPage = () => {
 	const orderLoading = useSelector((state) => state.orders?.loading);
 	const table = tables.find((candidate) => String(candidate.id) === String(tableId));
 	const [cart, setCart] = React.useState([]);
-
+	const scrolled = useScrollTrigger({
+		threshold: 120,
+		disableHysteresis: true,
+	});
 	const [selectedCategoryId, setSelectedCategoryId] = React.useState("");
 	React.useEffect(() => {
 		dispatch(fetchCategories());
@@ -221,8 +226,11 @@ export const CustomerMenuPage = () => {
 				const primary = (opacity = 1) =>
 					`color-mix(in srgb, ${theme.palette.primary.main} ${opacity * 100}%, transparent)`;
 				return {
-					background: `radial-gradient(circle at top, ${primary(0.1)}, transparent 40%)`,
+					// background: `radial-gradient(circle at top, ${primary(0.1)}, transparent 40%)`,
 					position: "relative",
+					overflow: "hidden",
+					maxWidth: "100%",
+					height: "100%",
 				};
 			}}
 		>
@@ -234,9 +242,6 @@ export const CustomerMenuPage = () => {
 						</Typography>
 						<Typography color="text.secondary">Choose your items and send the order to the kitchen.</Typography>
 					</Box>
-					<MuiButton variant="outlined" startIcon={<Icon name="ArrowBack" />} onClick={() => navigate("/lobby")}>
-						Back
-					</MuiButton>
 				</Stack>
 				{isLoading && !safeCategories.length && !menuItems.length ? (
 					<Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
@@ -244,12 +249,14 @@ export const CustomerMenuPage = () => {
 					</Box>
 				) : (
 					<AnimatePresence mode="wait">
-						<motion.div
+						<Box
+							component={motion.div}
 							key="grid-view"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.2 }}
+							sx={{ overflow: "hidden", maxWidth: "100%" }}
 						>
 							{safeCategories.length > 0 && (
 								<Tabs
@@ -259,20 +266,26 @@ export const CustomerMenuPage = () => {
 									onChange={handleTabChange}
 									variant="scrollable"
 									scrollButtons="auto"
-									sx={{
+									sx={(theme) => ({
 										mb: 4,
 										borderBottom: 1,
 										borderColor: "divider",
-
+										bgcolor: scrolled ? "background.paper" : "transparent",
+										overflow: "hidden",
+										position: { xs: scrolled ? "fixed" : "static", md: "static" },
+										insetInline: "0",
+										zIndex: 10,
+										top: scrolled ? theme.layout["desktop-appbar-height"] : 0,
+										transition: "top 0.3s ease, insetInline 0.3s ease",
 										".MuiTabs-flexContainer": { gap: 1 },
 										".MuiTab-root": {
 											textTransform: "none",
 											fontWeight: 700,
-
+											maxWidth: "100%",
 											minHeight: 42,
 											px: 3,
 										},
-									}}
+									})}
 								>
 									{safeCategories.map((category) => (
 										<Tab
@@ -293,30 +306,25 @@ export const CustomerMenuPage = () => {
 							) : categoryItems.length === 0 ? (
 								<Box sx={{ py: 6, textAlign: "center" }}>
 									<Typography variant="h6" color="text.secondary">
-										No items available in {getFieldsByLang(activeCategory, "name")} yet.
+										{t("customerMenu.noItems")}
 									</Typography>
 								</Box>
 							) : (
-								<Grid container spacing={3}>
-									<Grid size={{ xs: 12, md: 8 }}>
-										<Box
-											sx={{
-												display: "grid",
-												gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-												rowGap: 6,
-												columnGap: 4,
-												mt: 8,
-											}}
-										>
-											{categoryItems.map((item) => (
-												<CustomerMenuCard key={item.id} item={item} onOrder={addToCart} />
-											))}
-										</Box>
-									</Grid>
-									{/* <Grid size={{ xs: 12, md: 4 }}></Grid> */}
-								</Grid>
+								<Box
+									sx={{
+										display: "grid",
+										gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+										rowGap: 4,
+										columnGap: 2,
+										mt: 8,
+									}}
+								>
+									{categoryItems.map((item) => (
+										<CustomerMenuCard key={item.id} item={item} onOrder={addToCart} />
+									))}
+								</Box>
 							)}
-						</motion.div>
+						</Box>
 					</AnimatePresence>
 				)}
 			</>
