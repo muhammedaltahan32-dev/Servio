@@ -1,21 +1,37 @@
-const SECRET = process.env.APP_SECRET || "AHMAD_SECRET";
+import jwt from "jsonwebtoken";
 
-export const generateToken = (userId) => {
-	const timestamp = Date.now();
-	const payload = `${userId}:${timestamp}:${SECRET}`;
-	return Buffer.from(payload).toString("base64");
+const SECRET = process.env.APP_SECRET;
+
+const ACCESS_TOKEN_TTL = 15 * 60;
+const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60;
+
+export const generateToken = (userId, options = {}) => {
+	const { type = "access", ttl = type === "refresh" ? REFRESH_TOKEN_TTL : ACCESS_TOKEN_TTL } = options;
+
+	const payload = {
+		userId,
+		type,
+	};
+
+	return jwt.sign(payload, SECRET, {
+		expiresIn: ttl,
+	});
 };
 
-export const verifyToken = (token) => {
+export const verifyToken = (token, expectedType = "access") => {
 	try {
-		const decoded = Buffer.from(token, "base64").toString("utf8");
-		const [userId, timestamp, secret] = decoded.split(":");
-		if (secret !== SECRET) return null;
-		// Optional expiration: 1 day
-		// 1000 x 3600 x 24 = 864000000
-		if (Date.now() - parseInt(timestamp) > 864000000) return null;
-		return { userId };
-	} catch {
+		const decoded = jwt.verify(token, SECRET);
+
+		if (expectedType && decoded.type !== expectedType) {
+			return null;
+		}
+
+		return {
+			userId: decoded.userId,
+			type: decoded.type,
+			exp: decoded.exp * 1000,
+		};
+	} catch (error) {
 		return null;
 	}
 };

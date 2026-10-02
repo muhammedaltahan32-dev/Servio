@@ -1,7 +1,17 @@
 import { mdlUser } from "../../../constants/modelNames.js";
 import { Kind_ADMIN, Kind_WAITER, Kind_KITCHEN } from "../../../constants/enumOptions.js";
-import { Api_Category, Api_MenuItem, Api_Order, Api_Signin, Api_Table, Api_Upload, Api_User } from "../../../constants/SubApi.js";
+import {
+	Api_Category,
+	Api_MenuItem,
+	Api_Order,
+	Api_Signin,
+	Api_Table,
+	Api_Upload,
+	Api_User,
+} from "../../../constants/SubApi.js";
 import { User_ID, User_Kind } from "../../../constants/FieldsName.js";
+import { St_UNAUTHORIZED } from "../../../constants/HttpStatus.js";
+import { Api_Architecture } from "../../../constants/SubApi.js";
 import { getUserIdFromReq } from "../controllers/authentication/helper.js";
 import {
 	UI_Categories,
@@ -85,24 +95,29 @@ export default async function assignContext(req, res, next) {
 		let userObj = null;
 
 		if (authHeader) {
-			const userId = getUserIdFromReq(req);
-			if (userId && !userId.message) {
-				userObj = { id: userId };
-
-				const userModel = req.app.locals.db[mdlUser];
-				const foundUser = await userModel.findOne({
-					where: { [User_ID]: userId },
-					attributes: [User_Kind],
-				});
-				if (foundUser) {
-					const roleMap = {
-						[Kind_ADMIN]: admin,
-						[Kind_KITCHEN]: kitchen,
-						[Kind_WAITER]: waiter,
-					};
-					role = roleMap[foundUser.kind] || guests;
-				}
+			const allowRefreshToken = req.path === `/${Api_Architecture}/refresh`;
+			const userId = getUserIdFromReq(req, allowRefreshToken);
+			if (!userId || userId.message) {
+				return res.status(St_UNAUTHORIZED).json({ success: false, message: "error.messages.ExpiredToken" });
 			}
+
+			userObj = { id: userId };
+
+			const userModel = req.app.locals.db[mdlUser];
+			const foundUser = await userModel.findOne({
+				where: { [User_ID]: userId },
+				attributes: [User_Kind],
+			});
+			if (!foundUser) {
+				return res.status(St_UNAUTHORIZED).json({ success: false, message: "error.messages.ExpiredToken" });
+			}
+
+			const roleMap = {
+				[Kind_ADMIN]: admin,
+				[Kind_KITCHEN]: kitchen,
+				[Kind_WAITER]: waiter,
+			};
+			role = roleMap[foundUser.kind] || guests;
 		}
 		req.context = new Context(role, userObj);
 		next();
