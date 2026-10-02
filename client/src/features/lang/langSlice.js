@@ -5,15 +5,19 @@ import { LANG_CODE } from "../../../../constants/localStorage.js";
 
 export const changeLanguage = createAsyncThunk("language/changeLanguage", async (lang, { rejectWithValue }) => {
 	try {
-		if (!i18n.services.resourceStore.data[lang]) {
+		if (!i18n.hasResourceBundle(lang, "translation")) {
 			const translations = await ApiService.getLanguage(lang);
+			if (!translations) throw new Error(`Missing ${lang} translations`);
 
 			i18n.addResourceBundle(lang, "translation", translations, true, true);
 		}
 		i18n.languages = lang;
 		await i18n.changeLanguage(lang);
 		localStorage.setItem(LANG_CODE, lang);
-		document.dir = lang === "ar" ? "rtl" : "ltr";
+		const direction = lang === "ar" ? "rtl" : "ltr";
+		document.documentElement.dir = direction;
+		document.documentElement.lang = lang;
+		document.body.dir = direction;
 
 		return lang;
 	} catch (error) {
