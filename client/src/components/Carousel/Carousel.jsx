@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Paper, Typography, MobileStepper, useTheme } from "@mui/material";
-import { IconButton } from "../index.js";
+import { Box, Paper, Typography, MobileStepper, useTheme, IconButton } from "@mui/material";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 const EMPTY_ARRAY = [];
 
@@ -18,12 +19,12 @@ export const Carousel = ({
 	const isRtl = isRtlProp ?? theme.direction === "rtl";
 
 	const [activeStep, setActiveStep] = useState(0);
-	const [dragOffset, setDragOffset] = useState(0);
 	const [isSwiping, setIsSwiping] = useState(false);
 
 	const startX = useRef(0);
 	const currentX = useRef(0);
 	const containerRef = useRef(null);
+	const trackRef = useRef(null);
 
 	const maxSteps = items.length;
 	const SWIPE_THRESHOLD = 50;
@@ -46,7 +47,9 @@ export const Carousel = ({
 		if (!isSwiping) return;
 		currentX.current = clientX;
 		const deltaX = currentX.current - startX.current;
-		setDragOffset(deltaX);
+		if (trackRef.current) {
+			trackRef.current.style.transform = `translateX(calc(${stepTranslate}% + ${deltaX}px))`;
+		}
 	};
 
 	const handleTouchEnd = () => {
@@ -67,7 +70,6 @@ export const Carousel = ({
 			}
 		}
 
-		setDragOffset(0);
 		setIsSwiping(false);
 	};
 
@@ -100,7 +102,7 @@ export const Carousel = ({
 		<Box dir={isRtl ? "rtl" : "ltr"} sx={{ userSelect: "none" }}>
 			<Paper
 				ref={containerRef}
-				elevation={3}
+				elevation={1}
 				onTouchStart={(e) => handleTouchStart(e.touches[0].clientX)}
 				onTouchMove={(e) => handleTouchMove(e.touches[0].clientX)}
 				onTouchEnd={handleTouchEnd}
@@ -111,12 +113,13 @@ export const Carousel = ({
 				sx={resolvedSX}
 			>
 				<Box
+					ref={trackRef}
 					sx={{
 						display: "flex",
 						height: "100%",
 						width: "100%",
 						transition: isSwiping ? "none" : "transform 0.3s ease-out",
-						transform: `translateX(calc(${stepTranslate}% + ${dragOffset}px))`,
+						transform: `translateX(${stepTranslate}%)`,
 						position: "relative",
 					}}
 				>
@@ -193,8 +196,9 @@ export const Carousel = ({
 								bgcolor: "rgba(0, 0, 0, 0.2)",
 								"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
 							}}
-							name={"KeyboardArrowLeft"}
-						/>
+						>
+							<KeyboardArrowLeft />
+						</IconButton>
 
 						<IconButton
 							onClick={isRtl ? handleBack : handleNext}
@@ -207,8 +211,9 @@ export const Carousel = ({
 								bgcolor: "rgba(0, 0, 0, 0.2)",
 								"&:hover": { bgcolor: "rgba(0, 0, 0, 0.4)" },
 							}}
-							name={"KeyboardArrowRight"}
-						/>
+						>
+							<KeyboardArrowRight />
+						</IconButton>
 					</>
 				)}
 			</Paper>

@@ -1,11 +1,11 @@
 import React from "react";
 import { TablePagination } from "@mui/material";
-import { useTableState, useTableFunctions } from "../context";
+import { useTablePagination, useTableFilteredData } from "../context";
 import { useLang } from "@hooks";
 
-export const TableFooter = () => {
-	const { page, rowsPerPage, setPage, setRowsPerPage } = useTableState();
-	const { filteredData } = useTableFunctions();
+const TableFooterComponent = () => {
+	const { page, rowsPerPage, setPage, setRowsPerPage } = useTablePagination();
+	const { filteredData } = useTableFilteredData();
 	const { t } = useLang();
 	const handleChangePage = (_, newPage) => {
 		setPage(newPage);
@@ -29,3 +29,5 @@ export const TableFooter = () => {
 		/>
 	);
 };
+
+export const TableFooter = React.memo(TableFooterComponent);

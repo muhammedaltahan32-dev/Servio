@@ -92,7 +92,7 @@ export function AppLoader({ label = "Loading..." }) {
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",
-							boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
+							boxShadow: `0 2px 6px color-mix(in srgb, ${theme.palette.primary.main} 18%, transparent)`,
 						}}
 					>
 						S

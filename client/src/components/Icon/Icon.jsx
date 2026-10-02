@@ -1,10 +1,36 @@
 import React from "react";
-import * as MuiIcons from "@mui/icons-material";
+import Category from "@mui/icons-material/Category";
+import DarkMode from "@mui/icons-material/DarkMode";
 import HelpOutlineTwoToneIcon from "@mui/icons-material/HelpOutlineTwoTone";
+import Home from "@mui/icons-material/Home";
+import Language from "@mui/icons-material/Language";
+import LightMode from "@mui/icons-material/LightMode";
+import Menu from "@mui/icons-material/Menu";
+import People from "@mui/icons-material/People";
+import RestaurantMenu from "@mui/icons-material/RestaurantMenu";
+import Settings from "@mui/icons-material/Settings";
+import Storefront from "@mui/icons-material/Storefront";
+import TableBarTwoTone from "@mui/icons-material/TableBarTwoTone";
+import TableRestaurant from "@mui/icons-material/TableRestaurant";
 import { Box } from "@mui/material";
+
+const ICONS = {
+	Category,
+	DarkMode,
+	Home,
+	Language,
+	LightMode,
+	Menu,
+	People,
+	RestaurantMenu,
+	Settings,
+	Storefront,
+	TableBarTwoTone,
+	TableRestaurant,
+};
 const EMPTY_OBJECT = {};
 export const Icon = React.forwardRef(({ name, size, color, status, sx = EMPTY_OBJECT, ...props }, ref) => {
-	const IconComponent = React.useMemo(() => (MuiIcons[name] ? MuiIcons[name] : MuiIcons["HelpOutlineTwoTone"]), [name]);
+	const IconComponent = ICONS[name] ?? HelpOutlineTwoToneIcon;
 
 	const properties = React.useMemo(
 		() => ({

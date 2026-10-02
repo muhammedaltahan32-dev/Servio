@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Box, SwipeableDrawer, Typography, styled } from "@mui/material";
-import { IconButton } from "../index.js";
+import { Box, SwipeableDrawer, Typography, styled, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const drawerBleeding = 20;
 
@@ -88,7 +88,7 @@ export function MobileBottomSheet({
 					</Box>
 
 					{backwardButton && (
-						<IconButton size="small" onClick={onClose} sx={{ mt: 1, flexShrink: 0 }} name="Close" aria-label="Close dialog" />
+						<IconButton size="small" onClick={onClose} sx={{ mt: 1, flexShrink: 0 }} aria-label="Close dialog"><CloseIcon fontSize="small" /></IconButton>
 					)}
 				</Box>
 

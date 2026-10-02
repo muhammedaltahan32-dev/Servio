@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Chip, Paper, Stack, Typography, useTheme } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { getCapacity, getTableNumber, normalizeStatus, getTableSizeType } from "./utils/normalize.js";
-import { Icon, RestaurantTable } from "@components";
+import { RestaurantTable } from "@components";
 import { useLang } from "@hooks";
 
 export const TableCard = React.memo(({ item, onSelect }) => {
@@ -69,7 +71,7 @@ export const TableCard = React.memo(({ item, onSelect }) => {
 					<Typography variant="caption" color="text.secondary">{t("lobby.tableType", { type: t(`lobby.${tableSizeType}`) })}</Typography>
 					<Stack direction="row" spacing={0.5} sx={{ color: isAvailable ? "primary.main" : "text.disabled", mt: 0.25, alignItems: "center" }}>
 						<Typography variant="caption" sx={{ fontWeight: 700 }}>{isAvailable ? t("lobby.openMenu") : t("lobby.unavailable")}</Typography>
-						{isAvailable && <Icon name={theme.direction === "rtl" ? "ArrowBack" : "ArrowForward"} size="0.9rem" />}
+						{isAvailable && (theme.direction === "rtl" ? <ArrowBackIcon sx={{ fontSize: "0.9rem" }} /> : <ArrowForwardIcon sx={{ fontSize: "0.9rem" }} />)}
 					</Stack>
 				</Stack>
 			</Stack>

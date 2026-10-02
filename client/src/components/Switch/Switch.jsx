@@ -8,7 +8,6 @@ import {
 	Stack,
 	styled,
 } from "@mui/material";
-import { Icon } from "../index";
 import React from "react";
 import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone";
 const IOSSwitch = React.forwardRef((props, ref) => (
@@ -50,7 +49,7 @@ const IOSSwitchStyled = styled(IOSSwitch)(({ theme }) => ({
 		boxSizing: "border-box",
 		width: 22,
 		height: 22,
-		boxShadow: "0 2px 4px 0 rgba(0,35,110,0.2)",
+		boxShadow: "0 1px 2px 0 rgba(0,35,110,0.12)",
 	},
 	"& .MuiSwitch-track": {
 		borderRadius: 26 / 2,
@@ -72,7 +71,7 @@ export const Switch = React.forwardRef(
 						<Stack direction="row" spacing={1}>
 							<IOSSwitchStyled ref={ref} {...props} />
 							{(error || warning) && (
-								<Icon status={error ? "error" : "warning"} size="1rem" name={"WarningAmberRounded"} />
+								<WarningTwoToneIcon color={error ? "error" : "warning"} sx={{ fontSize: "1rem" }} />
 							)}
 						</Stack>
 					}

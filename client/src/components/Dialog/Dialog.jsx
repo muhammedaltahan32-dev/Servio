@@ -9,8 +9,10 @@ import {
 	Grow,
 	useMediaQuery,
 	useTheme,
+	IconButton,
 } from "@mui/material";
-import { IconButton, MobileBottomSheet } from "../index.js";
+import CloseIcon from "@mui/icons-material/Close";
+import { MobileBottomSheet } from "../MobileBottomSheet/MobileBottomSheet.jsx";
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Grow direction="up" ref={ref} {...props} />;
 });
@@ -59,6 +61,8 @@ export const Dialog = ({
 								border: "1px solid",
 								borderColor: "divider",
 								borderRadius: `${theme.tokens.radius.panel}px`,
+								bgcolor: "background.paper",
+								color: "text.primary",
 								backgroundImage: "none",
 								boxShadow: theme.tokens.shadow.dialog,
 								overflow: "hidden",
@@ -99,12 +103,13 @@ export const Dialog = ({
 
 						{onClose && (
 							<IconButton
-								name="Close"
 								size="small"
 								onClick={(e) => onClose(e, "closeButtonClick")}
 								disabled={disabled}
 									sx={{ color: "text.secondary", ml: 1, flexShrink: 0 }}
-							/>
+							>
+								<CloseIcon fontSize="small" />
+							</IconButton>
 						)}
 					</DialogTitle>
 				)}

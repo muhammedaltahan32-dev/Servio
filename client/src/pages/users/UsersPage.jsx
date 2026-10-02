@@ -11,7 +11,8 @@ import UserDialog from "./UserDialog.jsx";
 export const UsersPage = () => {
 	const dispatch = useDispatch();
 	const { t } = useLang();
-	const { items: users, loading } = useSelector((state) => state.users || { items: [], loading: false });
+	const users = useSelector((state) => state.users.items);
+	const loading = useSelector((state) => state.users.loading);
 	const dialogRef = React.useRef(null);
 
 	const columns = React.useMemo(
@@ -58,6 +59,7 @@ export const UsersPage = () => {
 	}, [dispatch, loading, users]);
 
 	const handleDelete = React.useCallback((user) => dispatch(deleteUser(user.id)), [dispatch]);
+	const handleEdit = React.useCallback((user) => dialogRef.current.open(user), []);
 
 	return (
 		<PageContainer>
@@ -74,7 +76,7 @@ export const UsersPage = () => {
 				data={users}
 				loading={loading}
 				idField="id"
-				onEdit={(user) => dialogRef.current.open(user)}
+				onEdit={handleEdit}
 				onDelete={handleDelete}
 			/>
 		</PageContainer>

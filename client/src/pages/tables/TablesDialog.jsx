@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
-import { Button, Select, Dialog, Input, Table } from "@components";
-import { MenuItem } from "@mui/material";
+import { Button, Dialog, Input, MenuItem, Select, Table } from "@components";
 import { useLang } from "@hooks";
 import { addTable, updateTable } from "../../features/tables/TablesSlice.js";
 import { Table_Number, Table_Capacity, Table_Status } from "../../../../constants/FieldsName.js";
@@ -18,7 +17,7 @@ export const TablesDialog = React.memo(
 	React.forwardRef((props, ref) => {
 		const dispatch = useDispatch();
 		const { t } = useLang();
-		const { items: tables, loading } = useSelector((state) => state.tables || { items: [], loading: false });
+		const loading = useSelector((state) => state.tables.loading);
 
 		const [open, setOpen] = React.useState(false);
 		const [selectedTable, setSelectedTable] = React.useState(null);

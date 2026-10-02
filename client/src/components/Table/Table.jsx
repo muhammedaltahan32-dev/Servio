@@ -7,7 +7,7 @@ import { TableToolbar } from "./elements/TableToolbar";
 import { TableRoot } from "./elements/Table.Root";
 const EMPTY_ARRAY = [];
 const EMPTY_Object = {};
-export const Table = ({
+const TableComponent = ({
 	columns = EMPTY_ARRAY,
 	data = EMPTY_ARRAY,
 	idField = "id",
@@ -45,5 +45,7 @@ export const Table = ({
 		</TableStateProvider>
 	);
 };
+
+export const Table = React.memo(TableComponent);
 
 export default Table;

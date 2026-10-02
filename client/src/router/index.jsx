@@ -1,15 +1,18 @@
+import React, { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import {
-	Home,
-	Login,
-	CategoriesPage,
-	LobbyPage,
-	TablesPage,
-	MenuItemsPage,
-	UsersPage,
-	CustomerMenuPage,
-} from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import PageLoadingFallback from "../components/PageLoadingFallback.jsx";
+import {
+	CategoriesPage,
+	CustomerMenuPage,
+	Home,
+	LobbyPage,
+	Login,
+	MenuItemsPage,
+	SettingsPage,
+	TablesPage,
+	UsersPage,
+} from "./routePages.jsx";
 
 const protectedPaths = [
 	{
@@ -55,6 +58,12 @@ const protectedPaths = [
 		icon: "RestaurantMenu",
 		element: <CustomerMenuPage />,
 	},
+	{
+		path: "/settings",
+		label: "settings.title",
+		icon: "Settings",
+		element: <SettingsPage />,
+	},
 ];
 
 export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path, icon, label }));
@@ -62,7 +71,7 @@ export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path
 export const router = createBrowserRouter([
 	{
 		path: "/login",
-		element: <Login />,
+		element: <Suspense fallback={<PageLoadingFallback />}><Login /></Suspense>,
 	},
 	{
 		path: "/",

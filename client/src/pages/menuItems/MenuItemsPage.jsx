@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Container, Grid, Stack, Chip } from "@mui/material";
-import { Button, Dialog, Input, Table, Select, PhotoAlbumGallery, PageContainer } from "@components";
-import { MenuItem } from "@mui/material";
+import { Button, Dialog, Input, MenuItem, Table, Select, PhotoAlbumGallery, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchMenuItems,
@@ -28,8 +27,9 @@ import MenuItemsDialog from "./MenuItemsDialog.jsx";
 export const MenuItemsPage = () => {
 	const dispatch = useDispatch();
 	const { t, i18n } = useLang();
-	const { items: menuItems, loading } = useSelector((state) => state.menuItems || { items: [], loading: false });
-	const { items: categories } = useSelector((state) => state.categories || { items: [] });
+	const menuItems = useSelector((state) => state.menuItems.items);
+	const loading = useSelector((state) => state.menuItems.loading);
+	const categories = useSelector((state) => state.categories.items);
 	const columns = React.useMemo(
 		() => [
 			{

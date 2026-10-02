@@ -15,7 +15,9 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 				minWidth: 40,
 				width: "auto",
 				flexShrink: 0,
-				color: active ? "primary.main" : `color-mix(in srgb, ${theme.tokens.color.sidebarMuted} 68%, transparent)`,
+				color: active
+					? "primary.main"
+					: `color-mix(in srgb, var(--mui-palette-primary-main) 68%, ${theme.tokens.color.sidebarMuted})`,
 
 				[theme.breakpoints.up("md")]: {
 					minWidth: 40,
@@ -34,7 +36,7 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 			}}
 		>
 			{typeof icon === "string" ? (
-				<Icon name={icon} color={active ? theme.palette.primary.main : undefined} />
+				<Icon name={icon} />
 			) : (
 				icon
 			)}
@@ -44,7 +46,7 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 
 SidebarItemIcon.displayName = "SidebarItemIcon";
 
-export const SidebarItem = React.forwardRef(
+const SidebarItemComponent = React.forwardRef(
 		({ label, icon, onClick, children, sx = EMPTY_OBJECT, active, showTitle = true, ...props }, ref) => {
 		const theme = useTheme();
 		const { t } = useLang();
@@ -195,6 +197,9 @@ export const SidebarItem = React.forwardRef(
 	},
 );
 
+SidebarItemComponent.displayName = "SidebarItem";
+
+export const SidebarItem = React.memo(SidebarItemComponent);
 SidebarItem.displayName = "SidebarItem";
 
 export default SidebarItem;

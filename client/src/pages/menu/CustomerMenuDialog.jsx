@@ -1,8 +1,10 @@
-import { Carousel, Dialog, Icon } from "@components";
+import { Carousel, Dialog } from "@components";
+import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Menu_IsAvailable, Menu_Price } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
+import { formatCurrency } from "@utils";
 
 export const CustomerMenuDialog = React.memo(
 	React.forwardRef(({ item, name, description, galleryImages }, ref) => {
@@ -39,13 +41,10 @@ export const CustomerMenuDialog = React.memo(
 							sx={{ width: "100%", height: { xs: "34vh", sm: "48vh" }, minHeight: 200, maxHeight: 460, marginInline: "auto", borderRadius: 2 }}
 							caption={name}
 							items={carouselSlides}
-						/> : <Box sx={{ height: 200, display: "grid", placeItems: "center", borderRadius: 2, bgcolor: "action.hover", color: "text.secondary" }}><Icon name="ImageNotSupportedOutlined" size="2rem" /></Box>}
+						/> : <Box sx={{ height: 200, display: "grid", placeItems: "center", borderRadius: 2, bgcolor: "action.hover", color: "text.secondary" }}><ImageNotSupportedOutlinedIcon sx={{ fontSize: "2rem" }} /></Box>}
 						<Box sx={{ minWidth: 0 }}>
 						<Typography variant="h4" sx={{ fontWeight: 800, color: "primary.main", mb: 1 }}>
-						{new Intl.NumberFormat(currentLanguage === "ar" ? "ar" : "en-US", {
-								style: "currency",
-								currency: "USD",
-							}).format(Number(item[Menu_Price] ?? 0))}
+						{formatCurrency(item[Menu_Price], currentLanguage)}
 						</Typography>
 
 						<Chip

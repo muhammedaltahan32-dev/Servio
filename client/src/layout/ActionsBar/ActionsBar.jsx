@@ -3,7 +3,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export const ActionsBar = React.memo(() => {
-	const { isActionsBarOpened, actionsBarContent } = useSelector((state) => state.layout);
+	const isActionsBarOpened = useSelector((state) => state.layout.isActionsBarOpened);
+	const actionsBarContent = useSelector((state) => state.layout.actionsBarContent);
 	return (
 		<Drawer
 			variant="permanent"

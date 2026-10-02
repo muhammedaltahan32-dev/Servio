@@ -1,10 +1,10 @@
-import { Icon } from "../index.js";
+import { Icon } from "../Icon/Icon.jsx";
 import { IconButton as MUIconButton } from "@mui/material";
 import React from "react";
-export const IconButton = React.forwardRef(({ name, ...props }, ref) => {
+export const IconButton = React.forwardRef(({ name, children, ...props }, ref) => {
 	return (
 		<MUIconButton ref={ref} {...props}>
-			<Icon name={name} />
+			{children ?? (name ? <Icon name={name} /> : null)}
 		</MUIconButton>
 	);
 });
