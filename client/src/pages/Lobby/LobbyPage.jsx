@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import TableBarIcon from "@mui/icons-material/TableBar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Icon, Input, MenuItem, PageContainer, Select } from "@components";
+import { Input, MenuItem, PageContainer, Select } from "@components";
 import { useLang } from "@hooks";
 import { TABLE_STATUS } from "../../../../constants/enumOptions.js";
 import { getTableNumber } from "./utils/normalize.js";
@@ -38,7 +40,7 @@ const Filters = React.memo(({ tableName, setTableName, status, setStatus }) => {
 					placeholder={t("lobby.search")}
 					value={tableName}
 					onChange={(event) => setTableName(event.target.value)}
-					prefix={<Icon name="Search" color="text.secondary" />}
+					prefix={<SearchIcon sx={{ color: "text.secondary" }} />}
 				/>
 				<Select
 					value={status}
@@ -61,9 +63,12 @@ Filters.displayName = "LobbyFilters";
 export const LobbyPage = () => {
 	const { t } = useLang();
 	const navigate = useNavigate();
-	const { items = [], loading, connectionState } = useSelector((state) => state.tables);
+	const items = useSelector((state) => state.tables.items);
+	const loading = useSelector((state) => state.tables.loading);
+	const connectionState = useSelector((state) => state.tables.connectionState);
 	const [status, setStatus] = React.useState("all");
 	const [tableName, setTableName] = React.useState("");
+	const handleTableSelect = React.useCallback((selectedTable) => navigate(`/customer-menu/${selectedTable.id}`), [navigate]);
 
 	const tables = React.useMemo(() => {
 		const query = tableName.trim().toLocaleLowerCase();
@@ -73,9 +78,16 @@ export const LobbyPage = () => {
 			return matchesStatus && matchesName;
 		});
 	}, [items, status, tableName]);
-	const occupiedCount = items.filter((table) => String(table?.status).toLowerCase() === "occupied").length;
-	const availableCount = items.filter((table) => String(table?.status).toLowerCase() === "available").length;
-	const needsCleaningCount = items.filter((table) => String(table?.status).toLowerCase() === "needs_cleaning").length;
+	const statusCounts = React.useMemo(
+		() => items.reduce((counts, table) => {
+			const tableStatus = String(table?.status).toLowerCase();
+			if (tableStatus === "occupied") counts.occupied += 1;
+			else if (tableStatus === "available") counts.available += 1;
+			else if (tableStatus === "needs_cleaning") counts.needsCleaning += 1;
+			return counts;
+		}, { occupied: 0, available: 0, needsCleaning: 0 }),
+		[items],
+	);
 
 	return (
 		<PageContainer
@@ -110,17 +122,17 @@ export const LobbyPage = () => {
 			</Stack>
 
 			<Grid container spacing={1.5}>
-				<Grid size={{ xs: 6, sm: 6, lg: 3 }}>
+				<Grid size={{ xs: 12, sm: 6, lg: 3 }}>
 					<LobbySummeryCard type="total" label={t("lobby.totalTables")} number={items.length} />
 				</Grid>
-				<Grid size={{ xs: 6, sm: 6, lg: 3 }}>
-					<LobbySummeryCard type="occupied" label={t("lobby.Occupied")} number={occupiedCount} />
+				<Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+					<LobbySummeryCard type="occupied" label={t("lobby.Occupied")} number={statusCounts.occupied} />
 				</Grid>
-				<Grid size={{ xs: 6, sm: 6, lg: 3 }}>
-					<LobbySummeryCard type="ready" label={t("lobby.Available")} number={availableCount} />
+				<Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+					<LobbySummeryCard type="ready" label={t("lobby.Available")} number={statusCounts.available} />
 				</Grid>
-				<Grid size={{ xs: 6, sm: 6, lg: 3 }}>
-					<LobbySummeryCard type="preparing" label={t("lobby.Needs_Cleaning")} number={needsCleaningCount} />
+				<Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+					<LobbySummeryCard type="preparing" label={t("lobby.Needs_Cleaning")} number={statusCounts.needsCleaning} />
 				</Grid>
 			</Grid>
 
@@ -159,7 +171,7 @@ export const LobbyPage = () => {
 					<Grid container spacing={1.5}>
 						{tables.map((table) => (
 							<Grid key={table?.id ?? getTableNumber(table)} size={{ xs: 12, sm: 6, md: 4, xl: 3 }}>
-								<TableCard item={table} onSelect={(selectedTable) => navigate(`/customer-menu/${selectedTable.id}`)} />
+							<TableCard item={table} onSelect={handleTableSelect} />
 							</Grid>
 						))}
 					</Grid>
@@ -177,7 +189,7 @@ export const LobbyPage = () => {
 						}}
 					>
 						<Stack sx={{ alignItems: "center" }} spacing={1}>
-							<Icon name="TableBar" size="2rem" color="text.secondary" />
+							<TableBarIcon sx={{ fontSize: "2rem", color: "text.secondary" }} />
 							<Typography variant="h6" sx={{ fontWeight: 700 }}>
 								{t("lobby.emptyTitle")}
 							</Typography>

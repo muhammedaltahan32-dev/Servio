@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Container, Grid, Stack } from "@mui/material";
-import { Button, Dialog, Input, Table, Select, PhotoAlbumGallery, PageContainer } from "@components";
-import { MenuItem } from "@mui/material";
+import { Button, Dialog, Input, MenuItem, Table, Select, PhotoAlbumGallery, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchMenuItems,
@@ -46,16 +45,18 @@ const MenuItemsDialog = React.memo(
 		const dispatch = useDispatch();
 		const { t, getFieldsByLang } = useLang();
 		const { enqueueSnackbar } = useSnackbar();
-		const { items: menuItems, loading } = useSelector((state) => state.menuItems || { items: [], loading: false });
-		const { items: categories } = useSelector((state) => state.categories || { items: [] });
+		const loading = useSelector((state) => state.menuItems.loading);
+		const categories = useSelector((state) => state.categories.items);
 		const [open, setOpen] = useState(false);
 		const [selectedItem, setSelectedItem] = useState(null);
 		const [formData, setFormData] = useState(initialFormState);
+		const menuImages = formData[Menu_Images];
+		const baseImageValue = formData[Menu_BaseImage];
 		const resolvedImages = React.useMemo(
-			() => (Array.isArray(formData[Menu_Images]) ? formData[Menu_Images].map((image) => normalizeImage(image)) : []),
-			[formData],
+			() => (Array.isArray(menuImages) ? menuImages.map((image) => normalizeImage(image)) : []),
+			[menuImages],
 		);
-		const resolvedBaseImage = React.useMemo(() => normalizeImage(formData[Menu_BaseImage]), [formData]);
+		const resolvedBaseImage = React.useMemo(() => normalizeImage(baseImageValue), [baseImageValue]);
 		const handleOpen = React.useCallback((item = null) => {
 			if (item) {
 				setSelectedItem(item);
@@ -134,12 +135,12 @@ const MenuItemsDialog = React.memo(
 
 		const handleDeleteAnImage = React.useCallback(
 			(imageKey) => {
-				let images = Array.isArray(formData[Menu_Images]) ? [...formData[Menu_Images]] : [];
+				let images = Array.isArray(menuImages) ? [...menuImages] : [];
 				const result = [];
 				let shouldChangeBase = false;
 				let index = 0;
 				for (const img of images) {
-					const baseImage = formData[Menu_BaseImage]?.name || formData[Menu_BaseImage];
+					const baseImage = baseImageValue?.name || baseImageValue;
 					const targetImage = img?.name || img;
 					if (targetImage === imageKey) {
 						if (imageKey === baseImage) shouldChangeBase = true;
@@ -155,7 +156,7 @@ const MenuItemsDialog = React.memo(
 					[Menu_BaseImage]: shouldChangeBase ? result[newBaseIndex] || null : prev[Menu_BaseImage],
 				}));
 			},
-			[formData],
+			[menuImages, baseImageValue],
 		);
 		const handleUploadImages = React.useCallback(
 			(files) => {

@@ -20,7 +20,8 @@ const initialFormState = {
 export const CategoriesPage = () => {
 	const dispatch = useDispatch();
 	const { t } = useLang();
-	const { items: categories, loading } = useSelector((state) => state.categories);
+	const categories = useSelector((state) => state.categories.items);
+	const loading = useSelector((state) => state.categories.loading);
 
 	const columns = React.useMemo(
 		() => [

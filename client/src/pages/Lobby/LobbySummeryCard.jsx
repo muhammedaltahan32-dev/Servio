@@ -1,17 +1,21 @@
 import React from "react";
 import { Box, Paper, Stack, Typography, useTheme } from "@mui/material";
-import { Icon } from "@components";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 
 const SUMMARY_STYLES = {
-	total: { icon: "TableRestaurant", color: "primary.main", tint: "primary" },
-	occupied: { icon: "PeopleAlt", color: "tableStatus.occupied", tint: "error" },
-	ready: { icon: "CheckCircleOutline", color: "tableStatus.ready", tint: "success" },
-	preparing: { icon: "CleaningServices", color: "tableStatus.preparing", tint: "warning" },
+	total: { icon: TableRestaurantIcon, color: "primary.main", tint: "primary" },
+	occupied: { icon: PeopleAltIcon, color: "tableStatus.occupied", tint: "error" },
+	ready: { icon: CheckCircleOutlineIcon, color: "tableStatus.ready", tint: "success" },
+	preparing: { icon: CleaningServicesIcon, color: "tableStatus.preparing", tint: "warning" },
 };
 
-export const LobbySummeryCard = ({ type = "total", label, number }) => {
+export const LobbySummeryCard = React.memo(({ type = "total", label, number }) => {
 	const theme = useTheme();
 	const style = SUMMARY_STYLES[type] ?? SUMMARY_STYLES.total;
+	const SummaryIcon = style.icon;
 	return (
 		<Paper
 			variant="outlined"
@@ -38,10 +42,11 @@ export const LobbySummeryCard = ({ type = "total", label, number }) => {
 				</Typography>
 			</Stack>
 			<Box sx={{ display: "grid", placeItems: "center", width: 48, height: 48, flexShrink: 0, borderRadius: `${theme.tokens.radius.card}px`, bgcolor: `${style.tint}.light`, color: style.color }}>
-				<Icon name={style.icon} size="1.5rem" />
+				<SummaryIcon sx={{ fontSize: "1.5rem" }} />
 			</Box>
 		</Paper>
 	);
-};
+});
 
+LobbySummeryCard.displayName = "LobbySummeryCard";
 export default LobbySummeryCard;

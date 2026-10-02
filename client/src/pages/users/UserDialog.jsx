@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MenuItem, Stack } from "@mui/material";
-import { Button, Dialog, Input, Select } from "@components";
+import { Stack } from "@mui/material";
+import { Button, Dialog, Input, MenuItem, Select } from "@components";
 import { useLang } from "@hooks";
 import { addUser, updateUser } from "../../features/users/UsersSlice.js";
 import { User_Name, User_Password, User_Kind, User_IsActive } from "../../../../constants/FieldsName.js";
@@ -20,7 +20,7 @@ export const UserDialog = React.memo(
 	React.forwardRef((props, ref) => {
 		const dispatch = useDispatch();
 		const { t } = useLang();
-		const { loading } = useSelector((state) => state.users || { loading: false });
+		const loading = useSelector((state) => state.users.loading);
 		const [open, setOpen] = React.useState(false);
 		const [selectedUser, setSelectedUser] = React.useState(null);
 		const [formData, setFormData] = React.useState(initialFormState);

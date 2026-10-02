@@ -10,7 +10,8 @@ import TablesDialog from "./TablesDialog.jsx";
 export const TablesPage = () => {
 	const dispatch = useDispatch();
 	const { t } = useLang();
-	const { items: tables, loading } = useSelector((state) => state.tables || { items: [], loading: false });
+	const tables = useSelector((state) => state.tables.items);
+	const loading = useSelector((state) => state.tables.loading);
 
 	const columns = React.useMemo(
 		() => [

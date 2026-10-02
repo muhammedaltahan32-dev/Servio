@@ -8,3 +8,4 @@ export * from "./users/UsersPage.jsx";
 export * from "./menuItems/MenuItemsPage.jsx";
 export * from "./menu/CustomerMenuPage.jsx";
 export * from "./menu/CustomerMenuCard.jsx";
+export * from "./settings/SettingsPage.jsx";

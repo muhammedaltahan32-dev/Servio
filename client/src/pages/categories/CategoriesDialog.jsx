@@ -19,7 +19,7 @@ export const CategoriesDialog = React.memo(
 	React.forwardRef((props, ref) => {
 		const dispatch = useDispatch();
 		const { t } = useLang();
-		const { items: categories, loading } = useSelector((state) => state.categories);
+		const loading = useSelector((state) => state.categories.loading);
 
 		const [open, setOpen] = useState(false);
 		const [selectedCategory, setSelectedCategory] = useState(null);

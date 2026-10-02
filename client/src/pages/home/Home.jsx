@@ -1,4 +1,4 @@
-import { Button, Icon, IconButton, Input, MenuItem, Select } from "@components";
+import { Button, IconButton, Input, MenuItem, Select } from "@components";
 
 import React from "react";
 
@@ -15,6 +15,10 @@ import {
 	Stack,
 	Typography,
 } from "@mui/material";
+import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, resetAccountState } from "../../features/account/accountSlice.js";
 import ApiService from "../../services/ApiService.js";
@@ -23,7 +27,8 @@ const KINDS = [Kind_WAITER, Kind_KITCHEN];
 
 export const Home = () => {
 	const dispatch = useDispatch();
-	const { loading, error, success } = useSelector((state) => state.account);
+	const loading = useSelector((state) => state.account.loading);
+	const error = useSelector((state) => state.account.error);
 	const trans = useLang();
 	const [formData, setFormData] = React.useState({
 		[User_Name]: "",
@@ -56,10 +61,10 @@ export const Home = () => {
 			<Container maxWidth="xs">
 				<Button onClick={test}>change language </Button>
 				<Typography variant="h5">language test : {trans.t("auth.validation.nameRequired")}</Typography>
-				<Card elevation={4} sx={{ borderRadius: 3, p: 2 }}>
+				<Card elevation={1} sx={{ borderRadius: 3, p: 2 }}>
 					<CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<Avatar sx={{ m: 1, bgcolor: "primary.main", width: 56, height: 56 }}>
-							<Icon name="PersonAddRounded" fontSize="large" />
+							<PersonAddRoundedIcon fontSize="large" />
 						</Avatar>
 						<Typography component="h1" variant="h5" fontWeight="bold" sx={{ mb: 0.5 }}>
 							Account Registration
@@ -82,7 +87,7 @@ export const Home = () => {
 								label={"Username"}
 								value={formData[User_Name]}
 								onChange={(e) => setFormData((data) => ({ ...data, [User_Name]: e.target.value }))}
-								suffix={<IconButton name={"PersonOutlineOutlined"} />}
+								suffix={<IconButton aria-label="Username"><PersonOutlineOutlinedIcon /></IconButton>}
 							/>
 							<Input
 								error={error}
@@ -93,10 +98,9 @@ export const Home = () => {
 								onChange={(e) => setFormData((data) => ({ ...data, [User_Password]: e.target.value }))}
 								type={showPassword ? "text" : "password"}
 								suffix={
-									<IconButton
-										onClick={() => setShowPassword((p) => !p)}
-										name={showPassword ? "VisibilityOffOutlined" : "RemoveRedEyeOutlined"}
-									/>
+									<IconButton aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword((p) => !p)}>
+										{showPassword ? <VisibilityOffOutlinedIcon /> : <RemoveRedEyeOutlinedIcon />}
+									</IconButton>
 								}
 							/>
 							<Select
