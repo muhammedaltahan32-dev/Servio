@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Global, css } from "@emotion/react";
-import { Box, Button, CssBaseline, SwipeableDrawer, Typography, styled, useTheme } from "@mui/material";
+import { Box, SwipeableDrawer, Typography, styled } from "@mui/material";
 import { IconButton } from "../index.js";
 
 const drawerBleeding = 20;
 
 // Styled visual handle bar for touch drag indication
 const Puller = styled("div")(({ theme }) => ({
-	width: 32,
+	width: 36,
 	height: 4,
-	backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
-	borderRadius: 3,
+	backgroundColor: theme.palette.divider,
+	borderRadius: theme.tokens.radius.pill,
 	position: "absolute",
 	top: 8,
 	left: "calc(50% - 16px)",
@@ -22,6 +21,7 @@ export function MobileBottomSheet({
 	onClose,
 	children,
 	title,
+	subtitle,
 	anchor = "bottom",
 	disableSwipeToOpen = true,
 	maxHeight = "85vh",
@@ -32,12 +32,8 @@ export function MobileBottomSheet({
 }) {
 	// Configures iOS swipe back prevention optimization
 	const iOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
-	const theme = useTheme();
-
-	const isRtl = theme.direction === "rtl";
 	return (
 		<>
-			<CssBaseline />
 			<SwipeableDrawer
 				anchor={anchor}
 				open={open}
@@ -52,11 +48,15 @@ export function MobileBottomSheet({
 				slotProps={{
 					paper: {
 						sx: (theme) => ({
-							borderTopLeftRadius: theme.shape.borderRadius + "px",
-							borderTopRightRadius: theme.shape.borderRadius + "px",
+							borderTopLeftRadius: `${theme.tokens.radius.panel}px`,
+							borderTopRightRadius: `${theme.tokens.radius.panel}px`,
 							height,
 							maxHeight,
-							overflow: "visible",
+							overflow: "hidden",
+							border: "1px solid",
+							borderColor: "divider",
+							bgcolor: "background.paper",
+							boxShadow: theme.tokens.shadow.dialog,
 						}),
 					},
 				}}
@@ -67,11 +67,13 @@ export function MobileBottomSheet({
 					className="bottomSheetPaper"
 					sx={(theme) => ({
 						position: "relative",
-						borderTopLeftRadius: theme.shape.borderRadius + "px",
-						borderTopRightRadius: theme.shape.borderRadius + "px",
-						pt: 2,
-						pb: 1,
-						px: 2,
+						borderTopLeftRadius: `${theme.tokens.radius.panel}px`,
+						borderTopRightRadius: `${theme.tokens.radius.panel}px`,
+						pt: 2.5,
+						pb: 2,
+						px: 3,
+						borderBottom: "1px solid",
+						borderColor: "divider",
 						backgroundColor: "background.paper",
 						display: "flex",
 						alignItems: "center",
@@ -80,28 +82,33 @@ export function MobileBottomSheet({
 				>
 					<Puller />
 
-					<Typography variant="h6" sx={{ fontWeight: 700, mt: 1 }}>
-						{title}
-					</Typography>
+					<Box sx={{ minWidth: 0, flex: 1, mt: 1 }}>
+						{title && <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.3 }}>{title}</Typography>}
+						{subtitle && <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{subtitle}</Typography>}
+					</Box>
 
 					{backwardButton && (
-						<IconButton size="small" onClick={onClose} sx={{ mt: 1 }} name={!isRtl ? "ArrowForward" : "ArrowBack"} />
+						<IconButton size="small" onClick={onClose} sx={{ mt: 1, flexShrink: 0 }} name="Close" aria-label="Close dialog" />
 					)}
 				</Box>
 
 				{/* Scrollable Main Content */}
 				<Box
 					sx={{
-						px: 2,
-						pb: 3,
+						px: 3,
+						pb: "calc(24px + env(safe-area-inset-bottom))",
 						pt: 1,
-						height: "100%",
+						minHeight: 0,
 						overflowY: "auto",
 					}}
 				>
 					{children}
 				</Box>
-				{actions && <Box sx={{ p: 1 }}>{actions}</Box>}
+				{actions && (
+					<Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, p: 2, pb: "calc(16px + env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "background.paper" }}>
+						{actions}
+					</Box>
+				)}
 			</SwipeableDrawer>
 		</>
 	);
