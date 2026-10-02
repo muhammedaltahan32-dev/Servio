@@ -1,6 +1,7 @@
 import { Icon } from "@components";
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
+import { useLang } from "@hooks";
 
 const EMPTY_OBJECT = {};
 
@@ -14,17 +15,17 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 				minWidth: 40,
 				width: "auto",
 				flexShrink: 0,
-				color: active ? "primary.contrastText" : "text.secondary",
+				color: active ? "primary.main" : `color-mix(in srgb, ${theme.tokens.color.sidebarMuted} 68%, transparent)`,
 
 				[theme.breakpoints.up("md")]: {
-					minWidth: 0,
-					width: "100%",
+					minWidth: 40,
+					width: 40,
 
-					height: 28,
+					height: 24,
 
 					display: "flex",
 					alignItems: "center",
-					justifyContent: "center",
+						justifyContent: "flex-start",
 
 					flexShrink: 0,
 
@@ -33,7 +34,7 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 			}}
 		>
 			{typeof icon === "string" ? (
-				<Icon name={icon} color={active ? theme.palette.primary.contrastText : undefined} />
+				<Icon name={icon} color={active ? theme.palette.primary.main : undefined} />
 			) : (
 				icon
 			)}
@@ -44,8 +45,10 @@ const SidebarItemIcon = React.memo(({ icon, active }) => {
 SidebarItemIcon.displayName = "SidebarItemIcon";
 
 export const SidebarItem = React.forwardRef(
-	({ label, icon, onClick, children, sx = EMPTY_OBJECT, active, showTitle = true, ...props }, ref) => {
+		({ label, icon, onClick, children, sx = EMPTY_OBJECT, active, showTitle = true, ...props }, ref) => {
 		const theme = useTheme();
+		const { t } = useLang();
+		const translatedLabel = label ? t(label) : "";
 		const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 		const elRef = React.useRef(null);
 		const itemStyles = React.useCallback(
@@ -69,25 +72,27 @@ export const SidebarItem = React.forwardRef(
 					transition: theme.transitions.create(["background-color", "color","scale"]),
 					
 					...(active && {
-						backgroundColor: "primary.main",
-						color: "primary.contrastText",
+						backgroundColor: (theme) => `color-mix(in srgb, ${theme.palette.primary.main} 11%, transparent)`,
+						color: "primary.main",
 					}),
 
 					"&:hover": {
-						backgroundColor: active ? "primary.main" : "action.hover",
+						backgroundColor: active
+							? (theme) => `color-mix(in srgb, ${theme.palette.primary.main} 15%, transparent)`
+							: "action.hover",
 					},
 
 					[theme.breakpoints.up("md")]: {
 						width: "100%",
 						minWidth: 0,
-						height: 64,
-						minHeight: 64,
+						height: 46,
+						minHeight: 46,
 						boxSizing: "border-box",
 						display: "flex",
-						flexDirection: "column",
+						flexDirection: "row",
 						alignItems: "center",
-						justifyContent: "center",
-						textAlign: "center",
+						justifyContent: "flex-start",
+						textAlign: "start",
 						overflow: "hidden",
 					},
 
@@ -106,7 +111,7 @@ export const SidebarItem = React.forwardRef(
 		}, [active]);
 		return (
 			<Tooltip
-				title={label || ""}
+				title={translatedLabel}
 				placement={isRtl ? "left" : "right"}
 				slotProps={{
 					tooltip: {
@@ -127,21 +132,7 @@ export const SidebarItem = React.forwardRef(
 					sx={(theme) => ({
 						width: "100%",
 						minWidth: 0,
-						...(!isSmallScreen && {
-							bgcolor: "background.paper",
-
-							p: "0.5rem",
-							position: "relative",
-							'&:has(+[data-active="true"])': {
-								borderBottomRightRadius: theme.shape.borderRadius + "px",
-							},
-							...(active && {
-								"& + .sidebar-menu-item": {
-									borderTopRightRadius: theme.shape.borderRadius + "px",
-								},
-								bgcolor: "background.default",
-							}),
-						}),
+						p: 0.25,
 					})}
 					{...props}
 				>
@@ -150,7 +141,7 @@ export const SidebarItem = React.forwardRef(
 
 						{label && (!isSmallScreen ? showTitle : true) && (
 							<ListItemText
-								primary={label}
+								primary={translatedLabel}
 								disableTypography
 								sx={{
 									minWidth: 0,
@@ -174,10 +165,10 @@ export const SidebarItem = React.forwardRef(
 										minWidth: 0,
 										width: "100%",
 										maxWidth: "100%",
-										fontSize: "0.6rem",
+										fontSize: "0.875rem",
 										overflow: "hidden",
 
-										textAlign: "center",
+										textAlign: "start",
 
 										"& .MuiListItemText-primary": {
 											width: "100%",

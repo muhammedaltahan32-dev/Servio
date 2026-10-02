@@ -30,13 +30,7 @@ export const SidebarList = () => {
 				// height: "100%",
 				overflow: "auto",
 				scrollbarWidth: "none",
-				...(isSmallScreen
-					? {
-							p: 1,
-						}
-					: {
-							bgcolor: "background.default",
-						}),
+				p: isSmallScreen ? 1 : 1.5,
 			})}
 		>
 			{sidebarMenu.map((item) => {

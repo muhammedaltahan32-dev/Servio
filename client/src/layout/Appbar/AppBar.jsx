@@ -1,5 +1,5 @@
 import React from "react";
-import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme, useScrollTrigger } from "@mui/material";
+import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme, useScrollTrigger, useTheme } from "@mui/material";
 import { Icon, IconButton, MenuItem, Menu } from "@components";
 import { useDispatch } from "react-redux";
 import { drawerToggle } from "../../features/layout/layoutSlice.js";
@@ -25,9 +25,25 @@ const ThemeSwitcher = React.memo(() => {
 ThemeSwitcher.displayName = "ThemeSwitcher";
 const AppBar = () => {
 	const location = useLocation();
-	const pageName = location.pathname.split("/").filter(Boolean).pop() || "";
 	const { t, supportedLanguages, changeLanguage } = useLang();
+	const routeTitleKeys = {
+		"/": "home.title",
+		"/categories": "categories.title",
+		"/lobby": "lobby.title",
+		"/tables": "tables.title",
+		"/users": "users.title",
+		"/menu-items": "menuItems.title",
+		"/customer-menu": "customerMenu.title",
+	};
+	const routeKey = location.pathname.startsWith("/customer-menu/") ? "/customer-menu" : location.pathname.toLowerCase();
+	const pageName = routeTitleKeys[routeKey]
+		? t(routeTitleKeys[routeKey])
+		: (location.pathname.split("/").filter(Boolean).pop() || t("home.title"))
+				.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+				.replace(/[-_]/g, " ")
+				.replace(/\b\w/g, (character) => character.toUpperCase());
 	const dispatch = useDispatch();
+	const theme = useTheme();
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
 	};
@@ -40,15 +56,18 @@ const AppBar = () => {
 			color="transparent"
 			position="fixed"
 			sx={(theme) => ({
-				height: `${theme.layout["desktop-appbar-height"]}px`,
+				height: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` },
 				width: { md: `calc(100% -  ${theme.layout["desktop-drawer-width"]}px )` },
 				marginInlineStart: { md: `calc(${theme.layout["desktop-drawer-width"]}px )` },
-				bgcolor: scrolled ? "background.paper" : "transparent",
+				bgcolor: "background.appBar",
+				backdropFilter: `blur(${theme.tokens.effect.appBarBlur})`,
+				borderBottom: "1px solid",
+				borderColor: scrolled ? "divider" : "transparent",
 				boxShadow: "none",
-				transition: "background-color 0.3s ease, box-shadow 0.3s ease ",
+				// transition: `border-color ${theme.tokens.motion.standard}, background-color ${theme.tokens.motion.standard}`,
 			})}
 		>
-			<Toolbar>
+			<Toolbar sx={{ minHeight: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` }, px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd } }}>
 				<IconButton
 					color="inherit"
 					aria-label="open drawer"
@@ -61,7 +80,7 @@ const AppBar = () => {
 					name="Menu"
 				/>
 
-				<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+				<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 700, color: "text.primary", textTransform: "capitalize" }}>
 					{pageName}
 				</Typography>
 				<ThemeSwitcher />

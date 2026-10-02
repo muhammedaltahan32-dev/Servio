@@ -11,13 +11,15 @@ export const Main = () => {
 			sx={(theme) => ({
 				flexGrow: 1,
 				width: {
+					xs: "100%",
 					md: `calc(100% - ${theme.layout["desktop-drawer-width"]}px - ${isActionsBarOpened ? theme.layout["desktop-actions-bar-width"] : 0}px )`,
 				},
 				height: `calc(100% - ${theme.layout["desktop-appbar-height"]}px)`,
 				marginInlineStart: { md: `calc(${theme.layout["desktop-drawer-width"]}px )` },
 				marginInlineEnd: { md: `calc(${isActionsBarOpened ? theme.layout["desktop-actions-bar-width"] : 0}px  )` },
 				margin: "auto",
-				transition: "width 0.2s ease, margin 0.3s ease",
+				transition: `width ${theme.tokens.motion.fast}, margin ${theme.tokens.motion.standard}`,
+				px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd },
 			})}
 		>
 			<Toolbar />
