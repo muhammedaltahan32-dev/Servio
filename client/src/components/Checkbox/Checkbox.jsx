@@ -21,7 +21,7 @@ export const Checkbox = React.forwardRef(
 					labelPlacement={labelPlacement}
 					sx={{ gap: "0.2rem", userSelect: "none" }}
 					control={
-						<Stack direction="row" alignItems="center" spacing={1}>
+						<Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
 							<MUCheckbox ref={ref} {...props} />
 							{(error || warning) && (
 								<Icon status={error ? "error" : "warning"} size="1rem" name={"WarningAmberRounded"} />

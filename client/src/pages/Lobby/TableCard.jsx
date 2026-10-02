@@ -1,7 +1,7 @@
-import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
+import { Box, Chip, Paper, Stack, Typography, useTheme } from "@mui/material";
 import { getCapacity, getTableNumber, normalizeStatus, getTableSizeType } from "./utils/normalize.js";
-import { RestaurantTable } from "@components";
+import { Icon, RestaurantTable } from "@components";
 import { useLang } from "@hooks";
 
 export const TableCard = React.memo(({ item, onSelect }) => {
@@ -9,51 +9,73 @@ export const TableCard = React.memo(({ item, onSelect }) => {
 	const status = normalizeStatus(item?.status);
 	const capacity = getCapacity(item);
 	const { t } = useLang();
+	const theme = useTheme();
 	const tableSizeType = getTableSizeType(capacity);
 	const isAvailable = String(item?.status).toLowerCase() === "available";
+	const statusColor = theme.palette.tableStatus[status] ?? theme.palette.primary.main;
+
 	return (
 		<Paper
-			elevation={3}
-			onClick={isAvailable ? () => onSelect?.(item) : undefined}
+			component="button"
+			type="button"
+			disabled={!isAvailable}
+			aria-label={t("lobby.tableAria", { status: t(`lobby.${item?.status}`), number: tableNumber })}
+			onClick={() => onSelect?.(item)}
+			variant="outlined"
 			sx={{
-				p: 2,
-				height: 170,
+				p: 1.75,
+			minHeight: theme.tokens.size.tableCardMinHeight,
 				width: "100%",
-				userSelect: "none",
-				backgroundColor: "background.paper",
+				minWidth: 0,
+				textAlign: "start",
+				font: "inherit",
+				color: "text.primary",
+				bgcolor: "background.paper",
+				borderColor: "divider",
+			borderRadius: `${theme.tokens.radius.panel}px`,
+			boxShadow: theme.tokens.shadow.card,
 				display: "flex",
 				flexDirection: "column",
+				justifyContent: "space-between",
 				cursor: isAvailable ? "pointer" : "default",
-				transition: "transform 0.2s ease, box-shadow 0.2s ease",
-				"&:hover": isAvailable
-					? { transform: "translateY(-2px)", boxShadow: 6 }
-					: undefined,
+				transition: `transform ${theme.tokens.motion.fast}, box-shadow ${theme.tokens.motion.fast}, border-color ${theme.tokens.motion.fast}`,
+				"&:hover": isAvailable ? { transform: "translateY(-3px)", borderColor: "primary.main", boxShadow: theme.tokens.shadow.cardHover } : {},
+				"&:focus-visible": { outline: `3px solid ${theme.palette.primary.main}55`, outlineOffset: 2 },
+				"&:disabled": { opacity: 0.82 },
 			}}
 		>
-			<Stack direction={"row"} sx={{ alignItems: "start", flex: 1 }}>
-				<RestaurantTable number={String(tableNumber)} chairsCount={capacity} tableSize={60} />
-				<Box sx={{ marginInlineStart: "auto" }}>
-					<Chip
-						label={t(`lobby.${item?.status}`)}
-						sx={(theme) => ({
-							bgcolor: `color-mix(in srgb ,${theme.palette.tableStatus[status]} 20%,transparent )`,
-							color: `tableStatus.${status}`,
-						})}
-						size="small"
-					/>
+			<Stack direction="row" gap={1} sx={{ width: "100%", minWidth: 0, alignItems: "center", justifyContent: "space-between" }}>
+				<Box sx={{ minWidth: 0 }}>
+					<Typography variant="overline" color="text.secondary" sx={{ lineHeight: 1.2 }}>{t("lobby.tableLabel")}</Typography>
+					<Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.3 }} noWrap>#{tableNumber}</Typography>
 				</Box>
+				<Chip
+					label={t(`lobby.${item?.status}`)}
+					size="small"
+					sx={{ bgcolor: `color-mix(in srgb, ${statusColor} 13%, transparent)`, color: statusColor, fontWeight: 700, borderRadius: 1.25 }}
+				/>
 			</Stack>
-			<Stack direction={"row"} sx={{ justifyContent: "space-between", alignItems: "center" }}>
-				<Chip variant="outlined" label={t(`lobby.${tableSizeType}`)} size="small" />
-				{/* <Typography component="p" sx={{ fontSize: "0.8rem" }}>
-					{t(`lobby.${tableSizeType}`)}
-				</Typography> */}
-				<Typography component="p" sx={{ fontSize: "0.8rem" }}>
-					{capacity} {t("lobby.persons")}
-				</Typography>
+			<Stack direction="row" gap={1} sx={{ width: "100%", mt: 0.75, alignItems: "center", justifyContent: "space-between" }}>
+				<RestaurantTable
+					number={String(tableNumber)}
+					chairsCount={capacity}
+					tableSize={43}
+					chairColor={statusColor}
+					tableBgColor={`color-mix(in srgb, ${statusColor} 14%, transparent)`}
+					tableBorderColor={statusColor}
+				/>
+				<Stack spacing={0.5} sx={{ minWidth: 0, alignItems: "flex-end" }}>
+					<Typography variant="body2" sx={{ fontWeight: 700 }}>{capacity} {t("lobby.persons")}</Typography>
+					<Typography variant="caption" color="text.secondary">{t("lobby.tableType", { type: t(`lobby.${tableSizeType}`) })}</Typography>
+					<Stack direction="row" spacing={0.5} sx={{ color: isAvailable ? "primary.main" : "text.disabled", mt: 0.25, alignItems: "center" }}>
+						<Typography variant="caption" sx={{ fontWeight: 700 }}>{isAvailable ? t("lobby.openMenu") : t("lobby.unavailable")}</Typography>
+						{isAvailable && <Icon name={theme.direction === "rtl" ? "ArrowBack" : "ArrowForward"} size="0.9rem" />}
+					</Stack>
+				</Stack>
 			</Stack>
 		</Paper>
 	);
 });
+
 TableCard.displayName = "TableCard";
 export default TableCard;

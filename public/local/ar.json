@@ -1,233 +1,284 @@
 {
-	"layout": {
-		"mode": {
-			"dark": "الوضع المظلم",
-			"light": "الوضع الفاتح"
-		},
-		"languages": {
-			"en": "إنجليزي",
-			"ar": "عربي",
-			"language": "اللغة"
-		}
-	},
-	"login": {
-		"login": "تسجيل الدخول",
-		"username": "اسم المستخدم",
-		"password": "كلمة المرور"
-	},
-	"actions": {
-		"delete": "حذف",
-		"update": "تحديث",
-		"add": "إضافة",
-		"modify": "تعديل",
-		"save": "حفظ"
-	},
-	"customerMenu": {
-		"card": {
-			"showDetails": "عرض التفاصيل",
-			"order": "طلب"
-		}
-	},
-	"lobby": {
-		"persons": "أشخاص",
-		"small": "صغيرة",
-		"medium": "متوسطة",
-		"large": "كبيرة",
-		"Needs_Cleaning": "بحاجة إلى تنظيف",
-		"Occupied": "مشغولة",
-		"Available": "متاحة",
-		"allStatus": "كل الحالات",
-		"search": "بحث..."
-	},
-	"tables": {
-		"title": "الطاولات",
-		"addNew": "إضافة طاولة جديدة",
-		"editTitle": "تعديل الطاولة",
-		"addTitle": "إضافة طاولة جديدة",
-		"dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
-		"capacity": "سعة الطاولة",
-		"number": "رقم الطاولة",
-		"status": "حالة الطاولة",
-		"save": "حفظ التغييرات",
-		"cancel": "إلغاء"
-	},
-	"users": {
-		"title": "المستخدمون",
-		"addNew": "إضافة مستخدم جديد",
-		"editTitle": "تعديل المستخدم",
-		"addTitle": "إضافة مستخدم جديد",
-		"dialogSubtitle": "أدخل تفاصيل المستخدم أدناه لتحديث القائمة.",
-		"username": "اسم المستخدم",
-		"password": "كلمة المرور",
-		"kind": "نوع الحساب",
-		"isActive": "نشط",
-		"activate": {
-			"yes": "نعم",
-			"no": "لا"
-		},
-		"roles": {
-			"admin": "مدير",
-			"waiter": "نادل",
-			"kitchen": "مطبخ"
-		},
-		"save": "حفظ التغييرات",
-		"cancel": "إلغاء"
-	},
-	"auth": {
-		"validation": {
-			"nameRequired": "اسم المستخدم مطلوب",
-			"passwordRequired": "كلمة المرور مطلوبة",
-			"kindRequired": "نوع الحساب مطلوب",
-			"invalidKind": "نوع الحساب غير صالح",
-			"nameExists": "اسم المستخدم مُستخدَم بالفعل"
-		},
-		"error": {
-			"invalidCredentials": "اسم المستخدم أو كلمة المرور غير صالحة"
-		}
-	},
-	"user": {
-		"success": {
-			"created": "تمت إضافة المستخدم بنجاح"
-		}
-	},
-	"upload": {
-		"success": {
-			"completed": "تم رفع الملفات بنجاح"
-		},
-		"error": {
-			"noFiles": "لم يتم تحديد أي ملفات للرفع",
-			"failed": "حدث خطأ أثناء رفع الملفات",
-			"fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (5 ميجابايت)"
-		}
-	},
-	"payment": {
-		"success": {
-			"created": "تمت عملية الدفع بنجاح"
-		}
-	},
-	"table": {
-		"success": {
-			"created": "تم إنشاء الطاولة بنجاح",
-			"updated": "تم تحديث الطاولة بنجاح",
-			"deleted": "تم حذف الطاولة بنجاح"
-		},
-		"error": {
-			"notFound": "الطاولة غير موجودة",
-			"noIdsProvided": "لم يتم تقديم أي معرّفات للطاولة."
-		}
-	},
-	"order": {
-		"success": {
-			"created": "تم إنشاء الطلب بنجاح"
-		},
-		"error": {
-			"notFound": "الطلب غير موجود",
-			"invalidData": "يرجى اختيار طاولة وعنصر واحد على الأقل من القائمة.",
-			"tableUnavailable": "هذه الطاولة لم تعد متاحة."
-		}
-	},
-	"error": {
-		"messages": {
-			"ExpiredToken": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى.",
-			"serverError": "حدث خطأ في الخادم."
-		}
-	},
-	"messages": {
-		"success": {
-			"add": {
-				"menuItem": "تمت إضافة عنصر القائمة بنجاح.",
-				"category": "تمت إضافة العنصر بنجاح."
-			},
-			"delete": {
-				"menuItem": "تم حذف عنصر القائمة بنجاح.",
-				"category": "تم حذف العنصر بنجاح."
-			},
-			"update": {
-				"menuItem": "تم تحديث عنصر القائمة بنجاح.",
-				"category": "تم تحديث العنصر بنجاح."
-			}
-		},
-		"failed": {
-			"add": {
-				"menuItem": "فشل في إضافة عنصر القائمة.",
-				"category": "فشل في إضافة العنصر",
-				"nameRequired": "اسم العنصر العربي أو الإنجليزي مطلوب."
-			},
-			"delete": {
-				"menuItem": "فشل في حذف عنصر القائمة.",
-				"category": "فشل في حذف العنصر"
-			},
-			"update": {
-				"menuItem": "فشل في تحديث عنصر القائمة.",
-				"category": "فشل في تحديث العنصر"
-			}
-		},
-		"error": {
-			"Accessdenied": "تم رفض الوصول.",
-			"IDNotProvided": "لم يتم تقديم معرّف.",
-			"noContext": "لا يوجد سياق متاح."
-		},
-		"required": {
-			"category": {
-				"ID": "معرّف الفئة مطلوب."
-			}
-		},
-		"notFound": {
-			"category": "الفئة غير موجودة."
-		}
-	},
-	"categories": {
-		"title": "إدارة الأصناف",
-		"addNew": "إضافة تصنيف جديد",
-		"editTitle": "تعديل التصنيف",
-		"addTitle": "إضافة تصنيف جديد",
-		"dialogSubtitle": "أدخل تفاصيل التصنيف أدناه لتحديث القائمة.",
-		"nameAr": "اسم التصنيف (العربية)",
-		"nameEn": "اسم التصنيف (الإنجليزية)",
-		"sortOrder": "ترتيب العرض",
-		"save": "حفظ التغييرات",
-		"cancel": "إلغاء"
-	},
-	"menuItems": {
-		"title": "عناصر القائمة",
-		"addNew": "إضافة عنصر جديد",
-		"editTitle": "تعديل عنصر القائمة",
-		"addTitle": "إضافة عنصر جديد",
-		"name": "اسم عنصر القائمة",
-		"nameAr": "اسم العنصر (العربية)",
-		"nameEn": "اسم العنصر (الإنجليزية)",
-		"descriptionAr": "الوصف (العربية)",
-		"descriptionEn": "الوصف (الإنجليزية)",
-		"dialogSubtitle": "أدخل تفاصيل عنصر القائمة أدناه لتحديث القائمة.",
-		"price": "السعر",
-		"category": "الفئة",
-		"baseImage": "الصورة",
-		"available": "متاح",
-		"notAvailable": "غير متاح",
-		"save": "حفظ التغييرات",
-		"cancel": "إلغاء"
-	},
-	"components": {
-		"table": {
-			"noData": "لم يتم العثور على سجلات.",
-			"actions": "إجراءات",
-			"pagination": "عدد الصفوف في الصفحة",
-			"selectedRows": "الصفوف المحددة",
-			"search": "بحث...",
-			"tooltips": {
-				"deleteSelected": "حذف المحدد"
-			}
-		},
-		"dropzone": {
-			"title": "الصور",
-			"emptyText": "لم يتم تحميل أي صور بعد. قم بسحب وإسقاط الصور هنا أو انقر للتحميل.",
-			"upload": "تحميل",
-			"base": "الرئيسية",
-			"imageAlt": "صورة {{number}}",
-			"tooltips": {
-				"setAsBase": "تعيين كصورة رئيسية",
-				"deleteSelected": "حذف المحدد"
-			}
-		}
-	}
+  "layout": {
+    "mode": {
+      "dark": "الوضع الداكن",
+      "light": "الوضع الفاتح"
+    },
+    "languages": {
+      "en": "الإنجليزية",
+      "ar": "العربية",
+      "language": "اللغة"
+    }
+  },
+  "login": {
+    "login": "تسجيل الدخول",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور"
+  },
+  "actions": {
+    "delete": "حذف",
+    "update": "تحديث",
+    "add": "إضافة",
+    "modify": "تعديل",
+    "save": "حفظ"
+  },
+  "customerMenu": {
+    "card": {
+      "showDetails": "عرض التفاصيل",
+      "order": "طلب"
+    },
+    "pageTitle": "طاولة {{number}}",
+    "chooseItems": "اختر الأصناف لطلبك",
+    "backToLobby": "العودة للردهة",
+    "searchPlaceholder": "ابحث في قائمة الطعام هنا",
+    "category": "الفئة",
+    "menuItemCount": "{{count}} صنف في القائمة",
+    "menu": "قائمة الطعام",
+    "noCategories": "لا تتوفر فئات لقائمة الطعام حالياً.",
+    "noMatchingItems": "لم يتم العثور على أصناف مطابقة.",
+    "noAvailableItems": "لا تتوفر أصناف في هذه الفئة.",
+    "selectAvailableTable": "اختر طاولة متاحة من الردهة أولاً.",
+    "invoice": "الفاتورة",
+    "itemsCount": "{{count}} أصناف",
+    "invoiceEmpty": "فاتورتك فارغة. أضف بعض الأصناف للبدء.",
+    "addNote": "إضافة ملاحظة",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة",
+    "totalPayment": "إجمالي الدفع",
+    "paymentCard": "بطاقة",
+    "paymentWallet": "محفظة",
+    "paymentCash": "نقداً",
+    "placeOrder": "إرسال الطلب",
+    "placingOrder": "جاري إرسال الطلب...",
+    "menuItem": "صنف في القائمة",
+    "addItem": "إضافة {{name}}",
+    "removeOne": "إزالة واحدة من {{name}}",
+    "addOne": "إضافة واحدة من {{name}}",
+    "detailsFor": "تفاصيل {{name}}",
+    "availableNow": "متوفر الآن",
+    "unavailableNow": "غير متوفر حالياً",
+    "title": "قائمة العميل"
+  },
+  "lobby": {
+    "persons": "أشخاص",
+    "small": "صغيرة",
+    "medium": "متوسطة",
+    "large": "كبيرة",
+    "Needs_Cleaning": "تحتاج إلى تنظيف",
+    "Occupied": "مشغولة",
+    "Available": "متاحة",
+    "allStatus": "جميع الحالات",
+    "search": "البحث عن الطاولات...",
+    "tableAria": "{{status}}، طاولة {{number}}",
+    "totalTables": "إجمالي الطاولات",
+    "title": "ردهة الطاولات",
+    "emptyDescription": "جرب تغيير البحث أو تصفية الحالة.",
+    "tableType": "طاولة {{type}}",
+    "emptyTitle": "لم يتم العثور على طاولات",
+    "unavailable": "غير متاحة",
+    "status": "الحالة",
+    "connecting": "جاري الاتصال",
+    "tableLabel": "طاولة",
+    "liveUpdates": "تحديثات مباشرة",
+    "openMenu": "فتح قائمة الطعام",
+    "loadingTables": "جاري تحميل الطاولات...",
+    "subtitle": "إدارة توفر الطاولات وبدء طلبات الضيوف.",
+    "tableCount": "{{visible}} من أصل {{total}} طاولة",
+    "allTables": "جميع الطاولات",
+    "offline": "غير متصل"
+  },
+  "tables": {
+    "title": "الطاولات",
+    "addNew": "إضافة طاولة جديدة",
+    "editTitle": "تعديل الطاولة",
+    "addTitle": "إضافة طاولة جديدة",
+    "dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
+    "capacity": "سعة الطاولة",
+    "number": "رقم الطاولة",
+    "status": "حالة الطاولة",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء"
+  },
+  "users": {
+    "title": "المستخدمون",
+    "addNew": "إضافة مستخدم جديد",
+    "editTitle": "تعديل المستخدم",
+    "addTitle": "إضافة مستخدم جديد",
+    "dialogSubtitle": "أدخل تفاصيل المستخدم أدناه لتحديث القائمة.",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "kind": "نوع الحساب",
+    "isActive": "نشط",
+    "activate": {
+      "yes": "نعم",
+      "no": "لا"
+    },
+    "roles": {
+      "admin": "مدير",
+      "waiter": "نادل",
+      "kitchen": "مطبخ"
+    },
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء"
+  },
+  "auth": {
+    "validation": {
+      "nameRequired": "اسم المستخدم مطلوب",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "kindRequired": "نوع الحساب مطلوب",
+      "invalidKind": "نوع حساب غير صالحة",
+      "nameExists": "اسم المستخدم مستخدم بالفعل"
+    },
+    "error": {
+      "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة"
+    }
+  },
+  "user": {
+    "success": {
+      "created": "تمت إضافة المستخدم بنجاح"
+    }
+  },
+  "upload": {
+    "success": {
+      "completed": "تم رفع الملفات بنجاح"
+    },
+    "error": {
+      "noFiles": "لم يتم تحديد أي ملفات للرفع",
+      "failed": "حدث خطأ أثناء رفع الملفات",
+      "fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (5 ميجابايت)"
+    }
+  },
+  "payment": {
+    "success": {
+      "created": "تمت عملية الدفع بنجاح"
+    }
+  },
+  "table": {
+    "success": {
+      "created": "تم إنشاء الطاولة بنجاح",
+      "updated": "تم تحديث الطاولة بنجاح",
+      "deleted": "تم حذف الطاولة بنجاح"
+    },
+    "error": {
+      "notFound": "الطاولة غير موجودة",
+      "noIdsProvided": "لم يتم تقديم معرّفات للطاولات."
+    }
+  },
+  "order": {
+    "success": {
+      "created": "تم إنشاء الطلب بنجاح"
+    },
+    "error": {
+      "notFound": "الطلب غير موجود",
+      "invalidData": "يرجى تحديد طاولة وصنف واحد على الأقل من القائمة.",
+      "tableUnavailable": "هذه الطاولة لم تعد متاحة."
+    }
+  },
+  "error": {
+    "messages": {
+      "ExpiredToken": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً.",
+      "serverError": "حدث خطأ داخلي في الخادم."
+    }
+  },
+  "messages": {
+    "success": {
+      "add": {
+        "menuItem": "تمت إضافة صنف القائمة بنجاح.",
+        "category": "تمت إضافة العنصر بنجاح."
+      },
+      "delete": {
+        "menuItem": "تم حذف صنف القائمة بنجاح.",
+        "category": "تم حذف العنصر بنجاح."
+      },
+      "update": {
+        "menuItem": "تم تحديث صنف القائمة بنجاح.",
+        "category": "تم تحديث العنصر بنجاح."
+      }
+    },
+    "failed": {
+      "add": {
+        "menuItem": "فشل في إضافة صنف القائمة.",
+        "category": "فشل في إضافة العنصر.",
+        "nameRequired": "اسم العنصر باللغة العربية أو الإنجليزية مطلوب."
+      },
+      "delete": {
+        "menuItem": "فشل في حذف صنف القائمة.",
+        "category": "فشل في حذف العنصر."
+      },
+      "update": {
+        "menuItem": "فشل في تحديث صنف القائمة.",
+        "category": "فشل في تحديث العنصر."
+      }
+    },
+    "error": {
+      "Accessdenied": "تم رفض الوصول.",
+      "IDNotProvided": "لم يتم تقديم المعرّف (ID).",
+      "noContext": "لا يتوفر سياق."
+    },
+    "required": {
+      "category": {
+        "ID": "معرّف الفئة مطلوب."
+      }
+    },
+    "notFound": {
+      "category": "الفئة غير موجودة."
+    }
+  },
+  "categories": {
+    "title": "الفئات",
+    "addNew": "إضافة فئة جديدة",
+    "editTitle": "تعديل الفئة",
+    "addTitle": "إضافة فئة جديدة",
+    "dialogSubtitle": "أدخل تفاصيل الفئة أدناه لتحديث القائمة.",
+    "nameAr": "اسم الفئة (بالعربية)",
+    "nameEn": "اسم الفئة (بالإنجليزية)",
+    "sortOrder": "ترتيب الفرز",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء"
+  },
+  "menuItems": {
+    "title": "أصناف القائمة",
+    "addNew": "إضافة صنف جديد للقائمة",
+    "editTitle": "تعديل صنف القائمة",
+    "addTitle": "إضافة صنف جديد للقائمة",
+    "dialogSubtitle": "أدخل تفاصيل صنف القائمة أدناه لتحديث القائمة.",
+    "nameAr": "اسم الصنف (بالعربية)",
+    "nameEn": "اسم الصنف (بالإنجليزية)",
+    "descriptions": "الوصف",
+    "descriptionAr": "الوصف (بالعربية)",
+    "descriptionEN": "الوصف (بالإنجليزية)",
+    "price": "السعر",
+    "category": "الفئة",
+    "baseImage": "الصورة",
+    "available": "متوفر",
+    "notAvailable": "غير متوفر",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء"
+  },
+  "components": {
+    "table": {
+      "noData": "لم يتم العثور على سجلات.",
+      "actions": "الإجراءات",
+      "pagination": "عدد الصفوف في الصفحة",
+      "selectedRows": "الصفوف المحددة",
+      "search": "بحث...",
+      "tooltips": {
+        "deleteSelected": "حذف المحدد"
+      }
+    },
+    "dropzone": {
+      "title": "الصور",
+      "emptyText": "لم يتم رفع أي صور بعد. اسحب وإفلت الصور هنا أو انقر للرفع.",
+      "upload": "رفع",
+      "base": "الرئيسية",
+      "imageAlt": "صورة {{number}}",
+      "tooltips": {
+        "deleteSelected": "حذف",
+        "setAsBase": "تعيين كصورة رئيسية"
+      }
+    }
+  },
+  "home": {
+    "title": "لوحة التحكم"
+  }
 }

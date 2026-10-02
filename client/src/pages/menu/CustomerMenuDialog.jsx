@@ -1,10 +1,12 @@
-import { Carousel, Dialog } from "@components";
-import { Box, Card, CardMedia, Chip, Typography } from "@mui/material";
+import { Carousel, Dialog, Icon } from "@components";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Menu_IsAvailable, Menu_Price } from "../../../../constants/FieldsName.js";
+import { useLang } from "@hooks";
 
 export const CustomerMenuDialog = React.memo(
 	React.forwardRef(({ item, name, description, galleryImages }, ref) => {
+		const { t, currentLanguage } = useLang();
 		const [isOpened, setOpen] = React.useState(false);
 		const api = React.useMemo(
 			() => ({
@@ -30,38 +32,33 @@ export const CustomerMenuDialog = React.memo(
 			>
 				<Box>
 					<Box>
-						<Box
-							sx={{
-								display: "grid",
-								gap: 2,
-							}}
-						>
-							<Carousel
-								disableItemCaption
-								sx={{ width: "100%", height: "50dvh", marginInline: "auto" }}
-								caption={name}
-								items={carouselSlides}
-							/>
-						</Box>
-					</Box>
-
-					<Box>
-						<Typography variant="h4" sx={{ fontWeight: 800, color: "warning.main", mb: 2 }}>
-							{new Intl.NumberFormat("en-US", {
+					<Stack spacing={2} sx={{ minWidth: 0 }}>
+						{carouselSlides.length ? <Carousel
+							disableItemCaption
+							autoPlay={false}
+							sx={{ width: "100%", height: { xs: "34vh", sm: "48vh" }, minHeight: 200, maxHeight: 460, marginInline: "auto", borderRadius: 2 }}
+							caption={name}
+							items={carouselSlides}
+						/> : <Box sx={{ height: 200, display: "grid", placeItems: "center", borderRadius: 2, bgcolor: "action.hover", color: "text.secondary" }}><Icon name="ImageNotSupportedOutlined" size="2rem" /></Box>}
+						<Box sx={{ minWidth: 0 }}>
+						<Typography variant="h4" sx={{ fontWeight: 800, color: "primary.main", mb: 1 }}>
+						{new Intl.NumberFormat(currentLanguage === "ar" ? "ar" : "en-US", {
 								style: "currency",
 								currency: "USD",
 							}).format(Number(item[Menu_Price] ?? 0))}
 						</Typography>
 
 						<Chip
-							label={item[Menu_IsAvailable] === false ? "Currently unavailable" : "Available now"}
+							label={item[Menu_IsAvailable] === false ? t("customerMenu.unavailableNow") : t("customerMenu.availableNow")}
 							color={item[Menu_IsAvailable] === false ? "default" : "success"}
 							sx={{ mb: 2 }}
 						/>
 
-						<Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, whiteSpace: "pre-line" }}>
+						<Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, whiteSpace: "pre-line", overflowWrap: "anywhere" }}>
 							{description}
 						</Typography>
+						</Box>
+					</Stack>
 					</Box>
 				</Box>
 			</Dialog>

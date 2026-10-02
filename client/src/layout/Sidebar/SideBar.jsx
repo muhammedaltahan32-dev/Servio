@@ -1,6 +1,5 @@
 import { Icon } from "@components";
-import { useLang } from "@hooks";
-import { Avatar, Box, Divider, Drawer, List, Toolbar, Typography, useColorScheme, useTheme } from "@mui/material";
+import { Avatar, Box, Divider, Drawer, List, Toolbar, Typography, useTheme } from "@mui/material";
 import { sidebarMenu } from "@router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,11 +15,7 @@ export const SideBar = () => {
 	const { user } = useSelector((state) => state.auth);
 	const { mobileOpen } = useSelector((state) => state.layout);
 
-	const { mode } = useColorScheme();
 	const theme = useTheme();
-	const { t } = useLang();
-
-	const isDark = mode === "dark";
 
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
@@ -35,7 +30,7 @@ export const SideBar = () => {
 					height: "100%",
 					overflow: "hidden",
 					bgcolor: "background.paper",
-					color: "text.primary",
+					// color: "#F2F6FC",
 				}}
 			>
 				{/* ==============================
@@ -45,34 +40,22 @@ export const SideBar = () => {
 					disableGutters
 					sx={{
 						minHeight: {
-							xs: 64,
-							md: 88,
+							xs: theme.tokens.size.mobileAppBarHeight,
+							md: theme.tokens.size.appBarHeight,
 						},
 
-						px: {
-							xs: 2,
-							md: 1,
-						},
+						px: theme.tokens.space.pageXs,
 
-						justifyContent: {
-							xs: "flex-start",
-							md: "center",
-						},
+						justifyContent: "flex-start",
 					}}
 				>
 					<Box
 						sx={{
-							width: {
-								xs: 42,
-								md: 52,
-							},
+							width: theme.tokens.size.logo,
 
-							height: {
-								xs: 42,
-								md: 52,
-							},
+							height: theme.tokens.size.logo,
 
-							borderRadius: 2,
+							borderRadius: `${theme.tokens.radius.card}px`,
 
 							display: "flex",
 							alignItems: "center",
@@ -88,21 +71,13 @@ export const SideBar = () => {
 					<Typography
 						variant="h6"
 						noWrap
-						sx={{
-							ml: 1.5,
-							fontWeight: 700,
-
-							display: {
-								xs: "block",
-								md: "none",
-							},
-						}}
+						sx={{ ml: 1.5, fontWeight: 700, display: "block" }}
 					>
 						Servio
 					</Typography>
 				</Toolbar>
 
-				<Divider />
+				<Divider sx={{ borderColor: theme.tokens.color.sidebarDivider }} />
 
 				{/* ==============================
 				    MAIN NAVIGATION
@@ -124,14 +99,14 @@ export const SideBar = () => {
 				>
 					<SidebarList />
 				</Box>
-				<Divider />
+				<Divider sx={{ borderColor: theme.tokens.color.sidebarDivider }} />
 				<List disablePadding>
 					<ThemeSwitcher />
-					<SidebarItem icon={<Avatar src="" />} label={user?.[User_Name]} showTitle={false} />
+					<SidebarItem icon={<Avatar src="" />} label={user?.[User_Name]} />
 				</List>
 			</Box>
 		),
-		[user],
+				[user, theme],
 	);
 
 	return (
@@ -163,13 +138,13 @@ export const SideBar = () => {
 
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
-						width: theme.layout["mobile.drawer-width"],
+						width: theme.layout["mobile-drawer-width"],
 
 						border: "none",
 
-						bgcolor: "background.paper",
+						// bgcolor: "#141D2E",
 
-						color: "text.primary",
+						// color: "#F2F6FC",
 					},
 				})}
 			>
@@ -189,10 +164,12 @@ export const SideBar = () => {
 					"& .MuiDrawer-paper": {
 						boxSizing: "border-box",
 						width: theme.layout["desktop-drawer-width"],
-						border: "none",
-						bgcolor: "background.paper",
+						border: 0,
+						borderInlineEnd: "1px solid",
+						borderColor: "rgba(226, 232, 241, 0.12)",
+						// bgcolor: "#141D2E",
 						boxShadow: "none",
-						color: "text.primary",
+						// color: "#F2F6FC",
 
 						overflowX: "hidden",
 					},

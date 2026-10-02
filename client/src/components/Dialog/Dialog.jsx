@@ -6,19 +6,13 @@ import {
 	DialogActions,
 	Typography,
 	Box,
-	Fade,
-	Slide,
 	Grow,
 	useMediaQuery,
 	useTheme,
-	Drawer,
 } from "@mui/material";
 import { IconButton, MobileBottomSheet } from "../index.js";
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Grow direction="up" ref={ref} {...props} />;
-});
-const SlideUpTransition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
 });
 const BOTTOM_SHEET_PROPS = {};
 export const Dialog = ({
@@ -34,6 +28,7 @@ export const Dialog = ({
 	disableBackdropClick = true,
 	TransitionComponent = Transition,
 	bottomSheetProps = BOTTOM_SHEET_PROPS,
+	slotProps = {},
 	...props
 }) => {
 	const handleClose = (event, reason) => {
@@ -46,17 +41,31 @@ export const Dialog = ({
 		return (
 			<MuiDialog
 				open={open}
+				fullWidth
+				maxWidth="sm"
+				scroll="paper"
 				onClose={handleClose}
 				slots={{
 					transition: TransitionComponent,
 				}}
-				paper={{
-					elevation: 0,
-					sx: {
-						border: "1px solid",
-						borderColor: "divider",
-						p: 1,
-						pointerEvents: disabled ? "none" : "all",
+				slotProps={{
+					...slotProps,
+					paper: {
+						...slotProps.paper,
+						elevation: 0,
+						sx: (theme) => {
+							const callerSX = slotProps.paper?.sx;
+							return {
+								border: "1px solid",
+								borderColor: "divider",
+								borderRadius: `${theme.tokens.radius.panel}px`,
+								backgroundImage: "none",
+								boxShadow: theme.tokens.shadow.dialog,
+								overflow: "hidden",
+								pointerEvents: disabled ? "none" : "all",
+								...(typeof callerSX === "function" ? callerSX(theme) : callerSX),
+							};
+						},
 					},
 				}}
 				{...props}
@@ -68,14 +77,16 @@ export const Dialog = ({
 							display: "flex",
 							justifyContent: "space-between",
 							alignItems: "flex-start",
-							pb: subtitle ? 1 : 1.5,
-							pt: 1.5,
-							px: 2.5,
+							pb: subtitle ? 2 : 2.5,
+							pt: 2.5,
+							px: 3,
+							borderBottom: "1px solid",
+							borderColor: "divider",
 						}}
 					>
 						<Box>
 							{title && (
-								<Typography variant="h6" fontWeight={700} color="text.primary">
+									<Typography variant="h6" fontWeight={700} color="text.primary" sx={{ lineHeight: 1.3, letterSpacing: "-0.01em" }}>
 									{title}
 								</Typography>
 							)}
@@ -92,24 +103,26 @@ export const Dialog = ({
 								size="small"
 								onClick={(e) => onClose(e, "closeButtonClick")}
 								disabled={disabled}
-								sx={{ color: "text.secondary", ml: 1 }}
+									sx={{ color: "text.secondary", ml: 1, flexShrink: 0 }}
 							/>
 						)}
 					</DialogTitle>
 				)}
 
 				{/* Body Content */}
-				<DialogContent sx={{ px: 2.5, py: 1.5 }}>{children}</DialogContent>
+				<DialogContent sx={{ px: 3, py: 2.5 }}>{children}</DialogContent>
 
 				{/* Footer Actions */}
 				{actions && (
 					<DialogActions
 						sx={{
-							px: 2.5,
-							pb: 1.5,
-							pt: 1,
+							px: 3,
+							pb: 2.5,
+							pt: 2,
 							gap: 1,
 							justifyContent: "flex-end",
+							borderTop: "1px solid",
+							borderColor: "divider",
 						}}
 					>
 						{actions}
@@ -118,7 +131,7 @@ export const Dialog = ({
 			</MuiDialog>
 		);
 	return (
-		<MobileBottomSheet open={open} onClose={onClose} title={title} actions={actions} {...bottomSheetProps}>
+		<MobileBottomSheet open={open} onClose={onClose} title={title} subtitle={subtitle} actions={actions} {...bottomSheetProps}>
 			{children}
 		</MobileBottomSheet>
 	);

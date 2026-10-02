@@ -6,6 +6,7 @@ export const TableStateProvider = ({ children, data = [], columns = [], idField 
 	const [orderBy, setOrderBy] = useState("");
 	const [order, setOrder] = useState("asc");
 	const [selected, setSelected] = useState([]);
+	const [columnWidths, setColumnWidths] = useState({});
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [internalLoading, setLoading] = useState(loading);
@@ -28,6 +29,8 @@ export const TableStateProvider = ({ children, data = [], columns = [], idField 
 			setOrder,
 			selected,
 			setSelected,
+			columnWidths,
+			setColumnWidths,
 			page,
 			setPage,
 			rowsPerPage,
@@ -35,7 +38,7 @@ export const TableStateProvider = ({ children, data = [], columns = [], idField 
 			isLoading,
 			setLoading,
 		}),
-		[data, columns, idField, title, searchTerm, orderBy, order, selected, page, rowsPerPage, isLoading, setLoading],
+		[data, columns, idField, title, searchTerm, orderBy, order, selected, columnWidths, page, rowsPerPage, isLoading, setLoading],
 	);
 
 	return <TableStateContext.Provider value={value}>{children}</TableStateContext.Provider>;

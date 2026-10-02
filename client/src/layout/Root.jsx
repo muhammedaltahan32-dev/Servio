@@ -21,8 +21,8 @@ export default function Root() {
 				return {
 					bgcolor: "background.default",
 					position: "relative",
-					borderEndStartRadius: { md: theme.shape.borderRadius + "px", xs: 0 },
-					borderStartStartRadius: { md: theme.shape.borderRadius + "px", xs: 0 },
+					borderEndStartRadius: { md: `${theme.tokens.radius.panel}px`, xs: 0 },
+					borderStartStartRadius: { md: `${theme.tokens.radius.panel}px`, xs: 0 },
 					display: "flex",
 					height: "100%",
 					flexDirection: "column",

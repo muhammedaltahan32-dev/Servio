@@ -14,7 +14,7 @@ export const TableToolbar = ({ selection }) => {
 			direction={{ xs: "column", sm: "row" }}
 			spacing={2}
 			sx={{
-				p: 2.5,
+				p: (theme) => theme.tokens.space.pageSm,
 				borderBottom: "1px solid",
 				borderColor: "divider",
 				justifyContent: "space-between",
@@ -49,7 +49,7 @@ export const TableToolbar = ({ selection }) => {
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 						prefix={<Icon name="Search" fontSize="small" />}
-						sx={{ minWidth: 240, "& .MuiOutlinedInput-root": { borderRadius: 2 } }}
+						sx={(theme) => ({ minWidth: 240, "& .MuiOutlinedInput-root": { borderRadius: `${theme.tokens.radius.control}px` } })}
 					/>
 				)}
 			</Stack>

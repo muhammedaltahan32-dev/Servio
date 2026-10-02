@@ -8,11 +8,10 @@ export const useLang = () => {
 	const { t, i18n } = useTranslation();
 	const { currentLanguage } = useSelector((state) => state.language);
 	const dispatch = useDispatch();
-	const change = (lang) => {
-		dispatch(changeLanguage(lang));
-	};
+	const change = React.useCallback((lang) => dispatch(changeLanguage(lang)), [dispatch]);
 
-	const getFieldsByLang = (obj, field) => {
+	const getFieldsByLang = React.useCallback((obj, field) => {
+		if (!obj) return "";
 		const lang = currentLanguage;
 		if (lang === "ar") {
 			return obj[`${field}_ar`] ?? obj[`${field}_en`] ?? obj[field];
@@ -20,7 +19,7 @@ export const useLang = () => {
 			return obj[`${field}_en`] ?? obj[`${field}_ar`] ?? obj[field];
 		}
 		return obj[field];
-	};
+	}, [currentLanguage]);
 	// cSpell:disable-next-line
 	const supportedLanguages = i18n.options.supportedLngs.filter((lang) => lang !== "cimode" && lang !== false);
 	return {

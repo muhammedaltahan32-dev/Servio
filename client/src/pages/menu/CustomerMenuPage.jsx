@@ -1,19 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	Box,
-	Button as MuiButton,
-	Card,
-	CircularProgress,
-	Container,
-	Divider,
-	Grid,
-	Stack,
-	Tab,
-	Tabs,
-	TextField,
-	Typography,
-} from "@mui/material";
+import { Box, Button as MuiButton, Card, CircularProgress, Divider, Stack, Typography, useTheme } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
@@ -30,14 +17,14 @@ import {
 } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
-import { Icon, PageContainer } from "@components";
-import { openActionsBar, setActionsBarContent } from "../../features/layout/layoutSlice.js";
+import { Button, Icon, Input, PageContainer } from "@components";
 
 export const CustomerMenuPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const theme = useTheme();
 	const { tableId } = useParams();
-	const { getFieldsByLang } = useLang();
+	const { getFieldsByLang, t, currentLanguage } = useLang();
 
 	const categories = useSelector((state) => state.categories?.items ?? []);
 	const menuItems = useSelector((state) => state.menuItems?.items ?? []);
@@ -46,8 +33,17 @@ export const CustomerMenuPage = () => {
 	const orderLoading = useSelector((state) => state.orders?.loading);
 	const table = tables.find((candidate) => String(candidate.id) === String(tableId));
 	const [cart, setCart] = React.useState([]);
+	const [search, setSearch] = React.useState("");
+	const [paymentMethod, setPaymentMethod] = React.useState("card");
 
 	const [selectedCategoryId, setSelectedCategoryId] = React.useState("");
+	const formatCurrency = React.useCallback(
+		(value) =>
+			new Intl.NumberFormat(currentLanguage === "ar" ? "ar" : "en-US", { style: "currency", currency: "USD" }).format(
+				value,
+			),
+		[currentLanguage],
+	);
 	React.useEffect(() => {
 		dispatch(fetchCategories());
 		dispatch(fetchMenuItems());
@@ -72,13 +68,21 @@ export const CustomerMenuPage = () => {
 			return String(itemCategoryId) === String(activeCategory[Cat_ID]) && isAvailable;
 		});
 	}, [activeCategory, menuItems]);
+	const visibleItems = React.useMemo(() => {
+		const query = search.trim().toLocaleLowerCase();
+		if (!query) return categoryItems;
+		return categoryItems.filter((item) => {
+			const name = getFieldsByLang(item, "name") || "";
+			const description = getFieldsByLang(item, "description") || "";
+			return `${name} ${description}`.toLocaleLowerCase().includes(query);
+		});
+	}, [categoryItems, getFieldsByLang, search]);
 
 	const handleTabChange = (_, nextValue) => {
 		setSelectedCategoryId(nextValue);
 	};
 
 	const addToCart = (item) => {
-		dispatch(openActionsBar(true));
 		setCart((currentCart) => {
 			const itemId = item[Menu_ID] ?? item.id;
 			const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
@@ -138,188 +142,342 @@ export const CustomerMenuPage = () => {
 	}, [cart, dispatch, navigate, table]);
 	const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-	React.useEffect(() => {
-		dispatch(
-			setActionsBarContent(
-				<Card sx={{ p: 2.5, position: "sticky", top: 16 }}>
-					<Typography variant="h6" sx={{ fontWeight: 800 }}>
-						Your order
-					</Typography>
-					<Divider sx={{ my: 2 }} />
-					{cart.length === 0 ? (
-						<Typography color="text.secondary">Your order is empty.</Typography>
-					) : (
-						<Stack spacing={1.5}>
-							{cart.map((item) => (
-								<Stack
-									key={item.id}
-									direction="row"
-									spacing={1}
-									sx={{ alignItems: "center", justifyContent: "space-between" }}
-								>
-									<Box sx={{ minWidth: 0, flex: 1 }}>
-										<Typography noWrap>{item.name}</Typography>
-										<Typography variant="body2" color="text.secondary">
-											${(item.price * item.quantity).toFixed(2)}
-										</Typography>
-										<TextField
-											fullWidth
-											size="small"
-											margin="dense"
-											label="Notes"
-											placeholder="e.g. no onions"
-											value={item.notes}
-											onChange={(event) => updateNotes(item.id, event.target.value)}
-											inputProps={{ maxLength: 500 }}
-										/>
-									</Box>
-									<Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
-										<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
-											-
-										</MuiButton>
-										<Typography>{item.quantity}</Typography>
-										<MuiButton size="small" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
-											+
-										</MuiButton>
-									</Stack>
-								</Stack>
-							))}
-							<Divider />
-							<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-								<Typography sx={{ fontWeight: 700 }}>Total</Typography>
-								<Typography sx={{ fontWeight: 700 }}>${cartTotal.toFixed(2)}</Typography>
-							</Stack>
-							<MuiButton variant="contained" fullWidth disabled={orderLoading} onClick={submitOrder}>
-								{orderLoading ? "Sending..." : "Send order"}
-							</MuiButton>
-						</Stack>
-					)}
-				</Card>,
-			),
-		);
-	}, [cartTotal, dispatch, orderLoading, cart, submitOrder]);
-	React.useEffect(() => {
-		return () => {
-			dispatch(setActionsBarContent(null));
-			dispatch(openActionsBar(false));
-		};
-	}, [dispatch]);
 	if (!table) {
 		return (
 			<PageContainer sx={{ alignItems: "center", justifyContent: "center", gap: 2 }}>
-				<Typography variant="h6">Select an available table from the lobby first.</Typography>
-				<MuiButton variant="contained" onClick={() => navigate("/lobby")}>
-					Back to lobby
-				</MuiButton>
+				<Typography variant="h6">{t("customerMenu.selectAvailableTable")}</Typography>
+				<Button onClick={() => navigate("/lobby")}>{t("customerMenu.backToLobby")}</Button>
 			</PageContainer>
 		);
 	}
 
 	return (
 		<PageContainer
-			sx={(theme) => {
-				const primary = (opacity = 1) =>
-					`color-mix(in srgb, ${theme.palette.primary.main} ${opacity * 100}%, transparent)`;
-				return {
-					background: `radial-gradient(circle at top, ${primary(0.1)}, transparent 40%)`,
-					position: "relative",
-				};
+			sx={{
+				height: "auto",
+				minHeight: `calc(100dvh - ${theme.tokens.size.appBarHeight}px)`,
+				width: "100%",
+				minWidth: 0,
+				overflowX: "hidden",
+				// bgcolor: "background.default",
 			}}
 		>
-			<>
-				<Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 3 }}>
-					<Box>
-						<Typography variant="h5" sx={{ fontWeight: 800 }}>
-							Table {table[Table_Number]}
-						</Typography>
-						<Typography color="text.secondary">Choose your items and send the order to the kitchen.</Typography>
-					</Box>
-					<MuiButton variant="outlined" startIcon={<Icon name="ArrowBack" />} onClick={() => navigate("/lobby")}>
-						Back
-					</MuiButton>
-				</Stack>
-				{isLoading && !safeCategories.length && !menuItems.length ? (
-					<Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
-						<CircularProgress color="warning" />
-					</Box>
-				) : (
-					<AnimatePresence mode="wait">
-						<motion.div
-							key="grid-view"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.2 }}
-						>
-							{safeCategories.length > 0 && (
-								<Tabs
-									allowScrollButtonsMobile
-									selectionFollowsFocus
-									value={activeCategory?.[Cat_ID] ?? false}
-									onChange={handleTabChange}
-									variant="scrollable"
-									scrollButtons="auto"
-									sx={{
-										mb: 4,
-										borderBottom: 1,
-										borderColor: "divider",
-
-										".MuiTabs-flexContainer": { gap: 1 },
-										".MuiTab-root": {
-											textTransform: "none",
-											fontWeight: 700,
-
-											minHeight: 42,
-											px: 3,
-										},
-									}}
-								>
-									{safeCategories.map((category) => (
-										<Tab
+			<Stack
+				direction={{ xs: "column", sm: "row" }}
+				sx={{
+					alignItems: { xs: "stretch", sm: "center" },
+					justifyContent: "space-between",
+					gap: 2,
+					mb: 2.5,
+					minWidth: 0,
+				}}
+			>
+				<Box sx={{ minWidth: 0 }}>
+					<Typography variant="h5" sx={{ fontWeight: 800 }}>
+						{t("customerMenu.pageTitle", { number: table[Table_Number] })}
+					</Typography>
+					<Typography color="text.secondary">{t("customerMenu.chooseItems")}</Typography>
+				</Box>
+				<MuiButton
+					variant="outlined"
+					startIcon={<Icon name={currentLanguage === "ar" ? "ArrowForward" : "ArrowBack"} />}
+					onClick={() => navigate("/lobby")}
+				>
+					{t("customerMenu.backToLobby")}
+				</MuiButton>
+			</Stack>
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(0, 1fr) 300px" },
+					gap: { xs: 2, md: 2.5 },
+					alignItems: "start",
+					minWidth: 0,
+				}}
+			>
+				<Box sx={{ minWidth: 0 }}>
+					<Input
+						fullWidth
+						value={search}
+						onChange={(event) => setSearch(event.target.value)}
+						placeholder={t("customerMenu.searchPlaceholder")}
+						sx={{ mb: 2.5, bgcolor: "background.paper" }}
+						prefix={<Icon name="Search" color="text.secondary" />}
+					/>
+					{isLoading && !safeCategories.length && !menuItems.length ? (
+						<Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
+							<CircularProgress />
+						</Box>
+					) : (
+						<>
+							<Box
+								sx={{
+									display: "grid",
+									gridTemplateColumns: "repeat( auto-fit, minmax(min(100%, 145px), 1fr))",
+									gap: 1.25,
+									mb: 2.5,
+									minWidth: 0,
+								}}
+							>
+								{safeCategories.map((category, index) => {
+									const count = menuItems.filter(
+										(item) =>
+											String(item?.[Menu_CatID]) === String(category[Cat_ID]) && item?.[Menu_IsAvailable] !== false,
+									).length;
+									const selected = String(category[Cat_ID]) === String(activeCategory?.[Cat_ID]);
+									return (
+										<Card
 											key={category[Cat_ID]}
-											label={getFieldsByLang(category, "name") || "Category"}
-											value={category[Cat_ID]}
-										/>
-									))}
-								</Tabs>
-							)}
-
-							{!activeCategory ? (
-								<Box sx={{ py: 6, textAlign: "center" }}>
-									<Typography variant="h6" color="text.secondary">
-										No menu categories are available right now.
-									</Typography>
-								</Box>
-							) : categoryItems.length === 0 ? (
-								<Box sx={{ py: 6, textAlign: "center" }}>
-									<Typography variant="h6" color="text.secondary">
-										No items available in {getFieldsByLang(activeCategory, "name")} yet.
-									</Typography>
-								</Box>
-							) : (
-								<Grid container spacing={3}>
-									<Grid size={{ xs: 12, md: 8 }}>
-										<Box
+											component="button"
+											onClick={() => handleTabChange(null, category[Cat_ID])}
 											sx={{
-												display: "grid",
-												gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-												rowGap: 6,
-												columnGap: 4,
-												mt: 8,
+												display: "flex",
+												alignItems: "center",
+												gap: 1.25,
+												textAlign: "start",
+												p: 1.25,
+												minWidth: 0,
+												border: "1px solid",
+												borderColor: selected ? "primary.main" : "divider",
+												bgcolor: selected ? "primary.main" : "background.paper",
+												color: selected ? "primary.contrastText" : "text.primary",
+												borderRadius: 1.5,
+												cursor: "pointer",
+												boxShadow: "none",
+												transition: "all .18s ease",
+												"&:hover": { borderColor: "primary.main", transform: "translateY(-1px)" },
 											}}
 										>
-											{categoryItems.map((item) => (
-												<CustomerMenuCard key={item.id} item={item} onOrder={addToCart} />
-											))}
-										</Box>
-									</Grid>
-									{/* <Grid size={{ xs: 12, md: 4 }}></Grid> */}
-								</Grid>
+											<Box
+												sx={{
+													display: "grid",
+													placeItems: "center",
+													width: 36,
+													height: 36,
+													flexShrink: 0,
+													borderRadius: 1,
+													bgcolor: selected ? "rgba(255,255,255,.18)" : "action.hover",
+												}}
+											>
+												<Icon
+													name={
+														[
+															"FreeBreakfast",
+															"LunchDining",
+															"DinnerDining",
+															"SoupKitchen",
+															"Icecream",
+															"RamenDining",
+															"Fastfood",
+															"LocalCafe",
+														][index % 8]
+													}
+												/>
+											</Box>
+											<Box sx={{ minWidth: 0 }}>
+												<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
+													{getFieldsByLang(category, "name") || t("customerMenu.category")}
+												</Typography>
+												<Typography variant="caption" sx={{ opacity: 0.75 }}>
+													{t("customerMenu.menuItemCount", { count })}
+												</Typography>
+											</Box>
+										</Card>
+									);
+								})}
+							</Box>
+							<Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5 }}>
+								{activeCategory ? getFieldsByLang(activeCategory, "name") : t("customerMenu.menu")}
+							</Typography>
+							{!activeCategory ? (
+								<Typography color="text.secondary" sx={{ py: 4 }}>
+									{t("customerMenu.noCategories")}
+								</Typography>
+							) : visibleItems.length === 0 ? (
+								<Typography color="text.secondary" sx={{ py: 4 }}>
+									{search ? t("customerMenu.noMatchingItems") : t("customerMenu.noAvailableItems")}
+								</Typography>
+							) : (
+								<AnimatePresence mode="wait">
+									<motion.div
+										key={String(activeCategory[Cat_ID]) + search}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.18 }}
+										style={{
+											display: "grid",
+											gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+											gap: 1.25,
+											minWidth: 0,
+										}}
+									>
+										{visibleItems.map((item, index) => (
+											<CustomerMenuCard
+												key={item[Menu_ID] ?? item.id}
+												item={item}
+												index={index}
+												quantity={
+													cart.find((cartItem) => String(cartItem.id) === String(item[Menu_ID] ?? item.id))?.quantity ??
+													0
+												}
+												onOrder={addToCart}
+												onQuantityChange={(quantity) => updateQuantity(item[Menu_ID] ?? item.id, quantity)}
+											/>
+										))}
+									</motion.div>
+								</AnimatePresence>
 							)}
-						</motion.div>
-					</AnimatePresence>
-				)}
-			</>
+						</>
+					)}
+				</Box>
+				<Card
+					sx={{
+						p: 2,
+						minWidth: 0,
+						width: "100%",
+						position: { lg: "sticky" },
+						top: 16,
+						border: "1px solid",
+						borderColor: "divider",
+						borderRadius: 1.5,
+						boxShadow: "0 4px 16px rgba(20,35,60,.05)",
+					}}
+				>
+					<Typography variant="h6" sx={{ fontWeight: 800 }}>
+						{t("customerMenu.invoice")}{" "}
+						<Typography component="span" variant="body2" color="text.secondary">
+							{t("customerMenu.itemsCount", { count: cart.reduce((sum, item) => sum + item.quantity, 0) })}
+						</Typography>
+					</Typography>
+					<Divider sx={{ my: 1.5 }} />
+					{cart.length === 0 ? (
+						<Typography color="text.secondary" sx={{ py: 2 }}>
+							{t("customerMenu.invoiceEmpty")}
+						</Typography>
+					) : (
+						<Stack spacing={1.5} sx={{ maxHeight: { lg: "45vh" }, overflowY: "auto", pr: 0.5 }}>
+							{cart.map((item) => (
+								<Stack key={item.id} direction="row" spacing={1} sx={{ alignItems: "center", minWidth: 0 }}>
+									<Box sx={{ flex: 1, minWidth: 0 }}>
+										<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
+											{item.name}
+										</Typography>
+										<Typography dir="ltr" variant="caption" color="text.secondary">
+											{item.quantity} x {formatCurrency(item.price)}
+										</Typography>
+										<Input
+											fullWidth
+											placeholder={t("customerMenu.addNote")}
+											value={item.notes}
+											onChange={(event) => updateNotes(item.id, event.target.value)}
+											inputProps={{ maxLength: 500 }}
+											sx={{ mt: 0.75 }}
+										/>
+									</Box>
+					<Stack spacing={0.5} sx={{ alignItems: "flex-end", flexShrink: 0 }}>
+										<Typography dir="ltr" variant="body2" sx={{ fontWeight: 700 }}>
+											{formatCurrency(item.price * item.quantity)}
+										</Typography>
+						<Stack direction="row" sx={{ alignItems: "center" }}>
+											<MuiButton
+												aria-label={t("customerMenu.removeOne", { name: item.name })}
+												size="small"
+												onClick={() => updateQuantity(item.id, item.quantity - 1)}
+												sx={{ minWidth: 30, p: 0.25 }}
+											>
+												−
+											</MuiButton>
+											<Typography variant="caption">{item.quantity}</Typography>
+											<MuiButton
+												aria-label={t("customerMenu.addOne", { name: item.name })}
+												size="small"
+												onClick={() => updateQuantity(item.id, item.quantity + 1)}
+												sx={{ minWidth: 30, p: 0.25 }}
+											>
+												+
+											</MuiButton>
+										</Stack>
+									</Stack>
+								</Stack>
+							))}
+						</Stack>
+					)}
+					<Divider sx={{ my: 1.5 }} />
+					<Stack spacing={0.75}>
+						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+							<Typography variant="body2" color="text.secondary">
+								{t("customerMenu.subtotal")}
+							</Typography>
+							<Typography dir="ltr" variant="body2">
+								{formatCurrency(cartTotal)}
+							</Typography>
+						</Stack>
+						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+							<Typography variant="body2" color="text.secondary">
+								{t("customerMenu.tax")}
+							</Typography>
+							<Typography dir="ltr" variant="body2">
+								{formatCurrency(0)}
+							</Typography>
+						</Stack>
+						<Divider sx={{ my: 0.5 }} />
+						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+							<Typography sx={{ fontWeight: 800 }}>{t("customerMenu.totalPayment")}</Typography>
+							<Typography dir="ltr" sx={{ fontWeight: 800 }}>
+								{formatCurrency(cartTotal)}
+							</Typography>
+						</Stack>
+					</Stack>
+					<Box
+						sx={{
+							display: "grid",
+							gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+							gap: 0.75,
+							mt: 2,
+							p: 0.75,
+							bgcolor: "action.hover",
+							borderRadius: 1.25,
+						}}
+					>
+						{[
+							["card", "CreditCard", t("customerMenu.paymentCard")],
+							["wallet", "AccountBalanceWallet", t("customerMenu.paymentWallet")],
+							["cash", "Payments", t("customerMenu.paymentCash")],
+						].map(([method, icon, label]) => (
+							<MuiButton
+								key={method}
+								onClick={() => setPaymentMethod(method)}
+								color={paymentMethod === method ? "primary" : "inherit"}
+								variant={paymentMethod === method ? "contained" : "text"}
+								sx={{
+									minWidth: 0,
+									px: 0.5,
+									py: 0.75,
+									display: "flex",
+									flexDirection: "column",
+									gap: 0.25,
+									fontSize: 10,
+									lineHeight: 1.2,
+									boxShadow: "none",
+								}}
+							>
+								<Icon name={icon} size="1.1rem" />
+								{label}
+							</MuiButton>
+						))}
+					</Box>
+					<Button
+						fullWidth
+						disabled={orderLoading || cart.length === 0}
+						onClick={submitOrder}
+						suffix={<Icon name={currentLanguage === "ar" ? "ArrowBack" : "ArrowForward"} />}
+						sx={{ mt: 1.5, py: 1.25, fontWeight: 700 }}
+					>
+						{orderLoading ? t("customerMenu.placingOrder") : t("customerMenu.placeOrder")}
+					</Button>
+				</Card>
+			</Box>
 		</PageContainer>
 	);
 };

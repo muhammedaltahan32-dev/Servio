@@ -1,181 +1,60 @@
-import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, DialogTitle, Stack, Typography } from "@mui/material";
 import React from "react";
-import { Cat_ID, Menu_BaseImage, Menu_Images, Menu_IsAvailable, Menu_Price } from "../../../../constants/FieldsName.js";
+import { Box, Card, CardMedia, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { Add, InfoOutlined, Remove } from "@mui/icons-material";
+import { Menu_BaseImage, Menu_Images, Menu_IsAvailable, Menu_Price } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
 import { normalizeImage } from "./utils/helpers.js";
-import { Button, Carousel, Icon } from "@components";
-import { useSelector } from "react-redux";
 import CustomerMenuDialog from "./CustomerMenuDialog.jsx";
 import { AnimatePresence, motion } from "framer-motion";
 
-export const CustomerMenuCard = React.memo(({ item, onOrder, index }) => {
-	const { getFieldsByLang, t } = useLang();
+const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+
+export const CustomerMenuCard = React.memo(({ item, onOrder, onQuantityChange, quantity = 0, index = 0 }) => {
+	const { getFieldsByLang, t, currentLanguage } = useLang();
+	const theme = useTheme();
+	const dialogRef = React.useRef(null);
+	const name = getFieldsByLang(item, "name") || t("customerMenu.menuItem");
+	const description = getFieldsByLang(item, "description") || "";
 	const image = normalizeImage(item[Menu_BaseImage] || item[Menu_Images]?.[0]);
 	const price = Number(item[Menu_Price] ?? 0);
-	const dialogRef = React.useRef(null);
+	const galleryImages = React.useMemo(() => {
+		const images = [item[Menu_BaseImage], ...(Array.isArray(item[Menu_Images]) ? item[Menu_Images] : [])];
+		return images.filter(Boolean).map(normalizeImage);
+	}, [item]);
+	const available = item[Menu_IsAvailable] !== false;
 
-	const categories = useSelector((state) => state.categories?.items ?? []);
-	const safeCategories = React.useMemo(
-		() => categories.filter((category) => category && category[Cat_ID] !== undefined && category[Cat_ID] !== null),
-		[categories],
-	);
-	const { name, description, galleryImages } = React.useMemo(() => {
-		const result = {
-			description: getFieldsByLang(item, "description"),
-			name: getFieldsByLang(item, "name"),
-			galleryImages: [],
-		};
-		if (item) {
-			const images = [item[Menu_BaseImage], ...(Array.isArray(item[Menu_Images]) ? item[Menu_Images] : [])];
-			result.galleryImages = images.filter(Boolean).map(normalizeImage);
-		}
-		return result;
-	}, [getFieldsByLang, item]);
-	const carouselSlides = React.useMemo(() => {
-		if (galleryImages && galleryImages.length > 0) {
-			return galleryImages.map((image) => ({ image }));
-		}
-		return [];
-	}, [galleryImages]);
 	return (
 		<AnimatePresence mode="wait">
 			<motion.div
-				key="grid-view"
-				initial={{ opacity: 0, y: "10%" }}
+				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				exit={{ opacity: 0 }}
-				transition={{ duration: Math.min(1, 0.2 * (index + 1)) }}
+				transition={{ duration: 0.18, delay: Math.min(index * 0.025, 0.2) }}
+				style={{ minWidth: 0, width: "100%" }}
 			>
-				<Card
-					className={"customer-card"}
-					sx={{
-						height: "360px",
-						borderRadius: "shape.borderRadius",
-						boxShadow: "0 20px 45px rgba(15, 23, 42, 0.08)",
-						border: "1px solid ",
-						borderColor: "divider",
-						transition: "transform 0.4s ease, box-shadow 0.2s ease",
-						position: "relative",
-						overflow: "visible",
-						display: "flex",
-						flexDirection: "column",
-						"&:hover": {
-							boxShadow: "0 24px 50px rgba(15, 23, 42, 0.2)",
-							transform: "translateY(4px)",
-						},
-					}}
-				>
-					<Box
-						sx={{
-							height: "150px",
-							width: "150px",
-							borderRadius: 9999,
-							boxShadow: "0 0 20px 5px #0002",
-							overflow: "hidden",
-							position: "absolute",
-							top: "0",
-							border: "2px solid ",
-							borderColor: "primary.main",
-							insetInline: "50%",
-							transform: "translate(-50%,-25%)",
-						}}
-					>
-						<CardMedia
-							component="img"
-							draggable={false}
-							image={image}
-							alt={name}
-							sx={{
-								height: "100%",
-								width: "100%",
-								objectFit: "cover",
-								userSelect: "none",
-							}}
-						/>
+				<Card sx={{ display: "flex", alignItems: "center", gap: 1, p: 1, minWidth: 0, minHeight: theme.tokens.size.menuCardMinHeight, border: "1px solid", borderColor: "divider", borderRadius: `${theme.tokens.radius.card}px`, boxShadow: theme.tokens.shadow.subtle, transition: `box-shadow ${theme.tokens.motion.fast}, transform ${theme.tokens.motion.fast}`, "&:hover": { boxShadow: theme.tokens.shadow.cardHover, transform: "translateY(-1px)" } }}>
+					<CardMedia component="img" image={image} alt={name} draggable={false} sx={{ width: theme.tokens.size.menuThumbnail, height: theme.tokens.size.menuThumbnail, flexShrink: 0, borderRadius: `${theme.tokens.radius.control}px`, objectFit: "cover", bgcolor: "action.hover" }} />
+					<Box sx={{ flex: 1, minWidth: 0, alignSelf: "stretch", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+						<Stack direction="row" spacing={.5} sx={{ minWidth: 0, alignItems: "center" }}>
+							<Typography variant="body2" sx={{ fontWeight: 800, minWidth: 0, flex: 1 }} noWrap>{name}</Typography>
+							<IconButton aria-label={t("customerMenu.detailsFor", { name })} size="small" onClick={() => dialogRef.current?.open()} sx={{ p: .25, flexShrink: 0 }}><InfoOutlined sx={{ fontSize: 16 }} /></IconButton>
+						</Stack>
+						<Typography variant="caption" color="text.secondary" sx={{ overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", lineHeight: 1.35 }}>{description}</Typography>
+						<Stack direction="row" spacing={.5} sx={{ mt: .5, minWidth: 0, alignItems: "center", justifyContent: "space-between" }}>
+							<Typography variant="body1" sx={{ fontWeight: 800, whiteSpace: "nowrap" }}>{new Intl.NumberFormat(currentLanguage === "ar" ? "ar" : "en-US", { style: "currency", currency: "USD" }).format(price)}</Typography>
+							{quantity > 0 ? <Stack direction="row" spacing={.25} sx={{ flexShrink: 0, alignItems: "center" }}>
+								<IconButton aria-label={t("customerMenu.removeOne", { name })} size="small" onClick={() => onQuantityChange?.(quantity - 1)} sx={{ width: 27, height: 27, bgcolor: "action.hover" }}><Remove sx={{ fontSize: 16 }} /></IconButton>
+								<Typography variant="caption" sx={{ minWidth: 16, textAlign: "center", fontWeight: 700 }}>{quantity}</Typography>
+								<IconButton aria-label={t("customerMenu.addOne", { name })} size="small" onClick={() => onOrder?.(item)} sx={{ width: 27, height: 27, bgcolor: "primary.main", color: "primary.contrastText", "&:hover": { bgcolor: "primary.dark" } }}><Add sx={{ fontSize: 16 }} /></IconButton>
+							</Stack> : <IconButton aria-label={t("customerMenu.addItem", { name })} size="small" disabled={!available} onClick={() => onOrder?.(item)} sx={{ width: 28, height: 28, flexShrink: 0, color: "primary.main", bgcolor: "action.hover", "&:hover": { bgcolor: "primary.main", color: "primary.contrastText" } }}><Add sx={{ fontSize: 18 }} /></IconButton>}
+						</Stack>
 					</Box>
-					<CardContent
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							p: 2.5,
-							mt: "auto",
-							height: "calc(100% - 120px)",
-							userSelect: "none",
-						}}
-					>
-						<Stack
-							direction="column"
-							spacing={1}
-							sx={{ mb: 1.5, justifyContent: "space-between", alignItems: "center" }}
-						>
-							<Typography
-								variant="h3"
-								color="text.secondary"
-								sx={{
-									marginInline: "auto",
-									textAlign: "center",
-									overflow: "hidden",
-								}}
-							>
-								{name}
-							</Typography>
-							<Chip
-								label={item[Menu_IsAvailable] === false ? "Unavailable" : "Available"}
-								color={item[Menu_IsAvailable] === false ? "default" : "success"}
-								size="small"
-							/>
-							<Typography
-								variant="body2"
-								color="text.secondary"
-								sx={{
-									height: 45,
-									display: "-webkit-box",
-									WebkitLineClamp: 2,
-									WebkitBoxOrient: "vertical",
-									overflow: "hidden",
-								}}
-							>
-								{description}
-							</Typography>
-						</Stack>
-
-						<Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
-							<Typography variant="h6" sx={{ fontWeight: 800, color: "secondary.main" }}>
-								{new Intl.NumberFormat("en-US", {
-									style: "currency",
-									currency: "USD",
-								}).format(price)}
-							</Typography>
-						</Stack>
-						<Stack direction={"row"} spacing={1} sx={{ mt: "auto" }}>
-							<Button
-								onClick={() => onOrder?.(item)}
-								disabled={item[Menu_IsAvailable] === false}
-								suffix={<Icon name="TakeoutDiningOutlined" size="1rem" />}
-								sx={{ bgcolor: "primary" }}
-							>
-								{t("customerMenu.card.order")}
-							</Button>
-							<Button
-								onClick={() => dialogRef.current.open()}
-								suffix={<Icon name="InfoOutlined" size="1rem" />}
-								sx={{ bgcolor: "#0006" }}
-							>
-								{t("customerMenu.card.showDetails")}
-							</Button>
-						</Stack>
-					</CardContent>
 				</Card>
-				<CustomerMenuDialog
-					ref={dialogRef}
-					item={item}
-					name={name}
-					description={description}
-					galleryImages={galleryImages}
-				/>
+				<CustomerMenuDialog ref={dialogRef} item={item} name={name} description={description} galleryImages={galleryImages} />
 			</motion.div>
 		</AnimatePresence>
 	);
 });
+
 CustomerMenuCard.displayName = "CustomerMenuCard";
 export default CustomerMenuCard;

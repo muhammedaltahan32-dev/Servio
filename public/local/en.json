@@ -1,233 +1,284 @@
 {
-	"layout": {
-		"mode": {
-			"dark": "Dark mode",
-			"light": "Light mode"
-		},
-		"languages": {
-			"en": "English",
-			"ar": "Arabic",
-			"language": "Language"
-		}
-	},
-	"login": {
-		"login": "Login",
-		"username": "Username",
-		"password": "Password"
-	},
-	"actions": {
-		"delete": "Delete",
-		"update": "Update",
-		"add": "add",
-		"modify": "modify",
-		"save": "save"
-	},
-	"customerMenu": {
-		"card": {
-			"showDetails": "View Details",
-			"order": "Order"
-		}
-	},
-	"lobby": {
-		"persons": "Persons",
-		"small": "Small",
-		"medium": "Medium",
-		"large": "Large",
-		"Needs_Cleaning": "Needs cleaning",
-		"Occupied": "Occupied",
-		"Available": "Available",
-		"allStatus": "All status",
-		"search": "Search..."
-	},
-	"tables": {
-		"title": "Tables",
-		"addNew": "Add New Table",
-		"editTitle": "Edit Table",
-		"addTitle": "Add New Table",
-		"dialogSubtitle": "Enter the table details below to update the list.",
-		"capacity": "Table Capacity",
-		"number": "Table Number",
-		"status": "Table Status",
-		"save": "Save Changes",
-		"cancel": "Cancel"
-	},
-	"users": {
-		"title": "Users",
-		"addNew": "Add New User",
-		"editTitle": "Edit User",
-		"addTitle": "Add New User",
-		"dialogSubtitle": "Enter the user details below to update the list.",
-		"username": "Username",
-		"password": "Password",
-		"kind": "Account Type",
-		"isActive": "Is Active",
-		"activate": {
-			"yes": "Yes",
-			"no": "No"
-		},
-		"roles": {
-			"admin": "Admin",
-			"waiter": "Waiter",
-			"kitchen": "Kitchen"
-		},
-		"save": "Save Changes",
-		"cancel": "Cancel"
-	},
-	"auth": {
-		"validation": {
-			"nameRequired": "Username is required",
-			"passwordRequired": "Password is required",
-			"kindRequired": "Account type is required",
-			"invalidKind": "Invalid account type",
-			"nameExists": "Username is already taken"
-		},
-		"error": {
-			"invalidCredentials": "Invalid username or password"
-		}
-	},
-	"user": {
-		"success": {
-			"created": "User added successfully"
-		}
-	},
-	"upload": {
-		"success": {
-			"completed": "Files uploaded successfully"
-		},
-		"error": {
-			"noFiles": "No files selected for upload",
-			"failed": "An error occurred during file upload",
-			"fileTooLarge": "File size exceeds the allowed limit (5MB)"
-		}
-	},
-	"payment": {
-		"success": {
-			"created": "Payment successful"
-		}
-	},
-	"table": {
-		"success": {
-			"created": "Table created successfully",
-			"updated": "Table updated successfully",
-			"deleted": "Table deleted successfully"
-		},
-		"error": {
-			"notFound": "Table not found",
-			"noIdsProvided": "No table IDs provided."
-		}
-	},
-	"order": {
-		"success": {
-			"created": "Order created successfully"
-		},
-		"error": {
-			"notFound": "Order not found",
-			"invalidData": "Please select a table and at least one menu item.",
-			"tableUnavailable": "This table is no longer available."
-		}
-	},
-	"error": {
-		"messages": {
-			"ExpiredToken": "Session expired, please log in again.",
-			"serverError": "An internal server error occurred."
-		}
-	},
-	"messages": {
-		"success": {
-			"add": {
-				"menuItem": "The menu item has been successfully added.",
-				"category": "The item has been successfully added."
-			},
-			"delete": {
-				"menuItem": "The menu item has been successfully deleted.",
-				"category": "The item has been successfully deleted."
-			},
-			"update": {
-				"menuItem": "The menu item has been successfully updated.",
-				"category": "The item has been successfully updated."
-			}
-		},
-		"failed": {
-			"add": {
-				"menuItem": "Failed to add the menu item.",
-				"category": "Failed to add the item",
-				"nameRequired": "Arabic or English item name is required."
-			},
-			"delete": {
-				"menuItem": "Failed to delete the menu item.",
-				"category": "Failed to delete the item"
-			},
-			"update": {
-				"menuItem": "Failed to update the menu item.",
-				"category": "Failed to update the item"
-			}
-		},
-		"error": {
-			"Accessdenied": "Access denied.",
-			"IDNotProvided": "ID not provided.",
-			"noContext": "No context available."
-		},
-		"required": {
-			"category": {
-				"ID": "Category ID is required."
-			}
-		},
-		"notFound": {
-			"category": "The category does not exist."
-		}
-	},
-	"categories": {
-		"title": "Categories",
-		"addNew": "Add New Category",
-		"editTitle": "Edit Category",
-		"addTitle": "Add New Category",
-		"dialogSubtitle": "Enter the category details below to update the list.",
-		"nameAr": "Category Name (Arabic)",
-		"nameEn": "Category Name (English)",
-		"sortOrder": "Sort Order",
-		"save": "Save Changes",
-		"cancel": "Cancel"
-	},
-	"menuItems": {
-		"title": "Menu Items",
-		"addNew": "Add New Menu Item",
-		"editTitle": "Edit Menu Item",
-		"addTitle": "Add New Menu Item",
-		"dialogSubtitle": "Enter the menu item details below to update the list.",
-		"nameAr": "Menu Item Name (Arabic)",
-		"nameEn": "Menu Item Name (English)",
-		"descriptions": "Descriptions",
-		"descriptionAr": "Description (Arabic)",
-		"descriptionEN": "Description (English)",
-		"price": "Price",
-		"category": "Category",
-		"baseImage": "Image",
-		"available": "Available",
-		"notAvailable": "Not Available",
-		"save": "Save Changes",
-		"cancel": "Cancel"
-	},
-	"components": {
-		"table": {
-			"noData": "No records found.",
-			"actions": "Actions",
-			"pagination": "Rows per page",
-			"selectedRows": "Selected rows",
-			"search": "search...",
-			"tooltips": {
-				"deleteSelected": "Delete selected"
-			}
-		},
-		"dropzone": {
-			"title": "Images",
-			"emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
-			"upload": "Upload",
-			"base": "Base",
-			"imageAlt": "Image {{number}}",
-			"tooltips": {
-				"deleteSelected": "Delete",
-				"setAsBase": "Set as base image"
-			}
-		}
-	}
+  "layout": {
+    "mode": {
+      "dark": "Dark mode",
+      "light": "Light mode"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic",
+      "language": "Language"
+    }
+  },
+  "login": {
+    "login": "Login",
+    "username": "Username",
+    "password": "Password"
+  },
+  "actions": {
+    "delete": "Delete",
+    "update": "Update",
+    "add": "add",
+    "modify": "modify",
+    "save": "save"
+  },
+  "customerMenu": {
+    "card": {
+      "showDetails": "View Details",
+      "order": "Order"
+    },
+    "pageTitle": "Table {{number}}",
+    "chooseItems": "Choose items for your order",
+    "backToLobby": "Back to lobby",
+    "searchPlaceholder": "Search your menu here",
+    "category": "Category",
+    "menuItemCount": "{{count}} menu items",
+    "menu": "Menu",
+    "noCategories": "No menu categories are available right now.",
+    "noMatchingItems": "No matching items found.",
+    "noAvailableItems": "No available items in this category.",
+    "selectAvailableTable": "Select an available table from the lobby first.",
+    "invoice": "Invoice",
+    "itemsCount": "{{count}} items",
+    "invoiceEmpty": "Your invoice is empty. Add items to get started.",
+    "addNote": "Add a note",
+    "subtotal": "Sub total",
+    "tax": "Tax",
+    "totalPayment": "Total payment",
+    "paymentCard": "Card",
+    "paymentWallet": "Wallet",
+    "paymentCash": "Cash",
+    "placeOrder": "Place an order",
+    "placingOrder": "Placing order...",
+    "menuItem": "Menu item",
+    "addItem": "Add {{name}}",
+    "removeOne": "Remove one {{name}}",
+    "addOne": "Add one {{name}}",
+    "detailsFor": "Details for {{name}}",
+    "availableNow": "Available now",
+    "unavailableNow": "Currently unavailable",
+    "title": "Customer menu"
+  },
+  "lobby": {
+    "persons": "People",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "Needs_Cleaning": "Needs cleaning",
+    "Occupied": "Occupied",
+    "Available": "Available",
+    "allStatus": "All status",
+    "search": "Search tables...",
+    "tableAria": "{{status}}, table {{number}}",
+    "totalTables": "Total tables",
+    "title": "Table lobby",
+    "emptyDescription": "Try changing the search or status filter.",
+    "tableType": "{{type}} table",
+    "emptyTitle": "No tables found",
+    "unavailable": "Unavailable",
+    "status": "Status",
+    "connecting": "Connecting",
+    "tableLabel": "TABLE",
+    "liveUpdates": "Live updates",
+    "openMenu": "Open menu",
+    "loadingTables": "Loading tables...",
+    "subtitle": "Manage table availability and start a guest order.",
+    "tableCount": "{{visible}} of {{total}} tables",
+    "allTables": "All tables",
+    "offline": "Offline"
+  },
+  "tables": {
+    "title": "Tables",
+    "addNew": "Add New Table",
+    "editTitle": "Edit Table",
+    "addTitle": "Add New Table",
+    "dialogSubtitle": "Enter the table details below to update the list.",
+    "capacity": "Table Capacity",
+    "number": "Table Number",
+    "status": "Table Status",
+    "save": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "users": {
+    "title": "Users",
+    "addNew": "Add New User",
+    "editTitle": "Edit User",
+    "addTitle": "Add New User",
+    "dialogSubtitle": "Enter the user details below to update the list.",
+    "username": "Username",
+    "password": "Password",
+    "kind": "Account Type",
+    "isActive": "Is Active",
+    "activate": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "roles": {
+      "admin": "Admin",
+      "waiter": "Waiter",
+      "kitchen": "Kitchen"
+    },
+    "save": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "auth": {
+    "validation": {
+      "nameRequired": "Username is required",
+      "passwordRequired": "Password is required",
+      "kindRequired": "Account type is required",
+      "invalidKind": "Invalid account type",
+      "nameExists": "Username is already taken"
+    },
+    "error": {
+      "invalidCredentials": "Invalid username or password"
+    }
+  },
+  "user": {
+    "success": {
+      "created": "User added successfully"
+    }
+  },
+  "upload": {
+    "success": {
+      "completed": "Files uploaded successfully"
+    },
+    "error": {
+      "noFiles": "No files selected for upload",
+      "failed": "An error occurred during file upload",
+      "fileTooLarge": "File size exceeds the allowed limit (5MB)"
+    }
+  },
+  "payment": {
+    "success": {
+      "created": "Payment successful"
+    }
+  },
+  "table": {
+    "success": {
+      "created": "Table created successfully",
+      "updated": "Table updated successfully",
+      "deleted": "Table deleted successfully"
+    },
+    "error": {
+      "notFound": "Table not found",
+      "noIdsProvided": "No table IDs provided."
+    }
+  },
+  "order": {
+    "success": {
+      "created": "Order created successfully"
+    },
+    "error": {
+      "notFound": "Order not found",
+      "invalidData": "Please select a table and at least one menu item.",
+      "tableUnavailable": "This table is no longer available."
+    }
+  },
+  "error": {
+    "messages": {
+      "ExpiredToken": "Session expired, please log in again.",
+      "serverError": "An internal server error occurred."
+    }
+  },
+  "messages": {
+    "success": {
+      "add": {
+        "menuItem": "The menu item has been successfully added.",
+        "category": "The item has been successfully added."
+      },
+      "delete": {
+        "menuItem": "The menu item has been successfully deleted.",
+        "category": "The item has been successfully deleted."
+      },
+      "update": {
+        "menuItem": "The menu item has been successfully updated.",
+        "category": "The item has been successfully updated."
+      }
+    },
+    "failed": {
+      "add": {
+        "menuItem": "Failed to add the menu item.",
+        "category": "Failed to add the item",
+        "nameRequired": "Arabic or English item name is required."
+      },
+      "delete": {
+        "menuItem": "Failed to delete the menu item.",
+        "category": "Failed to delete the item"
+      },
+      "update": {
+        "menuItem": "Failed to update the menu item.",
+        "category": "Failed to update the item"
+      }
+    },
+    "error": {
+      "Accessdenied": "Access denied.",
+      "IDNotProvided": "ID not provided.",
+      "noContext": "No context available."
+    },
+    "required": {
+      "category": {
+        "ID": "Category ID is required."
+      }
+    },
+    "notFound": {
+      "category": "The category does not exist."
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "addNew": "Add New Category",
+    "editTitle": "Edit Category",
+    "addTitle": "Add New Category",
+    "dialogSubtitle": "Enter the category details below to update the list.",
+    "nameAr": "Category Name (Arabic)",
+    "nameEn": "Category Name (English)",
+    "sortOrder": "Sort Order",
+    "save": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "menuItems": {
+    "title": "Menu Items",
+    "addNew": "Add New Menu Item",
+    "editTitle": "Edit Menu Item",
+    "addTitle": "Add New Menu Item",
+    "dialogSubtitle": "Enter the menu item details below to update the list.",
+    "nameAr": "Menu Item Name (Arabic)",
+    "nameEn": "Menu Item Name (English)",
+    "descriptions": "Descriptions",
+    "descriptionAr": "Description (Arabic)",
+    "descriptionEN": "Description (English)",
+    "price": "Price",
+    "category": "Category",
+    "baseImage": "Image",
+    "available": "Available",
+    "notAvailable": "Not Available",
+    "save": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "components": {
+    "table": {
+      "noData": "No records found.",
+      "actions": "Actions",
+      "pagination": "Rows per page",
+      "selectedRows": "Selected rows",
+      "search": "search...",
+      "tooltips": {
+        "deleteSelected": "Delete selected"
+      }
+    },
+    "dropzone": {
+      "title": "Images",
+      "emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
+      "upload": "Upload",
+      "base": "Base",
+      "imageAlt": "Image {{number}}",
+      "tooltips": {
+        "deleteSelected": "Delete",
+        "setAsBase": "Set as base image"
+      }
+    }
+  },
+  "home": {
+    "title": "Dashboard"
+  }
 }

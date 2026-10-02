@@ -249,7 +249,7 @@ export const CrudPage = ({
 
 	return (
 		<Box sx={{ display: "grid", gap: 3 }}>
-			<Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems="center" spacing={2}>
+			<Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between", alignItems: "center" }}>
 				<Typography variant="h4" fontWeight={700}>
 					{pageTitle}
 				</Typography>
@@ -263,9 +263,7 @@ export const CrudPage = ({
 				<CardContent>
 					<Stack
 						direction={{ xs: "column", sm: "row" }}
-						justifyContent="space-between"
-						alignItems="center"
-						sx={{ mb: 2 }}
+						sx={{ mb: 2, justifyContent: "space-between", alignItems: "center" }}
 					>
 						<Typography variant="h6">قائمة البيانات</Typography>
 						{loading && <CircularProgress size={22} />}
@@ -302,7 +300,7 @@ export const CrudPage = ({
 
 											{(allowEdit || allowDelete) && (
 												<TableCell align="right">
-													<Stack direction="row" spacing={1} justifyContent="flex-end">
+										<Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
 														{allowEdit && (
 															<Button size="small" variant="outlined" onClick={() => openEditDialog(item)}>
 																تعديل

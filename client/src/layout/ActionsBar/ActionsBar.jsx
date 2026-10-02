@@ -31,15 +31,17 @@ export const ActionsBar = React.memo(() => {
 				},
 			})}
 		>
-			<Box sx={{ height: "100%", overflow: "auto", direction: "rtl", padding: "1rem" }}>
+			<Box sx={(theme) => ({ height: "100%", overflow: "auto", direction: theme.direction, padding: `${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.section / 2}rem` })}>
 				<Box
 					sx={(theme) => ({
-						height: "calc(100% - 0.5rem)",
-						mt: "0.5rem",
-						direction: "ltr",
-						boxShadow: 1,
+						height: `calc(100% - ${theme.tokens.space.section / 4}rem)`,
+						mt: `${theme.tokens.space.section / 4}rem`,
+						direction: theme.direction,
+						boxShadow: theme.tokens.shadow.card,
+						border: "1px solid",
+						borderColor: "divider",
 						bgcolor: "background.paper",
-						borderRadius: theme.shape.borderRadius + "px",
+						borderRadius: `${theme.tokens.radius.panel}px`,
 					})}
 				>
 					<React.Activity mode={isActionsBarOpened ? "visible" : "hidden"}>{actionsBarContent}</React.Activity>
