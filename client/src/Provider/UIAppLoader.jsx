@@ -59,7 +59,7 @@ export function AppLoader({ label = "Loading..." }) {
 							inset: 0,
 							borderRadius: "50%",
 							border: "3px solid",
-							borderColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.06)",
+						borderColor: "divider",
 						}}
 					/>
 
@@ -84,7 +84,7 @@ export function AppLoader({ label = "Loading..." }) {
 						sx={{
 							width: 32,
 							height: 32,
-							borderRadius: 2,
+							borderRadius: `${theme.tokens.radius.card}px`,
 							backgroundColor: "primary.main",
 							color: "#FFFFFF",
 							fontWeight: 800,
@@ -95,7 +95,7 @@ export function AppLoader({ label = "Loading..." }) {
 							boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
 						}}
 					>
-						N
+						S
 					</Box>
 				</Box>
 
@@ -121,45 +121,33 @@ export function AppLoader({ label = "Loading..." }) {
 }
 
 const Content = ({ resourcePromise, children }) => {
-	React.use(resourcePromise.current);
+	React.use(resourcePromise);
 
 	React.useEffect(() => {
 		const loader = document.getElementById("appLoader");
-		if (loader) {
-			setTimeout(() => {
-				loader.classList.add("loaded");
-			}, 200);
-		}
+		if (!loader) return undefined;
+		const frame = window.requestAnimationFrame(() => {
+			loader.classList.add("loaded");
+		});
+		return () => window.cancelAnimationFrame(frame);
 	}, []);
 	return children;
 };
 
 export const UIAppLoader = ({ children }) => {
-	const [resolve, setResolved] = React.useState(null);
-
-	const resourcePromise = React.useRef(
-		new Promise((resolve) => {
-			setResolved(resolve);
-		}),
+	const resourcePromise = React.useMemo(
+		() =>
+			new Promise((resolve) => {
+				if (document.readyState === "complete") {
+					resolve();
+					return;
+				}
+				window.addEventListener("load", resolve, { once: true });
+			}),
+		[],
 	);
-
-	React.useEffect(() => {
-		const handleComplete = () => {
-			if (resolve) {
-				setResolved(true);
-			}
-		};
-
-		if (document.readyState === "complete") {
-			handleComplete();
-		} else {
-			window.addEventListener("load", handleComplete);
-			return () => window.removeEventListener("load", handleComplete);
-		}
-	}, [resolve]);
-	const appLoaderContainer = document.getElementById("appLoader").render;
 	return (
-		<React.Suspense>
+		<React.Suspense fallback={null}>
 			<Content resourcePromise={resourcePromise}>{children}</Content>
 		</React.Suspense>
 	);
