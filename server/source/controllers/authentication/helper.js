@@ -27,13 +27,12 @@ export const getForms = (kind, roles) => {
 		.filter(([_, perms]) => perms.open === true)
 		.map(([_, { open, ...rest }]) => rest);
 };
-export const getUserIdFromReq = (req) => {
+export const getUserIdFromReq = (req, allowRefreshToken = false) => {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) throw new Error("Unauthorized");
 	const token = authHeader.split(" ")[1];
-	const user = verifyToken(token);
+	const user = allowRefreshToken ? verifyToken(token, "refresh") : verifyToken(token, "access");
 	if (user) {
 		return parseInt(user.userId);
 	} else return { message: "error.messages.ExpiredToken" };
 };
-

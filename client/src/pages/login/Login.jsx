@@ -137,8 +137,15 @@ export const Login = () => {
 		const result = await dispatch(loginUser(formData));
 
 		if (loginUser.fulfilled.match(result)) {
-			const { token } = result.payload.data;
-			dispatch(setCredentials({ token, ...formData }));
+			const { token, refreshToken } = result.payload.data;
+
+			dispatch(
+				setCredentials({
+					token,
+					refreshToken,
+					...formData,
+				}),
+			);
 			navigate("/");
 		} else {
 			setMessage(t(result.payload));

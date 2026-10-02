@@ -26,16 +26,17 @@ const signin = async (data, User) => {
 	if (!user || !isValidPassword) {
 		throw new Error("auth.error.invalidCredentials");
 	}
-	const token = generateToken(user.id);
-	return { token, user };
+	const token = generateToken(user.id, { type: "access" });
+	const refreshToken = generateToken(user.id, { type: "refresh" });
+	return { token, refreshToken, user };
 };
 
 export const post = async (req, res) => {
 	try {
 		const { [mdlUser]: User } = req.app.locals.db;
-		const { token, user } = await signin(req.body, User);
+		const { token, refreshToken, user } = await signin(req.body, User);
 		const forms = getForms(user[User_Kind]);
-		return res.status(St_OK).json({ success: true, data: { token, forms } });
+		return res.status(St_OK).json({ success: true, data: { token, refreshToken, forms } });
 	} catch (err) {
 		return res.status(St_UNAUTHORIZED).json({ success: false, message: err.message });
 	}
