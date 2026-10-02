@@ -1,11 +1,20 @@
 // cSpell:disable
 import React from "react";
-import { createTheme, ThemeProvider as MUThemeProvider, CssBaseline, backdropClasses } from "@mui/material";
+import { createTheme, ThemeProvider as MUThemeProvider, CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import rtlPlugin from "@mui/stylis-plugin-rtl";
 import { prefixer } from "stylis";
+import {
+	cloneThemeSettings,
+	DEFAULT_THEME_SETTINGS,
+	buildShadowValue,
+	mergePaletteSettings,
+	mergeThemeSettings,
+	THEME_PRESETS,
+	ThemeCustomizationProvider,
+} from "./themeCustomization.js";
 
 const cacheRtl = createCache({
 	key: "muirtl",
@@ -40,76 +49,38 @@ const tableStatusColorsDark = {
 	Occupied: "#EF907B",
 };
 
-const uiTokens = Object.freeze({
-	size: {
-		appBarHeight: 64,
-		mobileAppBarHeight: 56,
-		tooltipFontSize: "0.75rem",
-		tooltipPadding: "0.4rem",
-		scrollbarWidth: "0.5rem",
-		tableHeaderFontSize: "0.8rem",
-		tableMinWidth: 720,
-		tableDefaultColumnWidth: 180,
-		tableMinColumnWidth: 100,
-		tableMaxColumnWidth: 600,
-		tableSelectionColumnWidth: 52,
-		tableRowHeight: 56,
-		tableHeaderHeight: 52,
-		operationsColumnWidth: 96,
-		tableCellPaddingY: 0.75,
-		tableCellContentMaxHeight: 44,
-		tableCardMinHeight: 178,
-		menuCardMinHeight: 94,
-		summaryCardMinHeight: 112,
-		menuThumbnail: 58,
-		categoryIcon: 36,
-		invoicePanelWidth: 300,
-		modalImageMinHeight: 200,
-		modalImageMaxHeight: 460,
-		desktopDrawerWidth: 248,
-		mobileDrawerWidth: 260,
-		actionsBarWidth: 340,
-		pageMaxWidth: 1536,
-		logo: 40,
-		iconButton: 40,
-		lobbyCardMinHeight: 230,
-	},
-	space: {
-		pageXs: 1.5,
-		pageSm: 2.5,
-		pageMd: 3,
-		section: 2,
-	},
-	radius: {
-		control: 8,
-		card: 12,
-		panel: 16,
-		pill: 999,
-	},
-	shadow: {
-		subtle: "0 2px 8px color-mix(in srgb, var(--mui-palette-text-primary) 5%, transparent)",
-		card: "0 4px 18px color-mix(in srgb, var(--mui-palette-text-primary) 7%, transparent)",
-		cardHover: "0 10px 24px color-mix(in srgb, var(--mui-palette-text-primary) 12%, transparent)",
-		dialog: "0 20px 60px color-mix(in srgb, var(--mui-palette-text-primary) 18%, transparent)",
-	},
-	gradient: {
-		primary: "linear-gradient(90deg, var(--mui-palette-primary-main), var(--mui-palette-primary-light))",
-	},
-	motion: {
-		fast: "160ms ease",
-		standard: "240ms ease",
-	},
-	effect: {
-		appBarBlur: "18px",
-	},
-	color: {
-		sidebarMuted: "#90c38a",
-		sidebarDivider: "rgba(226, 232, 241, 0.12)",
-	},
-});
+const THEME_SETTINGS_STORAGE_KEY = "servio-theme-settings";
+
+const loadThemeSettings = () => {
+	try {
+		const stored = localStorage.getItem(THEME_SETTINGS_STORAGE_KEY);
+		if (!stored) return cloneThemeSettings(DEFAULT_THEME_SETTINGS);
+
+		const savedSettings = JSON.parse(stored);
+		const settings = mergeThemeSettings(DEFAULT_THEME_SETTINGS, savedSettings);
+		if (savedSettings.presetName === "default") {
+			settings.tokens.shadowControls = cloneThemeSettings(DEFAULT_THEME_SETTINGS.tokens.shadowControls);
+		}
+		return settings;
+	} catch {
+		return cloneThemeSettings(DEFAULT_THEME_SETTINGS);
+	}
+};
 
 export const ThemeProvider = ({ children }) => {
 	const direction = useSelector((state) => state.language?.direction || "ltr");
+	const [themeSettings, setThemeSettings] = React.useState(loadThemeSettings);
+	const saveThemeSettings = React.useCallback((settings) => {
+		const normalized = mergeThemeSettings(DEFAULT_THEME_SETTINGS, settings);
+		localStorage.setItem(THEME_SETTINGS_STORAGE_KEY, JSON.stringify(normalized));
+		setThemeSettings(normalized);
+	}, []);
+	const resetThemeSettings = React.useCallback(() => {
+		const defaults = cloneThemeSettings(DEFAULT_THEME_SETTINGS);
+		localStorage.removeItem(THEME_SETTINGS_STORAGE_KEY);
+		setThemeSettings(defaults);
+		return defaults;
+	}, []);
 
 	React.useEffect(() => {
 		document.documentElement.dir = direction;
@@ -121,15 +92,20 @@ export const ThemeProvider = ({ children }) => {
 		() =>
 			createTheme({
 				direction,
-				tokens: uiTokens,
+				tokens: {
+					...themeSettings.tokens,
+					shadow: Object.fromEntries(
+						Object.entries(themeSettings.tokens.shadowControls).map(([name, settings]) => [name, buildShadowValue(settings)]),
+					),
+				},
 				layout: {
-					"desktop-appbar-height": uiTokens.size.appBarHeight,
-					"desktop-drawer-width": uiTokens.size.desktopDrawerWidth,
-					"mobile-drawer-width": uiTokens.size.mobileDrawerWidth,
-					"desktop-actions-bar-width": uiTokens.size.actionsBarWidth,
+					"desktop-appbar-height": themeSettings.tokens.size.appBarHeight,
+					"desktop-drawer-width": themeSettings.tokens.size.desktopDrawerWidth,
+					"mobile-drawer-width": themeSettings.tokens.size.mobileDrawerWidth,
+					"desktop-actions-bar-width": themeSettings.tokens.size.actionsBarWidth,
 				},
 				shape: {
-					borderRadius: uiTokens.radius.control,
+					borderRadius: themeSettings.tokens.radius.control,
 				},
 
 				cssVariables: {
@@ -138,7 +114,7 @@ export const ThemeProvider = ({ children }) => {
 
 				colorSchemes: {
 					light: {
-						palette: {
+						palette: mergePaletteSettings({
 							primary: {
 								main: "#0D8A68",
 								light: "#35B88F",
@@ -202,11 +178,11 @@ export const ThemeProvider = ({ children }) => {
 							tableRowBorder: "#E7ECEF",
 
 							tableStatus: tableStatusColors,
-						},
+						}, themeSettings.colors.light),
 					},
 
 					dark: {
-						palette: {
+						palette: mergePaletteSettings({
 							primary: {
 								main: "#55C99A",
 								light: "#83E0B7",
@@ -270,40 +246,11 @@ export const ThemeProvider = ({ children }) => {
 							tableRowBorder: "#454545",
 
 							tableStatus: tableStatusColorsDark,
-						},
+						}, themeSettings.colors.dark),
 					},
 				},
 
-				typography: {
-					fontFamily: ["Inter", "Roboto", "Arial", "sans-serif"].join(","),
-
-					h1: {
-						fontSize: "2rem",
-						fontWeight: 700,
-						letterSpacing: "-0.02em",
-					},
-
-					h2: {
-						fontSize: "1.6rem",
-						fontWeight: 700,
-						letterSpacing: "-0.02em",
-					},
-
-					h3: {
-						fontSize: "1.35rem",
-						fontWeight: 600,
-					},
-
-					h4: {
-						fontSize: "1.15rem",
-						fontWeight: 600,
-					},
-
-					button: {
-						fontWeight: 600,
-						textTransform: "none",
-					},
-				},
+				typography: themeSettings.typography,
 
 				components: {
 					MuiAppBar: {
@@ -381,8 +328,8 @@ export const ThemeProvider = ({ children }) => {
 							root: ({ theme }) => ({
 								boxShadow: "none",
 								borderRadius: theme.tokens.radius.control,
-								fontWeight: 700,
-								textTransform: "none",
+								fontWeight: theme.typography.button.fontWeight,
+								textTransform: theme.typography.button.textTransform,
 							}),
 
 							contained: ({ theme }) => ({
@@ -514,15 +461,21 @@ export const ThemeProvider = ({ children }) => {
 					},
 				},
 			}),
-		[direction],
+		[direction, themeSettings],
 	);
 	const currentCache = direction === "rtl" ? cacheRtl : cacheLtr;
+	const customizationContext = React.useMemo(
+		() => ({ themeSettings, saveThemeSettings, resetThemeSettings, defaultThemeSettings: DEFAULT_THEME_SETTINGS, themePresets: THEME_PRESETS }),
+		[themeSettings, saveThemeSettings, resetThemeSettings],
+	);
 	return (
 		<CacheProvider value={currentCache}>
-			<MUThemeProvider theme={theme} defaultMode="system">
-				<CssBaseline />
-				{children}
-			</MUThemeProvider>
+			<ThemeCustomizationProvider value={customizationContext}>
+				<MUThemeProvider theme={theme} defaultMode="system">
+					<CssBaseline />
+					{children}
+				</MUThemeProvider>
+			</ThemeCustomizationProvider>
 		</CacheProvider>
 	);
 };
