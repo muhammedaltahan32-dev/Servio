@@ -1,81 +1,78 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import {
 	Home,
 	Login,
-	NotFound,
 	CategoriesPage,
 	LobbyPage,
 	TablesPage,
 	MenuItemsPage,
 	UsersPage,
 	CustomerMenuPage,
-	CustomerMenuCard
 } from "@pages";
 import ProtectedRoute from "./ProtectedRoute.jsx";
-import Root from "../layout/Root.jsx";
-
 
 const protectedPaths = [
 	{
 		path: "/",
 		index: true,
-		label: "home",
+		label: "home.title",
 		icon: "Home",
 		element: <Home />,
 	},
 	{
 		path: "/Categories",
-		label: "Categories",
+		label: "categories.title",
 		icon: "Category",
 		element: <CategoriesPage />,
 	},
 	{
 		path: "/lobby",
-		label: "lobby",
+		label: "lobby.title",
 		icon: "TableBarTwoTone",
 		element: <LobbyPage />,
 	},
 	{
 		path: "/tables",
-		label: "Tables",
+		label: "tables.title",
 		icon: "TableRestaurant",
 		element: <TablesPage />,
 	},
 	{
 		path: "/users",
-		label: "Users",
+		label: "users.title",
 		icon: "People",
 		element: <UsersPage />,
 	},
 	{
 		path: "/menu-items",
-		label: "Menu Items",
+		label: "menuItems.title",
 		icon: "RestaurantMenu",
 		element: <MenuItemsPage />,
 	},
 	{
-		path: "customer-menu",
-		label: "Customer Menu",
+		path: "/customer-menu",
+		label: "customerMenu.title",
 		icon: "RestaurantMenu",
 		element: <CustomerMenuPage />,
-		children: [
-			{
-				path: ":tableId",
-				element: <CustomerMenuPage />,
-			},
-		],
 	},
 ];
+
 export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path, icon, label }));
+
 export const router = createBrowserRouter([
 	{
-		path: "login",
+		path: "/login",
 		element: <Login />,
 	},
 	{
 		path: "/",
 		element: <ProtectedRoute />,
-		// errorElement: <NotFound />,
-		children: protectedPaths,
+		children: [
+			...protectedPaths,
+			{
+				path: "/customer-menu/:tableId",
+				element: <CustomerMenuPage />,
+			},
+		],
 	},
 ]);
