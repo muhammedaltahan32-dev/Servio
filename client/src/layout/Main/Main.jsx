@@ -1,10 +1,11 @@
 import { Box, Toolbar } from "@mui/material";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router";
+import PageLoadingFallback from "../../components/PageLoadingFallback.jsx";
 
 export const Main = () => {
-	const { isActionsBarOpened } = useSelector((state) => state.layout);
+	const isActionsBarOpened = useSelector((state) => state.layout.isActionsBarOpened);
 	return (
 		<Box
 			component="main"
@@ -24,7 +25,9 @@ export const Main = () => {
 		>
 			<Toolbar />
 
-			<Outlet />
+			<Suspense fallback={<PageLoadingFallback />}>
+				<Outlet />
+			</Suspense>
 		</Box>
 	);
 };

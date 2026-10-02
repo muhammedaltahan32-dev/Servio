@@ -12,8 +12,8 @@ import SidebarList from "./elements/SidebarList.jsx";
 export const SideBar = () => {
 	const dispatch = useDispatch();
 
-	const { user } = useSelector((state) => state.auth);
-	const { mobileOpen } = useSelector((state) => state.layout);
+	const user = useSelector((state) => state.auth?.user);
+	const mobileOpen = useSelector((state) => state.layout.mobileOpen);
 
 	const theme = useTheme();
 

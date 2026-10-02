@@ -7,20 +7,28 @@ import { closeDrawer } from "../../../features/layout/layoutSlice.js";
 import SidebarItem from "./SidebarItem.jsx";
 
 export const SidebarList = () => {
-	const { mobileOpen } = useSelector((state) => state.layout);
+	const mobileOpen = useSelector((state) => state.layout.mobileOpen);
 
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-	const handleNavigate = (path) => {
+	const mobileOpenRef = React.useRef(mobileOpen);
+	React.useEffect(() => {
+		mobileOpenRef.current = mobileOpen;
+	}, [mobileOpen]);
+	const handleNavigate = React.useCallback((path) => {
 		navigate(path);
 
-		if (mobileOpen) {
+		if (mobileOpenRef.current) {
 			dispatch(closeDrawer());
 		}
-	};
+	}, [dispatch, navigate]);
+	const itemClickHandlers = React.useMemo(
+		() => new Map(sidebarMenu.map((item) => [item.path, () => handleNavigate(item.path)])),
+		[handleNavigate],
+	);
 
 	return (
 		<List
@@ -42,7 +50,7 @@ export const SidebarList = () => {
 						icon={item.icon}
 						label={item.label}
 						active={isActive}
-						onClick={() => handleNavigate(item.path)}
+						onClick={itemClickHandlers.get(item.path)}
 					/>
 				);
 			})}
