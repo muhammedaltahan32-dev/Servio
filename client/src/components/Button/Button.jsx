@@ -1,6 +1,6 @@
 import { Button as MUButton } from "@mui/material";
 import React from "react";
-export const Button = React.forwardRef(({ children, prefix, suffix, sx, color = "primary", ...props }, ref) => {
+export const Button = React.forwardRef(({ children, prefix, suffix, startIcon, endIcon, sx, color = "primary", ...props }, ref) => {
 	const resolvedSX = React.useCallback(
 		(theme) => {
 			const overrides = typeof sx === "function" ? sx(theme) : sx;
@@ -18,7 +18,7 @@ export const Button = React.forwardRef(({ children, prefix, suffix, sx, color = 
 		[sx],
 	);
 	return (
-		<MUButton ref={ref} color={color} variant="contained" {...props} sx={resolvedSX} startIcon={prefix} endIcon={suffix}>
+		<MUButton ref={ref} color={color} variant="contained" {...props} sx={resolvedSX} startIcon={prefix ?? startIcon} endIcon={suffix ?? endIcon}>
 			{children}
 		</MUButton>
 	);

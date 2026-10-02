@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Box, Button, Card, CardMedia, CircularProgress, Stack, Tooltip, Typography } from "@mui/material";
-import { FavoriteBorder } from "@mui/icons-material";
+import { Box, Button, Card, CardMedia, CircularProgress, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
+import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import CloudUploadOutlined from "@mui/icons-material/CloudUploadOutlined";
 import { useLang } from "@hooks";
-import { Icon, IconButton } from "@components";
 
-export const PhotoAlbumGallery = ({
+export const PhotoAlbumGallery = React.memo(({
 	images = [],
 	baseImage = null,
 	onUpload,
@@ -115,7 +117,7 @@ export const PhotoAlbumGallery = ({
 					<Button
 						variant="outlined"
 						size="small"
-						startIcon={loading ? <CircularProgress color="inherit" size={16} /> : <Icon name="CloudUploadOutlined" />}
+						startIcon={loading ? <CircularProgress color="inherit" size={16} /> : <CloudUploadOutlined />}
 						disabled={loading}
 						onClick={() => fileInputRef.current?.click()}
 					>
@@ -191,9 +193,9 @@ export const PhotoAlbumGallery = ({
 													backgroundColor: "rgba(0, 0, 0, 0.50)",
 													"&:hover": { bgcolor: "primary.main", color: "#fff" },
 												}}
-												name={isBaseImage ? "Favorite" : "FavoriteBorder"}
-												fontSize="small"
-											/>
+											>
+												{isBaseImage ? <Favorite fontSize="small" /> : <FavoriteBorder fontSize="small" />}
+											</IconButton>
 										</Tooltip>
 										<Tooltip title={t("components.dropzone.tooltips.deleteSelected")} placement="top" arrow>
 											<IconButton
@@ -207,9 +209,9 @@ export const PhotoAlbumGallery = ({
 													"&:hover": { bgcolor: "primary.main" },
 													color: "#fff",
 												}}
-												name={"DeleteOutlined"}
-												fontSize="small"
-											/>
+											>
+												<DeleteOutlined fontSize="small" />
+											</IconButton>
 										</Tooltip>
 									</Box>
 								)}
@@ -261,7 +263,7 @@ export const PhotoAlbumGallery = ({
 						},
 					}}
 				>
-					{!viewOnly && <Icon name="CloudUploadOutlined" sx={{ fontSize: 36, color: "text.secondary" }} />}
+					{!viewOnly && <CloudUploadOutlined sx={{ fontSize: 36, color: "text.secondary" }} />}
 					<Typography color="text.secondary" variant="body2">
 						{displayEmptyText}
 					</Typography>
@@ -269,6 +271,8 @@ export const PhotoAlbumGallery = ({
 			)}
 		</Box>
 	);
-};
+});
+
+PhotoAlbumGallery.displayName = "PhotoAlbumGallery";
 
 export default PhotoAlbumGallery;

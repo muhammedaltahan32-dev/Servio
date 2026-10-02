@@ -1,13 +1,16 @@
 import React from "react";
-import { IconButton, Input, Icon } from "../../index.js";
-import { Stack, Box, Typography, Tooltip, TextField, InputAdornment, alpha } from "@mui/material";
-import { Search as SearchIcon, DeleteTwoTone as DeleteIcon } from "@mui/icons-material";
-import { useTableState, useTableFunctions } from "../context";
+import { Input } from "../../index.js";
+import { Stack, Box, Typography, Tooltip, TextField, InputAdornment, alpha, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
+import { useTableTitle, useTableSelection, useTableSearch, useTableBatchAction } from "../context";
 import { useLang } from "@hooks";
 
-export const TableToolbar = ({ selection }) => {
-	const { title, selected, searchTerm, setSearchTerm } = useTableState();
-	const { onBatchDelete } = useTableFunctions();
+const TableToolbarComponent = ({ selection }) => {
+	const { title } = useTableTitle();
+	const { selected } = useTableSelection();
+	const { searchTerm, setSearchTerm } = useTableSearch();
+	const { onBatchDelete } = useTableBatchAction();
 	const { t } = useLang();
 	return (
 		<Stack
@@ -39,8 +42,9 @@ export const TableToolbar = ({ selection }) => {
 							color="error"
 							onClick={() => onBatchDelete?.(selected)}
 							sx={{ bgcolor: (theme) => alpha(theme.palette.error.main, 0.1) }}
-							name="Delete"
-						/>
+						>
+							<DeleteIcon />
+						</IconButton>
 					</Tooltip>
 				) : (
 					<Input
@@ -48,7 +52,7 @@ export const TableToolbar = ({ selection }) => {
 						size="small"
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
-						prefix={<Icon name="Search" fontSize="small" />}
+						prefix={<SearchIcon fontSize="small" />}
 						sx={(theme) => ({ minWidth: 240, "& .MuiOutlinedInput-root": { borderRadius: `${theme.tokens.radius.control}px` } })}
 					/>
 				)}
@@ -56,3 +60,5 @@ export const TableToolbar = ({ selection }) => {
 		</Stack>
 	);
 };
+
+export const TableToolbar = React.memo(TableToolbarComponent);

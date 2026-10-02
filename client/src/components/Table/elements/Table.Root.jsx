@@ -1,14 +1,16 @@
 import React from "react";
 import { TableContainer, Table, Box, CircularProgress, useTheme } from "@mui/material";
-import { useTableRefs, useTableState } from "../context";
+import { useTableRefs, useTableLoading, useTableColumns, useTableSizing } from "../context";
 import { TableHeader } from "./TableHeader.jsx";
 import { TableBody } from "./TableBody.jsx";
 import { TableFooter } from "./TableFooter.jsx";
 import { getColumnWidth } from "../utils/tableSizing.js";
 
-export const TableRoot = ({ selection }) => {
+const TableRootComponent = ({ selection }) => {
 	const { tableContainerRef } = useTableRefs();
-	const { isLoading, columns, columnWidths } = useTableState();
+	const { isLoading } = useTableLoading();
+	const { columns } = useTableColumns();
+	const { columnWidths } = useTableSizing();
 	const theme = useTheme();
 
 	return (
@@ -70,3 +72,5 @@ export const TableRoot = ({ selection }) => {
 		</>
 	);
 };
+
+export const TableRoot = React.memo(TableRootComponent);

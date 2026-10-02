@@ -1,12 +1,16 @@
 import React from "react";
 import { Box, TableHead, TableRow, TableCell, Checkbox, TableSortLabel, useTheme } from "@mui/material";
-import { useTableState, useTableFunctions } from "../context";
+import { useTableColumns, useTableSizing, useTableSelection, useTableSort, useTablePageData, useTableHeaderActions } from "../context";
 import { useLang } from "@hooks";
 import { getColumnBounds, getColumnWidth } from "../utils/tableSizing.js";
 
-export const TableHeader = ({ selection }) => {
-	const { columns, selected, orderBy, order, columnWidths, setColumnWidths } = useTableState();
-	const { paginatedData, handleRequestSort, handleSelectAllClick } = useTableFunctions();
+const TableHeaderComponent = ({ selection }) => {
+	const { columns } = useTableColumns();
+	const { columnWidths, setColumnWidths } = useTableSizing();
+	const { selected } = useTableSelection();
+	const { orderBy, order } = useTableSort();
+	const { paginatedData } = useTablePageData();
+	const { handleRequestSort, handleSelectAllClick } = useTableHeaderActions();
 	const { t } = useLang();
 	const theme = useTheme();
 	const resizeRef = React.useRef(null);
@@ -158,3 +162,5 @@ export const TableHeader = ({ selection }) => {
 		</TableHead>
 	);
 };
+
+export const TableHeader = React.memo(TableHeaderComponent);

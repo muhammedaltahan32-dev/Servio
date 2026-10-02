@@ -1,6 +1,6 @@
-import { Icon } from "../index.js";
 import { FormControl, FormControlLabel, Stack, Radio as MURadio, FormHelperText } from "@mui/material";
 import React from "react";
+import WarningAmberRounded from "@mui/icons-material/WarningAmberRounded";
 
 export const Radio = React.forwardRef(
 	({ label, width, minWidth, helperText, labelPlacement, error, warning, ...props }, ref) => {
@@ -13,7 +13,7 @@ export const Radio = React.forwardRef(
 						<Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
 							<MURadio ref={ref} {...props} />
 							{(error || warning) && (
-								<Icon status={error ? "error" : "warning"} size="1rem" name={"WarningAmberRounded"} />
+								<WarningAmberRounded color={error ? "error" : "warning"} sx={{ fontSize: "1rem" }} />
 							)}
 						</Stack>
 					}
