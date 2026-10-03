@@ -19,6 +19,7 @@ export const Cat_ID = "id";
 export const Cat_Name = "name";
 export const Cat_Name_AR = "name_ar";
 export const Cat_Name_EN = "name_en";
+export const Cat_Icon = "icon";
 export const Cat_Sort = "sort_order";
 
 // Menu Items Table Fields
