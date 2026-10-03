@@ -9,8 +9,9 @@ import {
 	updateCategory,
 	deleteCategory,
 } from "../../features/categories/CategoriesSlice.js";
-import { Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
+import { Cat_Icon, Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
 const initialFormState = {
+	[Cat_Icon]: "",
 	[Cat_Name_AR]: "",
 	[Cat_Name_EN]: "",
 	[Cat_Sort]: 0,
@@ -30,6 +31,7 @@ export const CategoriesDialog = React.memo(
 				setFormData({
 					[Cat_Name_AR]: category[Cat_Name_AR] || "",
 					[Cat_Name_EN]: category[Cat_Name_EN] || "",
+					[Cat_Icon]: category[Cat_Icon] || "",
 					[Cat_Sort]: category[Cat_Sort] ?? 0,
 				});
 			} else {
@@ -111,6 +113,13 @@ export const CategoriesDialog = React.memo(
 						type="number"
 						fullWidth
 						value={formData[Cat_Sort]}
+						onChange={handleChange}
+					/>
+					<Input
+						label={t("categories.icon")}
+						name={Cat_Icon}
+						fullWidth
+						value={formData[Cat_Icon]}
 						onChange={handleChange}
 					/>
 				</Stack>

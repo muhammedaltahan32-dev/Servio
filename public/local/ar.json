@@ -1,456 +1,457 @@
 {
-  "layout": {
-    "mode": {
-      "dark": "الوضع الداكن",
-      "light": "الوضع الفاتح"
-    },
-    "languages": {
-      "en": "الإنجليزية",
-      "ar": "العربية",
-      "language": "اللغة"
-    }
-  },
-  "settings": {
-    "chooseColor": "اختر لونًا",
-    "customColor": "لون مخصص",
-    "resetOne": "إعادة تعيين هذا الإعداد",
-    "resetPreset": "استعادة السمة الافتراضية",
-    "title": "الإعدادات",
-    "subtitle": "خصص الألوان والأحجام والزوايا والخطوط المستخدمة في Servio.",
-    "save": "حفظ التغييرات",
-    "cancel": "إلغاء",
-    "reset": "استعادة الافتراضي",
-    "saved": "تم حفظ إعدادات السمة",
-    "resetDone": "تمت استعادة السمة الافتراضية",
-    "tabs": {
-      "presets": "سمات جاهزة",
-      "colors": "الألوان",
-      "dimensions": "الأحجام",
-      "shape": "المسافات والزوايا",
-      "effects": "التأثيرات",
-      "typography": "الخطوط"
-    },
-    "tabDescriptions": {
-      "presets": "ابدأ بسمة جاهزة ثم عدّل أي قيمة فيها حسب رغبتك.",
-      "colors": "اضبط ألوان الوضعين الفاتح والداكن. تُطبّق التغييرات بعد الحفظ.",
-      "dimensions": "عدّل أحجام وعروض التنقل والجداول والنوافذ والصفحات.",
-      "shape": "اضبط المسافات واستدارة زوايا عناصر التحكم واللوحات.",
-      "effects": "خصص الظلال والتدرجات وسرعة الانتقالات وتأثيرات الواجهة.",
-      "typography": "تحكم بنوع الخط والعناوين والنصوص وأزرار التطبيق."
-    },
-    "presetsTitle": "اختر سمة للبدء",
-    "presetsDescription": "اختر سمة جاهزة ثم خصص إعداداتها من الأقسام الأخرى.",
-    "presetHint": "تُطبّق السمة بعد الحفظ. السمة الافتراضية تطابق تصميم Servio الأصلي.",
-    "selected": "محدد",
-    "lightMode": "الوضع الفاتح",
-    "darkMode": "الوضع الداكن",
-    "presets": {
-      "default": "الافتراضية",
-      "ocean": "المحيط",
-      "plum": "البرقوق",
-      "custom": "مخصصة"
-    },
-    "shadowLabels": {
-      "subtle": "ظل خفيف",
-      "card": "ظل البطاقة",
-      "cardHover": "ظل البطاقة عند المرور",
-      "dialog": "ظل النافذة"
-    },
-    "shadowPreview": "معاينة الظل",
-    "matchThemeTextColor": "استخدم لون نص السمة الحالية",
-    "groups": {
-      "dimensions": "الأحجام والتخطيط",
-      "spacing": "المسافات",
-      "radius": "استدارة الزوايا",
-      "shadows": "الظلال",
-      "gradients": "التدرجات اللونية",
-      "motion": "الحركة",
-      "effects": "التأثيرات",
-      "miscColors": "ألوان أخرى",
-      "globalTypography": "إعدادات الخط العامة"
-    },
-    "palette": {
-      "primary": "اللون الأساسي",
-      "secondary": "اللون الثانوي",
-      "success": "النجاح",
-      "warning": "التحذير",
-      "error": "الخطأ",
-      "info": "المعلومات",
-      "text": "ألوان النصوص",
-      "background": "الخلفيات",
-      "interface": "الحدود",
-      "tableStatus": "ألوان حالات الطاولات"
-    },
-    "typography": {
-      "h1": "العنوان الأول",
-      "h2": "العنوان الثاني",
-      "h3": "العنوان الثالث",
-      "h4": "العنوان الرابع",
-      "body1": "النص الأساسي ١",
-      "body2": "النص الأساسي ٢",
-      "button": "الأزرار"
-    },
-    "fields": {
-      "main": "أساسي",
-      "light": "فاتح",
-      "dark": "داكن",
-      "contrastText": "لون النص المتباين",
-      "primary": "أساسي",
-      "secondary": "ثانوي",
-      "disabled": "معطل",
-      "default": "افتراضي",
-      "paper": "اللوحة",
-      "appBar": "الشريط العلوي",
-      "divider": "الفاصل",
-      "tableRowBorder": "حد الصف في الجدول",
-      "ready": "جاهز",
-      "Available": "متاح",
-      "delayed": "متأخر",
-      "preparing": "قيد التجهيز",
-      "Needs_Cleaning": "بحاجة إلى تنظيف",
-      "reserved": "محجوز",
-      "new": "جديد",
-      "occupied": "مشغول",
-      "Occupied": "مشغول",
-      "fontFamily": "عائلة الخط",
-      "fontSize": "حجم الخط",
-      "fontWeight": "سماكة الخط",
-      "letterSpacing": "تباعد الحروف",
-      "textTransform": "تنسيق النص",
-      "appBarHeight": "ارتفاع الشريط العلوي",
-      "mobileAppBarHeight": "ارتفاع الشريط على الهاتف",
-      "tooltipFontSize": "حجم خط التلميح",
-      "tooltipPadding": "هوامش التلميح",
-      "scrollbarWidth": "عرض شريط التمرير",
-      "tableHeaderFontSize": "حجم خط رأس الجدول",
-      "tableMinWidth": "الحد الأدنى لعرض الجدول",
-      "tableDefaultColumnWidth": "عرض العمود الافتراضي",
-      "tableMinColumnWidth": "الحد الأدنى لعرض العمود",
-      "tableMaxColumnWidth": "الحد الأقصى لعرض العمود",
-      "tableSelectionColumnWidth": "عرض عمود التحديد",
-      "tableRowHeight": "ارتفاع صف الجدول",
-      "tableHeaderHeight": "ارتفاع رأس الجدول",
-      "operationsColumnWidth": "عرض عمود العمليات",
-      "tableCellPaddingY": "الهامش العمودي لخلية الجدول",
-      "tableCellContentMaxHeight": "أقصى ارتفاع لمحتوى الخلية",
-      "tableCardMinHeight": "أقل ارتفاع لبطاقة الطاولة",
-      "menuCardMinHeight": "أقل ارتفاع لبطاقة القائمة",
-      "summaryCardMinHeight": "أقل ارتفاع لبطاقة الملخص",
-      "menuThumbnail": "حجم صورة القائمة",
-      "categoryIcon": "حجم أيقونة الفئة",
-      "invoicePanelWidth": "عرض لوحة الفاتورة",
-      "modalImageMinHeight": "أقل ارتفاع لصورة النافذة",
-      "modalImageMaxHeight": "أقصى ارتفاع لصورة النافذة",
-      "desktopDrawerWidth": "عرض الشريط الجانبي للحاسوب",
-      "mobileDrawerWidth": "عرض الشريط الجانبي للهاتف",
-      "actionsBarWidth": "عرض لوحة الإجراءات",
-      "pageMaxWidth": "أقصى عرض للصفحة",
-      "logo": "حجم الشعار",
-      "iconButton": "حجم زر الأيقونة",
-      "lobbyCardMinHeight": "أقل ارتفاع لبطاقة الردهة",
-      "pageXs": "مسافة الصفحة الصغيرة",
-      "pageSm": "مسافة الصفحة المتوسطة",
-      "pageMd": "مسافة الصفحة الكبيرة",
-      "section": "المسافة بين الأقسام",
-      "control": "استدارة عناصر التحكم",
-      "card": "استدارة البطاقة",
-      "panel": "استدارة اللوحة",
-      "pill": "استدارة العنصر البيضاوي",
-      "subtle": "ظل خفيف",
-      "cardHover": "ظل البطاقة عند المرور",
-      "dialog": "ظل النافذة",
-      "fast": "انتقال سريع",
-      "standard": "انتقال عادي",
-      "appBarBlur": "تمويه الشريط العلوي",
-      "sidebarMuted": "لون الشريط الجانبي الخافت",
-      "sidebarDivider": "لون فاصل الشريط الجانبي",
-      "shadowColor": "لون الظل",
-      "offsetX": "الإزاحة الأفقية",
-      "offsetY": "الإزاحة العمودية",
-      "blur": "التمويه",
-      "spread": "الانتشار",
-      "opacity": "الشفافية"
-    }
-  },
-  "login": {
-    "login": "تسجيل الدخول",
-    "username": "اسم المستخدم",
-    "password": "كلمة المرور",
-    "brand": "Servio",
-    "brandEyebrow": "إدارة المطاعم",
-    "brandHeadline": "كل نوبة عمل تبدأ بسلاسة أكبر.",
-    "brandDescription": "حافظ على تنسيق فريقك وطاولاتك وخدمتك من مساحة عمل واحدة.",
-    "formEyebrow": "دخول فريق العمل",
-    "welcome": "مرحباً بعودتك",
-    "signInHint": "سجّل الدخول للمتابعة إلى مساحة عمل Servio.",
-    "secureNote": "وصول آمن لفريق مطعمك.",
-    "showPassword": "إظهار كلمة المرور",
-    "hidePassword": "إخفاء كلمة المرور"
-  },
-  "actions": {
-    "delete": "حذف",
-    "update": "تحديث",
-    "add": "إضافة",
-    "modify": "تعديل",
-    "save": "حفظ"
-  },
-  "customerMenu": {
-    "card": {
-      "showDetails": "عرض التفاصيل",
-      "order": "طلب"
-    },
-    "pageTitle": "طاولة {{number}}",
-    "chooseItems": "اختر الأصناف لطلبك",
-    "backToLobby": "العودة للردهة",
-    "searchPlaceholder": "ابحث في قائمة الطعام هنا",
-    "category": "الفئة",
-    "menuItemCount": "{{count}} صنف في القائمة",
-    "menu": "قائمة الطعام",
-    "noCategories": "لا تتوفر فئات لقائمة الطعام حالياً.",
-    "noMatchingItems": "لم يتم العثور على أصناف مطابقة.",
-    "noAvailableItems": "لا تتوفر أصناف في هذه الفئة.",
-    "selectAvailableTable": "اختر طاولة متاحة من الردهة أولاً.",
-    "invoice": "الفاتورة",
-    "itemsCount": "{{count}} أصناف",
-    "invoiceEmpty": "فاتورتك فارغة. أضف بعض الأصناف للبدء.",
-    "addNote": "إضافة ملاحظة",
-    "subtotal": "المجموع الفرعي",
-    "tax": "الضريبة",
-    "totalPayment": "إجمالي الدفع",
-    "paymentCard": "بطاقة",
-    "paymentWallet": "محفظة",
-    "paymentCash": "نقداً",
-    "placeOrder": "إرسال الطلب",
-    "placingOrder": "جاري إرسال الطلب...",
-    "menuItem": "صنف في القائمة",
-    "addItem": "إضافة {{name}}",
-    "removeOne": "إزالة واحدة من {{name}}",
-    "addOne": "إضافة واحدة من {{name}}",
-    "detailsFor": "تفاصيل {{name}}",
-    "availableNow": "متوفر الآن",
-    "unavailableNow": "غير متوفر حالياً",
-    "title": "قائمة العميل"
-  },
-  "lobby": {
-    "persons": "أشخاص",
-    "small": "صغيرة",
-    "medium": "متوسطة",
-    "large": "كبيرة",
-    "Needs_Cleaning": "تحتاج إلى تنظيف",
-    "Occupied": "مشغولة",
-    "Available": "متاحة",
-    "allStatus": "جميع الحالات",
-    "search": "البحث عن الطاولات...",
-    "tableAria": "{{status}}، طاولة {{number}}",
-    "totalTables": "إجمالي الطاولات",
-    "title": "ردهة الطاولات",
-    "emptyDescription": "جرب تغيير البحث أو تصفية الحالة.",
-    "tableType": "طاولة {{type}}",
-    "emptyTitle": "لم يتم العثور على طاولات",
-    "unavailable": "غير متاحة",
-    "status": "الحالة",
-    "connecting": "جاري الاتصال",
-    "tableLabel": "طاولة",
-    "liveUpdates": "تحديثات مباشرة",
-    "openMenu": "فتح قائمة الطعام",
-    "loadingTables": "جاري تحميل الطاولات...",
-    "subtitle": "إدارة توفر الطاولات وبدء طلبات الضيوف.",
-    "tableCount": "{{visible}} من أصل {{total}} طاولة",
-    "allTables": "جميع الطاولات",
-    "offline": "غير متصل"
-  },
-  "tables": {
-    "title": "الطاولات",
-    "addNew": "إضافة طاولة جديدة",
-    "editTitle": "تعديل الطاولة",
-    "addTitle": "إضافة طاولة جديدة",
-    "dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
-    "capacity": "سعة الطاولة",
-    "number": "رقم الطاولة",
-    "status": "حالة الطاولة",
-    "save": "حفظ التغييرات",
-    "cancel": "إلغاء"
-  },
-  "users": {
-    "title": "المستخدمون",
-    "addNew": "إضافة مستخدم جديد",
-    "editTitle": "تعديل المستخدم",
-    "addTitle": "إضافة مستخدم جديد",
-    "dialogSubtitle": "أدخل تفاصيل المستخدم أدناه لتحديث القائمة.",
-    "username": "اسم المستخدم",
-    "password": "كلمة المرور",
-    "kind": "نوع الحساب",
-    "isActive": "نشط",
-    "activate": {
-      "yes": "نعم",
-      "no": "لا"
-    },
-    "roles": {
-      "admin": "مدير",
-      "waiter": "نادل",
-      "kitchen": "مطبخ"
-    },
-    "save": "حفظ التغييرات",
-    "cancel": "إلغاء"
-  },
-  "auth": {
-    "validation": {
-      "nameRequired": "اسم المستخدم مطلوب",
-      "passwordRequired": "كلمة المرور مطلوبة",
-      "kindRequired": "نوع الحساب مطلوب",
-      "invalidKind": "نوع حساب غير صالحة",
-      "nameExists": "اسم المستخدم مستخدم بالفعل"
-    },
-    "error": {
-      "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة"
-    }
-  },
-  "user": {
-    "success": {
-      "created": "تمت إضافة المستخدم بنجاح"
-    }
-  },
-  "upload": {
-    "success": {
-      "completed": "تم رفع الملفات بنجاح"
-    },
-    "error": {
-      "noFiles": "لم يتم تحديد أي ملفات للرفع",
-      "failed": "حدث خطأ أثناء رفع الملفات",
-      "fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (5 ميجابايت)"
-    }
-  },
-  "payment": {
-    "success": {
-      "created": "تمت عملية الدفع بنجاح"
-    }
-  },
-  "table": {
-    "success": {
-      "created": "تم إنشاء الطاولة بنجاح",
-      "updated": "تم تحديث الطاولة بنجاح",
-      "deleted": "تم حذف الطاولة بنجاح"
-    },
-    "error": {
-      "notFound": "الطاولة غير موجودة",
-      "noIdsProvided": "لم يتم تقديم معرّفات للطاولات."
-    }
-  },
-  "order": {
-    "success": {
-      "created": "تم إنشاء الطلب بنجاح"
-    },
-    "error": {
-      "notFound": "الطلب غير موجود",
-      "invalidData": "يرجى تحديد طاولة وصنف واحد على الأقل من القائمة.",
-      "tableUnavailable": "هذه الطاولة لم تعد متاحة."
-    }
-  },
-  "error": {
-    "messages": {
-      "ExpiredToken": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً.",
-      "serverError": "حدث خطأ داخلي في الخادم."
-    }
-  },
-  "messages": {
-    "success": {
-      "add": {
-        "menuItem": "تمت إضافة صنف القائمة بنجاح.",
-        "category": "تمت إضافة العنصر بنجاح."
-      },
-      "delete": {
-        "menuItem": "تم حذف صنف القائمة بنجاح.",
-        "category": "تم حذف العنصر بنجاح."
-      },
-      "update": {
-        "menuItem": "تم تحديث صنف القائمة بنجاح.",
-        "category": "تم تحديث العنصر بنجاح."
-      }
-    },
-    "failed": {
-      "add": {
-        "menuItem": "فشل في إضافة صنف القائمة.",
-        "category": "فشل في إضافة العنصر.",
-        "nameRequired": "اسم العنصر باللغة العربية أو الإنجليزية مطلوب."
-      },
-      "delete": {
-        "menuItem": "فشل في حذف صنف القائمة.",
-        "category": "فشل في حذف العنصر."
-      },
-      "update": {
-        "menuItem": "فشل في تحديث صنف القائمة.",
-        "category": "فشل في تحديث العنصر."
-      }
-    },
-    "error": {
-      "Accessdenied": "تم رفض الوصول.",
-      "IDNotProvided": "لم يتم تقديم المعرّف (ID).",
-      "noContext": "لا يتوفر سياق."
-    },
-    "required": {
-      "category": {
-        "ID": "معرّف الفئة مطلوب."
-      }
-    },
-    "notFound": {
-      "category": "الفئة غير موجودة."
-    }
-  },
-  "categories": {
-    "title": "الفئات",
-    "addNew": "إضافة فئة جديدة",
-    "editTitle": "تعديل الفئة",
-    "addTitle": "إضافة فئة جديدة",
-    "dialogSubtitle": "أدخل تفاصيل الفئة أدناه لتحديث القائمة.",
-    "nameAr": "اسم الفئة (بالعربية)",
-    "nameEn": "اسم الفئة (بالإنجليزية)",
-    "sortOrder": "ترتيب الفرز",
-    "save": "حفظ التغييرات",
-    "cancel": "إلغاء"
-  },
-  "menuItems": {
-    "title": "أصناف القائمة",
-    "addNew": "إضافة صنف جديد للقائمة",
-    "editTitle": "تعديل صنف القائمة",
-    "addTitle": "إضافة صنف جديد للقائمة",
-    "dialogSubtitle": "أدخل تفاصيل صنف القائمة أدناه لتحديث القائمة.",
-    "nameAr": "اسم الصنف (بالعربية)",
-    "nameEn": "اسم الصنف (بالإنجليزية)",
-    "descriptions": "الوصف",
-    "descriptionAr": "الوصف (بالعربية)",
-    "descriptionEN": "الوصف (بالإنجليزية)",
-    "price": "السعر",
-    "category": "الفئة",
-    "baseImage": "الصورة",
-    "available": "متوفر",
-    "notAvailable": "غير متوفر",
-    "save": "حفظ التغييرات",
-    "cancel": "إلغاء"
-  },
-  "components": {
-    "table": {
-      "noData": "لم يتم العثور على سجلات.",
-      "actions": "الإجراءات",
-      "pagination": "عدد الصفوف في الصفحة",
-      "selectedRows": "الصفوف المحددة",
-      "search": "بحث...",
-      "tooltips": {
-        "deleteSelected": "حذف المحدد"
-      }
-    },
-    "dropzone": {
-      "title": "الصور",
-      "emptyText": "لم يتم رفع أي صور بعد. اسحب وإفلت الصور هنا أو انقر للرفع.",
-      "upload": "رفع",
-      "base": "الرئيسية",
-      "imageAlt": "صورة {{number}}",
-      "tooltips": {
-        "deleteSelected": "حذف",
-        "setAsBase": "تعيين كصورة رئيسية"
-      }
-    }
-  },
-  "home": {
-    "title": "لوحة التحكم"
-  }
+	"layout": {
+		"mode": {
+			"dark": "الوضع الداكن",
+			"light": "الوضع الفاتح"
+		},
+		"languages": {
+			"en": "الإنجليزية",
+			"ar": "العربية",
+			"language": "اللغة"
+		}
+	},
+	"settings": {
+		"chooseColor": "اختر لونًا",
+		"customColor": "لون مخصص",
+		"resetOne": "إعادة تعيين هذا الإعداد",
+		"resetPreset": "استعادة السمة الافتراضية",
+		"title": "الإعدادات",
+		"subtitle": "خصص الألوان والأحجام والزوايا والخطوط المستخدمة في Servio.",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء",
+		"reset": "استعادة الافتراضي",
+		"saved": "تم حفظ إعدادات السمة",
+		"resetDone": "تمت استعادة السمة الافتراضية",
+		"tabs": {
+			"presets": "سمات جاهزة",
+			"colors": "الألوان",
+			"dimensions": "الأحجام",
+			"shape": "المسافات والزوايا",
+			"effects": "التأثيرات",
+			"typography": "الخطوط"
+		},
+		"tabDescriptions": {
+			"presets": "ابدأ بسمة جاهزة ثم عدّل أي قيمة فيها حسب رغبتك.",
+			"colors": "اضبط ألوان الوضعين الفاتح والداكن. تُطبّق التغييرات بعد الحفظ.",
+			"dimensions": "عدّل أحجام وعروض التنقل والجداول والنوافذ والصفحات.",
+			"shape": "اضبط المسافات واستدارة زوايا عناصر التحكم واللوحات.",
+			"effects": "خصص الظلال والتدرجات وسرعة الانتقالات وتأثيرات الواجهة.",
+			"typography": "تحكم بنوع الخط والعناوين والنصوص وأزرار التطبيق."
+		},
+		"presetsTitle": "اختر سمة للبدء",
+		"presetsDescription": "اختر سمة جاهزة ثم خصص إعداداتها من الأقسام الأخرى.",
+		"presetHint": "تُطبّق السمة بعد الحفظ. السمة الافتراضية تطابق تصميم Servio الأصلي.",
+		"selected": "محدد",
+		"lightMode": "الوضع الفاتح",
+		"darkMode": "الوضع الداكن",
+		"presets": {
+			"default": "الافتراضية",
+			"ocean": "المحيط",
+			"plum": "البرقوق",
+			"custom": "مخصصة"
+		},
+		"shadowLabels": {
+			"subtle": "ظل خفيف",
+			"card": "ظل البطاقة",
+			"cardHover": "ظل البطاقة عند المرور",
+			"dialog": "ظل النافذة"
+		},
+		"shadowPreview": "معاينة الظل",
+		"matchThemeTextColor": "استخدم لون نص السمة الحالية",
+		"groups": {
+			"dimensions": "الأحجام والتخطيط",
+			"spacing": "المسافات",
+			"radius": "استدارة الزوايا",
+			"shadows": "الظلال",
+			"gradients": "التدرجات اللونية",
+			"motion": "الحركة",
+			"effects": "التأثيرات",
+			"miscColors": "ألوان أخرى",
+			"globalTypography": "إعدادات الخط العامة"
+		},
+		"palette": {
+			"primary": "اللون الأساسي",
+			"secondary": "اللون الثانوي",
+			"success": "النجاح",
+			"warning": "التحذير",
+			"error": "الخطأ",
+			"info": "المعلومات",
+			"text": "ألوان النصوص",
+			"background": "الخلفيات",
+			"interface": "الحدود",
+			"tableStatus": "ألوان حالات الطاولات"
+		},
+		"typography": {
+			"h1": "العنوان الأول",
+			"h2": "العنوان الثاني",
+			"h3": "العنوان الثالث",
+			"h4": "العنوان الرابع",
+			"body1": "النص الأساسي ١",
+			"body2": "النص الأساسي ٢",
+			"button": "الأزرار"
+		},
+		"fields": {
+			"main": "أساسي",
+			"light": "فاتح",
+			"dark": "داكن",
+			"contrastText": "لون النص المتباين",
+			"primary": "أساسي",
+			"secondary": "ثانوي",
+			"disabled": "معطل",
+			"default": "افتراضي",
+			"paper": "اللوحة",
+			"appBar": "الشريط العلوي",
+			"divider": "الفاصل",
+			"tableRowBorder": "حد الصف في الجدول",
+			"ready": "جاهز",
+			"Available": "متاح",
+			"delayed": "متأخر",
+			"preparing": "قيد التجهيز",
+			"Needs_Cleaning": "بحاجة إلى تنظيف",
+			"reserved": "محجوز",
+			"new": "جديد",
+			"occupied": "مشغول",
+			"Occupied": "مشغول",
+			"fontFamily": "عائلة الخط",
+			"fontSize": "حجم الخط",
+			"fontWeight": "سماكة الخط",
+			"letterSpacing": "تباعد الحروف",
+			"textTransform": "تنسيق النص",
+			"appBarHeight": "ارتفاع الشريط العلوي",
+			"mobileAppBarHeight": "ارتفاع الشريط على الهاتف",
+			"tooltipFontSize": "حجم خط التلميح",
+			"tooltipPadding": "هوامش التلميح",
+			"scrollbarWidth": "عرض شريط التمرير",
+			"tableHeaderFontSize": "حجم خط رأس الجدول",
+			"tableMinWidth": "الحد الأدنى لعرض الجدول",
+			"tableDefaultColumnWidth": "عرض العمود الافتراضي",
+			"tableMinColumnWidth": "الحد الأدنى لعرض العمود",
+			"tableMaxColumnWidth": "الحد الأقصى لعرض العمود",
+			"tableSelectionColumnWidth": "عرض عمود التحديد",
+			"tableRowHeight": "ارتفاع صف الجدول",
+			"tableHeaderHeight": "ارتفاع رأس الجدول",
+			"operationsColumnWidth": "عرض عمود العمليات",
+			"tableCellPaddingY": "الهامش العمودي لخلية الجدول",
+			"tableCellContentMaxHeight": "أقصى ارتفاع لمحتوى الخلية",
+			"tableCardMinHeight": "أقل ارتفاع لبطاقة الطاولة",
+			"menuCardMinHeight": "أقل ارتفاع لبطاقة القائمة",
+			"summaryCardMinHeight": "أقل ارتفاع لبطاقة الملخص",
+			"menuThumbnail": "حجم صورة القائمة",
+			"categoryIcon": "حجم أيقونة الفئة",
+			"invoicePanelWidth": "عرض لوحة الفاتورة",
+			"modalImageMinHeight": "أقل ارتفاع لصورة النافذة",
+			"modalImageMaxHeight": "أقصى ارتفاع لصورة النافذة",
+			"desktopDrawerWidth": "عرض الشريط الجانبي للحاسوب",
+			"mobileDrawerWidth": "عرض الشريط الجانبي للهاتف",
+			"actionsBarWidth": "عرض لوحة الإجراءات",
+			"pageMaxWidth": "أقصى عرض للصفحة",
+			"logo": "حجم الشعار",
+			"iconButton": "حجم زر الأيقونة",
+			"lobbyCardMinHeight": "أقل ارتفاع لبطاقة الردهة",
+			"pageXs": "مسافة الصفحة الصغيرة",
+			"pageSm": "مسافة الصفحة المتوسطة",
+			"pageMd": "مسافة الصفحة الكبيرة",
+			"section": "المسافة بين الأقسام",
+			"control": "استدارة عناصر التحكم",
+			"card": "استدارة البطاقة",
+			"panel": "استدارة اللوحة",
+			"pill": "استدارة العنصر البيضاوي",
+			"subtle": "ظل خفيف",
+			"cardHover": "ظل البطاقة عند المرور",
+			"dialog": "ظل النافذة",
+			"fast": "انتقال سريع",
+			"standard": "انتقال عادي",
+			"appBarBlur": "تمويه الشريط العلوي",
+			"sidebarMuted": "لون الشريط الجانبي الخافت",
+			"sidebarDivider": "لون فاصل الشريط الجانبي",
+			"shadowColor": "لون الظل",
+			"offsetX": "الإزاحة الأفقية",
+			"offsetY": "الإزاحة العمودية",
+			"blur": "التمويه",
+			"spread": "الانتشار",
+			"opacity": "الشفافية"
+		}
+	},
+	"login": {
+		"login": "تسجيل الدخول",
+		"username": "اسم المستخدم",
+		"password": "كلمة المرور",
+		"brand": "Servio",
+		"brandEyebrow": "إدارة المطاعم",
+		"brandHeadline": "كل نوبة عمل تبدأ بسلاسة أكبر.",
+		"brandDescription": "حافظ على تنسيق فريقك وطاولاتك وخدمتك من مساحة عمل واحدة.",
+		"formEyebrow": "دخول فريق العمل",
+		"welcome": "مرحباً بعودتك",
+		"signInHint": "سجّل الدخول للمتابعة إلى مساحة عمل Servio.",
+		"secureNote": "وصول آمن لفريق مطعمك.",
+		"showPassword": "إظهار كلمة المرور",
+		"hidePassword": "إخفاء كلمة المرور"
+	},
+	"actions": {
+		"delete": "حذف",
+		"update": "تحديث",
+		"add": "إضافة",
+		"modify": "تعديل",
+		"save": "حفظ"
+	},
+	"customerMenu": {
+		"card": {
+			"showDetails": "عرض التفاصيل",
+			"order": "طلب"
+		},
+		"pageTitle": "طاولة {{number}}",
+		"chooseItems": "اختر الأصناف لطلبك",
+		"backToLobby": "العودة للردهة",
+		"searchPlaceholder": "ابحث في قائمة الطعام هنا",
+		"category": "الفئة",
+		"menuItemCount": "{{count}} صنف في القائمة",
+		"menu": "قائمة الطعام",
+		"noCategories": "لا تتوفر فئات لقائمة الطعام حالياً.",
+		"noMatchingItems": "لم يتم العثور على أصناف مطابقة.",
+		"noAvailableItems": "لا تتوفر أصناف في هذه الفئة.",
+		"selectAvailableTable": "اختر طاولة متاحة من الردهة أولاً.",
+		"invoice": "الفاتورة",
+		"itemsCount": "{{count}} أصناف",
+		"invoiceEmpty": "فاتورتك فارغة. أضف بعض الأصناف للبدء.",
+		"addNote": "إضافة ملاحظة",
+		"subtotal": "المجموع الفرعي",
+		"tax": "الضريبة",
+		"totalPayment": "إجمالي الدفع",
+		"paymentCard": "بطاقة",
+		"paymentWallet": "محفظة",
+		"paymentCash": "نقداً",
+		"placeOrder": "إرسال الطلب",
+		"placingOrder": "جاري إرسال الطلب...",
+		"menuItem": "صنف في القائمة",
+		"addItem": "إضافة {{name}}",
+		"removeOne": "إزالة واحدة من {{name}}",
+		"addOne": "إضافة واحدة من {{name}}",
+		"detailsFor": "تفاصيل {{name}}",
+		"availableNow": "متوفر الآن",
+		"unavailableNow": "غير متوفر حالياً",
+		"title": "قائمة العميل"
+	},
+	"lobby": {
+		"persons": "أشخاص",
+		"small": "صغيرة",
+		"medium": "متوسطة",
+		"large": "كبيرة",
+		"Needs_Cleaning": "تحتاج إلى تنظيف",
+		"Occupied": "مشغولة",
+		"Available": "متاحة",
+		"allStatus": "جميع الحالات",
+		"search": "البحث عن الطاولات...",
+		"tableAria": "{{status}}، طاولة {{number}}",
+		"totalTables": "إجمالي الطاولات",
+		"title": "ردهة الطاولات",
+		"emptyDescription": "جرب تغيير البحث أو تصفية الحالة.",
+		"tableType": "طاولة {{type}}",
+		"emptyTitle": "لم يتم العثور على طاولات",
+		"unavailable": "غير متاحة",
+		"status": "الحالة",
+		"connecting": "جاري الاتصال",
+		"tableLabel": "طاولة",
+		"liveUpdates": "تحديثات مباشرة",
+		"openMenu": "فتح قائمة الطعام",
+		"loadingTables": "جاري تحميل الطاولات...",
+		"subtitle": "إدارة توفر الطاولات وبدء طلبات الضيوف.",
+		"tableCount": "{{visible}} من أصل {{total}} طاولة",
+		"allTables": "جميع الطاولات",
+		"offline": "غير متصل"
+	},
+	"tables": {
+		"title": "الطاولات",
+		"addNew": "إضافة طاولة جديدة",
+		"editTitle": "تعديل الطاولة",
+		"addTitle": "إضافة طاولة جديدة",
+		"dialogSubtitle": "أدخل تفاصيل الطاولة أدناه لتحديث القائمة.",
+		"capacity": "سعة الطاولة",
+		"number": "رقم الطاولة",
+		"status": "حالة الطاولة",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
+	},
+	"users": {
+		"title": "المستخدمون",
+		"addNew": "إضافة مستخدم جديد",
+		"editTitle": "تعديل المستخدم",
+		"addTitle": "إضافة مستخدم جديد",
+		"dialogSubtitle": "أدخل تفاصيل المستخدم أدناه لتحديث القائمة.",
+		"username": "اسم المستخدم",
+		"password": "كلمة المرور",
+		"kind": "نوع الحساب",
+		"isActive": "نشط",
+		"activate": {
+			"yes": "نعم",
+			"no": "لا"
+		},
+		"roles": {
+			"admin": "مدير",
+			"waiter": "نادل",
+			"kitchen": "مطبخ"
+		},
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
+	},
+	"auth": {
+		"validation": {
+			"nameRequired": "اسم المستخدم مطلوب",
+			"passwordRequired": "كلمة المرور مطلوبة",
+			"kindRequired": "نوع الحساب مطلوب",
+			"invalidKind": "نوع حساب غير صالحة",
+			"nameExists": "اسم المستخدم مستخدم بالفعل"
+		},
+		"error": {
+			"invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة"
+		}
+	},
+	"user": {
+		"success": {
+			"created": "تمت إضافة المستخدم بنجاح"
+		}
+	},
+	"upload": {
+		"success": {
+			"completed": "تم رفع الملفات بنجاح"
+		},
+		"error": {
+			"noFiles": "لم يتم تحديد أي ملفات للرفع",
+			"failed": "حدث خطأ أثناء رفع الملفات",
+			"fileTooLarge": "حجم الملف يتجاوز الحد المسموح به (5 ميجابايت)"
+		}
+	},
+	"payment": {
+		"success": {
+			"created": "تمت عملية الدفع بنجاح"
+		}
+	},
+	"table": {
+		"success": {
+			"created": "تم إنشاء الطاولة بنجاح",
+			"updated": "تم تحديث الطاولة بنجاح",
+			"deleted": "تم حذف الطاولة بنجاح"
+		},
+		"error": {
+			"notFound": "الطاولة غير موجودة",
+			"noIdsProvided": "لم يتم تقديم معرّفات للطاولات."
+		}
+	},
+	"order": {
+		"success": {
+			"created": "تم إنشاء الطلب بنجاح"
+		},
+		"error": {
+			"notFound": "الطلب غير موجود",
+			"invalidData": "يرجى تحديد طاولة وصنف واحد على الأقل من القائمة.",
+			"tableUnavailable": "هذه الطاولة لم تعد متاحة."
+		}
+	},
+	"error": {
+		"messages": {
+			"ExpiredToken": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً.",
+			"serverError": "حدث خطأ داخلي في الخادم."
+		}
+	},
+	"messages": {
+		"success": {
+			"add": {
+				"menuItem": "تمت إضافة صنف القائمة بنجاح.",
+				"category": "تمت إضافة العنصر بنجاح."
+			},
+			"delete": {
+				"menuItem": "تم حذف صنف القائمة بنجاح.",
+				"category": "تم حذف العنصر بنجاح."
+			},
+			"update": {
+				"menuItem": "تم تحديث صنف القائمة بنجاح.",
+				"category": "تم تحديث العنصر بنجاح."
+			}
+		},
+		"failed": {
+			"add": {
+				"menuItem": "فشل في إضافة صنف القائمة.",
+				"category": "فشل في إضافة العنصر.",
+				"nameRequired": "اسم العنصر باللغة العربية أو الإنجليزية مطلوب."
+			},
+			"delete": {
+				"menuItem": "فشل في حذف صنف القائمة.",
+				"category": "فشل في حذف العنصر."
+			},
+			"update": {
+				"menuItem": "فشل في تحديث صنف القائمة.",
+				"category": "فشل في تحديث العنصر."
+			}
+		},
+		"error": {
+			"Accessdenied": "تم رفض الوصول.",
+			"IDNotProvided": "لم يتم تقديم المعرّف (ID).",
+			"noContext": "لا يتوفر سياق."
+		},
+		"required": {
+			"category": {
+				"ID": "معرّف الفئة مطلوب."
+			}
+		},
+		"notFound": {
+			"category": "الفئة غير موجودة."
+		}
+	},
+	"categories": {
+		"title": "الفئات",
+		"addNew": "إضافة فئة جديدة",
+		"editTitle": "تعديل الفئة",
+		"addTitle": "إضافة فئة جديدة",
+		"dialogSubtitle": "أدخل تفاصيل الفئة أدناه لتحديث القائمة.",
+		"nameAr": "اسم الفئة (بالعربية)",
+		"nameEn": "اسم الفئة (بالإنجليزية)",
+		"sortOrder": "ترتيب الفرز",
+		"save": "حفظ التغييرات",
+		"icon": "الايقونة",
+		"cancel": "إلغاء"
+	},
+	"menuItems": {
+		"title": "أصناف القائمة",
+		"addNew": "إضافة صنف جديد للقائمة",
+		"editTitle": "تعديل صنف القائمة",
+		"addTitle": "إضافة صنف جديد للقائمة",
+		"dialogSubtitle": "أدخل تفاصيل صنف القائمة أدناه لتحديث القائمة.",
+		"nameAr": "اسم الصنف (بالعربية)",
+		"nameEn": "اسم الصنف (بالإنجليزية)",
+		"descriptions": "الوصف",
+		"descriptionAr": "الوصف (بالعربية)",
+		"descriptionEN": "الوصف (بالإنجليزية)",
+		"price": "السعر",
+		"category": "الفئة",
+		"baseImage": "الصورة",
+		"available": "متوفر",
+		"notAvailable": "غير متوفر",
+		"save": "حفظ التغييرات",
+		"cancel": "إلغاء"
+	},
+	"components": {
+		"table": {
+			"noData": "لم يتم العثور على سجلات.",
+			"actions": "الإجراءات",
+			"pagination": "عدد الصفوف في الصفحة",
+			"selectedRows": "الصفوف المحددة",
+			"search": "بحث...",
+			"tooltips": {
+				"deleteSelected": "حذف المحدد"
+			}
+		},
+		"dropzone": {
+			"title": "الصور",
+			"emptyText": "لم يتم رفع أي صور بعد. اسحب وإفلت الصور هنا أو انقر للرفع.",
+			"upload": "رفع",
+			"base": "الرئيسية",
+			"imageAlt": "صورة {{number}}",
+			"tooltips": {
+				"deleteSelected": "حذف",
+				"setAsBase": "تعيين كصورة رئيسية"
+			}
+		}
+	},
+	"home": {
+		"title": "لوحة التحكم"
+	}
 }
