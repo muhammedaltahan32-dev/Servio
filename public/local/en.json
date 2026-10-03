@@ -1,456 +1,457 @@
 {
-  "layout": {
-    "mode": {
-      "dark": "Dark mode",
-      "light": "Light mode"
-    },
-    "languages": {
-      "en": "English",
-      "ar": "Arabic",
-      "language": "Language"
-    }
-  },
-  "settings": {
-    "chooseColor": "Choose a color",
-    "customColor": "Custom color",
-    "resetOne": "Reset this setting",
-    "resetPreset": "Restore the default preset",
-    "title": "Settings",
-    "subtitle": "Customize the colors, dimensions, shape, and typography used across Servio.",
-    "save": "Save changes",
-    "cancel": "Cancel",
-    "reset": "Restore defaults",
-    "saved": "Theme settings saved",
-    "resetDone": "Default theme restored",
-    "tabs": {
-      "presets": "Theme presets",
-      "colors": "Colors",
-      "dimensions": "Dimensions",
-      "shape": "Spacing and shape",
-      "effects": "Effects",
-      "typography": "Typography"
-    },
-    "tabDescriptions": {
-      "presets": "Start with a ready-made palette, then fine-tune every theme value.",
-      "colors": "Set colors for both appearance modes. Changes take effect after saving.",
-      "dimensions": "Adjust the sizes and widths used by navigation, tables, dialogs, and pages.",
-      "shape": "Set shared spacing and corner shapes for controls and panels.",
-      "effects": "Customize shadows, gradients, transition timing, and interface effects.",
-      "typography": "Control the font family, heading scale, body text, and button labels."
-    },
-    "presetsTitle": "Choose a starting theme",
-    "presetsDescription": "Pick a preset, then customize its settings in the other sections.",
-    "presetHint": "Preset choices are applied when you save. The Default preset matches Servio's original theme.",
-    "selected": "Selected",
-    "lightMode": "Light mode",
-    "darkMode": "Dark mode",
-    "presets": {
-      "default": "Default",
-      "ocean": "Ocean",
-      "plum": "Plum",
-      "custom": "Custom"
-    },
-    "shadowLabels": {
-      "subtle": "Subtle shadow",
-      "card": "Card shadow",
-      "cardHover": "Card hover shadow",
-      "dialog": "Dialog shadow"
-    },
-    "shadowPreview": "Shadow preview",
-    "matchThemeTextColor": "Match the current theme's text color",
-    "groups": {
-      "dimensions": "Sizes and layout",
-      "spacing": "Spacing",
-      "radius": "Corner radius",
-      "shadows": "Shadows",
-      "gradients": "Gradients",
-      "motion": "Motion",
-      "effects": "Effects",
-      "miscColors": "Other colors",
-      "globalTypography": "Global typography"
-    },
-    "palette": {
-      "primary": "Primary",
-      "secondary": "Secondary",
-      "success": "Success",
-      "warning": "Warning",
-      "error": "Error",
-      "info": "Information",
-      "text": "Text colors",
-      "background": "Surfaces",
-      "interface": "Borders",
-      "tableStatus": "Table status colors"
-    },
-    "typography": {
-      "h1": "Heading 1",
-      "h2": "Heading 2",
-      "h3": "Heading 3",
-      "h4": "Heading 4",
-      "body1": "Body text 1",
-      "body2": "Body text 2",
-      "button": "Buttons"
-    },
-    "fields": {
-      "main": "Main",
-      "light": "Light",
-      "dark": "Dark",
-      "contrastText": "Contrast text",
-      "primary": "Primary",
-      "secondary": "Secondary",
-      "disabled": "Disabled",
-      "default": "Default",
-      "paper": "Panel",
-      "appBar": "App bar",
-      "divider": "Divider",
-      "tableRowBorder": "Table row border",
-      "ready": "Ready",
-      "Available": "Available",
-      "delayed": "Delayed",
-      "preparing": "Preparing",
-      "Needs_Cleaning": "Needs cleaning",
-      "reserved": "Reserved",
-      "new": "New",
-      "occupied": "Occupied (lowercase status)",
-      "Occupied": "Occupied",
-      "fontFamily": "Font family",
-      "fontSize": "Font size",
-      "fontWeight": "Font weight",
-      "letterSpacing": "Letter spacing",
-      "textTransform": "Text transform",
-      "appBarHeight": "App bar height",
-      "mobileAppBarHeight": "Mobile app bar height",
-      "tooltipFontSize": "Tooltip font size",
-      "tooltipPadding": "Tooltip padding",
-      "scrollbarWidth": "Scrollbar width",
-      "tableHeaderFontSize": "Table header font size",
-      "tableMinWidth": "Table minimum width",
-      "tableDefaultColumnWidth": "Default column width",
-      "tableMinColumnWidth": "Minimum column width",
-      "tableMaxColumnWidth": "Maximum column width",
-      "tableSelectionColumnWidth": "Selection column width",
-      "tableRowHeight": "Table row height",
-      "tableHeaderHeight": "Table header height",
-      "operationsColumnWidth": "Operations column width",
-      "tableCellPaddingY": "Table cell vertical padding",
-      "tableCellContentMaxHeight": "Table cell content height",
-      "tableCardMinHeight": "Table card minimum height",
-      "menuCardMinHeight": "Menu card minimum height",
-      "summaryCardMinHeight": "Summary card minimum height",
-      "menuThumbnail": "Menu thumbnail size",
-      "categoryIcon": "Category icon size",
-      "invoicePanelWidth": "Invoice panel width",
-      "modalImageMinHeight": "Dialog image minimum height",
-      "modalImageMaxHeight": "Dialog image maximum height",
-      "desktopDrawerWidth": "Desktop sidebar width",
-      "mobileDrawerWidth": "Mobile sidebar width",
-      "actionsBarWidth": "Actions panel width",
-      "pageMaxWidth": "Page maximum width",
-      "logo": "Logo size",
-      "iconButton": "Icon button size",
-      "lobbyCardMinHeight": "Lobby card minimum height",
-      "pageXs": "Small page spacing",
-      "pageSm": "Medium page spacing",
-      "pageMd": "Large page spacing",
-      "section": "Section spacing",
-      "control": "Control radius",
-      "card": "Card radius",
-      "panel": "Panel radius",
-      "pill": "Pill radius",
-      "subtle": "Subtle shadow",
-      "cardHover": "Card hover shadow",
-      "dialog": "Dialog shadow",
-      "fast": "Fast transition",
-      "standard": "Standard transition",
-      "appBarBlur": "App bar blur",
-      "sidebarMuted": "Muted sidebar color",
-      "sidebarDivider": "Sidebar divider color",
-      "shadowColor": "Shadow color",
-      "offsetX": "Horizontal offset",
-      "offsetY": "Vertical offset",
-      "blur": "Blur",
-      "spread": "Spread",
-      "opacity": "Opacity"
-    }
-  },
-  "login": {
-    "login": "Login",
-    "username": "Username",
-    "password": "Password",
-    "brand": "Servio",
-    "brandEyebrow": "RESTAURANT OPERATIONS",
-    "brandHeadline": "A smoother shift starts here.",
-    "brandDescription": "Keep your team, tables, and service in sync from one simple workspace.",
-    "formEyebrow": "TEAM SIGN IN",
-    "welcome": "Welcome back",
-    "signInHint": "Sign in to continue to your Servio workspace.",
-    "secureNote": "Secure access for your restaurant team.",
-    "showPassword": "Show password",
-    "hidePassword": "Hide password"
-  },
-  "actions": {
-    "delete": "Delete",
-    "update": "Update",
-    "add": "add",
-    "modify": "modify",
-    "save": "save"
-  },
-  "customerMenu": {
-    "card": {
-      "showDetails": "View Details",
-      "order": "Order"
-    },
-    "pageTitle": "Table {{number}}",
-    "chooseItems": "Choose items for your order",
-    "backToLobby": "Back to lobby",
-    "searchPlaceholder": "Search your menu here",
-    "category": "Category",
-    "menuItemCount": "{{count}} menu items",
-    "menu": "Menu",
-    "noCategories": "No menu categories are available right now.",
-    "noMatchingItems": "No matching items found.",
-    "noAvailableItems": "No available items in this category.",
-    "selectAvailableTable": "Select an available table from the lobby first.",
-    "invoice": "Invoice",
-    "itemsCount": "{{count}} items",
-    "invoiceEmpty": "Your invoice is empty. Add items to get started.",
-    "addNote": "Add a note",
-    "subtotal": "Sub total",
-    "tax": "Tax",
-    "totalPayment": "Total payment",
-    "paymentCard": "Card",
-    "paymentWallet": "Wallet",
-    "paymentCash": "Cash",
-    "placeOrder": "Place an order",
-    "placingOrder": "Placing order...",
-    "menuItem": "Menu item",
-    "addItem": "Add {{name}}",
-    "removeOne": "Remove one {{name}}",
-    "addOne": "Add one {{name}}",
-    "detailsFor": "Details for {{name}}",
-    "availableNow": "Available now",
-    "unavailableNow": "Currently unavailable",
-    "title": "Customer menu"
-  },
-  "lobby": {
-    "persons": "People",
-    "small": "Small",
-    "medium": "Medium",
-    "large": "Large",
-    "Needs_Cleaning": "Needs cleaning",
-    "Occupied": "Occupied",
-    "Available": "Available",
-    "allStatus": "All status",
-    "search": "Search tables...",
-    "tableAria": "{{status}}, table {{number}}",
-    "totalTables": "Total tables",
-    "title": "Table lobby",
-    "emptyDescription": "Try changing the search or status filter.",
-    "tableType": "{{type}} table",
-    "emptyTitle": "No tables found",
-    "unavailable": "Unavailable",
-    "status": "Status",
-    "connecting": "Connecting",
-    "tableLabel": "TABLE",
-    "liveUpdates": "Live updates",
-    "openMenu": "Open menu",
-    "loadingTables": "Loading tables...",
-    "subtitle": "Manage table availability and start a guest order.",
-    "tableCount": "{{visible}} of {{total}} tables",
-    "allTables": "All tables",
-    "offline": "Offline"
-  },
-  "tables": {
-    "title": "Tables",
-    "addNew": "Add New Table",
-    "editTitle": "Edit Table",
-    "addTitle": "Add New Table",
-    "dialogSubtitle": "Enter the table details below to update the list.",
-    "capacity": "Table Capacity",
-    "number": "Table Number",
-    "status": "Table Status",
-    "save": "Save Changes",
-    "cancel": "Cancel"
-  },
-  "users": {
-    "title": "Users",
-    "addNew": "Add New User",
-    "editTitle": "Edit User",
-    "addTitle": "Add New User",
-    "dialogSubtitle": "Enter the user details below to update the list.",
-    "username": "Username",
-    "password": "Password",
-    "kind": "Account Type",
-    "isActive": "Is Active",
-    "activate": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "roles": {
-      "admin": "Admin",
-      "waiter": "Waiter",
-      "kitchen": "Kitchen"
-    },
-    "save": "Save Changes",
-    "cancel": "Cancel"
-  },
-  "auth": {
-    "validation": {
-      "nameRequired": "Username is required",
-      "passwordRequired": "Password is required",
-      "kindRequired": "Account type is required",
-      "invalidKind": "Invalid account type",
-      "nameExists": "Username is already taken"
-    },
-    "error": {
-      "invalidCredentials": "Invalid username or password"
-    }
-  },
-  "user": {
-    "success": {
-      "created": "User added successfully"
-    }
-  },
-  "upload": {
-    "success": {
-      "completed": "Files uploaded successfully"
-    },
-    "error": {
-      "noFiles": "No files selected for upload",
-      "failed": "An error occurred during file upload",
-      "fileTooLarge": "File size exceeds the allowed limit (5MB)"
-    }
-  },
-  "payment": {
-    "success": {
-      "created": "Payment successful"
-    }
-  },
-  "table": {
-    "success": {
-      "created": "Table created successfully",
-      "updated": "Table updated successfully",
-      "deleted": "Table deleted successfully"
-    },
-    "error": {
-      "notFound": "Table not found",
-      "noIdsProvided": "No table IDs provided."
-    }
-  },
-  "order": {
-    "success": {
-      "created": "Order created successfully"
-    },
-    "error": {
-      "notFound": "Order not found",
-      "invalidData": "Please select a table and at least one menu item.",
-      "tableUnavailable": "This table is no longer available."
-    }
-  },
-  "error": {
-    "messages": {
-      "ExpiredToken": "Session expired, please log in again.",
-      "serverError": "An internal server error occurred."
-    }
-  },
-  "messages": {
-    "success": {
-      "add": {
-        "menuItem": "The menu item has been successfully added.",
-        "category": "The item has been successfully added."
-      },
-      "delete": {
-        "menuItem": "The menu item has been successfully deleted.",
-        "category": "The item has been successfully deleted."
-      },
-      "update": {
-        "menuItem": "The menu item has been successfully updated.",
-        "category": "The item has been successfully updated."
-      }
-    },
-    "failed": {
-      "add": {
-        "menuItem": "Failed to add the menu item.",
-        "category": "Failed to add the item",
-        "nameRequired": "Arabic or English item name is required."
-      },
-      "delete": {
-        "menuItem": "Failed to delete the menu item.",
-        "category": "Failed to delete the item"
-      },
-      "update": {
-        "menuItem": "Failed to update the menu item.",
-        "category": "Failed to update the item"
-      }
-    },
-    "error": {
-      "Accessdenied": "Access denied.",
-      "IDNotProvided": "ID not provided.",
-      "noContext": "No context available."
-    },
-    "required": {
-      "category": {
-        "ID": "Category ID is required."
-      }
-    },
-    "notFound": {
-      "category": "The category does not exist."
-    }
-  },
-  "categories": {
-    "title": "Categories",
-    "addNew": "Add New Category",
-    "editTitle": "Edit Category",
-    "addTitle": "Add New Category",
-    "dialogSubtitle": "Enter the category details below to update the list.",
-    "nameAr": "Category Name (Arabic)",
-    "nameEn": "Category Name (English)",
-    "sortOrder": "Sort Order",
-    "save": "Save Changes",
-    "cancel": "Cancel"
-  },
-  "menuItems": {
-    "title": "Menu Items",
-    "addNew": "Add New Menu Item",
-    "editTitle": "Edit Menu Item",
-    "addTitle": "Add New Menu Item",
-    "dialogSubtitle": "Enter the menu item details below to update the list.",
-    "nameAr": "Menu Item Name (Arabic)",
-    "nameEn": "Menu Item Name (English)",
-    "descriptions": "Descriptions",
-    "descriptionAr": "Description (Arabic)",
-    "descriptionEN": "Description (English)",
-    "price": "Price",
-    "category": "Category",
-    "baseImage": "Image",
-    "available": "Available",
-    "notAvailable": "Not Available",
-    "save": "Save Changes",
-    "cancel": "Cancel"
-  },
-  "components": {
-    "table": {
-      "noData": "No records found.",
-      "actions": "Actions",
-      "pagination": "Rows per page",
-      "selectedRows": "Selected rows",
-      "search": "search...",
-      "tooltips": {
-        "deleteSelected": "Delete selected"
-      }
-    },
-    "dropzone": {
-      "title": "Images",
-      "emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
-      "upload": "Upload",
-      "base": "Base",
-      "imageAlt": "Image {{number}}",
-      "tooltips": {
-        "deleteSelected": "Delete",
-        "setAsBase": "Set as base image"
-      }
-    }
-  },
-  "home": {
-    "title": "Dashboard"
-  }
+	"layout": {
+		"mode": {
+			"dark": "Dark mode",
+			"light": "Light mode"
+		},
+		"languages": {
+			"en": "English",
+			"ar": "Arabic",
+			"language": "Language"
+		}
+	},
+	"settings": {
+		"chooseColor": "Choose a color",
+		"customColor": "Custom color",
+		"resetOne": "Reset this setting",
+		"resetPreset": "Restore the default preset",
+		"title": "Settings",
+		"subtitle": "Customize the colors, dimensions, shape, and typography used across Servio.",
+		"save": "Save changes",
+		"cancel": "Cancel",
+		"reset": "Restore defaults",
+		"saved": "Theme settings saved",
+		"resetDone": "Default theme restored",
+		"tabs": {
+			"presets": "Theme presets",
+			"colors": "Colors",
+			"dimensions": "Dimensions",
+			"shape": "Spacing and shape",
+			"effects": "Effects",
+			"typography": "Typography"
+		},
+		"tabDescriptions": {
+			"presets": "Start with a ready-made palette, then fine-tune every theme value.",
+			"colors": "Set colors for both appearance modes. Changes take effect after saving.",
+			"dimensions": "Adjust the sizes and widths used by navigation, tables, dialogs, and pages.",
+			"shape": "Set shared spacing and corner shapes for controls and panels.",
+			"effects": "Customize shadows, gradients, transition timing, and interface effects.",
+			"typography": "Control the font family, heading scale, body text, and button labels."
+		},
+		"presetsTitle": "Choose a starting theme",
+		"presetsDescription": "Pick a preset, then customize its settings in the other sections.",
+		"presetHint": "Preset choices are applied when you save. The Default preset matches Servio's original theme.",
+		"selected": "Selected",
+		"lightMode": "Light mode",
+		"darkMode": "Dark mode",
+		"presets": {
+			"default": "Default",
+			"ocean": "Ocean",
+			"plum": "Plum",
+			"custom": "Custom"
+		},
+		"shadowLabels": {
+			"subtle": "Subtle shadow",
+			"card": "Card shadow",
+			"cardHover": "Card hover shadow",
+			"dialog": "Dialog shadow"
+		},
+		"shadowPreview": "Shadow preview",
+		"matchThemeTextColor": "Match the current theme's text color",
+		"groups": {
+			"dimensions": "Sizes and layout",
+			"spacing": "Spacing",
+			"radius": "Corner radius",
+			"shadows": "Shadows",
+			"gradients": "Gradients",
+			"motion": "Motion",
+			"effects": "Effects",
+			"miscColors": "Other colors",
+			"globalTypography": "Global typography"
+		},
+		"palette": {
+			"primary": "Primary",
+			"secondary": "Secondary",
+			"success": "Success",
+			"warning": "Warning",
+			"error": "Error",
+			"info": "Information",
+			"text": "Text colors",
+			"background": "Surfaces",
+			"interface": "Borders",
+			"tableStatus": "Table status colors"
+		},
+		"typography": {
+			"h1": "Heading 1",
+			"h2": "Heading 2",
+			"h3": "Heading 3",
+			"h4": "Heading 4",
+			"body1": "Body text 1",
+			"body2": "Body text 2",
+			"button": "Buttons"
+		},
+		"fields": {
+			"main": "Main",
+			"light": "Light",
+			"dark": "Dark",
+			"contrastText": "Contrast text",
+			"primary": "Primary",
+			"secondary": "Secondary",
+			"disabled": "Disabled",
+			"default": "Default",
+			"paper": "Panel",
+			"appBar": "App bar",
+			"divider": "Divider",
+			"tableRowBorder": "Table row border",
+			"ready": "Ready",
+			"Available": "Available",
+			"delayed": "Delayed",
+			"preparing": "Preparing",
+			"Needs_Cleaning": "Needs cleaning",
+			"reserved": "Reserved",
+			"new": "New",
+			"occupied": "Occupied (lowercase status)",
+			"Occupied": "Occupied",
+			"fontFamily": "Font family",
+			"fontSize": "Font size",
+			"fontWeight": "Font weight",
+			"letterSpacing": "Letter spacing",
+			"textTransform": "Text transform",
+			"appBarHeight": "App bar height",
+			"mobileAppBarHeight": "Mobile app bar height",
+			"tooltipFontSize": "Tooltip font size",
+			"tooltipPadding": "Tooltip padding",
+			"scrollbarWidth": "Scrollbar width",
+			"tableHeaderFontSize": "Table header font size",
+			"tableMinWidth": "Table minimum width",
+			"tableDefaultColumnWidth": "Default column width",
+			"tableMinColumnWidth": "Minimum column width",
+			"tableMaxColumnWidth": "Maximum column width",
+			"tableSelectionColumnWidth": "Selection column width",
+			"tableRowHeight": "Table row height",
+			"tableHeaderHeight": "Table header height",
+			"operationsColumnWidth": "Operations column width",
+			"tableCellPaddingY": "Table cell vertical padding",
+			"tableCellContentMaxHeight": "Table cell content height",
+			"tableCardMinHeight": "Table card minimum height",
+			"menuCardMinHeight": "Menu card minimum height",
+			"summaryCardMinHeight": "Summary card minimum height",
+			"menuThumbnail": "Menu thumbnail size",
+			"categoryIcon": "Category icon size",
+			"invoicePanelWidth": "Invoice panel width",
+			"modalImageMinHeight": "Dialog image minimum height",
+			"modalImageMaxHeight": "Dialog image maximum height",
+			"desktopDrawerWidth": "Desktop sidebar width",
+			"mobileDrawerWidth": "Mobile sidebar width",
+			"actionsBarWidth": "Actions panel width",
+			"pageMaxWidth": "Page maximum width",
+			"logo": "Logo size",
+			"iconButton": "Icon button size",
+			"lobbyCardMinHeight": "Lobby card minimum height",
+			"pageXs": "Small page spacing",
+			"pageSm": "Medium page spacing",
+			"pageMd": "Large page spacing",
+			"section": "Section spacing",
+			"control": "Control radius",
+			"card": "Card radius",
+			"panel": "Panel radius",
+			"pill": "Pill radius",
+			"subtle": "Subtle shadow",
+			"cardHover": "Card hover shadow",
+			"dialog": "Dialog shadow",
+			"fast": "Fast transition",
+			"standard": "Standard transition",
+			"appBarBlur": "App bar blur",
+			"sidebarMuted": "Muted sidebar color",
+			"sidebarDivider": "Sidebar divider color",
+			"shadowColor": "Shadow color",
+			"offsetX": "Horizontal offset",
+			"offsetY": "Vertical offset",
+			"blur": "Blur",
+			"spread": "Spread",
+			"opacity": "Opacity"
+		}
+	},
+	"login": {
+		"login": "Login",
+		"username": "Username",
+		"password": "Password",
+		"brand": "Servio",
+		"brandEyebrow": "RESTAURANT OPERATIONS",
+		"brandHeadline": "A smoother shift starts here.",
+		"brandDescription": "Keep your team, tables, and service in sync from one simple workspace.",
+		"formEyebrow": "TEAM SIGN IN",
+		"welcome": "Welcome back",
+		"signInHint": "Sign in to continue to your Servio workspace.",
+		"secureNote": "Secure access for your restaurant team.",
+		"showPassword": "Show password",
+		"hidePassword": "Hide password"
+	},
+	"actions": {
+		"delete": "Delete",
+		"update": "Update",
+		"add": "add",
+		"modify": "modify",
+		"save": "save"
+	},
+	"customerMenu": {
+		"card": {
+			"showDetails": "View Details",
+			"order": "Order"
+		},
+		"pageTitle": "Table {{number}}",
+		"chooseItems": "Choose items for your order",
+		"backToLobby": "Back to lobby",
+		"searchPlaceholder": "Search your menu here",
+		"category": "Category",
+		"menuItemCount": "{{count}} menu items",
+		"menu": "Menu",
+		"noCategories": "No menu categories are available right now.",
+		"noMatchingItems": "No matching items found.",
+		"noAvailableItems": "No available items in this category.",
+		"selectAvailableTable": "Select an available table from the lobby first.",
+		"invoice": "Invoice",
+		"itemsCount": "{{count}} items",
+		"invoiceEmpty": "Your invoice is empty. Add items to get started.",
+		"addNote": "Add a note",
+		"subtotal": "Sub total",
+		"tax": "Tax",
+		"totalPayment": "Total payment",
+		"paymentCard": "Card",
+		"paymentWallet": "Wallet",
+		"paymentCash": "Cash",
+		"placeOrder": "Place an order",
+		"placingOrder": "Placing order...",
+		"menuItem": "Menu item",
+		"addItem": "Add {{name}}",
+		"removeOne": "Remove one {{name}}",
+		"addOne": "Add one {{name}}",
+		"detailsFor": "Details for {{name}}",
+		"availableNow": "Available now",
+		"unavailableNow": "Currently unavailable",
+		"title": "Customer menu"
+	},
+	"lobby": {
+		"persons": "People",
+		"small": "Small",
+		"medium": "Medium",
+		"large": "Large",
+		"Needs_Cleaning": "Needs cleaning",
+		"Occupied": "Occupied",
+		"Available": "Available",
+		"allStatus": "All status",
+		"search": "Search tables...",
+		"tableAria": "{{status}}, table {{number}}",
+		"totalTables": "Total tables",
+		"title": "Table lobby",
+		"emptyDescription": "Try changing the search or status filter.",
+		"tableType": "{{type}} table",
+		"emptyTitle": "No tables found",
+		"unavailable": "Unavailable",
+		"status": "Status",
+		"connecting": "Connecting",
+		"tableLabel": "TABLE",
+		"liveUpdates": "Live updates",
+		"openMenu": "Open menu",
+		"loadingTables": "Loading tables...",
+		"subtitle": "Manage table availability and start a guest order.",
+		"tableCount": "{{visible}} of {{total}} tables",
+		"allTables": "All tables",
+		"offline": "Offline"
+	},
+	"tables": {
+		"title": "Tables",
+		"addNew": "Add New Table",
+		"editTitle": "Edit Table",
+		"addTitle": "Add New Table",
+		"dialogSubtitle": "Enter the table details below to update the list.",
+		"capacity": "Table Capacity",
+		"number": "Table Number",
+		"status": "Table Status",
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
+	"users": {
+		"title": "Users",
+		"addNew": "Add New User",
+		"editTitle": "Edit User",
+		"addTitle": "Add New User",
+		"dialogSubtitle": "Enter the user details below to update the list.",
+		"username": "Username",
+		"password": "Password",
+		"kind": "Account Type",
+		"isActive": "Is Active",
+		"activate": {
+			"yes": "Yes",
+			"no": "No"
+		},
+		"roles": {
+			"admin": "Admin",
+			"waiter": "Waiter",
+			"kitchen": "Kitchen"
+		},
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
+	"auth": {
+		"validation": {
+			"nameRequired": "Username is required",
+			"passwordRequired": "Password is required",
+			"kindRequired": "Account type is required",
+			"invalidKind": "Invalid account type",
+			"nameExists": "Username is already taken"
+		},
+		"error": {
+			"invalidCredentials": "Invalid username or password"
+		}
+	},
+	"user": {
+		"success": {
+			"created": "User added successfully"
+		}
+	},
+	"upload": {
+		"success": {
+			"completed": "Files uploaded successfully"
+		},
+		"error": {
+			"noFiles": "No files selected for upload",
+			"failed": "An error occurred during file upload",
+			"fileTooLarge": "File size exceeds the allowed limit (5MB)"
+		}
+	},
+	"payment": {
+		"success": {
+			"created": "Payment successful"
+		}
+	},
+	"table": {
+		"success": {
+			"created": "Table created successfully",
+			"updated": "Table updated successfully",
+			"deleted": "Table deleted successfully"
+		},
+		"error": {
+			"notFound": "Table not found",
+			"noIdsProvided": "No table IDs provided."
+		}
+	},
+	"order": {
+		"success": {
+			"created": "Order created successfully"
+		},
+		"error": {
+			"notFound": "Order not found",
+			"invalidData": "Please select a table and at least one menu item.",
+			"tableUnavailable": "This table is no longer available."
+		}
+	},
+	"error": {
+		"messages": {
+			"ExpiredToken": "Session expired, please log in again.",
+			"serverError": "An internal server error occurred."
+		}
+	},
+	"messages": {
+		"success": {
+			"add": {
+				"menuItem": "The menu item has been successfully added.",
+				"category": "The item has been successfully added."
+			},
+			"delete": {
+				"menuItem": "The menu item has been successfully deleted.",
+				"category": "The item has been successfully deleted."
+			},
+			"update": {
+				"menuItem": "The menu item has been successfully updated.",
+				"category": "The item has been successfully updated."
+			}
+		},
+		"failed": {
+			"add": {
+				"menuItem": "Failed to add the menu item.",
+				"category": "Failed to add the item",
+				"nameRequired": "Arabic or English item name is required."
+			},
+			"delete": {
+				"menuItem": "Failed to delete the menu item.",
+				"category": "Failed to delete the item"
+			},
+			"update": {
+				"menuItem": "Failed to update the menu item.",
+				"category": "Failed to update the item"
+			}
+		},
+		"error": {
+			"Accessdenied": "Access denied.",
+			"IDNotProvided": "ID not provided.",
+			"noContext": "No context available."
+		},
+		"required": {
+			"category": {
+				"ID": "Category ID is required."
+			}
+		},
+		"notFound": {
+			"category": "The category does not exist."
+		}
+	},
+	"categories": {
+		"title": "Categories",
+		"addNew": "Add New Category",
+		"editTitle": "Edit Category",
+		"addTitle": "Add New Category",
+		"dialogSubtitle": "Enter the category details below to update the list.",
+		"nameAr": "Category Name (Arabic)",
+		"nameEn": "Category Name (English)",
+		"sortOrder": "Sort Order",
+		"save": "Save Changes",
+		"icon": "Icon",
+		"cancel": "Cancel"
+	},
+	"menuItems": {
+		"title": "Menu Items",
+		"addNew": "Add New Menu Item",
+		"editTitle": "Edit Menu Item",
+		"addTitle": "Add New Menu Item",
+		"dialogSubtitle": "Enter the menu item details below to update the list.",
+		"nameAr": "Menu Item Name (Arabic)",
+		"nameEn": "Menu Item Name (English)",
+		"descriptions": "Descriptions",
+		"descriptionAr": "Description (Arabic)",
+		"descriptionEN": "Description (English)",
+		"price": "Price",
+		"category": "Category",
+		"baseImage": "Image",
+		"available": "Available",
+		"notAvailable": "Not Available",
+		"save": "Save Changes",
+		"cancel": "Cancel"
+	},
+	"components": {
+		"table": {
+			"noData": "No records found.",
+			"actions": "Actions",
+			"pagination": "Rows per page",
+			"selectedRows": "Selected rows",
+			"search": "search...",
+			"tooltips": {
+				"deleteSelected": "Delete selected"
+			}
+		},
+		"dropzone": {
+			"title": "Images",
+			"emptyText": "No images uploaded yet. Drag & drop photos here or click upload.",
+			"upload": "Upload",
+			"base": "Base",
+			"imageAlt": "Image {{number}}",
+			"tooltips": {
+				"deleteSelected": "Delete",
+				"setAsBase": "Set as base image"
+			}
+		}
+	},
+	"home": {
+		"title": "Dashboard"
+	}
 }

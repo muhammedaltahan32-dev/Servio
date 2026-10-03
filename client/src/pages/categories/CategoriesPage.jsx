@@ -9,7 +9,7 @@ import {
 	updateCategory,
 	deleteCategory,
 } from "../../features/categories/CategoriesSlice.js";
-import { Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
+import { Cat_Icon, Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
 import CategoriesDialog from "./CategoriesDialog.jsx";
 const initialFormState = {
 	[Cat_Name_AR]: "",
@@ -27,6 +27,7 @@ export const CategoriesPage = () => {
 		() => [
 			{ field: Cat_Name_AR, headerName: t("categories.nameAr") },
 			{ field: Cat_Name_EN, headerName: t("categories.nameEn") },
+			{ field: Cat_Icon, headerName: t("categories.icon") },
 			{ field: Cat_Sort, headerName: t("categories.sortOrder") },
 		],
 		[t],
