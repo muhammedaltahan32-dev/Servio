@@ -55,7 +55,7 @@ export const post = async (req, res) => {
 export const getAll = async (req, res) => {
 	try {
 		const { [mdlUser]: User } = req.app.locals.db;
-		const users = await User.findAll();
+		const users = await User.findAll({ attributes: { exclude: [User_HashedPassword] } });
 		res.status(200).json({
 			success: true,
 			data: users,
