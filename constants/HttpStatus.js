@@ -4,6 +4,7 @@ export const St_ACCEPTED = 202;
 export const St_NO_CONTENT = 204;
 export const St_BAD_REQUEST = 400;
 export const St_UNAUTHORIZED = 401;
+export const St_TOO_MANY_REQUESTS = 429;
 export const St_FORBIDDEN = 403;
 export const St_NOT_FOUND = 404;
 export const St_METHOD_NOT_ALLOWED = 405;

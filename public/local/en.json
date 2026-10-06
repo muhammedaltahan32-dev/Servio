@@ -302,7 +302,8 @@
 			"nameExists": "Username is already taken"
 		},
 		"error": {
-			"invalidCredentials": "Invalid username or password"
+			"invalidCredentials": "Invalid username or password",
+			"tooManyAttempts": "Too many failed login attempts. Try again in 15 minutes."
 		}
 	},
 	"user": {
