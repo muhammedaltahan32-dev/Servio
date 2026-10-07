@@ -1,5 +1,13 @@
 import React from "react";
-import { Toolbar, Typography, AppBar as MUAppBar, Tooltip, useColorScheme, useScrollTrigger, useTheme } from "@mui/material";
+import {
+	Toolbar,
+	Typography,
+	AppBar as MUAppBar,
+	Tooltip,
+	useColorScheme,
+	useScrollTrigger,
+	useTheme,
+} from "@mui/material";
 import { IconButton, Menu } from "@components";
 import { useDispatch } from "react-redux";
 import { drawerToggle } from "../../features/layout/layoutSlice.js";
@@ -11,6 +19,7 @@ const ROUTE_TITLE_KEYS = {
 	"/categories": "categories.title",
 	"/lobby": "lobby.title",
 	"/tables": "tables.title",
+	"/orders": "orders.title",
 	"/users": "users.title",
 	"/menu-items": "menuItems.title",
 	"/customer-menu": "customerMenu.title",
@@ -45,13 +54,18 @@ const AppBarContent = React.memo(() => {
 	const pageName = ROUTE_TITLE_KEYS[routeKey]
 		? t(ROUTE_TITLE_KEYS[routeKey])
 		: (location.pathname.split("/").filter(Boolean).pop() || t("home.title"))
-			.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-			.replace(/[-_]/g, " ")
-			.replace(/\b\w/g, (character) => character.toUpperCase());
+				.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+				.replace(/[-_]/g, " ")
+				.replace(/\b\w/g, (character) => character.toUpperCase());
 	const handleDrawerToggle = React.useCallback(() => dispatch(drawerToggle()), [dispatch]);
 
 	return (
-		<Toolbar sx={{ minHeight: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` }, px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd } }}>
+		<Toolbar
+			sx={{
+				minHeight: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` },
+				px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd },
+			}}
+		>
 			<IconButton
 				color="inherit"
 				aria-label="open drawer"
@@ -60,7 +74,12 @@ const AppBarContent = React.memo(() => {
 				sx={{ display: { md: "none" }, marginInlineEnd: 2 }}
 				name="Menu"
 			/>
-			<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 700, color: "text.primary", textTransform: "capitalize" }}>
+			<Typography
+				variant="h6"
+				noWrap
+				component="div"
+				sx={{ flexGrow: 1, fontWeight: 700, color: "text.primary", textTransform: "capitalize" }}
+			>
 				{pageName}
 			</Typography>
 			<ThemeSwitcher />

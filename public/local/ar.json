@@ -429,6 +429,36 @@
 		"save": "حفظ التغييرات",
 		"cancel": "إلغاء"
 	},
+	"orders": {
+		"title": "الطلبات",
+		"subtitle": "تابع الطلبات الجديدة وانقل كل طلب خلال مراحل المطبخ.",
+		"refresh": "تحديث الطلبات",
+		"orderNumber": "الطلب",
+		"table": "طاولة {{number}}",
+		"waiter": "النادل: {{name}}",
+		"items": "أصناف الطلب",
+		"menuItem": "صنف في القائمة",
+		"noItems": "لا تتوفر تفاصيل للأصناف.",
+		"total": "إجمالي الطلب",
+		"unknownTime": "الوقت غير متاح",
+		"emptyTitle": "لا توجد طلبات",
+		"emptyDescription": "ستظهر الطلبات الجديدة هنا.",
+		"statusUpdated": "تم تحديث حالة الطلب",
+		"status": {
+			"all": "الكل",
+			"pending": "قيد الانتظار",
+			"preparing": "قيد التحضير",
+			"ready": "جاهز",
+			"served": "تم التقديم",
+			"paid": "مدفوع",
+			"cancelled": "ملغي"
+		},
+		"action": {
+			"preparing": "بدء التحضير",
+			"ready": "تحديد كجاهز",
+			"served": "تحديد كمُقدّم"
+		}
+	},
 	"components": {
 		"table": {
 			"noData": "لم يتم العثور على سجلات.",
