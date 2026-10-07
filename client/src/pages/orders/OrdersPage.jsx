@@ -7,7 +7,6 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import { Button, IconButton, PageContainer } from "@components";
 import { useLang } from "@hooks";
-import { formatCurrency } from "@utils";
 import {
 	Item_Notes,
 	Item_Quantity,
@@ -15,7 +14,6 @@ import {
 	Order_CreatedAt,
 	Order_ID,
 	Order_Status,
-	Order_Total,
 	Table_Number,
 	User_Name,
 } from "../../../../constants/FieldsName.js";
@@ -88,31 +86,34 @@ const OrderCard = React.memo(({ order, isUpdating, onStatusChange, t, getFieldsB
 
 			<Divider />
 
-			<Stack spacing={1}>
+			<Stack spacing={1.5}>
 				{order.OrderItems?.map((item) => {
 					const itemName = getFieldsByLang(item.MenuItem, "name") || item.MenuItem?.[Menu_Name];
+					const notes = item[Item_Notes];
 					return (
-						<Box key={item.id} sx={{ display: "flex", justifyContent: "space-between", gap: 1 }}>
+						<Box key={item.id} sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
 							<Typography variant="body2">
 								<strong>{item[Item_Quantity]}×</strong> {itemName || t("orders.menuItem")}
 							</Typography>
-							<Typography variant="body2" fontWeight={600}>
-								{formatCurrency(Number(item.unit_price) * Number(item[Item_Quantity]), currentLanguage)}
-							</Typography>
+							{notes && (
+								<Typography
+									variant="caption"
+									sx={{
+										bgcolor: "warning.soft",
+										color: "warning.dark",
+										p: 0.75,
+										borderRadius: 1,
+										fontWeight: 600,
+										border: "1px dashed",
+										borderColor: "warning.main",
+									}}
+								>
+									{notes}
+								</Typography>
+							)}
 						</Box>
 					);
 				})}
-			</Stack>
-
-			<Divider />
-
-			<Stack direction="row" justifyContent="space-between" alignItems="center">
-				<Typography variant="body2" color="text.secondary">
-					{t("orders.total")}
-				</Typography>
-				<Typography variant="subtitle1" fontWeight={800}>
-					{formatCurrency(Number(order[Order_Total] ?? 0), currentLanguage)}
-				</Typography>
 			</Stack>
 
 			{nextStatus && (
@@ -121,6 +122,7 @@ const OrderCard = React.memo(({ order, isUpdating, onStatusChange, t, getFieldsB
 					size="small"
 					disabled={isUpdating}
 					onClick={() => onStatusChange(order[Order_ID], nextStatus)}
+					sx={{ mt: "auto" }}
 				>
 					{isUpdating ? <CircularProgress size={16} color="inherit" /> : t(`orders.action.${nextStatus.toLowerCase()}`)}
 				</Button>
@@ -135,7 +137,6 @@ export const OrdersPage = () => {
 	const { t, getFieldsByLang, currentLanguage } = useLang();
 	const { items: orders, fetching, updatingIds, error } = useSelector((state) => state.orders);
 
-	// تحسين الأداء: تحويل مصفوفة المعرفات الجارية إلى Set لتقليل تعقيد البحث إلى O(1)
 	const updatingSet = React.useMemo(() => new Set(updatingIds.map(String)), [updatingIds]);
 
 	React.useEffect(() => {
@@ -164,7 +165,6 @@ export const OrdersPage = () => {
 				</Alert>
 			)}
 
-			{/* لوحة الأعمدة المتوازية (Kanban Layout) */}
 			<Box
 				sx={{
 					display: "grid",
