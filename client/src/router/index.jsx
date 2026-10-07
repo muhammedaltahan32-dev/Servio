@@ -9,6 +9,7 @@ import {
 	LobbyPage,
 	Login,
 	MenuItemsPage,
+	OrdersPage,
 	SettingsPage,
 	TablesPage,
 	UsersPage,
@@ -41,6 +42,12 @@ const protectedPaths = [
 		element: <TablesPage />,
 	},
 	{
+		path: "/orders",
+		label: "orders.title",
+		icon: "ReceiptLong",
+		element: <OrdersPage />,
+	},
+	{
 		path: "/users",
 		label: "users.title",
 		icon: "People",
@@ -71,7 +78,11 @@ export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path
 export const router = createBrowserRouter([
 	{
 		path: "/login",
-		element: <Suspense fallback={<PageLoadingFallback />}><Login /></Suspense>,
+		element: (
+			<Suspense fallback={<PageLoadingFallback />}>
+				<Login />
+			</Suspense>
+		),
 	},
 	{
 		path: "/",

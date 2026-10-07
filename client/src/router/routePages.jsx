@@ -9,3 +9,4 @@ export const MenuItemsPage = lazy(() => import("../pages/menuItems/MenuItemsPage
 export const UsersPage = lazy(() => import("../pages/users/UsersPage.jsx"));
 export const CustomerMenuPage = lazy(() => import("../pages/menu/CustomerMenuPage.jsx"));
 export const SettingsPage = lazy(() => import("../pages/settings/SettingsPage.jsx"));
+export const OrdersPage = lazy(() => import("../pages/orders/OrdersPage.jsx"));

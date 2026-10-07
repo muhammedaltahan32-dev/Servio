@@ -20,6 +20,7 @@ import {
 	UI_Lobby,
 	UI_Login,
 	UI_MenuItems,
+	UI_Orders,
 	UI_Tables,
 } from "../../../constants/Forms.js";
 
@@ -36,6 +37,7 @@ export const admin = {
 	[UI_Categories]: { open: true, path: "/categories", label: "Categories", icon: "Category" },
 	[UI_Lobby]: { open: true, path: "/lobby", label: "Lobby", icon: "TableBarTwoTone" },
 	[UI_Tables]: { open: true, path: "/tables", label: "Tables", icon: "TableRestaurant" },
+	[UI_Orders]: { open: true, path: "/orders", label: "Orders", icon: "ReceiptLong" },
 	[UI_MenuItems]: { open: true, path: "/menu-items", label: "Menu Items", icon: "RestaurantMenu" },
 	[UI_CustomerMenu]: { open: true, path: "/customer-menu", label: "Customer Menu", icon: "RestaurantMenu" },
 };
@@ -54,6 +56,8 @@ export const waiter = {
 
 export const kitchen = {
 	[Api_Signin]: { post: true },
+	[Api_Order]: { getAll: true, patch: true },
+	[UI_Orders]: { open: true, path: "/orders", label: "Orders", icon: "ReceiptLong" },
 	[UI_Login]: { open: true, path: "/login" },
 	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
 };

@@ -1,6 +1,12 @@
 import { mdlOrders, mdlOrderItems, mdlTable, mdlUser, mdlMenuItems } from "../../../constants/modelNames.js";
 import { Api_Order } from "../../../constants/SubApi.js";
-import { St_BAD_REQUEST, St_CREATED, St_OK, St_INTERNAL_SERVER_ERROR, St_NOT_FOUND } from "../../../constants/HttpStatus.js";
+import {
+	St_BAD_REQUEST,
+	St_CREATED,
+	St_OK,
+	St_INTERNAL_SERVER_ERROR,
+	St_NOT_FOUND,
+} from "../../../constants/HttpStatus.js";
 import { ST_AVAILABLE, ST_OCCUPIED } from "../../../constants/enumOptions.js";
 import {
 	Order_ID,
@@ -11,6 +17,7 @@ import {
 	Order_Tax,
 	Order_Total,
 	Order_CreatedAt,
+	Item_ID,
 	Item_OrderID,
 	Item_MenuID,
 	Item_Quantity,
@@ -19,6 +26,8 @@ import {
 	Table_Number,
 	User_Name,
 	Menu_Name,
+	Menu_Name_AR,
+	Menu_Name_EN,
 	Menu_Price,
 	Menu_IsAvailable,
 	Table_Status,
@@ -79,10 +88,7 @@ export const post = async (req, res) => {
 				[Item_Notes]: item[Item_Notes] || null,
 			};
 		});
-		const subtotal = orderItemsData.reduce(
-			(sum, item) => sum + Number(item[Item_UnitPrice]) * item[Item_Quantity],
-			0,
-		);
+		const subtotal = orderItemsData.reduce((sum, item) => sum + Number(item[Item_UnitPrice]) * item[Item_Quantity], 0);
 		const tax = Number.isFinite(tax_amount) && tax_amount >= 0 ? tax_amount : 0;
 		const total_amount = subtotal + tax;
 
@@ -135,21 +141,37 @@ export const patch = async (req, res) => {
 	}
 };
 
-export const getAll = async (req, res, params) => {
+export const getAll = async (req, res, params = {}) => {
 	try {
-		const { [mdlOrders]: Order, [mdlTable]: Table, [mdlUser]: User } = req.app.locals.db;
-		const { [Order_Status]: status } = params;
+		const {
+			[mdlOrders]: Order,
+			[mdlTable]: Table,
+			[mdlUser]: User,
+			[mdlOrderItems]: OrderItem,
+			[mdlMenuItems]: MenuItem,
+		} = req.app.locals.db;
+
+		const status = params?.[Order_Status];
 		const whereClause = status ? { [Order_Status]: status } : {};
+
 		const orders = await Order.findAll({
 			where: whereClause,
 			include: [
 				{ model: Table, attributes: [Table_Number] },
 				{ model: User, attributes: [User_Name] },
+				{
+					model: OrderItem,
+					attributes: [Item_ID, Item_MenuID, Item_Quantity, Item_UnitPrice, Item_Notes],
+					// تم إزالة Menu_Name لعدم توفره في جدول قاعدة البيانات
+					include: [{ model: MenuItem, attributes: [Menu_Name_AR, Menu_Name_EN] }],
+				},
 			],
-			order: [[Order_CreatedAt, "ASC"]],
+			order: [[Order_CreatedAt, "DESC"]],
 		});
+
 		res.status(St_OK).json({ success: true, data: orders });
 	} catch (err) {
+		console.error(err);
 		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };

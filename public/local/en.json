@@ -231,6 +231,36 @@
 		"unavailableNow": "Currently unavailable",
 		"title": "Customer menu"
 	},
+	"orders": {
+		"title": "Orders",
+		"subtitle": "Track incoming orders and move each one through the kitchen.",
+		"refresh": "Refresh orders",
+		"orderNumber": "Order",
+		"table": "Table {{number}}",
+		"waiter": "Waiter: {{name}}",
+		"items": "Order items",
+		"menuItem": "Menu item",
+		"noItems": "No item details available.",
+		"total": "Order total",
+		"unknownTime": "Time unavailable",
+		"emptyTitle": "No orders found",
+		"emptyDescription": "New orders will appear here.",
+		"statusUpdated": "Order status updated",
+		"status": {
+			"all": "All",
+			"pending": "Pending",
+			"preparing": "Preparing",
+			"ready": "Ready",
+			"served": "Served",
+			"paid": "Paid",
+			"cancelled": "Cancelled"
+		},
+		"action": {
+			"preparing": "Start preparing",
+			"ready": "Mark ready",
+			"served": "Mark served"
+		}
+	},
 	"lobby": {
 		"persons": "People",
 		"small": "Small",
