@@ -64,7 +64,6 @@ export const Dialog = ({
 								bgcolor: "background.paper",
 								color: "text.primary",
 								backgroundImage: "none",
-								boxShadow: theme.tokens.shadow.dialog,
 								overflow: "hidden",
 								pointerEvents: disabled ? "none" : "all",
 								...(typeof callerSX === "function" ? callerSX(theme) : callerSX),

@@ -14,7 +14,7 @@ export * from "./RoundTableChairs/RoundTableChairs.jsx";
 export * from "./PhotoAlbumGallery/PhotoAlbumGallery.jsx";
 export * from "./Carousel/Carousel.jsx";
 export * from "./MobileBottomSheet/MobileBottomSheet.jsx";
-
+export * from "./IconPicker/IconPicker.jsx";
 //  items controls
 export * from "./Controls/MenuItem";
 export * from "./Controls/RadioGroup";
