@@ -131,9 +131,8 @@ export const mergeThemeSettings = (base, updates = {}) => {
 	if (!base || typeof base !== "object" || Array.isArray(base)) return updates ?? base;
 	const result = { ...base };
 	for (const [key, value] of Object.entries(updates ?? {})) {
-		result[key] = value && typeof value === "object" && !Array.isArray(value)
-			? mergeThemeSettings(base[key] ?? {}, value)
-			: value;
+		result[key] =
+			value && typeof value === "object" && !Array.isArray(value) ? mergeThemeSettings(base[key] ?? {}, value) : value;
 	}
 	return result;
 };
@@ -141,14 +140,20 @@ export const mergeThemeSettings = (base, updates = {}) => {
 export const mergePaletteSettings = (base, updates) => {
 	const result = { ...base };
 	for (const [key, value] of Object.entries(updates ?? {})) {
-		result[key] = value && typeof value === "object" && !Array.isArray(value)
-			? { ...base[key], ...value }
-			: value;
+		result[key] = value && typeof value === "object" && !Array.isArray(value) ? { ...base[key], ...value } : value;
 	}
 	return result;
 };
 
-export const buildShadowValue = ({ offsetX = 0, offsetY = 0, blur = 0, spread = 0, opacity = 0, color = "#000000", useThemeTextColor = false }) => {
+export const buildShadowValue = ({
+	offsetX = 0,
+	offsetY = 0,
+	blur = 0,
+	spread = 0,
+	opacity = 0,
+	color = "#000000",
+	useThemeTextColor = false,
+}) => {
 	const shadowColor = useThemeTextColor ? "var(--mui-palette-text-primary)" : color;
 	return `${offsetX}px ${offsetY}px ${blur}px ${spread}px color-mix(in srgb, ${shadowColor} ${opacity}%, transparent)`;
 };
@@ -176,3 +181,4 @@ export const useThemeCustomization = () => {
 };
 
 export const ThemeCustomizationProvider = ThemeCustomizationContext.Provider;
+

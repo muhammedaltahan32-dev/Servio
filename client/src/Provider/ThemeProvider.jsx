@@ -368,15 +368,15 @@ export const ThemeProvider = ({ children }) => {
 						styleOverrides: {
 							root: ({ theme }) => ({
 								"& fieldset": {
-									borderColor: theme.palette.divider,
+									// borderColor: theme.palette.divider,
 								},
 
 								"&:hover fieldset": {
-									borderColor: theme.palette.text.secondary,
+									// borderColor: theme.palette.text.secondary,
 								},
 
 								"&.Mui-focused fieldset": {
-									borderColor: theme.palette.primary.main,
+									// borderColor: theme.palette.primary.main,
 								},
 							}),
 						},
@@ -425,7 +425,7 @@ export const ThemeProvider = ({ children }) => {
 								backgroundImage: "none",
 								backgroundColor: theme.palette.background.paper,
 								border: `1px solid ${theme.palette.divider}`,
-								boxShadow: theme.tokens.shadow.dialog,
+								
 								borderRadius: theme.tokens.radius.panel,
 								overflow: "hidden",
 							}),
