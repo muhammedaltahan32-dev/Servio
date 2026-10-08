@@ -6,11 +6,10 @@ export const Button = React.forwardRef(({ children, prefix, suffix, startIcon, e
 			const overrides = typeof sx === "function" ? sx(theme) : sx;
 			return {
 				borderRadius: `${theme.tokens.radius.control}px`,
-				fontWeight: 700,
 				textTransform: "none",
 				boxShadow: "none",
 				transition: `transform ${theme.tokens.motion.fast}, box-shadow ${theme.tokens.motion.fast}, background-color ${theme.tokens.motion.fast}`,
-				"&:hover": { boxShadow: theme.tokens.shadow.card, transform: "translateY(-1px)" },
+				// "&:hover": { boxShadow: theme.tokens.shadow.card, transform: "translateY(-1px)" },
 				"&:active": { transform: "translateY(0)" },
 				...overrides,
 			};
