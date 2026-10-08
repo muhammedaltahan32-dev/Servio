@@ -429,6 +429,33 @@
 		"cancel": "إلغاء"
 	},
 	"components": {
+		"iconPicker": {
+			"noIcons": "لم يتم العثور على أيقونات مطابقة.",
+			"searchPlaceholder": "بحث...",
+			"placeholder": "اختر أيقونة",
+			"categories": {
+				"all": "الكل",
+				"weatherAndNature": "الطقس والطبيعة",
+				"timeAndCalendar": "الوقت والتقويم",
+				"peopleAndAccounts": "الأشخاص والحسابات",
+				"commerceAndFinance": "التجارة والمالية",
+				"actionsAndControls": "الإجراءات وعناصر التحكم",
+				"securityAndPrivacy": "الأمان والخصوصية",
+				"travelAndTransport": "السفر والنقل",
+				"mediaAndCreative": "الوسائط والإبداع",
+				"productivityAndEditing": "الإنتاجية والتعديل",
+				"communication": "التواصل",
+				"analyticsAndData": "التحليلات والبيانات",
+				"placesAndBusiness": "الأماكن والأعمال",
+				"technology": "التكنولوجيا",
+				"filesAndDocuments": "الملفات والمستندات",
+				"healthAndMedical": "الصحة والطب",
+				"education": "التعليم",
+				"foodAndDining": "المأكولات والمطاعم",
+				"sportsAndRecreation": "الرياضة والترفيه",
+				"other": "أخرى"
+			}
+		},
 		"table": {
 			"noData": "لم يتم العثور على سجلات.",
 			"actions": "الإجراءات",

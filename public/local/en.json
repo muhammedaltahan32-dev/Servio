@@ -429,6 +429,33 @@
 		"cancel": "Cancel"
 	},
 	"components": {
+		"iconPicker": {
+			"noIcons": "No icons matched your search.",
+			"searchPlaceholder": "Search icons...",
+			"placeholder": "Select an icon",
+			"categories": {
+				"all": "All",
+				"weatherAndNature": "Weather & Nature",
+				"timeAndCalendar": "Time & Calendar",
+				"peopleAndAccounts": "People & Accounts",
+				"commerceAndFinance": "Commerce & Finance",
+				"actionsAndControls": "Actions & Controls",
+				"securityAndPrivacy": "Security & Privacy",
+				"travelAndTransport": "Travel & Transport",
+				"mediaAndCreative": "Media & Creative",
+				"productivityAndEditing": "Productivity & Editing",
+				"communication": "Communication",
+				"analyticsAndData": "Analytics & Data",
+				"placesAndBusiness": "Places & Business",
+				"technology": "Technology",
+				"filesAndDocuments": "Files & Documents",
+				"healthAndMedical": "Health & Medical",
+				"education": "Education",
+				"foodAndDining": "Food & Dining",
+				"sportsAndRecreation": "Sports & Recreation",
+				"other": "Other"
+			}
+		},
 		"table": {
 			"noData": "No records found.",
 			"actions": "Actions",
