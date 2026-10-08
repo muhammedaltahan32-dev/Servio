@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
-import { Button, Dialog, Input, Table, PageContainer } from "@components";
+import { Button, Dialog, Input, Table, PageContainer, IconPicker } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchCategories,
@@ -47,8 +47,9 @@ export const CategoriesDialog = React.memo(
 			setFormData(initialFormState);
 		}, []);
 
-		const handleChange = React.useCallback((e) => {
-			const { name, value } = e.target;
+		const handleChange = React.useCallback((event,props) => {
+			const { name, value } = props;
+			console.log(value)
 			setFormData((prev) => ({
 				...prev,
 				[name]: name === Cat_Sort ? Number(value) : value,
@@ -96,7 +97,7 @@ export const CategoriesDialog = React.memo(
 						name={Cat_Name_AR}
 						fullWidth
 						value={formData[Cat_Name_AR]}
-						onChange={handleChange}
+						onChange={(event) => handleChange(event, { value: event.target.value, name: Cat_Name_AR })}
 						required
 					/>
 					<Input
@@ -104,7 +105,7 @@ export const CategoriesDialog = React.memo(
 						name={Cat_Name_EN}
 						fullWidth
 						value={formData[Cat_Name_EN]}
-						onChange={handleChange}
+						onChange={(event) => handleChange(event, { value: event.target.value, name: Cat_Name_EN })}
 						required
 					/>
 					<Input
@@ -113,14 +114,20 @@ export const CategoriesDialog = React.memo(
 						type="number"
 						fullWidth
 						value={formData[Cat_Sort]}
-						onChange={handleChange}
+						onChange={(event) => handleChange(event, { value: event.target.value, name: Cat_Sort })}
 					/>
-					<Input
+					{/* <Input
 						label={t("categories.icon")}
 						name={Cat_Icon}
 						fullWidth
 						value={formData[Cat_Icon]}
 						onChange={handleChange}
+					/> */}
+					<IconPicker
+						placeholder={t("categories.icon")}
+						// name={Cat_Icon}
+						value={formData[Cat_Icon]}
+						onChange={(event, value) => handleChange(event, { value: value.name, name: Cat_Icon })}
 					/>
 				</Stack>
 			</Dialog>
