@@ -2,25 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Card, CircularProgress, Divider, Stack, Typography, useTheme } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import WalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
-import IcecreamIcon from "@mui/icons-material/Icecream";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import LunchDiningIcon from "@mui/icons-material/LunchDining";
-import PaymentsIcon from "@mui/icons-material/Payments";
-import RamenDiningIcon from "@mui/icons-material/RamenDining";
-import SearchIcon from "@mui/icons-material/Search";
-import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
 import { fetchMenuItems } from "../../features/menuItems/MenuItemsSlice.js";
 import { createOrder } from "../../features/orders/OrdersSlice.js";
 import {
+	Cat_Icon,
 	Cat_ID,
 	Item_Notes,
 	Menu_CatID,
@@ -31,43 +18,58 @@ import {
 } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
-import { Button, Input, PageContainer } from "@components";
+import { Button, Input, PageContainer, Icon } from "@components";
 import { formatCurrency as formatMoney } from "@utils";
 
-const CATEGORY_ICONS = [FreeBreakfastIcon, LunchDiningIcon, DinnerDiningIcon, SoupKitchenIcon, IcecreamIcon, RamenDiningIcon, FastfoodIcon, LocalCafeIcon];
 const EMPTY_CART_SUMMARY = { total: 0, itemCount: 0 };
 
-const MenuCategoryTile = React.memo(({ categoryId, categoryName, icon: CategoryIcon, countLabel, selected, onSelect }) => (
-	<Card
-		component="button"
-		onClick={() => onSelect(categoryId)}
-		sx={{
-			display: "flex",
-			alignItems: "center",
-			gap: 1.25,
-			textAlign: "start",
-			p: 1.25,
-			minWidth: 0,
-			border: "1px solid",
-			borderColor: selected ? "primary.main" : "divider",
-			bgcolor: selected ? "primary.main" : "background.paper",
-			color: selected ? "primary.contrastText" : "text.primary",
-			borderRadius: 1.5,
-			cursor: "pointer",
-			boxShadow: "none",
-			transition: "all .18s ease",
-			"&:hover": { borderColor: "primary.main", transform: "translateY(-1px)" },
-		}}
-	>
-		<Box sx={{ display: "grid", placeItems: "center", width: 36, height: 36, flexShrink: 0, borderRadius: 1, bgcolor: selected ? "rgba(255,255,255,.18)" : "action.hover" }}>
-			<CategoryIcon />
-		</Box>
-		<Box sx={{ minWidth: 0 }}>
-			<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>{categoryName}</Typography>
-			<Typography variant="caption" sx={{ opacity: 0.75 }}>{countLabel}</Typography>
-		</Box>
-	</Card>
-));
+const MenuCategoryTile = React.memo(
+	({ categoryId, categoryName, icon: CategoryIcon, countLabel, selected, onSelect }) => (
+		<Card
+			component="button"
+			onClick={() => onSelect(categoryId)}
+			sx={{
+				display: "flex",
+				alignItems: "center",
+				gap: 1.25,
+				textAlign: "start",
+				p: 1.25,
+				minWidth: 0,
+				border: "1px solid",
+				borderColor: selected ? "primary.main" : "divider",
+				bgcolor: selected ? "primary.main" : "background.paper",
+				color: selected ? "primary.contrastText" : "text.primary",
+				borderRadius: 1.5,
+				cursor: "pointer",
+				boxShadow: "none",
+				transition: "all .18s ease",
+				"&:hover": { borderColor: "primary.main", transform: "translateY(-1px)" },
+			}}
+		>
+			<Box
+				sx={{
+					display: "grid",
+					placeItems: "center",
+					width: 36,
+					height: 36,
+					flexShrink: 0,
+					borderRadius: 1,
+					bgcolor: selected ? "rgba(255,255,255,.18)" : "action.hover",
+				}}
+			>
+				<Icon name={CategoryIcon} />
+			</Box>
+			<Box sx={{ minWidth: 0 }}>
+				<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
+					{categoryName}
+				</Typography>
+				<Typography variant="caption" sx={{ opacity: 0.75 }}>
+					{countLabel}
+				</Typography>
+			</Box>
+		</Card>
+	),
+);
 MenuCategoryTile.displayName = "MenuCategoryTile";
 
 export const CustomerMenuPage = () => {
@@ -82,7 +84,10 @@ export const CustomerMenuPage = () => {
 	const isLoading = useSelector((state) => state.categories?.loading || state.menuItems?.loading);
 	const tables = useSelector((state) => state.tables?.items ?? []);
 	const orderLoading = useSelector((state) => state.orders?.loading);
-	const table = React.useMemo(() => tables.find((candidate) => String(candidate.id) === String(tableId)), [tables, tableId]);
+	const table = React.useMemo(
+		() => tables.find((candidate) => String(candidate.id) === String(tableId)),
+		[tables, tableId],
+	);
 	const [cart, setCart] = React.useState([]);
 	const [search, setSearch] = React.useState("");
 	const [paymentMethod, setPaymentMethod] = React.useState("card");
@@ -134,27 +139,30 @@ export const CustomerMenuPage = () => {
 
 	const handleCategorySelect = React.useCallback((categoryId) => setSelectedCategoryId(categoryId), []);
 
-	const addToCart = React.useCallback((item) => {
-		setCart((currentCart) => {
-			const itemId = item[Menu_ID] ?? item.id;
-			const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
-			if (existing) {
-				return currentCart.map((cartItem) =>
-					String(cartItem.id) === String(itemId) ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
-				);
-			}
-			return [
-				...currentCart,
-				{
-					id: itemId,
-					name: getFieldsByLang(item, "name"),
-					price: Number(item[Menu_Price] ?? 0),
-					quantity: 1,
-					notes: "",
-				},
-			];
-		});
-	}, [getFieldsByLang]);
+	const addToCart = React.useCallback(
+		(item) => {
+			setCart((currentCart) => {
+				const itemId = item[Menu_ID] ?? item.id;
+				const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
+				if (existing) {
+					return currentCart.map((cartItem) =>
+						String(cartItem.id) === String(itemId) ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
+					);
+				}
+				return [
+					...currentCart,
+					{
+						id: itemId,
+						name: getFieldsByLang(item, "name"),
+						price: Number(item[Menu_Price] ?? 0),
+						quantity: 1,
+						notes: "",
+					},
+				];
+			});
+		},
+		[getFieldsByLang],
+	);
 
 	const updateQuantity = React.useCallback((itemId, quantity) => {
 		setCart((currentCart) =>
@@ -193,10 +201,14 @@ export const CustomerMenuPage = () => {
 		})();
 	}, [cart, dispatch, navigate, table]);
 	const cartSummary = React.useMemo(
-		() => cart.reduce((summary, item) => ({
-			total: summary.total + item.price * item.quantity,
-			itemCount: summary.itemCount + item.quantity,
-		}), EMPTY_CART_SUMMARY),
+		() =>
+			cart.reduce(
+				(summary, item) => ({
+					total: summary.total + item.price * item.quantity,
+					itemCount: summary.itemCount + item.quantity,
+				}),
+				EMPTY_CART_SUMMARY,
+			),
 		[cart],
 	);
 	const cartQuantities = React.useMemo(() => new Map(cart.map((item) => [String(item.id), item.quantity])), [cart]);
@@ -240,7 +252,7 @@ export const CustomerMenuPage = () => {
 				</Box>
 				<Button
 					variant="outlined"
-					prefix={currentLanguage === "ar" ? <ArrowForwardIcon /> : <ArrowBackIcon />}
+					prefix={currentLanguage === "ar" ? <Icon name="ArrowForwardIcon" /> : <Icon name="ArrowBackIcon" />}
 					onClick={() => navigate("/lobby")}
 				>
 					{t("customerMenu.backToLobby")}
@@ -262,7 +274,7 @@ export const CustomerMenuPage = () => {
 						onChange={(event) => setSearch(event.target.value)}
 						placeholder={t("customerMenu.searchPlaceholder")}
 						sx={{ mb: 2.5, bgcolor: "background.paper" }}
-						prefix={<SearchIcon sx={{ color: "text.secondary" }} />}
+						prefix={<Icon name="SearchIcon" sx={{ color: "text.secondary" }} />}
 					/>
 					{isLoading && !safeCategories.length && !menuItems.length ? (
 						<Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
@@ -282,15 +294,17 @@ export const CustomerMenuPage = () => {
 								{safeCategories.map((category, index) => {
 									const count = availableItemCounts.get(String(category[Cat_ID])) ?? 0;
 									const selected = String(category[Cat_ID]) === String(activeCategory?.[Cat_ID]);
-									return <MenuCategoryTile
-										key={category[Cat_ID]}
-										categoryId={category[Cat_ID]}
-										categoryName={getFieldsByLang(category, "name") || t("customerMenu.category")}
-										icon={CATEGORY_ICONS[index % CATEGORY_ICONS.length]}
-										countLabel={t("customerMenu.menuItemCount", { count })}
-										selected={selected}
-										onSelect={handleCategorySelect}
-									/>;
+									return (
+										<MenuCategoryTile
+											key={category[Cat_ID]}
+											categoryId={category[Cat_ID]}
+											categoryName={getFieldsByLang(category, "name") || t("customerMenu.category")}
+											icon={category[Cat_Icon]}
+											countLabel={t("customerMenu.menuItemCount", { count })}
+											selected={selected}
+											onSelect={handleCategorySelect}
+										/>
+									);
 								})}
 							</Box>
 							<Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5 }}>
@@ -380,11 +394,11 @@ export const CustomerMenuPage = () => {
 											sx={{ mt: 0.75 }}
 										/>
 									</Box>
-					<Stack spacing={0.5} sx={{ alignItems: "flex-end", flexShrink: 0 }}>
+									<Stack spacing={0.5} sx={{ alignItems: "flex-end", flexShrink: 0 }}>
 										<Typography dir="ltr" variant="body2" sx={{ fontWeight: 700 }}>
 											{formatCurrency(item.price * item.quantity)}
 										</Typography>
-						<Stack direction="row" sx={{ alignItems: "center" }}>
+										<Stack direction="row" sx={{ alignItems: "center" }}>
 											<Button
 												aria-label={t("customerMenu.removeOne", { name: item.name })}
 												size="small"
@@ -436,49 +450,12 @@ export const CustomerMenuPage = () => {
 							</Typography>
 						</Stack>
 					</Stack>
-					<Box
-						sx={{
-							display: "grid",
-							gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-							gap: 0.75,
-							mt: 2,
-							p: 0.75,
-							bgcolor: "action.hover",
-							borderRadius: 1.25,
-						}}
-					>
-						{[
-							["card", CreditCardIcon, t("customerMenu.paymentCard")],
-							["wallet", WalletIcon, t("customerMenu.paymentWallet")],
-							["cash", PaymentsIcon, t("customerMenu.paymentCash")],
-						].map(([method, PaymentIcon, label]) => (
-							<Button
-								key={method}
-								onClick={() => setPaymentMethod(method)}
-								color={paymentMethod === method ? "primary" : "inherit"}
-								variant={paymentMethod === method ? "contained" : "text"}
-								sx={{
-									minWidth: 0,
-									px: 0.5,
-									py: 0.75,
-									display: "flex",
-									flexDirection: "column",
-									gap: 0.25,
-									fontSize: 10,
-									lineHeight: 1.2,
-									boxShadow: "none",
-								}}
-							>
-								<PaymentIcon sx={{ fontSize: "1.1rem" }} />
-								{label}
-							</Button>
-						))}
-					</Box>
+
 					<Button
 						fullWidth
 						disabled={orderLoading || cart.length === 0}
 						onClick={submitOrder}
-						suffix={currentLanguage === "ar" ? <ArrowBackIcon /> : <ArrowForwardIcon />}
+						suffix={currentLanguage === "ar" ? <Icon name="ArrowBackIcon" /> : <Icon name="ArrowForwardIcon" />}
 						sx={{ mt: 1.5, py: 1.25, fontWeight: 700 }}
 					>
 						{orderLoading ? t("customerMenu.placingOrder") : t("customerMenu.placeOrder")}
