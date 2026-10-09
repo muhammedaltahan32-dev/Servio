@@ -47,9 +47,8 @@ export const CategoriesDialog = React.memo(
 			setFormData(initialFormState);
 		}, []);
 
-		const handleChange = React.useCallback((event,props) => {
+		const handleChange = React.useCallback((event, props) => {
 			const { name, value } = props;
-			console.log(value)
 			setFormData((prev) => ({
 				...prev,
 				[name]: name === Cat_Sort ? Number(value) : value,

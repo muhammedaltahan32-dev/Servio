@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
-import { Button, Table, PageContainer } from "@components";
+import { Icon, Button, Table, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import {
 	fetchCategories,
@@ -11,11 +11,6 @@ import {
 } from "../../features/categories/CategoriesSlice.js";
 import { Cat_Icon, Cat_Name_AR, Cat_Name_EN, Cat_Sort } from "../../../../constants/FieldsName.js";
 import CategoriesDialog from "./CategoriesDialog.jsx";
-const initialFormState = {
-	[Cat_Name_AR]: "",
-	[Cat_Name_EN]: "",
-	[Cat_Sort]: 0,
-};
 
 export const CategoriesPage = () => {
 	const dispatch = useDispatch();
@@ -27,7 +22,7 @@ export const CategoriesPage = () => {
 		() => [
 			{ field: Cat_Name_AR, headerName: t("categories.nameAr") },
 			{ field: Cat_Name_EN, headerName: t("categories.nameEn") },
-			{ field: Cat_Icon, headerName: t("categories.icon") },
+			{ field: Cat_Icon, headerName: t("categories.icon"), render: (value, instance) => <Icon name={value} /> },
 			{ field: Cat_Sort, headerName: t("categories.sortOrder") },
 		],
 		[t],
