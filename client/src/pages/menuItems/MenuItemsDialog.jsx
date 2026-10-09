@@ -279,7 +279,7 @@ const MenuItemsDialog = React.memo(
 					</Grid>
 					<Grid size={6}>
 						<Input
-							label={t("menuItems.descriptionEn")}
+							label={t("menuItems.descriptionEN")}
 							name={Menu_Description_EN}
 							fullWidth
 							multiline
@@ -297,8 +297,8 @@ const MenuItemsDialog = React.memo(
 							value={String(formData[Menu_IsAvailable])}
 							onChange={(e) => setFormData((p) => ({ ...p, [Menu_IsAvailable]: e.target.value === "true" }))}
 						>
-							<MenuItem value={"true"}>{t("menuItems.availableTrue")}</MenuItem>
-							<MenuItem value={"false"}>{t("menuItems.availableFalse")}</MenuItem>
+							<MenuItem value={"true"}>{t("menuItems.available")}</MenuItem>
+							<MenuItem value={"false"}>{t("menuItems.notAvailable")}</MenuItem>
 						</Select>
 					</Grid>
 				</Grid>
