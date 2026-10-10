@@ -98,7 +98,8 @@ export default async function assignContext(req, res, next) {
 		let role = guests;
 		let userObj = null;
 
-		if (authHeader) {
+		const isSigninRequest = req.path === `/${Api_Signin}`;
+		if (authHeader && !isSigninRequest) {
 			const allowRefreshToken = req.path === `/${Api_Architecture}/refresh`;
 			const userId = getUserIdFromReq(req, allowRefreshToken);
 			if (!userId || userId.message) {
