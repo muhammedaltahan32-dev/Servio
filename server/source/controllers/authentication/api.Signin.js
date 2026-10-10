@@ -4,7 +4,13 @@ import { getForms } from "./helper.js";
 import { St_UNAUTHORIZED, St_OK, St_TOO_MANY_REQUESTS } from "../../../../constants/HttpStatus.js";
 import { mdlUser } from "../../../../constants/modelNames.js";
 import { verifyPassword } from "./hashPassword.js";
-import { User_HashedPassword, User_Kind, User_Name, User_Password } from "../../../../constants/FieldsName.js";
+import {
+	User_HashedPassword,
+	User_IsActive,
+	User_Kind,
+	User_Name,
+	User_Password,
+} from "../../../../constants/FieldsName.js";
 
 export const subapi = Api_Signin;
 
@@ -22,7 +28,6 @@ const validateInput = (data) => {
 const getLoginAttempt = (ip, now = Date.now()) => {
 	const attempt = loginAttemptsByIp.get(ip);
 	if (!attempt) return null;
-
 	if ((attempt.lockedUntil && attempt.lockedUntil <= now) || (!attempt.lockedUntil && attempt.expiresAt <= now)) {
 		loginAttemptsByIp.delete(ip);
 		return null;
@@ -51,7 +56,7 @@ const signin = async (data, User) => {
 	const { [User_Name]: name, [User_Password]: password } = data;
 	const user = await User.findOne({ where: { [User_Name]: name } });
 	const isValidPassword = user ? await verifyPassword(password, user[User_HashedPassword]) : false;
-	if (!user || !isValidPassword) {
+	if (!user || !isValidPassword || !user[User_IsActive]) {
 		throw new Error("auth.error.invalidCredentials");
 	}
 	const token = generateToken(user.id, { type: "access" });
