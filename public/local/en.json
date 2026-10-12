@@ -239,6 +239,7 @@
 		"table": "Table {{number}}",
 		"waiter": "Waiter: {{name}}",
 		"items": "Order items",
+		"emptyColumn": "No orders in this status.",
 		"menuItem": "Menu item",
 		"noItems": "No item details available.",
 		"total": "Order total",
