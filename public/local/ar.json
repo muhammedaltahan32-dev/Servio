@@ -444,6 +444,7 @@
 		"emptyTitle": "لا توجد طلبات",
 		"emptyDescription": "ستظهر الطلبات الجديدة هنا.",
 		"statusUpdated": "تم تحديث حالة الطلب",
+		"emptyColumn": "لا توجد طلبات في هذه الحالة.",
 		"status": {
 			"all": "الكل",
 			"pending": "قيد الانتظار",
