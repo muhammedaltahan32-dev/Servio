@@ -62,8 +62,9 @@ const AppBarContent = React.memo(() => {
 	return (
 		<Toolbar
 			sx={{
-				minHeight: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` },
 				px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd },
+				height: "100%",
+				width: "100%",
 			}}
 		>
 			<IconButton
@@ -113,8 +114,8 @@ const AppBar = () => {
 			sx={(theme) => ({
 				height: { xs: `${theme.tokens.size.mobileAppBarHeight}px`, md: `${theme.tokens.size.appBarHeight}px` },
 				zIndex: theme.zIndex.appBar + 1,
-				width: { md: `calc(100% - ${theme.layout["desktop-drawer-width"]}px)` },
-				marginInlineStart: { md: `${theme.layout["desktop-drawer-width"]}px` },
+				width: { md: `calc(100% - ${theme.tokens.size.desktopDrawerWidth}px)` },
+				marginInlineStart: { md: `${theme.tokens.size.desktopDrawerWidth}px` },
 				bgcolor: "background.appBar",
 				backdropFilter: `blur(${theme.tokens.effect.appBarBlur})`,
 				borderBottom: "1px solid",
