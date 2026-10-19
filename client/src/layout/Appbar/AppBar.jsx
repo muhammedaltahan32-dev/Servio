@@ -61,10 +61,12 @@ const AppBarContent = React.memo(() => {
 
 	return (
 		<Toolbar
+			disableGutters={true}
+			variant="dense"
 			sx={{
 				px: { xs: theme.tokens.space.pageXs, md: theme.tokens.space.pageMd },
-				height: "100%",
 				width: "100%",
+				height: "100%",
 			}}
 		>
 			<IconButton
