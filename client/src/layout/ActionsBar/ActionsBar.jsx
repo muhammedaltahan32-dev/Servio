@@ -18,21 +18,28 @@ export const ActionsBar = React.memo(() => {
 				},
 				"& .MuiDrawer-paper": {
 					boxSizing: "border-box",
-					width: isActionsBarOpened ? theme.layout["desktop-actions-bar-width"] : 0,
+					width: isActionsBarOpened ? theme.tokens.size.actionsBarWidth : 0,
 					opacity: isActionsBarOpened ? 1 : 0,
 					border: "none",
 					bgcolor: "transparent",
 					color: "text.primary",
 					overflow: "auto",
-					transition: "width 0.3s ease, opacity 0.5s ease",
+					transition: `width ${theme.tokens.motion.fast} , opacity ${theme.tokens.motion.fast}`,
 
-					height: `calc(100% - ${theme.layout["desktop-appbar-height"]}px)`,
+					height: `calc(100% - ${theme.tokens.size.appBarHeight}px)`,
 
-					top: `calc(${theme.layout["desktop-appbar-height"]}px )`,
+					top: `calc(${theme.tokens.size.appBarHeight}px )`,
 				},
 			})}
 		>
-			<Box sx={(theme) => ({ height: "100%", overflow: "auto", direction: theme.direction, padding: `${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.section / 2}rem` })}>
+			<Box
+				sx={(theme) => ({
+					height: "100%",
+					overflow: "auto",
+					direction: theme.direction,
+					padding: `${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.pageXs}rem ${theme.tokens.space.section / 2}rem`,
+				})}
+			>
 				<Box
 					sx={(theme) => ({
 						height: `calc(100% - ${theme.tokens.space.section / 4}rem)`,
