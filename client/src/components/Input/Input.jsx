@@ -8,6 +8,7 @@ export const Input = React.forwardRef(({ suffix, prefix, sx, inputProps = {}, sl
 			let overrideStyles = sx;
 			if (typeof overrideStyles === "function") overrideStyles = overrideStyles(theme);
 			return {
+				borderRadius: `${theme.tokens.radius.control}px`,
 				"& .MuiOutlinedInput-root": {
 					borderRadius: `${theme.tokens.radius.control}px`,
 					transition: `box-shadow ${theme.tokens.motion.fast}, border-color ${theme.tokens.motion.fast}`,

@@ -1,6 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Card, CircularProgress, Divider, Stack, Typography, useTheme } from "@mui/material";
+import {
+	Box,
+	Card,
+	CircularProgress,
+	Divider,
+	Stack,
+	Typography,
+	useMediaQuery,
+	useSelectFocusSource,
+	useTheme,
+} from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
@@ -18,8 +28,9 @@ import {
 } from "../../../../constants/FieldsName.js";
 import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
-import { Button, Input, PageContainer, Icon } from "@components";
+import { Button, Input, PageContainer, Icon, IconButton } from "@components";
 import { formatCurrency as formatMoney } from "@utils";
+import { openActionsBar, setActionsBarContent } from "../../features/layout/layoutSlice.js";
 
 const EMPTY_CART_SUMMARY = { total: 0, itemCount: 0 };
 
@@ -78,11 +89,12 @@ export const CustomerMenuPage = () => {
 	const theme = useTheme();
 	const { tableId } = useParams();
 	const { getFieldsByLang, t, currentLanguage } = useLang();
-
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	const categories = useSelector((state) => state.categories?.items ?? []);
 	const menuItems = useSelector((state) => state.menuItems?.items ?? []);
 	const isLoading = useSelector((state) => state.categories?.loading || state.menuItems?.loading);
 	const tables = useSelector((state) => state.tables?.items ?? []);
+	const { isActionsBarOpened } = useSelector((state) => state.layout);
 	const orderLoading = useSelector((state) => state.orders?.loading);
 	const table = React.useMemo(
 		() => tables.find((candidate) => String(candidate.id) === String(tableId)),
@@ -139,31 +151,6 @@ export const CustomerMenuPage = () => {
 
 	const handleCategorySelect = React.useCallback((categoryId) => setSelectedCategoryId(categoryId), []);
 
-	const addToCart = React.useCallback(
-		(item) => {
-			setCart((currentCart) => {
-				const itemId = item[Menu_ID] ?? item.id;
-				const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
-				if (existing) {
-					return currentCart.map((cartItem) =>
-						String(cartItem.id) === String(itemId) ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
-					);
-				}
-				return [
-					...currentCart,
-					{
-						id: itemId,
-						name: getFieldsByLang(item, "name"),
-						price: Number(item[Menu_Price] ?? 0),
-						quantity: 1,
-						notes: "",
-					},
-				];
-			});
-		},
-		[getFieldsByLang],
-	);
-
 	const updateQuantity = React.useCallback((itemId, quantity) => {
 		setCart((currentCart) =>
 			quantity > 0
@@ -213,7 +200,149 @@ export const CustomerMenuPage = () => {
 	);
 	const cartQuantities = React.useMemo(() => new Map(cart.map((item) => [String(item.id), item.quantity])), [cart]);
 	const cartTotal = cartSummary.total;
+	const actionsBarContent = React.useMemo(() => {
+		return (
+			<Box sx={{ p: 2, height: "100%" }}>
+				<Typography variant="h6" sx={{ fontWeight: 800 }}>
+					{t("customerMenu.invoice")}{" "}
+					<Typography component="span" variant="body2" color="text.secondary">
+						{t("customerMenu.itemsCount", { count: cartSummary.itemCount })}
+					</Typography>
+				</Typography>
+				<Divider sx={{ my: 1.5 }} />
+				{cart.length === 0 ? (
+					<Typography color="text.secondary" sx={{ py: 2 }}>
+						{t("customerMenu.invoiceEmpty")}
+					</Typography>
+				) : (
+					<Stack spacing={1.5} sx={{ maxHeight: { lg: "45vh" }, overflowY: "auto", pr: 0.5 }}>
+						{cart.map((item) => (
+							<Stack key={item.id} direction="row" spacing={1} sx={{ alignItems: "center", minWidth: 0 }}>
+								<Box sx={{ flex: 1, minWidth: 0 }}>
+									<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
+										{item.name}
+									</Typography>
+									<Typography dir="ltr" variant="caption" color="text.secondary">
+										{item.quantity} x {formatCurrency(item.price)}
+									</Typography>
+									<Input
+										fullWidth
+										placeholder={t("customerMenu.addNote")}
+										value={item.notes}
+										onChange={(event) => updateNotes(item.id, event.target.value)}
+										inputProps={{ maxLength: 500 }}
+										sx={{ mt: 0.75 }}
+									/>
+								</Box>
+								<Stack spacing={0.5} sx={{ alignItems: "flex-end", flexShrink: 0 }}>
+									<Typography dir="ltr" variant="body2" sx={{ fontWeight: 700 }}>
+										{formatCurrency(item.price * item.quantity)}
+									</Typography>
+									<Stack direction="row" sx={{ alignItems: "center" }}>
+										<IconButton
+											aria-label={t("customerMenu.removeOne", { name: item.name })}
+											name="Remove"
+											size="small"
+											onClick={() => updateQuantity(item.id, item.quantity - 1)}
+										/>
+											
+										<Typography variant="caption">{item.quantity}</Typography>
+										<IconButton
+											aria-label={t("customerMenu.addOne", { name: item.name })}
+											name="Add"
+											size="small"
+											onClick={() => updateQuantity(item.id, item.quantity + 1)}
+										/>
+									</Stack>
+								</Stack>
+							</Stack>
+						))}
+					</Stack>
+				)}
+				<Divider sx={{ my: 1.5 }} />
+				<Stack spacing={0.75}>
+					<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+						<Typography variant="body2" color="text.secondary">
+							{t("customerMenu.subtotal")}
+						</Typography>
+						<Typography dir="ltr" variant="body2">
+							{formatCurrency(cartTotal)}
+						</Typography>
+					</Stack>
+					<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+						<Typography variant="body2" color="text.secondary">
+							{t("customerMenu.tax")}
+						</Typography>
+						<Typography dir="ltr" variant="body2">
+							{formatCurrency(0)}
+						</Typography>
+					</Stack>
+					<Divider sx={{ my: 0.5 }} />
+					<Stack direction="row" sx={{ justifyContent: "space-between" }}>
+						<Typography sx={{ fontWeight: 800 }}>{t("customerMenu.totalPayment")}</Typography>
+						<Typography dir="ltr" sx={{ fontWeight: 800 }}>
+							{formatCurrency(cartTotal)}
+						</Typography>
+					</Stack>
+				</Stack>
 
+				<Button
+					fullWidth
+					disabled={orderLoading || cart.length === 0}
+					onClick={submitOrder}
+					suffix={currentLanguage === "ar" ? <Icon name="ArrowBackIcon" /> : <Icon name="ArrowForwardIcon" />}
+					sx={{ mt: 1.5, py: 1.25, fontWeight: 700 }}
+				>
+					{orderLoading ? t("customerMenu.placingOrder") : t("customerMenu.placeOrder")}
+				</Button>
+			</Box>
+		);
+	}, [
+		cart,
+		cartSummary.itemCount,
+		cartTotal,
+		currentLanguage,
+		formatCurrency,
+		orderLoading,
+		submitOrder,
+		t,
+		updateNotes,
+		updateQuantity,
+	]);
+	const addToCart = React.useCallback(
+		(item) => {
+			setCart((currentCart) => {
+				const itemId = item[Menu_ID] ?? item.id;
+				const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
+				if (existing) {
+					return currentCart.map((cartItem) =>
+						String(cartItem.id) === String(itemId) ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
+					);
+				}
+				return [
+					...currentCart,
+					{
+						id: itemId,
+						name: getFieldsByLang(item, "name"),
+						price: Number(item[Menu_Price] ?? 0),
+						quantity: 1,
+						notes: "",
+					},
+				];
+			});
+		},
+		[getFieldsByLang],
+	);
+	React.useEffect(() => {
+		if (cart.length > 0) dispatch(openActionsBar(true));
+		dispatch(setActionsBarContent(actionsBarContent));
+	}, [cart, dispatch, actionsBarContent]);
+	React.useEffect(() => {
+		return () => {
+			dispatch(openActionsBar(false));
+			dispatch(setActionsBarContent(null));
+		};
+	}, [dispatch]);
 	if (!table) {
 		return (
 			<PageContainer sx={{ alignItems: "center", justifyContent: "center", gap: 2 }}>
@@ -258,15 +387,7 @@ export const CustomerMenuPage = () => {
 					{t("customerMenu.backToLobby")}
 				</Button>
 			</Stack>
-			<Box
-				sx={{
-					display: "grid",
-					gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(0, 1fr) 300px" },
-					gap: { xs: 2, md: 2.5 },
-					alignItems: "start",
-					minWidth: 0,
-				}}
-			>
+			<Box>
 				<Box sx={{ minWidth: 0 }}>
 					<Input
 						fullWidth
@@ -350,117 +471,24 @@ export const CustomerMenuPage = () => {
 						</>
 					)}
 				</Box>
-				<Card
-					sx={{
-						p: 2,
-						minWidth: 0,
-						width: "100%",
-						position: { lg: "sticky" },
-						top: 16,
-						border: "1px solid",
-						borderColor: "divider",
-						borderRadius: 1.5,
-						boxShadow: theme.tokens.shadow.subtle,
-					}}
-				>
-					<Typography variant="h6" sx={{ fontWeight: 800 }}>
-						{t("customerMenu.invoice")}{" "}
-						<Typography component="span" variant="body2" color="text.secondary">
-							{t("customerMenu.itemsCount", { count: cartSummary.itemCount })}
-						</Typography>
-					</Typography>
-					<Divider sx={{ my: 1.5 }} />
-					{cart.length === 0 ? (
-						<Typography color="text.secondary" sx={{ py: 2 }}>
-							{t("customerMenu.invoiceEmpty")}
-						</Typography>
-					) : (
-						<Stack spacing={1.5} sx={{ maxHeight: { lg: "45vh" }, overflowY: "auto", pr: 0.5 }}>
-							{cart.map((item) => (
-								<Stack key={item.id} direction="row" spacing={1} sx={{ alignItems: "center", minWidth: 0 }}>
-									<Box sx={{ flex: 1, minWidth: 0 }}>
-										<Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
-											{item.name}
-										</Typography>
-										<Typography dir="ltr" variant="caption" color="text.secondary">
-											{item.quantity} x {formatCurrency(item.price)}
-										</Typography>
-										<Input
-											fullWidth
-											placeholder={t("customerMenu.addNote")}
-											value={item.notes}
-											onChange={(event) => updateNotes(item.id, event.target.value)}
-											inputProps={{ maxLength: 500 }}
-											sx={{ mt: 0.75 }}
-										/>
-									</Box>
-									<Stack spacing={0.5} sx={{ alignItems: "flex-end", flexShrink: 0 }}>
-										<Typography dir="ltr" variant="body2" sx={{ fontWeight: 700 }}>
-											{formatCurrency(item.price * item.quantity)}
-										</Typography>
-										<Stack direction="row" sx={{ alignItems: "center" }}>
-											<Button
-												aria-label={t("customerMenu.removeOne", { name: item.name })}
-												size="small"
-												variant="text"
-												onClick={() => updateQuantity(item.id, item.quantity - 1)}
-												sx={{ minWidth: 30, p: 0.25 }}
-											>
-												−
-											</Button>
-											<Typography variant="caption">{item.quantity}</Typography>
-											<Button
-												aria-label={t("customerMenu.addOne", { name: item.name })}
-												size="small"
-												variant="text"
-												onClick={() => updateQuantity(item.id, item.quantity + 1)}
-												sx={{ minWidth: 30, p: 0.25 }}
-											>
-												+
-											</Button>
-										</Stack>
-									</Stack>
-								</Stack>
-							))}
-						</Stack>
-					)}
-					<Divider sx={{ my: 1.5 }} />
-					<Stack spacing={0.75}>
-						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-							<Typography variant="body2" color="text.secondary">
-								{t("customerMenu.subtotal")}
-							</Typography>
-							<Typography dir="ltr" variant="body2">
-								{formatCurrency(cartTotal)}
-							</Typography>
-						</Stack>
-						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-							<Typography variant="body2" color="text.secondary">
-								{t("customerMenu.tax")}
-							</Typography>
-							<Typography dir="ltr" variant="body2">
-								{formatCurrency(0)}
-							</Typography>
-						</Stack>
-						<Divider sx={{ my: 0.5 }} />
-						<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-							<Typography sx={{ fontWeight: 800 }}>{t("customerMenu.totalPayment")}</Typography>
-							<Typography dir="ltr" sx={{ fontWeight: 800 }}>
-								{formatCurrency(cartTotal)}
-							</Typography>
-						</Stack>
-					</Stack>
 
-					<Button
-						fullWidth
-						disabled={orderLoading || cart.length === 0}
-						onClick={submitOrder}
-						suffix={currentLanguage === "ar" ? <Icon name="ArrowBackIcon" /> : <Icon name="ArrowForwardIcon" />}
-						sx={{ mt: 1.5, py: 1.25, fontWeight: 700 }}
+				{isMobile && (
+					<Card
+						sx={{
+							p: 2,
+							minWidth: 0,
+							width: "100%",
+							position: "sticky",
+							top: 16,
+							border: "1px solid",
+							borderColor: "divider",
+							borderRadius: 1.5,
+							boxShadow: theme.tokens.shadow.subtle,
+						}}
 					>
-						{orderLoading ? t("customerMenu.placingOrder") : t("customerMenu.placeOrder")}
-					</Button>
-				</Card>
+						{actionsBarContent}
+					</Card>
+				)}
 			</Box>
 		</PageContainer>
 	);
