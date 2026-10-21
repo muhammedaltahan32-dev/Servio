@@ -61,7 +61,7 @@ export const OrdersPage = () => {
 					return <Chip key={status} clickable color={color} variant={activeStatus === status ? "filled" : "outlined"} label={`${t(`orders.status.${status.toLowerCase()}`)} ${count}`} onClick={() => setActiveStatus(status)} />;
 				})}
 			</Stack>
-			<Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))", xl: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 1.25, sm: 2 }, alignItems: "start", overflowY: "auto", minHeight: 0, flex: 1, pb: 2 }}>
+			<Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))", xl: "repeat(3, minmax(0, 1fr))" }, gridAutoRows: "max-content", gridAutoFlow: "row", alignContent: "start", gap: { xs: 1.25, sm: 2 }, alignItems: "start", overflowY: "auto", minHeight: 0, flex: 1, pb: 2 }}>
 				{KANBAN_COLUMNS.map(({ status, color }) => {
 					const columnOrders = orders.filter((order) => order[Order_Status] === status);
 					return (
@@ -84,7 +84,7 @@ export const OrdersPage = () => {
 								<Typography variant="subtitle1" fontWeight={700} sx={{ minWidth: 0, overflowWrap: "anywhere" }}>{t(`orders.status.${status.toLowerCase()}`)}</Typography>
 								<Chip size="small" color={color} label={columnOrders.length} sx={{ fontWeight: 700 }} />
 							</Stack>
-							<Stack spacing={{ xs: 1.25, sm: 2 }}>
+							<Box sx={{ display: "grid", gridAutoRows: "max-content", alignContent: "start", gap: { xs: 1.25, sm: 2 }, minWidth: 0 }}>
 								{columnOrders.map((order) => {
 									const nextStatus = NEXT_STATUS[status];
 									const isUpdating = updatingSet.has(String(order[Order_ID]));
@@ -101,7 +101,7 @@ export const OrdersPage = () => {
 									);
 								})}
 								{columnOrders.length === 0 && <Box sx={{ display: "grid", placeItems: "center", py: { xs: 4, sm: 8 }, color: "text.disabled" }}><Typography variant="body2">{t("orders.emptyColumn")}</Typography></Box>}
-							</Stack>
+							</Box>
 						</Box>
 					);
 				})}
