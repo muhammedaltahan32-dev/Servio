@@ -7,6 +7,7 @@ import {
 	St_INTERNAL_SERVER_ERROR,
 	St_NOT_FOUND,
 } from "../../../constants/HttpStatus.js";
+import { Op } from "sequelize";
 import { ST_AVAILABLE, ST_OCCUPIED } from "../../../constants/enumOptions.js";
 import {
 	Order_ID,
@@ -151,8 +152,19 @@ export const getAll = async (req, res, params = {}) => {
 			[mdlMenuItems]: MenuItem,
 		} = req.app.locals.db;
 
-		const status = params?.[Order_Status];
-		const whereClause = status ? { [Order_Status]: status } : {};
+		let status = params?.[Order_Status] || req.query?.[Order_Status];
+
+		let whereClause = {};
+		if (status) {
+			if (typeof status === "string" && status.includes(",")) {
+				status = status.split(",").map((s) => s.trim());
+			}
+			if (Array.isArray(status) && status.length > 0) {
+				whereClause = { [Order_Status]: { [Op.in]: status } };
+			} else if (typeof status === "string") {
+				whereClause = { [Order_Status]: status };
+			}
+		}
 
 		const orders = await Order.findAll({
 			where: whereClause,
@@ -162,7 +174,6 @@ export const getAll = async (req, res, params = {}) => {
 				{
 					model: OrderItem,
 					attributes: [Item_ID, Item_MenuID, Item_Quantity, Item_UnitPrice, Item_Notes],
-					// تم إزالة Menu_Name لعدم توفره في جدول قاعدة البيانات
 					include: [{ model: MenuItem, attributes: [Menu_Name_AR, Menu_Name_EN] }],
 				},
 			],
@@ -175,7 +186,6 @@ export const getAll = async (req, res, params = {}) => {
 		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
-
 export const getOne = async (id, req, res) => {
 	try {
 		const {
