@@ -115,6 +115,7 @@ export const post = async (req, res) => {
 		if (io) {
 			const tables = await Table.findAll({ order: [["table_number", "ASC"]] });
 			io.emit("tables:updated", tables);
+			io.emit("orders:changed");
 		}
 		res.status(St_CREATED).json({ success: true, data: newOrder, message: "order.success.created" });
 	} catch (err) {
@@ -134,6 +135,7 @@ export const patch = async (req, res) => {
 
 		order[Order_Status] = status;
 		await order.save();
+		req.app.locals.io?.emit("orders:changed");
 
 		res.status(St_OK).json({ success: true, data: order });
 	} catch (err) {
