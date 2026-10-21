@@ -1,10 +1,9 @@
 import { Box, Drawer } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useActionsBar } from "../index.js";
 
 export const ActionsBar = React.memo(() => {
-	const isActionsBarOpened = useSelector((state) => state.layout.isActionsBarOpened);
-	const actionsBarContent = useSelector((state) => state.layout.actionsBarContent);
+	const { isActionsBarOpened, actionsBarContent } = useActionsBar();
 	return (
 		<Drawer
 			variant="permanent"
@@ -25,9 +24,7 @@ export const ActionsBar = React.memo(() => {
 					color: "text.primary",
 					overflow: "auto",
 					transition: `width ${theme.tokens.motion.fast} , opacity ${theme.tokens.motion.fast}`,
-
 					height: `calc(100% - ${theme.tokens.size.appBarHeight}px)`,
-
 					top: `calc(${theme.tokens.size.appBarHeight}px )`,
 				},
 			})}

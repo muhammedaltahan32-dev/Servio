@@ -16,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
 import { fetchMenuItems } from "../../features/menuItems/MenuItemsSlice.js";
 import { createOrder } from "../../features/orders/OrdersSlice.js";
+import { useActionsBar } from "@layout";
 import {
 	Cat_Icon,
 	Cat_ID,
@@ -30,7 +31,6 @@ import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
 import { Button, Input, PageContainer, Icon, IconButton } from "@components";
 import { formatCurrency as formatMoney } from "@utils";
-import { openActionsBar, setActionsBarContent } from "../../features/layout/layoutSlice.js";
 
 const EMPTY_CART_SUMMARY = { total: 0, itemCount: 0 };
 
@@ -84,6 +84,7 @@ const MenuCategoryTile = React.memo(
 MenuCategoryTile.displayName = "MenuCategoryTile";
 
 export const CustomerMenuPage = () => {
+	const { openActionsBar, setActionsBarContent, closeActionsBar } = useActionsBar();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const theme = useTheme();
@@ -94,7 +95,7 @@ export const CustomerMenuPage = () => {
 	const menuItems = useSelector((state) => state.menuItems?.items ?? []);
 	const isLoading = useSelector((state) => state.categories?.loading || state.menuItems?.loading);
 	const tables = useSelector((state) => state.tables?.items ?? []);
-	const { isActionsBarOpened } = useSelector((state) => state.layout);
+	const { isActionsBarOpened } = useActionsBar();
 	const orderLoading = useSelector((state) => state.orders?.loading);
 	const table = React.useMemo(
 		() => tables.find((candidate) => String(candidate.id) === String(tableId)),
@@ -245,7 +246,7 @@ export const CustomerMenuPage = () => {
 											size="small"
 											onClick={() => updateQuantity(item.id, item.quantity - 1)}
 										/>
-											
+
 										<Typography variant="caption">{item.quantity}</Typography>
 										<IconButton
 											aria-label={t("customerMenu.addOne", { name: item.name })}
@@ -334,15 +335,16 @@ export const CustomerMenuPage = () => {
 		[getFieldsByLang],
 	);
 	React.useEffect(() => {
-		if (cart.length > 0) dispatch(openActionsBar(true));
-		dispatch(setActionsBarContent(actionsBarContent));
-	}, [cart, dispatch, actionsBarContent]);
+		if (cart.length > 0) {
+			openActionsBar();
+			setActionsBarContent(actionsBarContent);
+		}
+	}, [cart, openActionsBar, setActionsBarContent, actionsBarContent]);
 	React.useEffect(() => {
 		return () => {
-			dispatch(openActionsBar(false));
-			dispatch(setActionsBarContent(null));
+			closeActionsBar();
 		};
-	}, [dispatch]);
+	}, [closeActionsBar]);
 	if (!table) {
 		return (
 			<PageContainer sx={{ alignItems: "center", justifyContent: "center", gap: 2 }}>

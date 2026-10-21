@@ -28,6 +28,7 @@ export default defineConfig({
 			"@utils": path.resolve(__dirname, "./src/utils/index.js"),
 			"@pages": path.resolve(__dirname, "./src/pages/index.js"),
 			"@router": path.resolve(__dirname, "./src/router/index.jsx"),
+			"@layout": path.resolve(__dirname, "./src/layout/index.js"),
 		},
 	},
 	server: {
