@@ -6,7 +6,8 @@
 			"@utils": ["./src/utils/index.js"],
 			"@hooks": ["./src/hooks/index.js"],
 			"@router": ["./src/router/index.jsx"],
-			"@pages": ["./src/pages/index.js"]
+			"@pages": ["./src/pages/index.js"],
+			"@layout": ["./src/layout/index.js"]
 		},
 		"checkJs": false,
 		"allowJs": true,
