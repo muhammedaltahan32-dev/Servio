@@ -152,10 +152,13 @@ export const getAll = async (req, res, params = {}) => {
 			[mdlMenuItems]: MenuItem,
 		} = req.app.locals.db;
 
-		const status = params?.[Order_Status] || req.query?.[Order_Status];
+		let status = params?.[Order_Status] || req.query?.[Order_Status];
 
 		let whereClause = {};
 		if (status) {
+			if (typeof status === "string" && status.includes(",")) {
+				status = status.split(",").map((s) => s.trim());
+			}
 			if (Array.isArray(status) && status.length > 0) {
 				whereClause = { [Order_Status]: { [Op.in]: status } };
 			} else if (typeof status === "string") {
@@ -183,7 +186,6 @@ export const getAll = async (req, res, params = {}) => {
 		res.status(St_BAD_REQUEST).json({ success: false, message: "error.messages.serverError" });
 	}
 };
-
 export const getOne = async (id, req, res) => {
 	try {
 		const {
