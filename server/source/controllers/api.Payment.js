@@ -53,6 +53,7 @@ export const post = async (req, res) => {
 			await table.save({ transaction: t });
 		}
 		await t.commit();
+		req.app.locals.io?.emit("orders:changed");
 		res.status(St_CREATED).json({ success: true, data: newPayment, message: "payment.success.created" });
 	} catch (err) {
 		await t.rollback();

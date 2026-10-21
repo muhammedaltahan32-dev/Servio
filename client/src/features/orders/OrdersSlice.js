@@ -12,9 +12,9 @@ export const createOrder = createAsyncThunk("orders/create", async (data, { reje
 	}
 });
 
-export const fetchOrders = createAsyncThunk("orders/fetchAll", async (_, { rejectWithValue }) => {
+export const fetchOrders = createAsyncThunk("orders/fetchAll", async (params={}, { rejectWithValue }) => {
 	try {
-		return await ApiService.get(`${Api_Order}/all`);
+		return await ApiService.get(`${Api_Order}/all`, { params });
 	} catch (error) {
 		return rejectWithValue(error?.response?.data || { message: error.message });
 	}

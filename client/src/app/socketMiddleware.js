@@ -1,6 +1,7 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 import { io } from "socket.io-client";
 import { setTables, setConnectionState } from "../features/tables/TablesSlice.js";
+import { fetchOrders } from "../features/orders/OrdersSlice.js";
 
 export const listenerMiddleware = createListenerMiddleware();
 
@@ -15,6 +16,7 @@ listenerMiddleware.startListening({
 		socket.on("connect", () => {
 			listenerApi.dispatch(setConnectionState("live"));
 			socket.emit("tables:request");
+			listenerApi.dispatch(fetchOrders());
 		});
 
 		socket.on("disconnect", () => {
@@ -26,6 +28,10 @@ listenerMiddleware.startListening({
 			// dispatch(setTables(nextTables));
 
 			listenerApi.dispatch(setTables(nextTables));
+		});
+
+		socket.on("orders:changed", () => {
+			listenerApi.dispatch(fetchOrders());
 		});
 
 		await listenerApi.condition(() => false);

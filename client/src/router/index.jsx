@@ -13,6 +13,7 @@ import {
 	SettingsPage,
 	TablesPage,
 	UsersPage,
+	WaiterPage,
 } from "./routePages.jsx";
 
 const protectedPaths = [
@@ -46,6 +47,12 @@ const protectedPaths = [
 		label: "orders.title",
 		icon: "ReceiptLong",
 		element: <OrdersPage />,
+	},
+	{
+		path: "/waiter",
+		label: "waiter.title",
+		icon: "Person",
+		element: <WaiterPage />,
 	},
 	{
 		path: "/users",
