@@ -61,7 +61,7 @@ export const WaiterPage = () => {
 					return <Chip key={status} clickable color={color} variant={activeStatus === status ? "filled" : "outlined"} label={`${t(`orders.status.${status.toLowerCase()}`)} ${count}`} onClick={() => setActiveStatus(status)} />;
 				})}
 			</Stack>
-			<Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))", xl: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 1.25, sm: 2 }, alignItems: "start", overflowY: "auto", minHeight: 0, flex: 1, pb: 2 }}>
+			<Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))", xl: "repeat(3, minmax(0, 1fr))" }, gridAutoRows: "max-content", gridAutoFlow: "row", alignContent: "start", gap: { xs: 1.25, sm: 2 }, alignItems: "start", overflowY: "auto", minHeight: 0, flex: 1, pb: 2 }}>
 				{WAITER_SECTIONS.map(({ status, color, readOnly }) => {
 					const sectionOrders = orders.filter((order) => order[Order_Status] === status);
 					return (
@@ -87,7 +87,7 @@ export const WaiterPage = () => {
 								</Box>
 								<Chip size="small" color={color} label={sectionOrders.length} sx={{ fontWeight: 700 }} />
 							</Stack>
-							<Stack spacing={{ xs: 1.25, sm: 1.5 }}>
+							<Box sx={{ display: "grid", gridAutoRows: "max-content", alignContent: "start", gap: { xs: 1.25, sm: 1.5 }, minWidth: 0 }}>
 								{sectionOrders.map((order) => {
 									const isUpdating = updatingSet.has(String(order[Order_ID]));
 									const actions = (WAITER_ACTIONS[status] ?? []).map((nextStatus) => ({
@@ -103,7 +103,7 @@ export const WaiterPage = () => {
 									return <OrderCard key={order[Order_ID]} order={order} t={t} getFieldsByLang={getFieldsByLang} currentLanguage={currentLanguage} statusColor={color} actions={actions} />;
 								})}
 								{sectionOrders.length === 0 && <Box sx={{ display: "grid", placeItems: "center", py: { xs: 4, sm: 5 }, color: "text.disabled" }}><Typography variant="body2">{t("orders.emptyColumn")}</Typography></Box>}
-							</Stack>
+							</Box>
 						</Box>
 					);
 				})}
