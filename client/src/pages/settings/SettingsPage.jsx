@@ -1,10 +1,31 @@
 import React from "react";
-import { Alert, Box, Snackbar, Stack, Tab, Tabs, Typography, Button as ButtonBase } from "@mui/material";
+import {
+	Alert,
+	Box,
+	Button as ButtonBase,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Snackbar,
+	Stack,
+	Tab,
+	Tabs,
+	Typography,
+} from "@mui/material";
 import { Button, PageContainer } from "@components";
 import { useLang } from "@hooks";
 import { DEFAULT_THEME_SETTINGS, useThemeCustomization } from "../../Provider/themeCustomization.js";
-import { COLOR_GROUPS, SECTIONS, SIZE_SLIDER_CONTROLS, TOKEN_GROUPS, TYPOGRAPHY_GROUPS } from "./constants.js";
-import { deepClone, getAtPath, humanize, updateAtPath } from "./utils/index.js";
+import {
+	COLOR_GROUPS,
+	getSliderControl,
+	SECTIONS,
+	SIZE_SLIDER_CONTROLS,
+	TOKEN_GROUPS,
+	TYPOGRAPHY_GROUPS,
+	VARIANT_OPTIONS,
+} from "./constants.js";
+import { deepClone, getAtPath, humanize, isColor, updateAtPath } from "./utils/index.js";
 import { SettingField, SettingResetButton, SettingsSection, ShadowSetting } from "./elements/index.js";
 
 export const SettingsPage = () => {
@@ -15,6 +36,7 @@ export const SettingsPage = () => {
 	const [section, setSection] = React.useState("presets");
 	const [scheme, setScheme] = React.useState("light");
 	const [notice, setNotice] = React.useState("");
+	const [pendingAction, setPendingAction] = React.useState(null);
 	const [colorResetEpoch, setColorResetEpoch] = React.useState(0);
 
 	const update = React.useCallback((path, value) => {
@@ -37,7 +59,7 @@ export const SettingsPage = () => {
 		},
 		[themePresets],
 	);
-	const selectDefaultPreset = React.useCallback(() => selectPreset("default"), [selectPreset]);
+	const selectDefaultPreset = React.useCallback(() => selectPreset("blurred"), [selectPreset]);
 	const handleSectionChange = React.useCallback((_, nextSection) => {
 		setDraft(draftRef.current);
 		setSection(nextSection);
@@ -51,6 +73,7 @@ export const SettingsPage = () => {
 		setDraft(currentDraft);
 		saveThemeSettings(currentDraft);
 		setNotice(t("settings.saved"));
+		setPendingAction(null);
 	};
 	const reset = () => {
 		const defaults = resetThemeSettings();
@@ -59,6 +82,7 @@ export const SettingsPage = () => {
 		setDraft(nextDraft);
 		setColorResetEpoch((current) => current + 1);
 		setNotice(t("settings.resetDone"));
+		setPendingAction(null);
 	};
 	const cancel = () => {
 		const nextDraft = deepClone(themeSettings);
@@ -72,7 +96,15 @@ export const SettingsPage = () => {
 			{Object.entries(object).map(([key, value]) => {
 				const path = `${prefix}.${key}`;
 				const label = t(`settings.fields.${key}`, { defaultValue: humanize(key) });
-				const sizeControl = prefix === "tokens.size" ? SIZE_SLIDER_CONTROLS[key] : undefined;
+				const sliderControl = getSliderControl(
+					path,
+					value,
+					prefix === "tokens.size" ? SIZE_SLIDER_CONTROLS[key] : undefined,
+				);
+				const options = VARIANT_OPTIONS[path]?.map((option) => ({
+					value: option,
+					label: t(`settings.variants.${option}`),
+				}));
 				return (
 					<SettingField
 						key={path}
@@ -84,8 +116,9 @@ export const SettingsPage = () => {
 						path={path}
 						resetLabel={resetOneLabel}
 						colorResetEpoch={colorResetEpoch}
-						color={colors}
-						sizeControl={sizeControl}
+						color={colors || isColor(value)}
+						sizeControl={sliderControl}
+						options={options}
 					/>
 				);
 			})}
@@ -214,11 +247,13 @@ export const SettingsPage = () => {
 											component="button"
 											onClick={() => selectPreset(name)}
 											aria-pressed={selected}
+											variant="text"
 											sx={{
 												width: "100%",
 												py: 1.75,
 												px: 1,
 												borderBottom: "1px solid",
+												borderRadius: "0px",
 												borderColor: selected ? "primary.main" : "divider",
 												textAlign: "start",
 												justifyContent: "space-between",
@@ -317,7 +352,7 @@ export const SettingsPage = () => {
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
 							{TOKEN_GROUPS[section].map(({ path, title: titleKey }) => (
 								<SettingsSection key={path} title={t(titleKey)}>
-									{renderFields(draft.tokens[path], `tokens.${path}`)}
+									{renderFields(getAtPath(draft.tokens, path), `tokens.${path}`)}
 								</SettingsSection>
 							))}
 						</Box>
@@ -354,14 +389,19 @@ export const SettingsPage = () => {
 						borderColor: "divider",
 					}}
 				>
-					<Button variant="text" color="inherit" onClick={reset} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
+					<Button
+						variant="text"
+						color="inherit"
+						onClick={() => setPendingAction("reset")}
+						sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}
+					>
 						{t("settings.reset")}
 					</Button>
 					<Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end", flexWrap: "wrap", maxWidth: "100%" }}>
 						<Button variant="outlined" color="inherit" onClick={cancel} sx={{ minWidth: { xs: 0, sm: 64 } }}>
 							{t("settings.cancel")}
 						</Button>
-						<Button variant="contained" onClick={save} sx={{ minWidth: { xs: 0, sm: 64 } }}>
+						<Button variant="contained" onClick={() => setPendingAction("save")} sx={{ minWidth: { xs: 0, sm: 64 } }}>
 							{t("settings.save")}
 						</Button>
 					</Stack>
@@ -377,6 +417,28 @@ export const SettingsPage = () => {
 					{notice}
 				</Alert>
 			</Snackbar>
+			<Dialog open={Boolean(pendingAction)} onClose={() => setPendingAction(null)} maxWidth="xs" fullWidth>
+				<DialogTitle>
+					{t(pendingAction === "reset" ? "settings.confirmResetTitle" : "settings.confirmSaveTitle")}
+				</DialogTitle>
+				<DialogContent>
+					<Alert severity={pendingAction === "reset" ? "warning" : "info"} variant="outlined">
+						{t(pendingAction === "reset" ? "settings.confirmReset" : "settings.confirmSave")}
+					</Alert>
+				</DialogContent>
+				<DialogActions>
+					<Button variant="text" color="inherit" onClick={() => setPendingAction(null)}>
+						{t("settings.cancel")}
+					</Button>
+					<Button
+						variant="contained"
+						color={pendingAction === "reset" ? "error" : "primary"}
+						onClick={pendingAction === "reset" ? reset : save}
+					>
+						{t(pendingAction === "reset" ? "settings.reset" : "settings.save")}
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</PageContainer>
 	);
 };
