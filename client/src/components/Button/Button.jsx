@@ -17,7 +17,7 @@ export const Button = React.forwardRef(({ children, prefix, suffix, startIcon, e
 		[sx],
 	);
 	return (
-		<MUButton ref={ref} color={color} variant="contained" {...props} sx={resolvedSX} startIcon={prefix ?? startIcon} endIcon={suffix ?? endIcon}>
+		<MUButton ref={ref} color={color} {...props} sx={resolvedSX} startIcon={prefix ?? startIcon} endIcon={suffix ?? endIcon}>
 			{children}
 		</MUButton>
 	);

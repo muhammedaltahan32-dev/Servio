@@ -7,6 +7,7 @@ import {
 	OutlinedInput,
 	FilledInput,
 	Input,
+	useTheme,
 } from "@mui/material";
 import { FORM_CONTROL_PROPS } from "../constant";
 import { propertiesSelection } from "@utils";
@@ -23,12 +24,14 @@ export const Select = React.forwardRef(
 			warning,
 			sx,
 			value = "",
-			variant = "outlined",
+			variant,
 			InputLabelProps,
 			...props
 		},
 		ref,
 	) => {
+		const theme = useTheme();
+		const resolvedVariant = variant ?? theme.tokens.components.selectVariant ?? "outlined";
 		const formProps = propertiesSelection(props, FORM_CONTROL_PROPS);
 
 		const selectProps = { ...props };
@@ -54,7 +57,7 @@ export const Select = React.forwardRef(
 		);
 
 		const inputElement = React.useMemo(() => {
-			switch (variant) {
+			switch (resolvedVariant) {
 				case "filled":
 					return <FilledInput label={label} />;
 				case "standard":
@@ -63,10 +66,10 @@ export const Select = React.forwardRef(
 				default:
 					return <OutlinedInput label={label} />;
 			}
-		}, [label, variant]);
+		}, [label, resolvedVariant]);
 
 		return (
-			<FormControl {...formProps} variant={variant} error={error} sx={resolvedSX} size={selectProps.size || "small"}>
+			<FormControl {...formProps} variant={resolvedVariant} error={error} sx={resolvedSX} size={selectProps.size || "small"}>
 				{label && (
 					<InputLabel error={error} id={labelId} {...InputLabelProps}>
 						{label}
