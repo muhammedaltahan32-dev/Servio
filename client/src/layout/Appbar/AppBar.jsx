@@ -15,7 +15,7 @@ import { useLang } from "@hooks";
 import { useLocation } from "react-router";
 
 const ROUTE_TITLE_KEYS = {
-	"/": "home.title",
+	"/": "dashboard.title",
 	"/categories": "categories.title",
 	"/lobby": "lobby.title",
 	"/tables": "tables.title",
@@ -53,7 +53,7 @@ const AppBarContent = React.memo(() => {
 	const routeKey = location.pathname.startsWith("/customer-menu/") ? "/customer-menu" : location.pathname.toLowerCase();
 	const pageName = ROUTE_TITLE_KEYS[routeKey]
 		? t(ROUTE_TITLE_KEYS[routeKey])
-		: (location.pathname.split("/").filter(Boolean).pop() || t("home.title"))
+		: (location.pathname.split("/").filter(Boolean).pop() || t("dashboard.title"))
 				.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
 				.replace(/[-_]/g, " ")
 				.replace(/\b\w/g, (character) => character.toUpperCase());
@@ -118,11 +118,11 @@ const AppBar = () => {
 				zIndex: theme.zIndex.appBar + 1,
 				width: { md: `calc(100% - ${theme.tokens.size.desktopDrawerWidth}px)` },
 				marginInlineStart: { md: `${theme.tokens.size.desktopDrawerWidth}px` },
-				bgcolor: "background.appBar",
-				backdropFilter: `blur(${theme.tokens.effect.appBarBlur})`,
-				borderBottom: "1px solid",
-				borderColor: scrolled ? "divider" : "transparent",
-				boxShadow: "none",
+				bgcolor: theme.tokens.chrome.appBar.glass ? "background.appBar" : "background.paper",
+				backdropFilter: theme.tokens.chrome.appBar.glass ? `blur(${theme.tokens.effect.appBarBlur})` : "none",
+				borderBottom: theme.tokens.chrome.appBar.border ? "1px solid" : "none",
+				borderColor: scrolled && theme.tokens.chrome.appBar.border ? "divider" : "transparent",
+				boxShadow: theme.tokens.chrome.appBar.shadow ? theme.tokens.shadow.card : "none",
 			})}
 		>
 			<AppBarContent />
