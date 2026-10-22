@@ -1,5 +1,7 @@
 {
 	"layout": {
+		"logout": "Log out",
+		"accountMenu": "Account menu",
 		"mode": {
 			"dark": "Dark mode",
 			"light": "Light mode"
@@ -9,6 +11,10 @@
 			"ar": "Arabic",
 			"language": "Language"
 		}
+	},
+	"loading": {
+		"page": "Loading page",
+		"title": "Preparing your workspace"
 	},
 	"settings": {
 		"chooseColor": "Choose a color",
@@ -22,12 +28,18 @@
 		"reset": "Restore defaults",
 		"saved": "Theme settings saved",
 		"resetDone": "Default theme restored",
+		"confirmSaveTitle": "Apply theme changes?",
+		"confirmSave": "Your custom theme will be applied across Servio. Continue?",
+		"confirmResetTitle": "Restore the default theme?",
+		"confirmReset": "This will replace your current theme settings with the defaults. Continue?",
 		"tabs": {
 			"presets": "Theme presets",
 			"colors": "Colors",
 			"dimensions": "Dimensions",
 			"shape": "Spacing and shape",
 			"effects": "Effects",
+			"chrome": "Navigation style",
+			"components": "Component styles",
 			"typography": "Typography"
 		},
 		"tabDescriptions": {
@@ -36,16 +48,22 @@
 			"dimensions": "Adjust the sizes and widths used by navigation, tables, dialogs, and pages.",
 			"shape": "Set shared spacing and corner shapes for controls and panels.",
 			"effects": "Customize shadows, gradients, transition timing, and interface effects.",
+			"chrome": "Choose optional surface treatments for the sidebar and app bar.",
+			"components": "Choose a consistent field, selection, and button variant across the app.",
 			"typography": "Control the font family, heading scale, body text, and button labels."
 		},
 		"presetsTitle": "Choose a starting theme",
 		"presetsDescription": "Pick a preset, then customize its settings in the other sections.",
-		"presetHint": "Preset choices are applied when you save. The Default preset matches Servio's original theme.",
+		"presetHint": "Preset choices are applied when you save. Blurred is the default theme.",
 		"selected": "Selected",
 		"lightMode": "Light mode",
 		"darkMode": "Dark mode",
 		"presets": {
 			"default": "Default",
+			"servio": "Servio Classic",
+			"blurred": "Blurred",
+			"lavender": "Lavender",
+			"rose": "Rose",
 			"ocean": "Ocean",
 			"plum": "Plum",
 			"custom": "Custom"
@@ -67,7 +85,10 @@
 			"motion": "Motion",
 			"effects": "Effects",
 			"miscColors": "Other colors",
-			"globalTypography": "Global typography"
+			"globalTypography": "Global typography",
+			"sidebar": "Sidebar appearance",
+			"appBar": "App bar appearance",
+			"componentVariants": "Component variants"
 		},
 		"palette": {
 			"primary": "Primary",
@@ -91,6 +112,10 @@
 			"button": "Buttons"
 		},
 		"fields": {
+			"acrylic": "Acrylic blur surfaces",
+			"inputVariant": "Text field style",
+			"selectVariant": "Selection field style",
+			"buttonVariant": "Button style",
 			"main": "Main",
 			"light": "Light",
 			"dark": "Dark",
@@ -113,6 +138,10 @@
 			"occupied": "Occupied (lowercase status)",
 			"Occupied": "Occupied",
 			"fontFamily": "Font family",
+			"tinted": "Tinted surface",
+			"shadow": "Show shadow",
+			"glass": "Glass blur",
+			"border": "Show divider",
 			"fontSize": "Font size",
 			"fontWeight": "Font weight",
 			"letterSpacing": "Letter spacing",
@@ -170,6 +199,13 @@
 			"blur": "Blur",
 			"spread": "Spread",
 			"opacity": "Opacity"
+		},
+		"variants": {
+			"outlined": "Outlined",
+			"filled": "Filled",
+			"standard": "Standard",
+			"contained": "Contained",
+			"text": "Text"
 		}
 	},
 	"login": {
@@ -370,10 +406,10 @@
 			"noIdsProvided": "No table IDs provided."
 		}
 	},
-	"waiter":{
-		"title":"Waiter",
-		"subtitle":"Follow order progress and handle ready orders.",
-		"kitchenManaged":"Updated by the kitchen"
+	"waiter": {
+		"title": "Waiter",
+		"subtitle": "Follow order progress and handle ready orders.",
+		"kitchenManaged": "Updated by the kitchen"
 	},
 	"order": {
 		"success": {
@@ -517,7 +553,47 @@
 			}
 		}
 	},
-	"home": {
-		"title": "Dashboard"
+	"dashboard": {
+		"title": "Dashboard",
+		"greeting": "Good service starts here.",
+		"intro": "Here’s what’s happening in your restaurant today.",
+		"live": "Live updates",
+		"offline": "Offline",
+		"connecting": "Connecting",
+		"refresh": "Refresh dashboard",
+		"revenue": "Today’s revenue",
+		"ordersReceived": "{{count}} orders received today",
+		"activeOrders": "Active orders",
+		"activeOrdersDetail": "Orders currently in service",
+		"occupancy": "Table occupancy",
+		"occupiedOf": "{{occupied}} of {{total}} tables occupied",
+		"ordersToday": "Orders today",
+		"ordersTodayDetail": "A fresh look at today’s service",
+		"revenueTrend": "Revenue trend",
+		"revenueTrendDetail": "Daily revenue over the last seven days",
+		"recentOrders": "Recent orders",
+		"recentOrdersDetail": "A live view of your latest activity",
+		"allOrders": "All orders",
+		"noOrders": "No orders yet",
+		"noOrdersDetail": "New orders will appear here as they come in.",
+		"orderNumber": "Order #{{id}}",
+		"table": "Table {{number}}",
+		"atAGlance": "At a glance",
+		"floorNow": "Your floor right now",
+		"occupied": "Occupied",
+		"available": "Available",
+		"needsCleaning": "Needs cleaning",
+		"openFloor": "Open floor",
+		"appearance": "Appearance",
+		"appearanceDetail": "Make Servio feel like yours",
+		"openAppearance": "Open appearance settings",
+		"presetTheme": "{{preset}} palette",
+		"colorMode": "Color mode",
+		"dark": "Dark",
+		"light": "Light",
+		"theme": "{{preset}} theme",
+		"today": "Today",
+		"yesterday": "Yesterday",
+		"date": "EEEE, MMMM d"
 	}
 }
