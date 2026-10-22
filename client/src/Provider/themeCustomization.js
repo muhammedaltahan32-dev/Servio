@@ -76,6 +76,11 @@ const uiTokens = Object.freeze({
 	motion: { fast: "160ms ease", standard: "240ms ease" },
 	effect: { appBarBlur: "18px" },
 	color: { sidebarMuted: "#90c38a", sidebarDivider: "rgba(226, 232, 241, 0.12)" },
+	chrome: {
+		sidebar: { tinted: false, shadow: false },
+		appBar: { glass: true, shadow: false, border: true },
+	},
+	components: { acrylic: false, inputVariant: "outlined", selectVariant: "outlined", buttonVariant: "contained" },
 });
 
 const defaultPaletteSettings = {
@@ -87,7 +92,11 @@ const defaultPaletteSettings = {
 		error: { main: "#D94F5C", light: "#FBEAEC", dark: "#B93644", contrastText: "#FFFFFF" },
 		info: { main: "#3E7BFA", light: "#EAF1FF", dark: "#245ED6", contrastText: "#FFFFFF" },
 		text: { primary: "#2E3033", secondary: "#6B6E71", disabled: "#B4B8BF" },
-		background: { default: "#F3F6FB", paper: "#FFFFFF", appBar: "rgba(255, 255, 255, 0.88)" },
+		background: {
+			default: "#ffffff",
+			paper: "#f9f9f9",
+			appBar: "#ffffff30",
+		},
 		divider: "#E2E8F1",
 		tableRowBorder: "#E7ECEF",
 		tableStatus: tableStatusColors,
@@ -100,7 +109,11 @@ const defaultPaletteSettings = {
 		error: { main: "#F0717D", light: "#3C2025", dark: "#D94F5C", contrastText: "#FFFFFF" },
 		info: { main: "#8DAEFF", light: "#1D2B47", dark: "#5D86E0", contrastText: "#FFFFFF" },
 		text: { primary: "#F0F0F0", secondary: "#B3B3B3", disabled: "#777777" },
-		background: { default: "#121212", paper: "#1E1E1E", appBar: "rgba(18, 18, 18, 0.94)" },
+		background: {
+			default: "#1E1E1E",
+			paper: "#121212",
+			appBar: "#1e1e1e30",
+		},
 		divider: "#383838",
 		tableRowBorder: "#454545",
 		tableStatus: tableStatusColorsDark,
@@ -118,16 +131,66 @@ const defaultTypographySettings = {
 	button: { fontWeight: 600, textTransform: "none" },
 };
 
+const blurredPaletteSettings = {
+	light: {
+		primary: { main: "#0067C0", light: "#60CDFF", dark: "#005A9E", contrastText: "#FFFFFF" },
+		secondary: { main: "#5C5A58", light: "#E6E6E6", dark: "#3B3A39", contrastText: "#FFFFFF" },
+		success: { main: "#0F7B0F", light: "#DFF6DD", dark: "#0A5C0A", contrastText: "#FFFFFF" },
+		warning: { main: "#9D5D00", light: "#FFF4CE", dark: "#7A4800", contrastText: "#FFFFFF" },
+		error: { main: "#C42B1C", light: "#FDE7E9", dark: "#A4262C", contrastText: "#FFFFFF" },
+		info: { main: "#0067C0", light: "#DFF6FF", dark: "#005A9E", contrastText: "#FFFFFF" },
+		text: { primary: "#1A1A1A", secondary: "#616161", disabled: "#9A9A9A" },
+		background: { default: "#F3F6FA", paper: "rgba(255, 255, 255, 0.5)", appBar: "rgba(248, 250, 253, 0.76)" },
+		divider: "rgba(0, 0, 0, 0.09)",
+		tableRowBorder: "rgba(0, 0, 0, 0.07)",
+	},
+	dark: {
+		primary: { main: "#60CDFF", light: "#9BE4FF", dark: "#36A6D8", contrastText: "#00344F" },
+		secondary: { main: "#C8C6C4", light: "#484644", dark: "#A19F9D", contrastText: "#1A1A1A" },
+		success: { main: "#6CCB5F", light: "#203B20", dark: "#4FA344", contrastText: "#0A2008" },
+		warning: { main: "#FCE100", light: "#433B08", dark: "#D7C200", contrastText: "#241F00" },
+		error: { main: "#FF99A4", light: "#442126", dark: "#E66B78", contrastText: "#3C080D" },
+		info: { main: "#60CDFF", light: "#173746", dark: "#36A6D8", contrastText: "#001D2D" },
+		text: { primary: "#F3F3F3", secondary: "#C4C4C4", disabled: "#777777" },
+		background: { default: "#15181D", paper: "rgba(38, 42, 48, 0.82)", appBar: "rgba(30, 34, 40, 0.78)" },
+		divider: "rgba(255, 255, 255, 0.12)",
+		tableRowBorder: "rgba(255, 255, 255, 0.5)",
+	},
+};
+
+const blurredTokenSettings = {
+	size: {
+		appBarHeight: 52, mobileAppBarHeight: 48, desktopDrawerWidth: 216, mobileDrawerWidth: 232,
+		actionsBarWidth: 304, tableRowHeight: 42, tableHeaderHeight: 40, tableHeaderFontSize: "0.72rem",
+		tableCellPaddingY: 0.5, tableCellContentMaxHeight: 36, tableCardMinHeight: 140,
+		menuCardMinHeight: 74, summaryCardMinHeight: 84, iconButton: 36, logo: 36,
+	},
+	space: { pageXs: 1, pageSm: 1.75, pageMd: 2, section: 1.25 },
+	radius: { control: 6, card: 8, panel: 10 },
+	effect: { appBarBlur: "24px" },
+	chrome: { sidebar: { tinted: true }, appBar: { glass: true, border: true } },
+	components: { acrylic: true, inputVariant: "filled", selectVariant: "filled", buttonVariant: "contained" },
+};
+
+const blurredTypographySettings = {
+	fontFamily: '"Segoe UI Variable", "Segoe UI", Inter, Roboto, Arial, sans-serif',
+	h1: { fontSize: "1.55rem" }, h2: { fontSize: "1.3rem" }, h3: { fontSize: "1.1rem" },
+	h4: { fontSize: "0.98rem" }, h5: { fontSize: "0.9rem" }, h6: { fontSize: "0.84rem" },
+	subtitle1: { fontSize: "0.88rem" }, subtitle2: { fontSize: "0.78rem" },
+	body1: { fontSize: "0.875rem" }, body2: { fontSize: "0.75rem" }, button: { fontSize: "0.78rem" },
+	caption: { fontSize: "0.68rem" }, overline: { fontSize: "0.64rem" },
+};
+
 export const DEFAULT_THEME_SETTINGS = {
-	presetName: "default",
-	colors: defaultPaletteSettings,
-	tokens: uiTokens,
-	typography: defaultTypographySettings,
+	presetName: "blurred",
+	colors: blurredPaletteSettings,
+	tokens: mergeThemeSettings(uiTokens, blurredTokenSettings),
+	typography: mergeThemeSettings(defaultTypographySettings, blurredTypographySettings),
 };
 
 export const cloneThemeSettings = (value) => JSON.parse(JSON.stringify(value));
 
-export const mergeThemeSettings = (base, updates = {}) => {
+export function mergeThemeSettings(base, updates = {}) {
 	if (!base || typeof base !== "object" || Array.isArray(base)) return updates ?? base;
 	const result = { ...base };
 	for (const [key, value] of Object.entries(updates ?? {})) {
@@ -135,7 +198,7 @@ export const mergeThemeSettings = (base, updates = {}) => {
 			value && typeof value === "object" && !Array.isArray(value) ? mergeThemeSettings(base[key] ?? {}, value) : value;
 	}
 	return result;
-};
+}
 
 export const mergePaletteSettings = (base, updates) => {
 	const result = { ...base };
@@ -161,7 +224,105 @@ export const buildShadowValue = ({
 const makePreset = (presetName, colors) => mergeThemeSettings(DEFAULT_THEME_SETTINGS, { presetName, colors });
 
 export const THEME_PRESETS = {
-	default: makePreset("default", defaultPaletteSettings),
+	servio: mergeThemeSettings(DEFAULT_THEME_SETTINGS, {
+		presetName: "servio",
+		colors: defaultPaletteSettings,
+		tokens: uiTokens,
+		typography: defaultTypographySettings,
+	}),
+	blurred: mergeThemeSettings(DEFAULT_THEME_SETTINGS, {
+		presetName: "blurred",
+		colors: {
+			light: {
+				primary: { main: "#0067C0", light: "#60CDFF", dark: "#005A9E", contrastText: "#FFFFFF" },
+				secondary: { main: "#5C5A58", light: "#E6E6E6", dark: "#3B3A39", contrastText: "#FFFFFF" },
+				success: { main: "#0F7B0F", light: "#DFF6DD", dark: "#0A5C0A", contrastText: "#FFFFFF" },
+				warning: { main: "#9D5D00", light: "#FFF4CE", dark: "#7A4800", contrastText: "#FFFFFF" },
+				error: { main: "#C42B1C", light: "#FDE7E9", dark: "#A4262C", contrastText: "#FFFFFF" },
+				info: { main: "#0067C0", light: "#DFF6FF", dark: "#005A9E", contrastText: "#FFFFFF" },
+				text: { primary: "#1A1A1A", secondary: "#616161", disabled: "#9A9A9A" },
+				background: { default: "#F3F6FA", paper: "rgba(255, 255, 255, 0.5)", appBar: "rgba(248, 250, 253, 0.76)" },
+				divider: "rgba(0, 0, 0, 0.09)",
+				tableRowBorder: "rgba(0, 0, 0, 0.07)",
+			},
+			dark: {
+				primary: { main: "#60CDFF", light: "#9BE4FF", dark: "#36A6D8", contrastText: "#00344F" },
+				secondary: { main: "#C8C6C4", light: "#484644", dark: "#A19F9D", contrastText: "#1A1A1A" },
+				success: { main: "#6CCB5F", light: "#203B20", dark: "#4FA344", contrastText: "#0A2008" },
+				warning: { main: "#FCE100", light: "#433B08", dark: "#D7C200", contrastText: "#241F00" },
+				error: { main: "#FF99A4", light: "#442126", dark: "#E66B78", contrastText: "#3C080D" },
+				info: { main: "#60CDFF", light: "#173746", dark: "#36A6D8", contrastText: "#001D2D" },
+				text: { primary: "#F3F3F3", secondary: "#C4C4C4", disabled: "#777777" },
+				background: { default: "#15181D", paper: "rgba(38, 42, 48, 0.82)", appBar: "rgba(30, 34, 40, 0.78)" },
+				divider: "rgba(255, 255, 255, 0.12)",
+				tableRowBorder: "rgba(255, 255, 255, 0.5)",
+			},
+		},
+		tokens: {
+			size: {
+				appBarHeight: 52,
+				mobileAppBarHeight: 48,
+				desktopDrawerWidth: 216,
+				mobileDrawerWidth: 232,
+				actionsBarWidth: 304,
+				tableRowHeight: 42,
+				tableHeaderHeight: 40,
+				tableHeaderFontSize: "0.72rem",
+				tableCellPaddingY: 0.5,
+				tableCellContentMaxHeight: 36,
+				tableCardMinHeight: 140,
+				menuCardMinHeight: 74,
+				summaryCardMinHeight: 84,
+				iconButton: 36,
+				logo: 36,
+			},
+			space: { pageXs: 1, pageSm: 1.75, pageMd: 2, section: 1.25 },
+			radius: { control: 6, card: 8, panel: 10 },
+			effect: { appBarBlur: "24px" },
+			chrome: {
+				sidebar: { tinted: true },
+				appBar: { glass: true, border: true },
+			},
+			components: { acrylic: true, inputVariant: "filled", selectVariant: "filled", buttonVariant: "contained" },
+		},
+		typography: {
+			fontFamily: '"Segoe UI Variable", "Segoe UI", Inter, Roboto, Arial, sans-serif',
+			h1: { fontSize: "1.55rem" },
+			h2: { fontSize: "1.3rem" },
+			h3: { fontSize: "1.1rem" },
+			h4: { fontSize: "0.98rem" },
+			h5: { fontSize: "0.9rem" },
+			h6: { fontSize: "0.84rem" },
+			subtitle1: { fontSize: "0.88rem" },
+			subtitle2: { fontSize: "0.78rem" },
+			body1: { fontSize: "0.875rem" },
+			body2: { fontSize: "0.75rem" },
+			button: { fontSize: "0.78rem" },
+			caption: { fontSize: "0.68rem" },
+			overline: { fontSize: "0.64rem" },
+		},
+	}),
+	rose: makePreset("rose", {
+		chrome: {
+			sidebar: { tinted: true },
+		},
+		light: {
+			primary: { main: "#BD005E", light: "#DD006D", dark: "#FF1D8D" },
+			background: {
+				default: "#ffffff",
+				paper: "#f9f9f9",
+				appBar: "#ffffff30",
+			},
+		},
+		dark: {
+			primary: { main: "#BD005E", light: "#DD006D", dark: "#FF1D8D" },
+			background: {
+				default: "#1E1E1E",
+				paper: "#121212",
+				appBar: "#1e1e1e30",
+			},
+		},
+	}),
 	ocean: makePreset("ocean", {
 		light: { primary: { main: "#2864C5", light: "#5B8DE0", dark: "#194B9E" } },
 		dark: { primary: { main: "#78A9FF", light: "#A1C2FF", dark: "#4D7FE8" } },

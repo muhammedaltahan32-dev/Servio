@@ -59,6 +59,7 @@ const loadThemeSettings = () => {
 		const savedSettings = JSON.parse(stored);
 		const settings = mergeThemeSettings(DEFAULT_THEME_SETTINGS, savedSettings);
 		if (savedSettings.presetName === "default") {
+			settings.presetName = "servio";
 			settings.tokens.shadowControls = cloneThemeSettings(DEFAULT_THEME_SETTINGS.tokens.shadowControls);
 		}
 		return settings;
@@ -257,9 +258,19 @@ export const ThemeProvider = ({ children }) => {
 						styleOverrides: {
 							root: ({ theme }) => ({
 								backgroundColor: theme.palette.background.appBar,
-								backdropFilter: `blur(${theme.tokens.effect.appBarBlur})`,
-								boxShadow: "none",
+								backdropFilter: theme.tokens.chrome.appBar.glass
+									? `blur(${theme.tokens.effect.appBarBlur}) saturate(145%)`
+									: "none",
+								boxShadow: theme.tokens.chrome.appBar.shadow ? theme.tokens.shadow.card : "none",
+								borderBottom: theme.tokens.chrome.appBar.border ? `1px solid ${theme.palette.divider}` : "none",
 							}),
+						},
+					},
+					MuiBackdrop: {
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic
+								? { backgroundColor: "rgba(10, 16, 24, 0.24)", backdropFilter: "blur(8px) saturate(130%)" }
+								: {},
 						},
 					},
 					MuiCssBaseline: {
@@ -290,6 +301,7 @@ export const ThemeProvider = ({ children }) => {
 						styleOverrides: {
 							tooltip: ({ theme }) => ({
 								backgroundColor: theme.palette.text.primary,
+								...(theme.tokens.components.acrylic && { backdropFilter: "blur(16px) saturate(140%)" }),
 								color: theme.palette.background.paper,
 								fontSize: theme.tokens.size.tooltipFontSize,
 								fontWeight: 500,
@@ -304,8 +316,14 @@ export const ThemeProvider = ({ children }) => {
 					MuiPaper: {
 						styleOverrides: {
 							root: ({ theme }) => ({
-								backgroundImage: "none",
+								backgroundImage: theme.tokens.components.acrylic
+									? "linear-gradient(135deg, color-mix(in srgb, var(--mui-palette-common-white) 8%, transparent), transparent 55%)"
+									: "none",
 								boxShadow: theme.tokens.shadow.subtle,
+								...(theme.tokens.components.acrylic && {
+									backdropFilter: "blur(18px) saturate(140%)",
+									border: "1px solid color-mix(in srgb, var(--mui-palette-text-primary) 11%, transparent)",
+								}),
 							}),
 						},
 					},
@@ -313,8 +331,12 @@ export const ThemeProvider = ({ children }) => {
 					MuiCard: {
 						styleOverrides: {
 							root: ({ theme }) => ({
-								backgroundImage: "none",
+								backgroundImage: theme.tokens.components.acrylic
+									? "linear-gradient(135deg, color-mix(in srgb, var(--mui-palette-common-white) 8%, transparent), transparent 55%)"
+									: "none",
 								boxShadow: theme.tokens.shadow.subtle,
+								borderRadius: theme.tokens.radius.card,
+								...(theme.tokens.components.acrylic && { backdropFilter: "blur(18px) saturate(140%)" }),
 								transition: `box-shadow ${theme.tokens.motion.fast}`,
 								"&:hover": {
 									boxShadow: theme.tokens.shadow.cardHover,
@@ -324,18 +346,27 @@ export const ThemeProvider = ({ children }) => {
 					},
 
 					MuiButton: {
+						defaultProps: {
+							variant: themeSettings.tokens.components.buttonVariant,
+							...(themeSettings.tokens.components.acrylic && { size: "small" }),
+						},
 						styleOverrides: {
 							root: ({ theme }) => ({
 								boxShadow: "none",
 								borderRadius: theme.tokens.radius.control,
+								minHeight: theme.tokens.components.acrylic ? 30 : undefined,
+								paddingInline: theme.tokens.components.acrylic ? 11 : undefined,
 								fontWeight: theme.typography.button.fontWeight,
 								textTransform: theme.typography.button.textTransform,
+								transition: "background-color 140ms ease, box-shadow 140ms ease, transform 140ms ease",
 							}),
 
 							contained: ({ theme }) => ({
-								background: theme.tokens.gradient.primary,
+								background: theme.tokens.components.acrylic ? theme.palette.primary.main : theme.tokens.gradient.primary,
+								...(theme.tokens.components.acrylic && { border: "1px solid color-mix(in srgb, var(--mui-palette-primary-main) 80%, white)" }),
 								"&:hover": {
-									boxShadow: "none",
+									boxShadow: theme.tokens.components.acrylic ? "0 3px 8px rgba(0, 0, 0, 0.16)" : "none",
+									filter: "brightness(1.04)",
 								},
 							}),
 						},
@@ -344,15 +375,17 @@ export const ThemeProvider = ({ children }) => {
 					MuiChip: {
 						styleOverrides: {
 							root: ({ theme }) => ({
-								borderRadius: theme.tokens.radius.pill,
+								borderRadius: theme.tokens.components.acrylic ? theme.tokens.radius.control : theme.tokens.radius.pill,
 								fontWeight: 600,
+								minHeight: theme.tokens.components.acrylic ? 26 : undefined,
 							}),
 						},
 					},
 
 					MuiTextField: {
 						defaultProps: {
-							variant: "outlined",
+							variant: themeSettings.tokens.components.inputVariant,
+							...(themeSettings.tokens.components.acrylic && { size: "small" }),
 						},
 
 						styleOverrides: {
@@ -363,10 +396,39 @@ export const ThemeProvider = ({ children }) => {
 							}),
 						},
 					},
+					MuiInputBase: {
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic ? { fontSize: "0.8125rem", minHeight: 36 } : {},
+							input: ({ theme }) => theme.tokens.components.acrylic ? { paddingBlock: 8, fontSize: "0.8125rem" } : {},
+						},
+					},
+					MuiInputLabel: {
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic ? { fontSize: "0.8125rem" } : {},
+						},
+					},
+					MuiIconButton: {
+						defaultProps: { ...(themeSettings.tokens.components.acrylic && { size: "small" }) },
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic ? { padding: 6 } : {},
+						},
+					},
+					MuiCheckbox: {
+						defaultProps: { ...(themeSettings.tokens.components.acrylic && { size: "small" }) },
+					},
+					MuiRadio: {
+						defaultProps: { ...(themeSettings.tokens.components.acrylic && { size: "small" }) },
+					},
 
 					MuiOutlinedInput: {
 						styleOverrides: {
 							root: ({ theme }) => ({
+								borderRadius: theme.tokens.radius.control,
+								...(theme.tokens.components.acrylic && {
+									backgroundColor: "color-mix(in srgb, var(--mui-palette-background-paper) 78%, transparent)",
+									"& fieldset": { borderColor: "color-mix(in srgb, var(--mui-palette-text-primary) 18%, transparent)" },
+									"&:hover fieldset": { borderColor: "color-mix(in srgb, var(--mui-palette-primary-main) 65%, transparent)" },
+								}),
 								"& fieldset": {
 									// borderColor: theme.palette.divider,
 								},
@@ -380,6 +442,21 @@ export const ThemeProvider = ({ children }) => {
 								},
 							}),
 						},
+					},
+					MuiFilledInput: {
+						styleOverrides: {
+							root: ({ theme }) => ({
+								borderTopLeftRadius: theme.tokens.radius.control,
+								borderTopRightRadius: theme.tokens.radius.control,
+								...(theme.tokens.components.acrylic && {
+									backgroundColor: "color-mix(in srgb, var(--mui-palette-background-paper) 84%, var(--mui-palette-text-primary) 5%)",
+									"&:hover": { backgroundColor: "color-mix(in srgb, var(--mui-palette-background-paper) 76%, var(--mui-palette-text-primary) 8%)" },
+								}),
+							}),
+						},
+					},
+					MuiFormControl: {
+						defaultProps: themeSettings.tokens.components.acrylic ? { size: "small" } : {},
 					},
 
 					MuiTableContainer: {
@@ -422,11 +499,16 @@ export const ThemeProvider = ({ children }) => {
 					MuiDialog: {
 						styleOverrides: {
 							paper: ({ theme }) => ({
-								backgroundImage: "none",
+								backgroundImage: theme.tokens.components.acrylic
+									? "linear-gradient(145deg, color-mix(in srgb, var(--mui-palette-common-white) 12%, transparent), transparent 58%)"
+									: "none",
 								backgroundColor: theme.palette.background.paper,
-								border: `1px solid ${theme.palette.divider}`,
-								
+								border: theme.tokens.components.acrylic
+									? "1px solid color-mix(in srgb, var(--mui-palette-common-white) 24%, var(--mui-palette-divider))"
+									: `1px solid ${theme.palette.divider}`,
 								borderRadius: theme.tokens.radius.panel,
+								backdropFilter: theme.tokens.components.acrylic ? "blur(28px) saturate(160%)" : undefined,
+								boxShadow: theme.tokens.components.acrylic ? "0 20px 60px rgba(0, 0, 0, 0.25)" : theme.tokens.shadow.dialog,
 								overflow: "hidden",
 							}),
 						},
@@ -434,20 +516,20 @@ export const ThemeProvider = ({ children }) => {
 					MuiDialogTitle: {
 						styleOverrides: {
 							root: ({ theme }) => ({
-								padding: theme.spacing(2.5, 3),
+								padding: theme.tokens.components.acrylic ? theme.spacing(2, 2.5) : theme.spacing(2.5, 3),
 								borderBottom: `1px solid ${theme.palette.divider}`,
 							}),
 						},
 					},
 					MuiDialogContent: {
 						styleOverrides: {
-							root: ({ theme }) => ({ padding: theme.spacing(3) }),
+							root: ({ theme }) => ({ padding: theme.tokens.components.acrylic ? theme.spacing(2.5) : theme.spacing(3) }),
 						},
 					},
 					MuiDialogActions: {
 						styleOverrides: {
 							root: ({ theme }) => ({
-								padding: theme.spacing(2, 3, 2.5),
+								padding: theme.tokens.components.acrylic ? theme.spacing(1.5, 2.5, 2) : theme.spacing(2, 3, 2.5),
 								gap: theme.spacing(1),
 								borderTop: `1px solid ${theme.palette.divider}`,
 							}),
@@ -456,7 +538,73 @@ export const ThemeProvider = ({ children }) => {
 
 					MuiMenu: {
 						styleOverrides: {
-							paper: ({ theme }) => ({ borderRadius: theme.tokens.radius.card, boxShadow: theme.tokens.shadow.card }),
+							paper: ({ theme }) => ({
+								borderRadius: theme.tokens.radius.card,
+								boxShadow: theme.tokens.components.acrylic ? "0 12px 32px rgba(0, 0, 0, 0.2)" : theme.tokens.shadow.card,
+								...(theme.tokens.components.acrylic && {
+									backgroundColor: theme.palette.background.paper,
+									backgroundImage: "linear-gradient(145deg, color-mix(in srgb, var(--mui-palette-common-white) 10%, transparent), transparent 60%)",
+									backdropFilter: "blur(24px) saturate(155%)",
+									border: "1px solid color-mix(in srgb, var(--mui-palette-text-primary) 12%, transparent)",
+								}),
+							}),
+						},
+					},
+					MuiPopover: {
+						styleOverrides: {
+							paper: ({ theme }) => theme.tokens.components.acrylic
+								? {
+									backgroundColor: theme.palette.background.paper,
+									backgroundImage: "linear-gradient(145deg, color-mix(in srgb, var(--mui-palette-common-white) 10%, transparent), transparent 60%)",
+									backdropFilter: "blur(24px) saturate(155%)",
+									border: "1px solid color-mix(in srgb, var(--mui-palette-text-primary) 12%, transparent)",
+									borderRadius: theme.tokens.radius.card,
+									boxShadow: "0 12px 32px rgba(0, 0, 0, 0.2)",
+								}
+								: {},
+						},
+					},
+					MuiDrawer: {
+						styleOverrides: {
+							paper: ({ theme }) => theme.tokens.components.acrylic
+								? { backdropFilter: "blur(24px) saturate(145%)", backgroundImage: "linear-gradient(160deg, color-mix(in srgb, var(--mui-palette-primary-main) 5%, transparent), transparent 45%)" }
+								: {},
+						},
+					},
+					MuiListItemButton: {
+						styleOverrides: {
+							root: ({ theme }) => ({
+								borderRadius: theme.tokens.radius.control,
+								...(theme.tokens.components.acrylic && { minHeight: 38, transition: "background-color 140ms ease, color 140ms ease" }),
+							}),
+						},
+					},
+					MuiMenuItem: {
+						styleOverrides: {
+							root: ({ theme }) => ({
+								minHeight: theme.tokens.components.acrylic ? 36 : undefined,
+								borderRadius: theme.tokens.components.acrylic ? theme.tokens.radius.control : undefined,
+								marginInline: theme.tokens.components.acrylic ? 4 : undefined,
+								...(theme.tokens.components.acrylic && {
+									"&.Mui-selected": { backgroundColor: "color-mix(in srgb, var(--mui-palette-primary-main) 12%, transparent)" },
+									"&:hover": { backgroundColor: "color-mix(in srgb, var(--mui-palette-primary-main) 8%, transparent)" },
+								}),
+							}),
+						},
+					},
+					MuiAccordion: {
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic
+								? { borderRadius: `${theme.tokens.radius.card}px !important`, backgroundColor: theme.palette.background.paper, backgroundImage: "linear-gradient(135deg, color-mix(in srgb, var(--mui-palette-common-white) 8%, transparent), transparent 60%)", backdropFilter: "blur(16px) saturate(140%)", border: `1px solid ${theme.palette.divider}`, "&:before": { display: "none" } }
+								: {},
+						},
+					},
+					MuiSlider: {
+						styleOverrides: {
+							root: ({ theme }) => theme.tokens.components.acrylic ? { height: 4 } : {},
+							thumb: ({ theme }) => theme.tokens.components.acrylic
+								? { width: 16, height: 16, boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)" }
+								: {},
 						},
 					},
 				},

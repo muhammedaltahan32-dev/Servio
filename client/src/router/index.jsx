@@ -5,7 +5,7 @@ import PageLoadingFallback from "../components/PageLoadingFallback.jsx";
 import {
 	CategoriesPage,
 	CustomerMenuPage,
-	Home,
+	Dashboard,
 	LobbyPage,
 	Login,
 	MenuItemsPage,
@@ -20,9 +20,9 @@ const protectedPaths = [
 	{
 		path: "/",
 		index: true,
-		label: "home.title",
-		icon: "Home",
-		element: <Home />,
+		label: "dashboard.title",
+		icon: "Dashboard",
+		element: <Dashboard />,
 	},
 	{
 		path: "/Categories",

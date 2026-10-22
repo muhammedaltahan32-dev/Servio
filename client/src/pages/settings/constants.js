@@ -4,6 +4,8 @@ export const SECTIONS = [
 	{ id: "dimensions", label: "settings.tabs.dimensions" },
 	{ id: "shape", label: "settings.tabs.shape" },
 	{ id: "effects", label: "settings.tabs.effects" },
+	{ id: "chrome", label: "settings.tabs.chrome" },
+	{ id: "components", label: "settings.tabs.components" },
 	{ id: "typography", label: "settings.tabs.typography" },
 ];
 
@@ -34,6 +36,17 @@ export const TOKEN_GROUPS = {
 		{ path: "effect", title: "settings.groups.effects" },
 		{ path: "color", title: "settings.groups.miscColors" },
 	],
+	chrome: [
+		{ path: "chrome.sidebar", title: "settings.groups.sidebar" },
+		{ path: "chrome.appBar", title: "settings.groups.appBar" },
+	],
+	components: [{ path: "components", title: "settings.groups.componentVariants" }],
+};
+
+export const VARIANT_OPTIONS = {
+	"tokens.components.inputVariant": ["outlined", "filled", "standard"],
+	"tokens.components.selectVariant": ["outlined", "filled", "standard"],
+	"tokens.components.buttonVariant": ["contained", "outlined", "text"],
 };
 
 export const SIZE_SLIDER_CONTROLS = {
@@ -68,6 +81,19 @@ export const SIZE_SLIDER_CONTROLS = {
 	logo: { min: 24, max: 72, step: 2, unit: "px", preview: "square" },
 	iconButton: { min: 32, max: 64, step: 2, unit: "px", preview: "square" },
 	lobbyCardMinHeight: { min: 160, max: 360, step: 5, unit: "px", preview: "height" },
+};
+
+export const getSliderControl = (path, value, knownControl) => {
+	if (knownControl) return knownControl;
+	if (path === "tokens.effect.appBarBlur") return { min: 0, max: 40, step: 1, unit: "px", preview: "width" };
+	if (typeof value !== "number" && !/\.fontSize$/.test(path)) return undefined;
+	if (path.startsWith("tokens.space.")) return { min: 0, max: 8, step: 0.25, unit: "sp", preview: "padding" };
+	if (path.startsWith("tokens.radius.")) return path.endsWith(".pill")
+		? { min: 0, max: 999, step: 1, unit: "px", preview: "square" }
+		: { min: 0, max: 32, step: 1, unit: "px", preview: "square" };
+	if (path.endsWith(".fontSize")) return { min: 0.75, max: 4, step: 0.05, unit: "rem", preview: "font" };
+	if (path.endsWith(".fontWeight")) return { min: 100, max: 900, step: 100, unit: "" };
+	return undefined;
 };
 
 export const TYPOGRAPHY_GROUPS = [

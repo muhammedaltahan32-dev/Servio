@@ -1,12 +1,13 @@
 import React from "react";
-import { Box, ButtonBase, Popover, Stack, Typography } from "@mui/material";
-import { Input } from "@components";
+import { Box, ButtonBase, Popover, Stack, Tooltip, Typography, useTheme } from "@mui/material";
+import { Icon, Input } from "@components";
 import { useLang } from "@hooks";
 import { COLOR_SWATCHES } from "../constants.js";
 import { isColor, toPickerHex } from "../utils/index.js";
 
 const ColorSelector = ({ value, onChange, label, disabled = false }) => {
 	const { t } = useLang();
+	const theme = useTheme();
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [pickerDraft, setPickerDraft] = React.useState(null);
 	const activePickerDraft = pickerDraft?.baseValue === value ? pickerDraft.color : null;
@@ -84,9 +85,7 @@ const ColorSelector = ({ value, onChange, label, disabled = false }) => {
 				<Typography variant="body2" noWrap sx={{ minWidth: 0, flex: 1 }}>
 					{previewValue}
 				</Typography>
-				<Typography aria-hidden="true" color="text.secondary">
-					▾
-				</Typography>
+				<Icon name="ExpandMore" color="var(--mui-palette-text-secondary)" />
 			</ButtonBase>
 			<Popover
 				open={Boolean(anchorEl)}
@@ -95,8 +94,8 @@ const ColorSelector = ({ value, onChange, label, disabled = false }) => {
 					commitPickerValue();
 					setAnchorEl(null);
 				}}
-				anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-				transformOrigin={{ vertical: "top", horizontal: "left" }}
+				anchorOrigin={{ vertical: "bottom", horizontal: theme.direction === "rtl" ? "right" : "left" }}
+				transformOrigin={{ vertical: "top", horizontal: theme.direction === "rtl" ? "right" : "left" }}
 				slotProps={{
 					paper: { sx: { width: 280, maxWidth: "calc(100vw - 32px)", p: 2, borderRadius: 2 } },
 				}}
@@ -106,24 +105,31 @@ const ColorSelector = ({ value, onChange, label, disabled = false }) => {
 						{t("settings.chooseColor")}
 					</Typography>
 					<Box sx={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 1 }}>
-						{COLOR_SWATCHES.map((swatch) => (
-							<ButtonBase
-								key={swatch}
-								aria-label={`${t("settings.chooseColor")}: ${swatch}`}
-								aria-pressed={pickerValue.toLowerCase() === swatch.toLowerCase()}
-								onClick={() => handleSwatchSelect(swatch)}
-								sx={{
-									width: 34,
-									height: 34,
-									borderRadius: 1.25,
-									bgcolor: swatch,
-									border: "1px solid",
-									borderColor: "divider",
-									"&:hover": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 1 },
-									"&[aria-pressed='true']": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 1 },
-								}}
-							/>
-						))}
+						{COLOR_SWATCHES.map((swatch) => {
+							const selected = pickerValue.toLowerCase() === swatch.toLowerCase();
+							return (
+								<Tooltip key={swatch} title={swatch}>
+									<ButtonBase
+									aria-label={`${t("settings.chooseColor")}: ${swatch}`}
+									aria-pressed={selected}
+									onClick={() => handleSwatchSelect(swatch)}
+									sx={{
+										width: 38,
+										height: 38,
+										borderRadius: 1.5,
+										bgcolor: swatch,
+										border: "1px solid",
+										borderColor: "divider",
+										transition: "transform 140ms ease, outline-color 140ms ease",
+										"&:hover": { transform: "scale(1.08)", outline: "2px solid", outlineColor: "primary.main", outlineOffset: 1 },
+										"&[aria-pressed='true']": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 1 },
+									}}
+								>
+									{selected && <Icon name="CheckRounded" color="#fff" sx={{ fontSize: 20, filter: "drop-shadow(0 1px 2px #000)" }} />}
+								</ButtonBase>
+								</Tooltip>
+							);
+						})}
 					</Box>
 					<Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
 						<Box
@@ -144,6 +150,9 @@ const ColorSelector = ({ value, onChange, label, disabled = false }) => {
 								borderRadius: 1.25,
 								bgcolor: "transparent",
 								cursor: "pointer",
+								"&::-webkit-color-swatch-wrapper": { p: 0 },
+								"&::-webkit-color-swatch": { border: 0, borderRadius: 0.75 },
+								"&::-moz-color-swatch": { border: 0, borderRadius: 0.75 },
 							}}
 						/>
 						<Input

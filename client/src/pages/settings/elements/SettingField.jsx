@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Slider, Stack, Typography } from "@mui/material";
-import { Input } from "@components";
+import { Box, MenuItem, Slider, Stack, Typography } from "@mui/material";
+import { Input, Select as SelectControl, Switch as SwitchControl } from "@components";
 import { formatSizeValue, parseSizeValue } from "../utils/index.js";
 import ColorSelector from "./ColorSelector.jsx";
 import SettingResetButton from "./SettingResetButton.jsx";
 import SizeExample from "./SizeExample.jsx";
 
-const SettingFieldComponent = ({ value, defaultValue, update, stageUpdate, path, label, resetLabel, colorResetEpoch, color = false, sizeControl, helperText }) => {
+const SettingFieldComponent = ({ value, defaultValue, update, stageUpdate, path, label, resetLabel, colorResetEpoch, color = false, sizeControl, helperText, options }) => {
 	const numeric = typeof value === "number";
 	const [pickerResetEpoch, setPickerResetEpoch] = React.useState(0);
 	const handleChange = React.useCallback((nextValue) => update(path, nextValue), [path, update]);
@@ -47,11 +47,34 @@ const SettingFieldComponent = ({ value, defaultValue, update, stageUpdate, path,
 								sx={{ flex: 1, minWidth: 0, mx: 0.5 }}
 							/>
 							<Typography variant="caption" dir="ltr" sx={{ minWidth: 42, textAlign: "end", whiteSpace: "nowrap" }}>
-								{typeof value === "number" ? `${value}${sizeControl.unit === "sp" ? " sp" : " px"}` : value}
+								{typeof value === "number" ? `${value}${sizeControl.unit === "sp" ? " sp" : sizeControl.unit ? ` ${sizeControl.unit}` : ""}` : value}
 							</Typography>
 							<SettingResetButton label={resetLabel} onClick={handleReset} />
 						</Stack>
-						<SizeExample value={value} control={sizeControl} label={label} />
+						{sizeControl.preview ? (
+							<SizeExample value={value} control={sizeControl} label={label} />
+						) : (
+							<Typography variant="caption" dir="ltr" sx={{ minWidth: 68, textAlign: "center" }}>
+								{value}
+							</Typography>
+						)}
+					</Box>
+				) : options ? (
+					<SelectControl
+						fullWidth
+						value={value}
+						aria-label={label}
+						onChange={(event) => handleChange(event.target.value)}
+					>
+						{options.map((option) => (
+							<MenuItem key={option.value} value={option.value}>
+								{option.label}
+							</MenuItem>
+						))}
+					</SelectControl>
+				) : typeof value === "boolean" ? (
+					<Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", flex: 1 }}>
+						<SwitchControl checked={value} onChange={(event) => handleChange(event.target.checked)} aria-label={label} />
 					</Box>
 				) : color ? (
 					<Box sx={{ flex: 1, minWidth: 0 }}>

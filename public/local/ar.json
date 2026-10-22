@@ -1,5 +1,7 @@
 {
 	"layout": {
+		"logout": "تسجيل الخروج",
+		"accountMenu": "قائمة الحساب",
 		"mode": {
 			"dark": "الوضع الداكن",
 			"light": "الوضع الفاتح"
@@ -9,6 +11,10 @@
 			"ar": "العربية",
 			"language": "اللغة"
 		}
+	},
+	"loading": {
+		"page": "جارٍ تحميل الصفحة",
+		"title": "جارٍ تجهيز مساحة العمل"
 	},
 	"settings": {
 		"chooseColor": "اختر لونًا",
@@ -22,12 +28,18 @@
 		"reset": "استعادة الافتراضي",
 		"saved": "تم حفظ إعدادات السمة",
 		"resetDone": "تمت استعادة السمة الافتراضية",
+		"confirmSaveTitle": "تطبيق تغييرات السمة؟",
+		"confirmSave": "سيتم تطبيق السمة المخصصة على Servio. هل تريد المتابعة؟",
+		"confirmResetTitle": "استعادة السمة الافتراضية؟",
+		"confirmReset": "سيؤدي ذلك إلى استبدال إعدادات السمة الحالية بالإعدادات الافتراضية. هل تريد المتابعة؟",
 		"tabs": {
 			"presets": "سمات جاهزة",
 			"colors": "الألوان",
 			"dimensions": "الأحجام",
 			"shape": "المسافات والزوايا",
 			"effects": "التأثيرات",
+			"chrome": "مظهر التنقل",
+			"components": "مظهر العناصر",
 			"typography": "الخطوط"
 		},
 		"tabDescriptions": {
@@ -36,16 +48,22 @@
 			"dimensions": "عدّل أحجام وعروض التنقل والجداول والنوافذ والصفحات.",
 			"shape": "اضبط المسافات واستدارة زوايا عناصر التحكم واللوحات.",
 			"effects": "خصص الظلال والتدرجات وسرعة الانتقالات وتأثيرات الواجهة.",
+			"chrome": "اختر تأثيرات اختيارية لمظهر الشريط الجانبي والشريط العلوي.",
+			"components": "اختر نمطًا موحدًا لحقول النص والاختيار والأزرار.",
 			"typography": "تحكم بنوع الخط والعناوين والنصوص وأزرار التطبيق."
 		},
 		"presetsTitle": "اختر سمة للبدء",
 		"presetsDescription": "اختر سمة جاهزة ثم خصص إعداداتها من الأقسام الأخرى.",
-		"presetHint": "تُطبّق السمة بعد الحفظ. السمة الافتراضية تطابق تصميم Servio الأصلي.",
+		"presetHint": "تُطبّق السمة بعد الحفظ. السمة الزجاجية الضبابية هي السمة الافتراضية.",
 		"selected": "محدد",
 		"lightMode": "الوضع الفاتح",
 		"darkMode": "الوضع الداكن",
 		"presets": {
 			"default": "الافتراضية",
+			"servio": "سيرفيو الكلاسيكية",
+			"blurred": "زجاج ضبابي",
+			"lavender": "خزامى",
+			"rose": "وردي",
 			"ocean": "المحيط",
 			"plum": "البرقوق",
 			"custom": "مخصصة"
@@ -67,7 +85,10 @@
 			"motion": "الحركة",
 			"effects": "التأثيرات",
 			"miscColors": "ألوان أخرى",
-			"globalTypography": "إعدادات الخط العامة"
+			"globalTypography": "إعدادات الخط العامة",
+			"sidebar": "مظهر الشريط الجانبي",
+			"appBar": "مظهر الشريط العلوي",
+			"componentVariants": "أنماط العناصر"
 		},
 		"palette": {
 			"primary": "اللون الأساسي",
@@ -91,6 +112,10 @@
 			"button": "الأزرار"
 		},
 		"fields": {
+			"acrylic": "أسطح زجاجية ضبابية",
+			"inputVariant": "نمط حقل النص",
+			"selectVariant": "نمط حقل الاختيار",
+			"buttonVariant": "نمط الزر",
 			"main": "أساسي",
 			"light": "فاتح",
 			"dark": "داكن",
@@ -113,6 +138,10 @@
 			"occupied": "مشغول",
 			"Occupied": "مشغول",
 			"fontFamily": "عائلة الخط",
+			"tinted": "خلفية ملونة",
+			"shadow": "إظهار الظل",
+			"glass": "تمويه زجاجي",
+			"border": "إظهار الفاصل",
 			"fontSize": "حجم الخط",
 			"fontWeight": "سماكة الخط",
 			"letterSpacing": "تباعد الحروف",
@@ -170,6 +199,13 @@
 			"blur": "التمويه",
 			"spread": "الانتشار",
 			"opacity": "الشفافية"
+		},
+		"variants": {
+			"outlined": "محدد بإطار",
+			"filled": "ممتلئ",
+			"standard": "قياسي",
+			"contained": "ممتلئ",
+			"text": "نصي"
 		}
 	},
 	"login": {
@@ -517,7 +553,47 @@
 			}
 		}
 	},
-	"home": {
-		"title": "لوحة التحكم"
+	"dashboard": {
+		"title": "لوحة التحكم",
+		"greeting": "خدمة مميزة تبدأ من هنا.",
+		"intro": "إليك لمحة عمّا يحدث في مطعمك اليوم.",
+		"live": "التحديثات مباشرة",
+		"offline": "غير متصل",
+		"connecting": "جارٍ الاتصال",
+		"refresh": "تحديث لوحة التحكم",
+		"revenue": "إيرادات اليوم",
+		"ordersReceived": "{{count}} طلبات مستلمة اليوم",
+		"activeOrders": "الطلبات النشطة",
+		"activeOrdersDetail": "الطلبات قيد الخدمة الآن",
+		"occupancy": "إشغال الطاولات",
+		"occupiedOf": "{{occupied}} من أصل {{total}} طاولة مشغولة",
+		"ordersToday": "طلبات اليوم",
+		"ordersTodayDetail": "ملخص خدمة اليوم",
+		"revenueTrend": "اتجاه الإيرادات",
+		"revenueTrendDetail": "الإيرادات اليومية خلال آخر سبعة أيام",
+		"recentOrders": "أحدث الطلبات",
+		"recentOrdersDetail": "عرض مباشر لأحدث الأنشطة",
+		"allOrders": "كل الطلبات",
+		"noOrders": "لا توجد طلبات بعد",
+		"noOrdersDetail": "ستظهر الطلبات الجديدة هنا عند وصولها.",
+		"orderNumber": "الطلب رقم {{id}}",
+		"table": "الطاولة {{number}}",
+		"atAGlance": "نظرة سريعة",
+		"floorNow": "حالة صالة المطعم الآن",
+		"occupied": "مشغولة",
+		"available": "متاحة",
+		"needsCleaning": "بحاجة إلى تنظيف",
+		"openFloor": "عرض الصالة",
+		"appearance": "المظهر",
+		"appearanceDetail": "خصّص Servio ليناسب ذوقك",
+		"openAppearance": "فتح إعدادات المظهر",
+		"presetTheme": "لوحة {{preset}}",
+		"colorMode": "نمط الألوان",
+		"dark": "داكن",
+		"light": "فاتح",
+		"theme": "سمة {{preset}}",
+		"today": "اليوم",
+		"yesterday": "أمس",
+		"date": "EEEE، d MMMM"
 	}
 }

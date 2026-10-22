@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 
-export const Home = lazy(() => import("../pages/home/Home.jsx"));
+export const Dashboard = lazy(() => import("../pages/dashboard/Dashboard.jsx"));
 export const Login = lazy(() => import("../pages/login/Login.jsx"));
 export const CategoriesPage = lazy(() => import("../pages/categories/CategoriesPage.jsx"));
 export const LobbyPage = lazy(() => import("../pages/Lobby/LobbyPage.jsx"));

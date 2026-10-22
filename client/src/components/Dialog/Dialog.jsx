@@ -58,14 +58,25 @@ export const Dialog = ({
 						sx: (theme) => {
 							const callerSX = slotProps.paper?.sx;
 							return {
-								border: "1px solid",
-								borderColor: "divider",
 								borderRadius: `${theme.tokens.radius.panel}px`,
-								bgcolor: "background.paper",
 								color: "text.primary",
-								backgroundImage: "none",
 								overflow: "hidden",
 								pointerEvents: disabled ? "none" : "all",
+								...(theme.tokens.components.acrylic
+									? {
+										backgroundColor: theme.palette.background.paper,
+										backgroundImage: "linear-gradient(145deg, color-mix(in srgb, var(--mui-palette-common-white) 14%, transparent), transparent 62%)",
+										backdropFilter: "blur(32px) saturate(180%)",
+										WebkitBackdropFilter: "blur(32px) saturate(180%)",
+										border: "1px solid color-mix(in srgb, var(--mui-palette-text-primary) 14%, transparent)",
+										boxShadow: "0 24px 64px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12)",
+									}
+									: {
+										bgcolor: "background.paper",
+										backgroundImage: "none",
+										border: "1px solid",
+										borderColor: "divider",
+									}),
 								...(typeof callerSX === "function" ? callerSX(theme) : callerSX),
 							};
 						},

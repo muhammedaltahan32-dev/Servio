@@ -1,16 +1,21 @@
-import { Icon } from "@components";
+import { Icon, Menu } from "@components";
 import { Avatar, Box, Divider, Drawer, List, Toolbar, Typography, useTheme } from "@mui/material";
 import { sidebarMenu } from "@router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { User_Name } from "../../../../constants/FieldsName.js";
 import ThemeSwitcher from "./ThemeSwitcher.jsx";
 import { closeDrawer, drawerToggle } from "../../features/layout/layoutSlice.js";
+import { logout } from "../../features/auth/authSlice.js";
+import { useLang } from "@hooks";
 import SidebarItem from "./elements/SidebarItem.jsx";
 import SidebarList from "./elements/SidebarList.jsx";
 
 export const SideBar = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { t } = useLang();
 
 	const user = useSelector((state) => state.auth?.user);
 	const mobileOpen = useSelector((state) => state.layout.mobileOpen);
@@ -20,6 +25,11 @@ export const SideBar = () => {
 	const handleDrawerToggle = () => {
 		dispatch(drawerToggle());
 	};
+	const handleLogout = React.useCallback(() => {
+		dispatch(logout());
+		dispatch(closeDrawer());
+		navigate("/login", { replace: true });
+	}, [dispatch, navigate]);
 
 	const drawerContent = React.useMemo(
 		() => (
@@ -30,6 +40,9 @@ export const SideBar = () => {
 					height: "100%",
 					overflow: "hidden",
 					bgcolor: "background.paper",
+					backgroundImage: theme.tokens.chrome.sidebar.tinted
+						? "linear-gradient(180deg, color-mix(in srgb, var(--mui-palette-primary-main) 7%, var(--mui-palette-background-paper)), var(--mui-palette-background-paper) 55%)"
+						: "none",
 					// color: "#F2F6FC",
 				}}
 			>
@@ -102,11 +115,26 @@ export const SideBar = () => {
 				<Divider sx={{ borderColor: theme.tokens.color.sidebarDivider }} />
 				<List disablePadding>
 					<ThemeSwitcher />
-					<SidebarItem icon={<Avatar src="" />} label={user?.[User_Name]} />
+					<Menu>
+						<Menu.Trigger>
+							<SidebarItem
+								icon={<Avatar src="" />}
+								label={user?.[User_Name]}
+								aria-haspopup="menu"
+								aria-label={t("layout.accountMenu")}
+							/>
+						</Menu.Trigger>
+						<Menu.Content>
+							<Menu.Item onClick={handleLogout}>
+								<Icon name="Logout" sx={{ marginInlineEnd: 1 }} />
+								{t("layout.logout")}
+							</Menu.Item>
+						</Menu.Content>
+					</Menu>
 				</List>
 			</Box>
 		),
-				[user, theme],
+			[user, theme, handleLogout, t],
 	);
 
 	return (
@@ -141,6 +169,7 @@ export const SideBar = () => {
 						width: theme.layout["mobile-drawer-width"],
 
 						border: "none",
+						boxShadow: theme.tokens.chrome.sidebar.shadow ? theme.tokens.shadow.card : "none",
 
 						// bgcolor: "#141D2E",
 
@@ -168,7 +197,7 @@ export const SideBar = () => {
 						borderInlineEnd: "1px solid",
 						borderColor: "rgba(226, 232, 241, 0.12)",
 						// bgcolor: "#141D2E",
-						boxShadow: "none",
+						boxShadow: theme.tokens.chrome.sidebar.shadow ? theme.tokens.shadow.card : "none",
 						// color: "#F2F6FC",
 
 						overflowX: "hidden",
