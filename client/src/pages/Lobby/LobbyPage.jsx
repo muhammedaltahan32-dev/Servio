@@ -2,11 +2,12 @@ import React from "react";
 import { Box, Chip, CircularProgress, Grid, Paper, Stack, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import TableBarIcon from "@mui/icons-material/TableBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Input, MenuItem, PageContainer, Select } from "@components";
 import { useLang } from "@hooks";
-import { TABLE_STATUS } from "../../../../constants/enumOptions.js";
+import { ST_AVAILABLE, ST_NEEDS_CLEANING, ST_OCCUPIED, TABLE_STATUS } from "../../../../constants/enumOptions.js";
+import { updateTable } from "../../features/tables/TablesSlice.js";
 import { getTableNumber } from "./utils/normalize.js";
 import LobbySummeryCard from "./LobbySummeryCard.jsx";
 import TableCard from "./TableCard.jsx";
@@ -62,13 +63,34 @@ Filters.displayName = "LobbyFilters";
 
 export const LobbyPage = () => {
 	const { t } = useLang();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const items = useSelector((state) => state.tables.items);
 	const loading = useSelector((state) => state.tables.loading);
 	const connectionState = useSelector((state) => state.tables.connectionState);
+	const isInitialLoading = loading && items.length === 0;
 	const [status, setStatus] = React.useState("all");
 	const [tableName, setTableName] = React.useState("");
+	const [updatingTableId, setUpdatingTableId] = React.useState(null);
 	const handleTableSelect = React.useCallback((selectedTable) => navigate(`/customer-menu/${selectedTable.id}`), [navigate]);
+	const handleStatusChange = React.useCallback(async (table) => {
+		const currentStatus = String(table?.status).toLowerCase();
+		const nextStatus = currentStatus === ST_OCCUPIED.toLowerCase()
+			? ST_NEEDS_CLEANING
+			: currentStatus === ST_NEEDS_CLEANING.toLowerCase()
+				? ST_AVAILABLE
+				: null;
+		if (!nextStatus || !table?.id) return;
+
+		setUpdatingTableId(table.id);
+		try {
+			await dispatch(updateTable({ ...table, status: nextStatus })).unwrap();
+		} catch {
+			// The thunk reports the API error; keep the current status until the socket updates it.
+		} finally {
+			setUpdatingTableId(null);
+		}
+	}, [dispatch]);
 
 	const tables = React.useMemo(() => {
 		const query = tableName.trim().toLocaleLowerCase();
@@ -151,7 +173,7 @@ export const LobbyPage = () => {
 					</Box>
 					<Filters tableName={tableName} setTableName={setTableName} status={status} setStatus={setStatus} />
 				</Stack>
-				{loading ? (
+				{isInitialLoading ? (
 					<Paper
 						variant="outlined"
 						sx={{
@@ -171,7 +193,12 @@ export const LobbyPage = () => {
 					<Grid container spacing={1.5}>
 						{tables.map((table) => (
 							<Grid key={table?.id ?? getTableNumber(table)} size={{ xs: 12, sm: 6, md: 4, xl: 3 }}>
-							<TableCard item={table} onSelect={handleTableSelect} />
+							<TableCard
+								item={table}
+								onSelect={handleTableSelect}
+								onStatusChange={handleStatusChange}
+								updating={updatingTableId === table.id}
+							/>
 							</Grid>
 						))}
 					</Grid>

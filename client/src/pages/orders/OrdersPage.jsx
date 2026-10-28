@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Box, Chip, Stack, Typography } from "@mui/material";
+import { Alert, Box, Chip, CircularProgress, Stack, Typography } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { IconButton, PageContainer } from "@components";
 import { useLang } from "@hooks";
@@ -88,6 +88,9 @@ export const OrdersPage = () => {
 								{columnOrders.map((order) => {
 									const nextStatus = NEXT_STATUS[status];
 									const isUpdating = updatingSet.has(String(order[Order_ID]));
+									const actions = [];
+									if (nextStatus) actions.push({ status: nextStatus, label: isUpdating ? <CircularProgress size={16} color="inherit" /> : t(`orders.action.${nextStatus.toLowerCase()}`), disabled: isUpdating, onClick: () => handleStatusChange(order[Order_ID], nextStatus) });
+									if (status !== OrderStatus_CANCELLED) actions.push({ status: OrderStatus_CANCELLED, label: isUpdating ? <CircularProgress size={16} color="inherit" /> : t("orders.action.cancel", { defaultValue: "Cancel order" }), color: "error", variant: "outlined", disabled: isUpdating, onClick: () => handleStatusChange(order[Order_ID], OrderStatus_CANCELLED) });
 									return (
 										<OrderCard
 											key={order[Order_ID]}
@@ -95,8 +98,8 @@ export const OrdersPage = () => {
 											t={t}
 											getFieldsByLang={getFieldsByLang}
 											currentLanguage={currentLanguage}
-											statusColor={color}
-											actions={nextStatus ? [{ status: nextStatus, label: t(`orders.action.${nextStatus.toLowerCase()}`), disabled: isUpdating, onClick: () => handleStatusChange(order[Order_ID], nextStatus) }] : []}
+										statusColor={color}
+										actions={actions}
 										/>
 									);
 								})}
