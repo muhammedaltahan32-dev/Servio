@@ -3,6 +3,7 @@ import { Box, Card, Chip, Divider, Stack, Typography } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import { Button } from "@components";
+import { formatCurrency } from "../../utils/formatCurrency.js";
 import {
 	Item_Notes,
 	Item_Quantity,
@@ -70,11 +71,15 @@ const OrderCard = ({ order, t, getFieldsByLang, currentLanguage, actions = [], s
 			<Stack spacing={1} sx={{ minWidth: 0, maxWidth: "100%" }}>
 				{order.OrderItems?.map((item) => {
 					const name = getFieldsByLang(item.MenuItem, "name") || item.MenuItem?.[Menu_Name];
+					const lineTotal = Number(item.unit_price ?? item.MenuItem?.price ?? 0) * Number(item[Item_Quantity] ?? 0);
 					return (
 						<Box key={item.id} sx={{ display: "flex", flexDirection: "column", gap: 0.5, minWidth: 0 }}>
-							<Typography variant="body2" sx={{ minWidth: 0, maxWidth: "100%", overflowWrap: "anywhere", wordBreak: "break-word" }}>
-								<strong>{item[Item_Quantity]} x</strong> {name || t("orders.menuItem")}
-							</Typography>
+							<Stack direction="row" justifyContent="space-between" alignItems="baseline" gap={1}>
+								<Typography variant="body2" sx={{ minWidth: 0, maxWidth: "100%", overflowWrap: "anywhere", wordBreak: "break-word" }}>
+									<strong>{item[Item_Quantity]} x</strong> {name || t("orders.menuItem")}
+								</Typography>
+								<Typography variant="body2" fontWeight={600} sx={{ whiteSpace: "nowrap" }}>{formatCurrency(lineTotal, currentLanguage)}</Typography>
+							</Stack>
 							{item[Item_Notes] && (
 								<Typography variant="caption" sx={{ minWidth: 0, maxWidth: "100%", bgcolor: "warning.light", color: "warning.dark", p: 0.75, borderRadius: 1, fontWeight: 600, overflowWrap: "anywhere", wordBreak: "break-word" }}>
 									{item[Item_Notes]}
@@ -83,6 +88,11 @@ const OrderCard = ({ order, t, getFieldsByLang, currentLanguage, actions = [], s
 						</Box>
 					);
 				})}
+			</Stack>
+			<Divider />
+			<Stack direction="row" justifyContent="space-between" alignItems="center">
+				<Typography variant="subtitle2" color="text.secondary">{t("orders.total", { defaultValue: "Total" })}</Typography>
+				<Typography variant="h6" fontWeight={800}>{formatCurrency(order.total_amount ?? order.OrderItems?.reduce((sum, item) => sum + Number(item.unit_price ?? item.MenuItem?.price ?? 0) * Number(item[Item_Quantity] ?? 0), 0), currentLanguage)}</Typography>
 			</Stack>
 			{actions.length > 0 && (
 				<Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: "auto", minWidth: 0, maxWidth: "100%" }}>

@@ -90,11 +90,12 @@ export const WaiterPage = () => {
 							<Box sx={{ display: "grid", gridAutoRows: "max-content", alignContent: "start", gap: { xs: 1.25, sm: 1.5 }, minWidth: 0 }}>
 								{sectionOrders.map((order) => {
 									const isUpdating = updatingSet.has(String(order[Order_ID]));
-									const actions = (WAITER_ACTIONS[status] ?? []).map((nextStatus) => ({
+									const nextStatuses = WAITER_ACTIONS[status] ?? [];
+									const actions = [...nextStatuses, ...(status !== OrderStatus_CANCELLED ? [OrderStatus_CANCELLED] : [])].map((nextStatus) => ({
 										status: nextStatus,
 										label: isUpdating
 											? <CircularProgress size={16} color="inherit" />
-											: t(`orders.action.${nextStatus.toLowerCase()}`, { defaultValue: nextStatus === OrderStatus_CANCELLED ? "Cancel order" : "Mark paid" }),
+											: t(nextStatus === OrderStatus_CANCELLED ? "orders.action.cancel" : `orders.action.${nextStatus.toLowerCase()}`, { defaultValue: nextStatus === OrderStatus_CANCELLED ? "Cancel order" : "Mark paid" }),
 										color: nextStatus === OrderStatus_CANCELLED ? "error" : "primary",
 										variant: nextStatus === OrderStatus_CANCELLED ? "outlined" : "contained",
 										disabled: isUpdating,
