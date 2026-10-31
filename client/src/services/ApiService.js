@@ -19,6 +19,16 @@ const saveTokens = ({ accessToken, refreshToken }) => {
 	}
 };
 
+const saveForms = (forms) => {
+	if (!Array.isArray(forms)) return;
+	try {
+		const userInfo = JSON.parse(localStorage.getItem(USER_INFO) || "{}");
+		localStorage.setItem(USER_INFO, JSON.stringify({ ...userInfo, forms }));
+	} catch {
+		localStorage.setItem(USER_INFO, JSON.stringify({ forms }));
+	}
+};
+
 let refreshPromise;
 
 const refreshAccessToken = async () => {
@@ -46,6 +56,7 @@ const refreshAccessToken = async () => {
 				throw new Error("Refresh response did not include both tokens");
 			}
 			saveTokens({ accessToken: tokens.token, refreshToken: tokens.refreshToken });
+			saveForms(tokens.forms);
 			return tokens.token;
 		})
 		.finally(() => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { List, useMediaQuery, useTheme } from "@mui/material";
-import { sidebarMenu } from "@router";
+import { getSidebarMenu } from "@router";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { closeDrawer } from "../../../features/layout/layoutSlice.js";
@@ -8,12 +8,14 @@ import SidebarItem from "./SidebarItem.jsx";
 
 export const SidebarList = () => {
 	const mobileOpen = useSelector((state) => state.layout.mobileOpen);
+	const forms = useSelector((state) => state.auth.user?.forms ?? []);
 
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+	const sidebarMenu = React.useMemo(() => getSidebarMenu(forms), [forms]);
 	const mobileOpenRef = React.useRef(mobileOpen);
 	React.useEffect(() => {
 		mobileOpenRef.current = mobileOpen;
@@ -27,7 +29,7 @@ export const SidebarList = () => {
 	}, [dispatch, navigate]);
 	const itemClickHandlers = React.useMemo(
 		() => new Map(sidebarMenu.map((item) => [item.path, () => handleNavigate(item.path)])),
-		[handleNavigate],
+		[handleNavigate, sidebarMenu],
 	);
 
 	return (
