@@ -25,7 +25,7 @@ const protectedPaths = [
 		element: <Dashboard />,
 	},
 	{
-		path: "/Categories",
+		path: "/categories",
 		label: "categories.title",
 		icon: "Category",
 		element: <CategoriesPage />,
@@ -80,7 +80,15 @@ const protectedPaths = [
 	},
 ];
 
-export const sidebarMenu = protectedPaths.map(({ path, icon, label }) => ({ path, icon, label }));
+export const getSidebarMenu = (forms = []) => {
+	if (!Array.isArray(forms)) return [];
+	return forms
+		.map((form) => {
+			const route = protectedPaths.find((item) => item.path.toLowerCase() === String(form.path || "").toLowerCase());
+			return route ? { path: route.path, icon: route.icon, label: route.label } : null;
+		})
+		.filter(Boolean);
+};
 
 export const router = createBrowserRouter([
 	{

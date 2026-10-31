@@ -33,9 +33,10 @@ const authSlice = createSlice({
 	},
 	reducers: {
 		setCredentials: (state, action) => {
-			const { token, refreshToken, ...data } = action.payload;
+			const { token, refreshToken, forms = [], ...data } = action.payload;
 			const userInfo = {
 				[User_Name]: data[User_Name],
+				forms,
 			};
 			state.user = userInfo;
 			state.token = token;

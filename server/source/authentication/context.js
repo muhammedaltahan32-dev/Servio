@@ -21,7 +21,10 @@ import {
 	UI_Login,
 	UI_MenuItems,
 	UI_Orders,
+	UI_Settings,
 	UI_Tables,
+	UI_Users,
+	UI_Waiter,
 } from "../../../constants/Forms.js";
 
 export const admin = {
@@ -39,7 +42,9 @@ export const admin = {
 	[UI_Tables]: { open: true, path: "/tables", label: "Tables", icon: "TableRestaurant" },
 	[UI_Orders]: { open: true, path: "/orders", label: "Orders", icon: "ReceiptLong" },
 	[UI_MenuItems]: { open: true, path: "/menu-items", label: "Menu Items", icon: "RestaurantMenu" },
-	[UI_CustomerMenu]: { open: true, path: "/customer-menu", label: "Customer Menu", icon: "RestaurantMenu" },
+	[UI_Users]: { open: true, path: "/users", label: "users.title", icon: "People" },
+	[UI_Waiter]: { open: true, path: "/waiter", label: "waiter.title", icon: "Person" },
+	[UI_Settings]: { open: true, path: "/settings", label: "settings.title", icon: "Settings" },
 };
 
 export const waiter = {
@@ -49,9 +54,9 @@ export const waiter = {
 	[Api_Table]: { getAll: true },
 	[Api_Order]: { post: true },
 	[UI_Login]: { open: true, path: "/login" },
-	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
 	[UI_Lobby]: { open: true, path: "/lobby", label: "Lobby", icon: "TableBarTwoTone" },
-	[UI_CustomerMenu]: { open: true, path: "/customer-menu", label: "Customer Menu", icon: "RestaurantMenu" },
+	[UI_Waiter]: { open: true, path: "/waiter", label: "waiter.title", icon: "Person" },
+	[UI_Settings]: { open: true, path: "/settings", label: "settings.title", icon: "Settings" },
 };
 
 export const kitchen = {
@@ -59,7 +64,7 @@ export const kitchen = {
 	[Api_Order]: { getAll: true, patch: true },
 	[UI_Orders]: { open: true, path: "/orders", label: "Orders", icon: "ReceiptLong" },
 	[UI_Login]: { open: true, path: "/login" },
-	[UI_Home]: { open: true, path: "/", label: "Home", icon: "Home" },
+	[UI_Settings]: { open: true, path: "/settings", label: "settings.title", icon: "Settings" },
 };
 
 export const guests = {

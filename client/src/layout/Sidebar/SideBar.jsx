@@ -1,6 +1,5 @@
 import { Icon, Menu } from "@components";
 import { Avatar, Box, Divider, Drawer, List, Toolbar, Typography, useTheme } from "@mui/material";
-import { sidebarMenu } from "@router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";

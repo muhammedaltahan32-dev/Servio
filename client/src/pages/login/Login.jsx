@@ -137,16 +137,18 @@ export const Login = () => {
 		const result = await dispatch(loginUser(formData));
 
 		if (loginUser.fulfilled.match(result)) {
-			const { token, refreshToken } = result.payload.data;
+			const { token, refreshToken, forms = [] } = result.payload.data;
 
 			dispatch(
 				setCredentials({
 					token,
 					refreshToken,
+					forms,
 					...formData,
 				}),
 			);
-			navigate("/");
+			const landingPath = forms.find((form) => form.path && form.path !== "/login")?.path || "/";
+			navigate(landingPath, { replace: true });
 		} else {
 			setMessage(t(result.payload));
 		}
