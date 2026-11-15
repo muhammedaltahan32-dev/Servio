@@ -48,8 +48,11 @@ export const UserDialog = React.memo(
 
 		const handleSave = async () => {
 			const data = selectedUser ? { ...formData, id: selectedUser.id } : formData;
-			await dispatch(selectedUser ? updateUser(data) : addUser(data));
-			handleClose();
+			const action = selectedUser ? updateUser : addUser;
+			const result = await dispatch(action(data));
+			if (action.fulfilled.match(result)) {
+				handleClose();
+			}
 		};
 
 		React.useImperativeHandle(ref, () => ({ open: handleOpen, close: handleClose }), [handleOpen, handleClose]);
@@ -58,7 +61,7 @@ export const UserDialog = React.memo(
 			<Dialog
 				open={open}
 				onClose={handleClose}
-				title={selectedUser ? t("users.titleEdit") : t("users.addTitle")}
+				title={selectedUser ? t("users.editTitle") : t("users.addTitle")}
 				subtitle={t("users.dialogSubtitle")}
 				disabled={loading}
 				actions={

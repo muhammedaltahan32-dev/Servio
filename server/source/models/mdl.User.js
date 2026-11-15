@@ -22,4 +22,3 @@ const defineUser = (sequelize, DataTypes) => {
 };
 
 export default defineUser;
-

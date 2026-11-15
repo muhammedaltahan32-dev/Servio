@@ -9,6 +9,7 @@ import {
 	Order_TableID,
 	Order_Total,
 	Order_Status,
+	Table_Number,
 	Table_Status,
 } from "../../../constants/FieldsName.js";
 import { OrderStatus_PAID, ST_NEEDS_CLEANING } from "../../../constants/enumOptions.js";
@@ -32,19 +33,20 @@ export const post = async (req, res) => {
 	const t = await sequelize.transaction();
 	try {
 		const { [Pay_OrderID]: order_id, [Pay_Method]: payment_method, [Pay_Amount]: amount_paid } = req.body;
-		const newPayment = await Payment.create(
-			{
-				[Pay_OrderID]: order_id,
-				[Pay_Method]: payment_method,
-				[Pay_Amount]: amount_paid,
-			},
-			{ transaction: t },
-		);
 		const order = await Order.findByPk(order_id, { transaction: t });
 		if (!order) {
 			await t.rollback();
 			return res.status(St_BAD_REQUEST).json({ success: false, message: "order.error.notFound" });
 		}
+		const normalizedMethod = String(payment_method || "CASH").toUpperCase() === "CARD" ? "CARD" : "CASH";
+		const newPayment = await Payment.create(
+			{
+				[Pay_OrderID]: order_id,
+				[Pay_Method]: normalizedMethod,
+				[Pay_Amount]: amount_paid ?? order[Order_Total],
+			},
+			{ transaction: t },
+		);
 		order[Order_Status] = OrderStatus_PAID;
 		await order.save({ transaction: t });
 		const table = await Table.findByPk(order[Order_TableID], { transaction: t });
@@ -53,10 +55,17 @@ export const post = async (req, res) => {
 			await table.save({ transaction: t });
 		}
 		await t.commit();
-		req.app.locals.io?.emit("orders:changed");
+		const io = req.app.locals.io;
+		if (io) {
+			if (Table) {
+				const tables = await Table.findAll({ order: [[Table_Number, "ASC"]] });
+				io.emit("tables:updated", tables);
+			}
+			io.emit("orders:changed");
+		}
 		res.status(St_CREATED).json({ success: true, data: newPayment, message: "payment.success.created" });
 	} catch (err) {
-		await t.rollback();
+		if (!t.finished) await t.rollback();
 		res.status(St_INTERNAL_SERVER_ERROR).json({ success: false, message: "error.messages.serverError" });
 	}
 };

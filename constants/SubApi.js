@@ -6,4 +6,5 @@ export const Api_Category = "api/category";
 export const Api_MenuItem = "api/menu-item";
 export const Api_Table = "api/table";
 export const Api_Order = "api/order";
+export const Api_Recommendation = "api/recommendations";
 export const Api_Payment = "api/payment";

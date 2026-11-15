@@ -108,7 +108,7 @@ export const Dashboard = () => {
 	const connectionState = useSelector((state) => state.tables.connectionState);
 
 	React.useEffect(() => {
-		dispatch(fetchOrders());
+		dispatch(fetchOrders({ days: 7 }));
 		dispatch(fetchTables());
 	}, [dispatch]);
 
@@ -148,7 +148,7 @@ export const Dashboard = () => {
 		return days;
 	}, [orders, dateFormat]);
 	const refresh = () => {
-		dispatch(fetchOrders());
+		dispatch(fetchOrders({ days: 7 }));
 		dispatch(fetchTables());
 	};
 	const dateLabel = new Intl.DateTimeFormat(locale, { weekday: "long", month: "long", day: "numeric" }).format(

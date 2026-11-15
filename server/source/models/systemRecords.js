@@ -1,4 +1,5 @@
 import { User_ID, User_IsActive, User_Kind, User_Name, User_HashedPassword } from "../../../constants/FieldsName.js";
+import { Kind_ADMIN } from "../../../constants/enumOptions.js";
 
 export const RecUser_ID = 1;
 
@@ -12,7 +13,7 @@ const systemRecords = async (models) => {
 		[User_ID]: RecUser_ID,
 		[User_Name]: "admin",
 		[User_HashedPassword]: hashedPassword,
-		[User_Kind]: 1,
+		[User_Kind]: Kind_ADMIN,
 		[User_IsActive]: true,
 	};
 

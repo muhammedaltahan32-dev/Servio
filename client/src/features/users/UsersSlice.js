@@ -82,8 +82,10 @@ const usersSlice = createSlice({
 			})
 			.addCase(addUser.fulfilled, (state, action) => {
 				state.loading = false;
+				if (action.payload?.data) {
+					state.items.push(action.payload.data);
+				}
 				notify.snackbar.success(translator(action.payload?.message));
-				// Array update is omitted here — socket handles state update
 			})
 			.addCase(addUser.rejected, (state, action) => {
 				state.loading = false;
@@ -98,8 +100,14 @@ const usersSlice = createSlice({
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				state.loading = false;
+				const updatedUser = action.payload?.data ?? action.meta.arg;
+				if (updatedUser?.id !== undefined) {
+					const index = state.items.findIndex((item) => String(item.id) === String(updatedUser.id));
+					if (index !== -1) {
+						state.items[index] = { ...state.items[index], ...updatedUser };
+					}
+				}
 				notify.snackbar.success(translator(action.payload?.message));
-				// Array update is omitted here — socket handles state update
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.loading = false;
@@ -114,6 +122,8 @@ const usersSlice = createSlice({
 			})
 			.addCase(deleteUser.fulfilled, (state, action) => {
 				state.loading = false;
+				const deletedId = action.payload?.data ?? action.meta.arg;
+				state.items = state.items.filter((item) => String(item.id) !== String(deletedId));
 				notify.snackbar.success(translator(action.payload?.message));
 			})
 			.addCase(deleteUser.rejected, (state, action) => {

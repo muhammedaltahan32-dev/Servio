@@ -7,10 +7,11 @@ import * as MenuItem from "./api.MenuItem.js";
 import * as Order from "./api.Order.js";
 import * as Table from "./api.Table.js";
 import * as Payment from "./api.Payment.js";
+import * as Recommendation from "./api.Recommendation.js";
 
 import { St_FORBIDDEN, St_INTERNAL_SERVER_ERROR, St_NOT_FOUND } from "../../../constants/HttpStatus.js";
 
-const controllers = [Signin, Architecture, User, Upload, Category, MenuItem, Order, Table, Payment];
+const controllers = [Signin, Architecture, User, Upload, Category, MenuItem, Order, Table, Payment, Recommendation];
 
 const permissionCheck = (method, resourceName, action) => async (req, res) => {
 	try {
@@ -91,4 +92,3 @@ export default function registerAPIs(app) {
 		}
 	});
 }
-

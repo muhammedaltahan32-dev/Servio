@@ -12,9 +12,10 @@ export const createOrder = createAsyncThunk("orders/create", async (data, { reje
 	}
 });
 
-export const fetchOrders = createAsyncThunk("orders/fetchAll", async (params={}, { rejectWithValue }) => {
+export const fetchOrders = createAsyncThunk("orders/fetchAll", async (params, { getState, rejectWithValue }) => {
 	try {
-		return await ApiService.get(`${Api_Order}/all`, { params });
+		const effectiveParams = params ?? getState()?.orders?.lastParams ?? {};
+		return await ApiService.get(`${Api_Order}/all`, { params: effectiveParams });
 	} catch (error) {
 		return rejectWithValue(error?.response?.data || { message: error.message });
 	}
@@ -30,7 +31,7 @@ export const updateOrderStatus = createAsyncThunk("orders/updateStatus", async (
 
 const ordersSlice = createSlice({
 	name: "orders",
-	initialState: { items: [], loading: false, fetching: false, updatingIds: [], error: null },
+	initialState: { items: [], loading: false, fetching: false, updatingIds: [], lastParams: {}, error: null },
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
@@ -48,13 +49,16 @@ const ordersSlice = createSlice({
 				state.error = action.payload?.message || action.error.message;
 				notify.snackbar.error(translator(state.error));
 			})
-			.addCase(fetchOrders.pending, (state) => {
+			.addCase(fetchOrders.pending, (state, action) => {
 				state.fetching = true;
 				state.error = null;
+				if (action.meta.arg !== undefined) {
+					state.lastParams = action.meta.arg;
+				}
 			})
 			.addCase(fetchOrders.fulfilled, (state, action) => {
 				state.fetching = false;
-				state.items = action.payload.data;
+				state.items = action.payload.data ?? [];
 			})
 			.addCase(fetchOrders.rejected, (state, action) => {
 				state.fetching = false;

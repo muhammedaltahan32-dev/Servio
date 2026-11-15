@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	Box,
+	Alert,
 	Card,
 	CircularProgress,
 	Divider,
@@ -16,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchCategories } from "../../features/categories/CategoriesSlice.js";
 import { fetchMenuItems } from "../../features/menuItems/MenuItemsSlice.js";
 import { createOrder } from "../../features/orders/OrdersSlice.js";
+import ApiService from "../../services/ApiService.js";
 import { useActionsBar } from "@layout";
 import {
 	Cat_Icon,
@@ -31,8 +33,10 @@ import { useLang } from "@hooks";
 import CustomerMenuCard from "./CustomerMenuCard.jsx";
 import { Button, Input, PageContainer, Icon, IconButton } from "@components";
 import { formatCurrency as formatMoney } from "@utils";
+import { Api_Recommendation } from "../../../../constants/SubApi.js";
 
 const EMPTY_CART_SUMMARY = { total: 0, itemCount: 0 };
+const EMPTY_RECOMMENDATIONS = [];
 
 const MenuCategoryTile = React.memo(
 	({ categoryId, categoryName, icon: CategoryIcon, countLabel, selected, onSelect }) => (
@@ -104,6 +108,12 @@ export const CustomerMenuPage = () => {
 	const [cart, setCart] = React.useState([]);
 	const [search, setSearch] = React.useState("");
 	const [paymentMethod, setPaymentMethod] = React.useState("card");
+	const [recommendationDishId, setRecommendationDishId] = React.useState(null);
+	const [recommendationResult, setRecommendationResult] = React.useState({ dishId: null, recommendations: [], error: false });
+	const isRecommendationCurrent = recommendationResult.dishId === recommendationDishId;
+	const recommendations = isRecommendationCurrent ? recommendationResult.recommendations : EMPTY_RECOMMENDATIONS;
+	const recommendationsLoading = Boolean(recommendationDishId) && !isRecommendationCurrent;
+	const recommendationsError = isRecommendationCurrent && recommendationResult.error;
 
 	const [selectedCategoryId, setSelectedCategoryId] = React.useState("");
 	const formatCurrency = React.useCallback((value) => formatMoney(value, currentLanguage), [currentLanguage]);
@@ -111,6 +121,24 @@ export const CustomerMenuPage = () => {
 		dispatch(fetchCategories());
 		dispatch(fetchMenuItems());
 	}, [dispatch]);
+	React.useEffect(() => {
+		if (!recommendationDishId) return undefined;
+		const controller = new AbortController();
+		ApiService.get(`${Api_Recommendation}/${recommendationDishId}`, { signal: controller.signal })
+			.then((response) => {
+				setRecommendationResult({
+					dishId: recommendationDishId,
+					recommendations: response?.data?.recommendations ?? [],
+					error: false,
+				});
+			})
+			.catch((error) => {
+				if (!controller.signal.aborted && error.name !== "CanceledError" && error.name !== "AbortError") {
+					setRecommendationResult({ dishId: recommendationDishId, recommendations: [], error: true });
+				}
+			});
+		return () => controller.abort();
+	}, [recommendationDishId]);
 
 	const safeCategories = React.useMemo(
 		() => categories.filter((category) => category && category[Cat_ID] !== undefined && category[Cat_ID] !== null),
@@ -200,6 +228,10 @@ export const CustomerMenuPage = () => {
 		[cart],
 	);
 	const cartQuantities = React.useMemo(() => new Map(cart.map((item) => [String(item.id), item.quantity])), [cart]);
+	const visibleRecommendations = React.useMemo(
+		() => recommendations.filter((recommendation) => !cartQuantities.has(String(recommendation.dishId))),
+		[cartQuantities, recommendations],
+	);
 	const cartTotal = cartSummary.total;
 	const actionsBarContent = React.useMemo(() => {
 		return (
@@ -312,6 +344,7 @@ export const CustomerMenuPage = () => {
 	]);
 	const addToCart = React.useCallback(
 		(item) => {
+			setRecommendationDishId(item[Menu_ID] ?? item.id);
 			setCart((currentCart) => {
 				const itemId = item[Menu_ID] ?? item.id;
 				const existing = currentCart.find((cartItem) => String(cartItem.id) === String(itemId));
@@ -433,6 +466,37 @@ export const CustomerMenuPage = () => {
 							<Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5 }}>
 								{activeCategory ? getFieldsByLang(activeCategory, "name") : t("customerMenu.menu")}
 							</Typography>
+							{recommendationDishId && (
+								<Box sx={{ mb: 2.5, p: 1.5, border: "1px solid", borderColor: "primary.light", borderRadius: 2, bgcolor: "action.hover" }}>
+									<Stack direction="row" alignItems="center" spacing={1} sx={{ mb: visibleRecommendations.length ? 1.5 : 0 }}>
+										<Icon name="AutoAwesome" sx={{ color: "primary.main" }} />
+										<Typography variant="subtitle1" fontWeight={800}>{t("customerMenu.recommendationsTitle", { defaultValue: "AI picks to go with your choice" })}</Typography>
+										{recommendationsLoading && <CircularProgress size={16} />}
+									</Stack>
+									{recommendationsError && <Alert severity="warning" sx={{ mb: 1 }}>{t("customerMenu.recommendationsError", { defaultValue: "Recommendations are unavailable right now." })}</Alert>}
+									{!recommendationsLoading && !recommendationsError && recommendations.length === 0 && (
+										<Typography variant="body2" color="text.secondary">{t("customerMenu.recommendationsEmpty", { defaultValue: "More order history is needed for suggestions." })}</Typography>
+									)}
+									{!recommendationsLoading && recommendations.length > 0 && visibleRecommendations.length === 0 && (
+										<Typography variant="body2" color="text.secondary">{t("customerMenu.recommendationsInCart", { defaultValue: "You already added these suggestions." })}</Typography>
+									)}
+									{visibleRecommendations.length > 0 && (
+										<Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))", gap: 1.25 }}>
+											{visibleRecommendations.map((recommendation, index) => (
+													<CustomerMenuCard
+														key={recommendation.dishId}
+														item={recommendation.dish}
+														itemId={recommendation.dishId}
+														index={index}
+														quantity={0}
+														onOrder={addToCart}
+														onQuantityChange={updateQuantity}
+													/>
+													))}
+										</Box>
+									)}
+								</Box>
+							)}
 							{!activeCategory ? (
 								<Typography color="text.secondary" sx={{ py: 4 }}>
 									{t("customerMenu.noCategories")}
